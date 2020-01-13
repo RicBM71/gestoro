@@ -5193,9 +5193,9 @@ mitt@^1.1.3:
   integrity sha512-mUDCnVNsAi+eD6qA0HkRkwYczbLHJ49z17BGe2PYRhZL4wpZUFZGJHU7/5tmvohoma+Hdn0Vh/oJTiPEmgSruA==
 
 mixin-deep@^1.2.0:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/mixin-deep/-/mixin-deep-1.3.1.tgz#a49e7268dce1a0d9698e45326c5626df3543d0fe"
-  integrity sha512-8ZItLHeEgaqEvd5lYBXfm4EZSFCX29Jb9K+lAHhDKzReKBQKj3R+7NOF6tjqYi9t4oI8VUfaWITJQm86wnXGNQ==
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/mixin-deep/-/mixin-deep-1.3.2.tgz#1120b43dc359a785dce65b55b82e257ccf479566"
+  integrity sha512-WRoDn//mXBiJ1H40rqa3vH0toePwSsGb45iInWlTySa+Uu4k3tYUSxa2v1KqAiLtvlrSzaExqS1gtk96A9zvEA==
   dependencies:
     for-in "^1.0.2"
     is-extendable "^1.0.1"
@@ -7910,6 +7910,13 @@ vue-toastr@^2.1.2:
   resolved "https://registry.yarnpkg.com/vue-toastr/-/vue-toastr-2.1.2.tgz#5bcbef8f85f043ca4d411e19e402bb170259527a"
   integrity sha512-OomiRJ641K5Zl1/QEwUFg/lBcP7XeVKL044loVtBkGm9oXkm02h3dx13XNcbSXYL/hsqWPO/et5fB0ciU3oaCQ==
 
+vue-web-cam@^1.7.1:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/vue-web-cam/-/vue-web-cam-1.9.0.tgz#5a27ed21ca3c7272fbbf170e07b26951a515a93f"
+  integrity sha512-AyEo8WWHpQGvMgWrxV6NFB6L6ojf85iTt8SeBokobYsr+Ev3qHKzR/L9C1aeW+lQ3+PSuRVUK9dVKHWkIiK+vA==
+  dependencies:
+    vue "^2.6.10"
+
 vue2-dropzone@^3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/vue2-dropzone/-/vue2-dropzone-3.6.0.tgz#b4bb4b64de1cbbb3b88f04b24878e06780a51546"
@@ -7927,10 +7934,10 @@ vue@^2.6.10:
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
   integrity sha512-ImThpeNU9HbdZL3utgMCq0oiMzAkt1mcgy3/E6zWC/G6AaQoeuFdsl9nDhTDU3X1R6FK7nsIUuRACVcjI+A2GQ==
 
-vuetify-toast-snackbar@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/vuetify-toast-snackbar/-/vuetify-toast-snackbar-0.5.0.tgz#cf0aba41d582ee3165161be6e94c6a804a42745e"
-  integrity sha512-p/8Tr4nmnhLZIBTLv0Ta+JzyiLSs3aYtpkdbFYGyg4AcuTbrKhMXdOWM9z1Fh/rfy+VBy6C0K55/jylDmGw3UQ==
+vuetify-toast-snackbar@^0.1.3:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/vuetify-toast-snackbar/-/vuetify-toast-snackbar-0.1.6.tgz#12a37846cc5da212fae9bc7f821d6c9225b95cb6"
+  integrity sha512-H/V3yfscqG6Y12sPYXQOoE/Y3HXnJJrdTBWZTQFcAKNqxfc5HRxgnD+r3/By5YwNew23X4Vg0FImslT8TWeSGg==
 
 vuetify@^1.5.1:
   version "1.5.14"
