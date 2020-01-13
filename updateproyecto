@@ -1,0 +1,6 @@
+git fetch origin
+git merge origin/master
+cd public
+cp -r * ~/www/
+cd ..
+php artisan config:cache

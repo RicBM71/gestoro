@@ -1,0 +1,138 @@
+<?php
+
+namespace App\Http\Controllers\Exportar;
+
+use Illuminate\Http\Request;
+use App\Rules\RangoFechaRule;
+use App\Exports\SituacionExport;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
+
+class SituacionController extends Controller
+{
+
+    public function situacion(Request $request){
+
+        if (!auth()->user()->hasRole('Gestor')){
+            return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Gestor');
+        }
+
+        $data = $request->validate([
+            'fecha_d'  => ['required','date', new RangoFechaRule($request->fecha_d, $request->fecha_h)],
+            'fecha_h'  => ['required','date'],
+            'operacion'=> ['required','string'],
+        ]);
+
+        return $this->detalle($data);
+
+    }
+
+    private function detalle($data){
+        $select='"%c" AS concepto, "%d" AS dh, SUM(importe) AS importe';
+
+
+        $s0 = str_replace('%c',"COMPRAS", $select);
+        $s0 = str_replace('%d',"D", $s0);
+        $union0 = DB::table('depositos')
+            ->select(DB::raw($s0))
+            ->join('conceptos','depositos.concepto_id','=','conceptos.id')
+            ->where('empresa_id', session('empresa')->id)
+            ->whereIn('concepto_id', [1,2,3,11,12])
+            ->whereDate('fecha','>=', $data['fecha_d'])
+            ->whereDate('fecha','<=', $data['fecha_h'])
+            ->groupBy('concepto','dh');
+
+        $s1 = str_replace('%c',"AMP./CAPITAL", $select);
+        $s1 = str_replace('%d',"D", $s1);
+        $union1 = DB::table('depositos')
+            ->select(DB::raw($s1))
+            ->join('conceptos','depositos.concepto_id','=','conceptos.id')
+            ->where('empresa_id', session('empresa')->id)
+            ->whereIn('concepto_id', [13,14])
+            ->whereDate('fecha','>=', $data['fecha_d'])
+            ->whereDate('fecha','<=', $data['fecha_h'])
+            ->groupBy('concepto','dh');
+
+        $s1 = str_replace('%c',"AMPLIACIONES", $select);
+        $s1 = str_replace('%d',"H", $s1);
+        $union2 = DB::table('depositos')
+            ->select(DB::raw($s1))
+            ->join('conceptos','depositos.concepto_id','=','conceptos.id')
+            ->where('empresa_id', session('empresa')->id)
+            ->whereIn('concepto_id', [4,5])
+            ->whereDate('fecha','>=', $data['fecha_d'])
+            ->whereDate('fecha','<=', $data['fecha_h'])
+            ->groupBy('concepto','dh');
+
+        $s1 = str_replace('%c',"A CUENTA", $select);
+        $s1 = str_replace('%d',"H", $s1);
+        $union3 = DB::table('depositos')
+            ->select(DB::raw($s1))
+            ->join('conceptos','depositos.concepto_id','=','conceptos.id')
+            ->where('empresa_id', session('empresa')->id)
+            ->whereIn('concepto_id', [6,7])
+            ->whereDate('fecha','>=', $data['fecha_d'])
+            ->whereDate('fecha','<=', $data['fecha_h'])
+            ->groupBy('concepto','dh');
+
+        $s1 = str_replace('%c',"RECUPERACIONES", $select);
+        $s1 = str_replace('%d',"H", $s1);
+        $union4 = DB::table('depositos')
+            ->select(DB::raw($s1))
+            ->join('conceptos','depositos.concepto_id','=','conceptos.id')
+            ->where('empresa_id', session('empresa')->id)
+            ->whereIn('concepto_id', [8,9])
+            ->whereDate('fecha','>=', $data['fecha_d'])
+            ->whereDate('fecha','<=', $data['fecha_h'])
+            ->groupBy('concepto','dh');
+
+        $s1 = str_replace('%c',"VENTAS REBU", $select);
+        $s1 = str_replace('%d',"H", $s1);
+        $union5 = DB::table('cobros')
+                ->select(DB::raw($s1))
+                ->join('albaranes','albaranes.id','=','cobros.albaran_id')
+                ->join('fpagos','cobros.fpago_id','=','fpagos.id')
+                ->where('albaranes.empresa_id', session('empresa')->id)
+                ->where('albaranes.tipo_id', 3)
+                ->whereDate('cobros.fecha','>=', $data['fecha_d'])
+                ->whereDate('cobros.fecha','<=', $data['fecha_h'])
+                ->whereNull('albaranes.deleted_at')
+                ->groupBy('concepto','dh');
+
+        $s1 = str_replace('%c',"VENTAS", $select);
+        $s1 = str_replace('%d',"H", $s1);
+        $union6 = DB::table('cobros')
+                ->select(DB::raw($s1))
+                ->join('albaranes','albaranes.id','=','cobros.albaran_id')
+                ->join('fpagos','cobros.fpago_id','=','fpagos.id')
+                ->where('albaranes.empresa_id', session('empresa')->id)
+                ->where('albaranes.tipo_id', 4)
+                ->whereDate('cobros.fecha','>=', $data['fecha_d'])
+                ->whereDate('cobros.fecha','<=', $data['fecha_h'])
+                ->whereNull('albaranes.deleted_at')
+                ->groupBy('concepto','dh')
+                ->union($union0)
+                ->union($union1)
+                ->union($union2)
+                ->union($union3)
+                ->union($union4)
+                ->union($union5)
+                ->orderBy('importe','desc')
+                ->get();
+
+        return $union6;
+    }
+
+     /**
+     * Recibe las facturas por request, previamente de $this->lisfac()
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function excel(Request $request){
+
+        return Excel::download(new SituacionExport($request->data, 'Resumen '.session('empresa')->razon), 'resumen.xlsx');
+
+    }
+}

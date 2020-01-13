@@ -1,0 +1,60 @@
+
+select referencia from klt_productos where empresa_id = 3 and substr(referencia,1,2)="EO" and estado_id=2
+
+
+SELECT klt_compras.id,albaran,fecha_compra,concepto
+FROM klt_compras
+join klt_comlines on klt_compras.id = klt_comlines.compra_id
+where klt_compras.empresa_id = 1 and fase_id =7 and year(fecha_liquidado)=2018
+and concepto like '%cadena%' and clase_id=1 and compra_id not in (SELECT compra_id from klt_productos WHERE empresa_id = 1)
+
+
+$user = \App\User::where('id',2)->first()
+$user->password = Hash::make('123456');
+$user->save()
+
+1. Verificar permiso (quien puede reabrir un lote cuando hay movimientos en depósitos, más de uno claro.)
+2. Liquidar intereses vale,supervisor, pero para recuperar o a cuenta administrador??
+3. En trimestres, selección anual??
+4. Revisar campos por defecto en productos al crear tarifa taller1-
+5. revisar vuelta al editar producto, no guarda orden anterior
+6. Revisar cambiar p coste cuando es taller, no lo es y tal
+7. Revisar calendario fechas en estadísticas
+
+
+select empresa,clase,quilates,sum(importe),sum(peso_gr) from
+((select klt_empresas.nombre AS empresa,klt_clases.nombre AS clase, klt_productos.quilates AS quilates,SUM(klt_productos.precio_venta * -1) AS importe,SUM(klt_productos.peso_gr * -1) AS peso_gr from `klt_productos` inner join `klt_empresas` on `klt_productos`.`empresa_id` = `klt_empresas`.`id` inner join `klt_clases` on `klt_productos`.`clase_id` = `klt_clases`.`id` where `klt_productos`.`empresa_id` in (1, 1, 2, 3, 4, 5, 6, 7) and date(`klt_productos`.`created_at`) >= "2019-12-01" and date(`klt_productos`.`created_at`) <= "2019-12-20" and `compra_id` > 0 and `klt_productos`.`deleted_at` is null group by empresa,clase,quilates ) union all (select klt_empresas.nombre AS empresa,klt_clases.nombre AS clase, klt_comlines.quilates AS quilates,SUM(klt_comlines.importe) AS importe,SUM(klt_comlines.peso_gr) AS peso_gr from `klt_compras` inner join `klt_empresas` on `klt_compras`.`empresa_id` = `klt_empresas`.`id` inner join `klt_comlines` on `klt_compras`.`id` = `compra_id` inner join `klt_clases` on `klt_comlines`.`clase_id` = `klt_clases`.`id` where `klt_compras`.`empresa_id` in (1, 1, 2, 3, 4, 5, 6, 7) and date(`fecha_liquidado`) >= "2019-12-01" and date(`fecha_liquidado`) <= "2019-12-20" group by empresa,clase,quilates )) t
+group by empresa,clase,quilates with rollup
+
+10. Permisos
+11. Procedencia empresa para taller
+12. Albarán Express.
+
+
+
+SELECT cliente, count(*)
+FROM albaranes,clientes
+WHERE empresa in (1,12) And comven="C" and estado=4 and tipo=1 AND
+albaranes.cliente = clientes.id
+GROUP BY 1
+having count(*) > 1
+ORDER BY 2 DESC
+
+qtX93q6rZtgF3
+
+GDPORLIER.
+
+Recuperar a coste.
+Reemcompras de hace mil años.
+Bloqueos 50298782J
+
+Excepción mensaje en libropol, desde eva arenal.
+
+
+
+update klt_comlines set empresa_id = 7 where compra_id in (select id from klt_compras where empresa_id = 1 and tipo_id = 1 and fase_id = 4);
+update klt_depositos set empresa_id = 7 where compra_id in (select id from klt_compras where empresa_id = 1 and tipo_id = 1 and fase_id = 4);
+update klt_compras set empresa_id = 7,serie_com="Z" where empresa_id = 1 and tipo_id = 1 and fase_id = 4
+
+// desfase en fase.
+SELECT * FROM `klt_compras` WHERE tipo_id = 2 and fase_id = 4 and id in (select compra_id from klt_comlines where fecha_liquidado is not null)
