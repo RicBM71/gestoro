@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Mto;
 
 use App\Caja;
+use App\Apunte;
 use Carbon\Carbon;
 use App\Exports\CajaExport;
 use Illuminate\Http\Request;
@@ -47,11 +48,12 @@ class CajasController extends Controller
     {
 
         $data = $request->validate([
-            'quefecha' => ['string','required'],
+            'quefecha'  => ['string','required'],
             'fecha_d'   => ['string','required',new RangoFechaRule($request->fecha_d, $request->fecha_h)],
-            'fecha_h' => ['string','required', new MaxDiasRangoFechaRule($request->fecha_d, $request->fecha_h)],
-            'dh' => ['string','required'],
-            'manual' => ['string','required'],
+            'fecha_h'   => ['string','required', new MaxDiasRangoFechaRule($request->fecha_d, $request->fecha_h)],
+            'dh'        => ['string','required'],
+            'apunte_id' => ['nullable','integer'],
+          //  'manual' => ['string','required'],
         ]);
 
         session(['filtro_caj' => $data]);
@@ -73,7 +75,8 @@ class CajasController extends Controller
         return [
             'caja' => Caja::rangoFechas($data['fecha_d'],$data['fecha_h'])
                         ->dh($data['dh'])
-                        ->manual($data['manual'])
+                        // ->manual($data['manual'])
+                        ->apunte($data['apunte_id'])
                         ->orderby('fecha')
                         ->get()
                         ->take(500),
@@ -98,6 +101,7 @@ class CajasController extends Controller
             'dh'=> ['required','string'],
             'deposito_id'=> ['nullable','integer'],
             'cobro_id'=> ['nullable','integer'],
+            'apunte_id'=> ['nullable','integer'],
         ]);
 
         $data['empresa_id'] =  session()->get('empresa')->id;
@@ -122,7 +126,7 @@ class CajasController extends Controller
     {
         if (request()->wantsJson())
             return [
-
+                'apuntes' => Apunte::selApuntesUser()
             ];
 
     }
@@ -141,6 +145,7 @@ class CajasController extends Controller
             return [
                 'caja' =>$caja,
                 'saldo'=>getCurrency(Caja::saldo($caja->fecha)),
+                'apuntes' => Apunte::selApuntesUser()
             ];
     }
 
@@ -160,6 +165,7 @@ class CajasController extends Controller
             'importe' => ['required','numeric'],
             'fecha'=> ['required','date'],
             'dh'=> ['required','string'],
+            'apunte_id'=> ['nullable','integer','min:4'],
         ]);
 
         $data['empresa_id'] = session()->get('empresa')->id;

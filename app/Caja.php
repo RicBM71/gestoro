@@ -11,7 +11,7 @@ class Caja extends Model
 {
     protected $fillable = [
         'empresa_id', 'fecha', 'dh', 'nombre', 'importe', 'manual','deposito_id', 'cobro_id',
-        'username'
+        'username','apunte_id'
     ];
 
     /**
@@ -56,6 +56,16 @@ class Caja extends Model
         return $query;
 
     }
+
+    public function scopeApunte($query, $apunte_id){
+
+        if ($apunte_id <> '')
+            $query->where('apunte_id',$apunte_id);
+
+        return $query;
+
+    }
+
 
     public static function saldo($fecha){
 

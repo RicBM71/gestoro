@@ -1,5 +1,6 @@
 <?php
 
+use App\Clase;
 use App\Producto;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -25,6 +26,71 @@ class YjProductosSeeder extends Seeder
         $etiqueta['D']=6; // ya impresa con pvp
 
         Producto::truncate();
+        Clase::truncate();
+
+
+        $clase = new Clase;
+
+        $clase->nombre = "Oro";
+        $clase->grupo_id = 1;
+        $clase->peso = true;
+        $clase->quilates = true;
+
+        $clase->save();
+
+        $clase = new Clase;
+        $clase->nombre = "Plata";
+        $clase->grupo_id = 1;
+        $clase->peso = true;
+        $clase->quilates = false;
+        $clase->save();
+
+        $clase = new Clase;
+        $clase->nombre = "Platino";
+        $clase->grupo_id = 1;
+        $clase->peso = true;
+        $clase->quilates = false;
+        $clase->save();
+
+        $clase = new Clase;
+        $clase->nombre = "Piedras Preciosas";
+        $clase->grupo_id = 1;
+        $clase->peso = true;
+        $clase->quilates = true;
+        $clase->save();
+
+        $clase = new Clase;
+        $clase->nombre = "Otros";
+        $clase->grupo_id = 1;
+        $clase->peso = false;
+        $clase->quilates = false;
+        $clase->save();
+
+        $clase = new Clase;
+        $clase->nombre = "Bisutería";
+        $clase->grupo_id = 2;  //B
+        $clase->peso = false;
+        $clase->quilates = false;
+        $clase->save();
+
+        $clase = new Clase;
+        $clase->nombre = "Complementos";
+        $clase->grupo_id = 2;  //C
+        $clase->peso = false;
+        $clase->quilates = false;
+        $clase->save();
+
+        $clase = new Clase;
+        $clase->nombre = "Otros";
+        $clase->grupo_id = 2;
+        $clase->peso = false;
+        $clase->quilates = false;
+        $clase->save();
+
+
+
+
+
 
         /// depósitos
         $reg = DB::connection($this->bbdd)

@@ -90,6 +90,7 @@ Route::group([
         Route::resource('garantias', 'GarantiasController', ['as' => 'mto']);
         Route::resource('talleres', 'TalleresController', ['as' => 'mto']);
         Route::resource('cajas', 'CajasController', ['as' => 'mto']);
+        Route::resource('apuntes', 'ApuntesController', ['as' => 'mto']);
 
         Route::resource('motivos', 'MotivosController', ['as' => 'mto']);
         Route::post('cajas/filtrar', 'CajasController@filtrar');
@@ -227,6 +228,7 @@ Route::group([
         Route::get('helpfiltroalb', 'HelpFiltroAlbController@index');
         Route::post('helptaller/ventas', 'HelpTalleresController@ventas');
         Route::put('reacli', 'ReasignarClienteController@reasignar');
+        Route::get('helpapuntes', 'HelpApuntesController@index');
      //   Route::get('helpbanco', 'HelpBancosController@index');
     }
 );

@@ -218,12 +218,13 @@ export default {
             text: 'Administración',
             model: false,
             children: [
-                { text: 'Usuarios', name: 'users.index' },
-                { text: 'Empresas', name: 'empresa.index' },
-                { text: 'Ubicaciones', name: 'almacen.index' },
-                { text: 'Libros', name: 'libro.index' },
-                { text: 'Contadores', name: 'contador.index' },
-                { text: 'Cuentas IBAN', name: 'cuenta.index' },
+                { icon: 'supervised_user_circle', text: 'Usuarios', name: 'users.index' },
+                { icon: 'outlined_flag', text: 'Apuntes', name: 'apunte.index' },
+                { icon: 'language', text: 'Empresas', name: 'empresa.index' },
+                { icon: 'event_seat', text: 'Ubicaciones', name: 'almacen.index' },
+                { icon: 'book', text: 'Libros', name: 'libro.index' },
+                { icon: 'alarm', text: 'Contadores', name: 'contador.index' },
+                { icon: 'account_balance', text: 'Cuentas IBAN', name: 'cuenta.index' },
             ]
         },
 
@@ -237,7 +238,6 @@ export default {
                 { icon: 'lock', text: 'Facturar Albaranes', name:'facturacion.albaranes' },
                 { text: 'Reubicar Albaranes', name: 'reubicar', icon: 'shuffle'},
                 { icon: 'fireplace', text: 'Liquidar Lotes', name:'liquidar.index' },
-
             ]
         },
 

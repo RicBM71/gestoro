@@ -6,6 +6,7 @@ use App\Clase;
 use App\Fpago;
 use App\Grupo;
 use App\Libro;
+use App\Apunte;
 use App\Estado;
 use App\Motivo;
 use App\Taller;
@@ -335,6 +336,27 @@ class GenericasSeeder extends Seeder
         $taller->nombre = "Taller 1";
         $taller->razon = "Taller 1";
         $taller->save();
+
+
+        $apunte = new Apunte;
+        $apunte->nombre = "Origen Compra";
+        $apunte->fijo = true;
+        $apunte->save();
+
+        $apunte = new Apunte;
+        $apunte->nombre = "Origen Venta";
+        $apunte->fijo = true;
+        $apunte->save();
+
+        $apunte = new Apunte;
+        $apunte->nombre = "Cierre";
+        $apunte->fijo = true;
+        $apunte->save();
+
+        // $apunte = new Apunte;
+        // $apunte->nombre = "Compra";
+        // $apunte->fijo = true;
+        // $apunte->save();
 
 
     }

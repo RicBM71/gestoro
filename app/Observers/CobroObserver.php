@@ -106,6 +106,7 @@ class CobroObserver
             'manual'=> 'N',
             'cobro_id' => $cobro->id,
             'deposito_id' => null,
+            'apunte_id'=> 2,
             'username' => $cobro->username
         ];
 

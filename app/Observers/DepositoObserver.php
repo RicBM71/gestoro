@@ -50,6 +50,7 @@ class DepositoObserver
             'manual'=> 'N',
             'deposito_id' => $deposito->id,
             'cobro_id' => null,
+            'apunte_id'=> 1,
             'username' => $deposito->username
         ];
 

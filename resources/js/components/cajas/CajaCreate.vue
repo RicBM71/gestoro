@@ -58,6 +58,16 @@
                             required
                             ></v-select>
                         </v-flex>
+                         <v-flex sm2 d-flex>
+                            <v-select
+                            v-model="caja.apunte_id"
+                            :error-messages="errors.collect('apunte_id')"
+                            data-vv-name="apunte_id"
+                            data-vv-as="apunte_id"
+                            :items="apuntes"
+                            label="Apunte"
+                            ></v-select>
+                        </v-flex>
                      </v-layout>
                     <v-layout row wrap>
                         <v-flex sm1></v-flex>
@@ -127,7 +137,8 @@ import {mapGetters} from 'vuex';
                     nombre: '',
                     manual: 'S',
                     deposito_id:null,
-                    cobro_id: null
+                    cobro_id: null,
+                    apunte_id: null
                 },
                 url: "/mto/cajas",
                 ruta: "caja",
@@ -141,19 +152,23 @@ import {mapGetters} from 'vuex';
 
                 show: false,
                 show_loading: true,
+                apuntes:[]
       		}
         },
         mounted(){
              this.show_loading = false;
-            // axios.get(this.url+'/create')
-            //     .then(res => {
-            //         this.show = true;
-            //         this.show_loading = false;
-            //     })
-            //     .catch(err => {
-            //         this.$toast.error(err.response.data.message);
-            //         this.$router.push({ name: this.ruta+'.index'})
-            //     })
+            axios.get(this.url+'/create')
+                .then(res => {
+
+                    this.apuntes = res.data.apuntes;
+                    this.apuntes.push({value: null, text: '-'});
+                    this.show = true;
+                    this.show_loading = false;
+                })
+                .catch(err => {
+                    this.$toast.error(err.response.data.message);
+                    this.$router.push({ name: this.ruta+'.index'})
+                })
         },
         computed: {
          ...mapGetters([

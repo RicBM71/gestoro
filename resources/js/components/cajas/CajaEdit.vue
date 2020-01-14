@@ -58,7 +58,18 @@
                             required
                             ></v-select>
                         </v-flex>
-                        <v-flex sm4></v-flex>
+                        <v-flex v-if="caja.manual" sm4 d-flex>
+                            <v-select
+                                v-model="caja.apunte_id"
+                                :error-messages="errors.collect('apunte_id')"
+                                data-vv-name="apunte_id"
+                                data-vv-as="apunte_id"
+                                :items="apuntes"
+                                :disabled="caja.apunte_id <= 3"
+                                label="Apunte"
+                            ></v-select>
+                        </v-flex>
+                        <v-flex v-else sm4></v-flex>
                         <v-flex sm2>
                             <v-text-field
                                 v-model="saldo"
@@ -172,6 +183,7 @@ import {mapGetters} from 'vuex';
 
                 show: false,
                 show_loading: true,
+                apuntes: []
       		}
         },
         mounted(){
@@ -183,6 +195,8 @@ import {mapGetters} from 'vuex';
 
                         this.caja = res.data.caja;
                         this.saldo = res.data.saldo;
+                        this.apuntes = res.data.apuntes;
+                        this.apuntes.push({value: null, text: '-'});
 
                         this.show = true;
                         this.show_loading = false;
@@ -224,6 +238,7 @@ import {mapGetters} from 'vuex';
                                     this.$toast.success(res.data.message);
                                     this.caja = res.data.caja;
                                     this.loading = false;
+                                    this.$validator.reset();
                                 })
                                 .catch(err => {
 
@@ -241,6 +256,9 @@ import {mapGetters} from 'vuex';
                                         this.$toast.error(err.response.data.message);
                                     }
                                     this.loading = false;
+                                })
+                                .finally(()=> {
+                                    this.show_loading = false;
                                 });
                             }
                         else{

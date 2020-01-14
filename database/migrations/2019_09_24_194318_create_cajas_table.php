@@ -23,6 +23,7 @@ class CreateCajasTable extends Migration
             $table->String('manual',1)->default('S');
             $table->unsignedInteger('deposito_id')->nullable()->index();
             $table->unsignedInteger('cobro_id')->nullable()->index();
+            $table->unsignedInteger('apunte_id')->nullable()->index();
             $table->string('username',30)->nullable();
             $table->timestamps();
         });

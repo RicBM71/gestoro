@@ -84,7 +84,8 @@
                                     <td :class="colorear(props.item.dh)">{{ props.item.dh }}</td>
                                     <td :class="colorear(props.item.dh)">{{ props.item.nombre }}</td>
                                     <td :class="colorear(props.item.dh, true)">{{ props.item.importe | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
-                                    <td :class="colorear(props.item.dh)">{{ props.item.username }}</td>
+                                    <td :class="colorear(props.item.dh)">{{ props.item.username+" "+formatDateUpdated(props.item.updated_at) }}</td>
+
                                     <td class="justify-center layout px-0">
                                         <v-icon
                                             v-if="puedeEditar(props.item)"
@@ -95,7 +96,7 @@
                                             edit
                                         </v-icon>
                                         <v-icon
-                                            v-show="props.item.manual != 'N' && isAdmin"
+                                            v-show="puedeBorrar(props.item)"
                                             small
                                             @click="openDialog(props.item.id)"
                                         >
@@ -186,7 +187,7 @@ import {mapActions} from "vuex";
                 text: 'Usuario',
                 align: 'left',
                 value: 'username',
-                width: '2%'
+                width: '15%'
             },
             {
                 text: 'Acciones',
@@ -259,14 +260,28 @@ import {mapActions} from "vuex";
             moment.locale('es');
             return moment(f).format('DD/MM/YYYY');
         },
+        formatDateUpdated(f){
+
+            if (f == null) return null;
+            moment.locale('es');
+            return moment(f).format('DD/MM/YYYY HH:MM');
+        },
         puedeEditar(item){
 
-            if (item.manual != 'S') return false;
+            if (item.manual != 'S' || item.apunte_id == 3) return false;
 
             if (this.isSuprevisor || this.isAdmin)
                 return true;
 
             return (this.userName == item.username && this.formatDate(item.created_at) == this.formatDate(new Date()));
+
+        },
+        puedeBorrar(item){
+            if (item.apunte_id == 3){ // es apunte de cierre
+                return (this.isSuprevisor || this.isAdmin)
+            }else{
+                return item.manual == "N";
+            }
 
         },
         updateEventPagina(obj){

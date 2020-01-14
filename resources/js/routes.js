@@ -98,6 +98,10 @@ import TallerIndex from './components/taller/TallerIndex.vue';
 import TallerEdit from './components/taller/TallerEdit.vue';
 import TallerCreate from './components/taller/TallerCreate.vue';
 
+import ApunteIndex from './components/apunte/ApunteIndex.vue';
+import ApunteEdit from './components/apunte/ApunteEdit.vue';
+import ApunteCreate from './components/apunte/ApunteCreate.vue';
+
 import Mod347 from './components/exportar/Mod347.vue';
 import Balance from './components/exportar/Balance.vue';
 import Operaciones from './components/exportar/Operaciones.vue';
@@ -486,6 +490,21 @@ export default [
                 path: '/garantias/:id/edit',
                 name: 'garantia.edit',
                 component: GarantiaEdit,
+            },
+            {
+                path: '/apuntes',
+                name: 'apunte.index',
+                component: ApunteIndex,
+            },
+            {
+                path: '/apuntes/create',
+                name: 'apunte.create',
+                component: ApunteCreate,
+            },
+            {
+                path: '/apuntes/:id/edit',
+                name: 'apunte.edit',
+                component: ApunteEdit,
             },
             {
                 path: '/exportar/mod347',

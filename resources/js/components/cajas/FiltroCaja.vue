@@ -74,7 +74,18 @@
                             required
                             ></v-select>
                     </v-flex>
-                    <v-flex sm2>
+                    <v-flex sm3>
+                        <v-select
+                            v-model="apunte_id"
+                            v-validate="'numeric'"
+                            data-vv-name="apunte_id"
+                            data-vv-as="apunte"
+                            :error-messages="errors.collect('apunte_id')"
+                            :items="apuntes"
+                            label="Apunte"
+                            ></v-select>
+                    </v-flex>
+                    <!-- <v-flex sm2>
                         <v-select
                             v-model="manual"
                             v-validate="'required'"
@@ -85,10 +96,10 @@
                             label="Tipo Apunte"
                             required
                             ></v-select>
-                    </v-flex>
+                    </v-flex> -->
                     <v-spacer></v-spacer>
                     <v-flex sm2>
-                        <v-btn @click="submit"  :loading="loading" round  block  color="info">
+                        <v-btn small flat @click="submit"  :loading="loading" round  block  color="info">
                             Filtrar
                         </v-btn>
                     </v-flex>
@@ -128,13 +139,26 @@ export default {
             manual:'T',
             menu_h: false,
             menu_d: false,
+            apunte_id:  null,
             label:"",
             fecha_d: new Date().toISOString().substr(0, 7)+"-01",
             fecha_h: new Date().toISOString().substr(0, 10),
+            apuntes:[],
       }
     },
-    mounted(){
+    beforeMount(){
 
+        axios.get('/utilidades/helpapuntes')
+            .then(res => {
+                this.apuntes = res.data;
+                this.apuntes.push({value: null, text: '-'});
+
+            })
+            .catch(err =>{
+
+                this.$toast.error(err.response.data.message);
+                this.$router.push({ name: 'dash' })
+            })
 
     },
     computed: {
@@ -160,7 +184,8 @@ export default {
                                 fecha_d: this.fecha_d,
                                 fecha_h: this.fecha_h,
                                 dh: this.dh,
-                                manual: this.manual
+                                manual: this.manual,
+                                apunte_id: this.apunte_id
                             }
                         )
                         .then(res => {
