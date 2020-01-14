@@ -95,16 +95,21 @@ class LiquidarController extends Controller
 
         $compra = Compra::with(['cliente','grupo','tipo','fase'])->findOrFail($id);
 
+        // TODO: Esto lo dejo por lotes traspasados de empresa EvaOro a Sol, lo debería quitar.
         $libro = Libro::where('grupo_id', $compra->grupo_id)
-                    ->where('ejercicio', getEjercicio($compra->fecha_compra))
-                    ->firstOrFail();
+                        ->where('ejercicio', date('Y'))
+                        ->firstOrFail();
+        // $libro = Libro::withoutGlobalScope(EmpresaScope::class)
+        //             ->where('grupo_id', $compra->grupo_id)
+        //             ->where('ejercicio', getEjercicio($compra->fecha_compra))
+        //             ->firstOrFail();
 
         if (request()->wantsJson())
             return [
-                'compra' => $compra,
-                'lineas' => Comline::with('clase')->CompraId($compra->id)->get(),
-                'productos'=> Producto::withoutGlobalScope(EmpresaScope::class)->with('clase')->compraId($compra->id)->get(),
-                'grabaciones'       => $libro->grabaciones,
+                'compra'      => $compra,
+                'lineas'      => Comline::with('clase')->CompraId($compra->id)->get(),
+                'productos'   => Producto::withoutGlobalScope(EmpresaScope::class)->with('clase')->compraId($compra->id)->get(),
+                'grabaciones' => $libro->grabaciones,
             ];
     }
 
@@ -119,9 +124,9 @@ class LiquidarController extends Controller
 
 
         $data = $request->validate([
-            'fecha' => ['required','date'],
-            'compra_id'=> ['required','integer'],
-            'lineas'=> ['array']
+            'fecha'     => ['required','date'],
+            'compra_id' => ['required','integer'],
+            'lineas'    => ['array']
         ]);
 
         foreach ($data['lineas'] as $comline_id) {

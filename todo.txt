@@ -51,7 +51,7 @@ Bloqueos 50298782J
 Excepción mensaje en libropol, desde eva arenal.
 
 
-
+pasar compras eva arenal a sol.
 update klt_comlines set empresa_id = 7 where compra_id in (select id from klt_compras where empresa_id = 1 and tipo_id = 1 and fase_id = 4);
 update klt_depositos set empresa_id = 7 where compra_id in (select id from klt_compras where empresa_id = 1 and tipo_id = 1 and fase_id = 4);
 update klt_compras set empresa_id = 7,serie_com="Z" where empresa_id = 1 and tipo_id = 1 and fase_id = 4

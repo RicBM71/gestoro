@@ -50,6 +50,10 @@ class EoCajaSeeder extends Seeder
                 $manual = "N";
                 $apunte_id = 21;
             }
+            elseif (strpos($concepto, 'Cierre')!==false){
+                $manual = "S";
+                $apunte_id = 30;
+            }
             else{
                 $manual = $row->manual == 'S' ? 'S' : 'N';
                 $apunte_id = null;

@@ -145,7 +145,7 @@ class ConceptosTableSeeder extends Seeder
         $apunte = new Apunte; //
         $apunte->id=30;
         $apunte->nombre = "Cierre";
-        $apunte->color = 'green--text darken 4';
+        $apunte->color = 'grey--text darken 4';
         $apunte->save();
 
 
