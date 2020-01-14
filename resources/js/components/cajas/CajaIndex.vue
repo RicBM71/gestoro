@@ -11,6 +11,19 @@
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on }">
                             <v-btn
+                                v-on="on"
+                                color="white"
+                                icon
+                                @click="filtro = !filtro"
+                            >
+                                <v-icon color="primary">filter_list</v-icon>
+                            </v-btn>
+                        </template>
+                        <span>Filtros</span>
+                    </v-tooltip>
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                            <v-btn
                                 v-if="arr_reg.length > 0 && isAdmin"
                                 v-on="on"
                                 color="white"
@@ -24,19 +37,7 @@
                         </template>
                         <span>Exportar a Excel</span>
                     </v-tooltip>
-                    <v-tooltip bottom>
-                            <template v-slot:activator="{ on }">
-                                <v-btn
-                                    v-on="on"
-                                    color="white"
-                                    icon
-                                    @click="filtro = !filtro"
-                                >
-                                    <v-icon color="primary">filter_list</v-icon>
-                                </v-btn>
-                            </template>
-                            <span>Filtros</span>
-                        </v-tooltip>
+
                     <menu-ope></menu-ope>
                 </v-card-title>
             </v-card>
@@ -75,18 +76,28 @@
                             :headers="headers"
                             :items="arr_reg"
                             :search="search"
+                            :expand="expand"
                             @update:pagination="updateEventPagina"
                             :pagination.sync="pagination"
                             rows-per-page-text="Registros por página"
                             >
                                 <template slot="items" slot-scope="props">
-                                    <td :class="colorear(props.item.dh)">{{ formatDate(props.item.fecha) }}</td>
-                                    <td :class="colorear(props.item.dh)">{{ props.item.dh }}</td>
-                                    <td :class="colorear(props.item.dh)">{{ props.item.nombre }}</td>
-                                    <td :class="colorear(props.item.dh, true)">{{ props.item.importe | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
-                                    <td :class="colorear(props.item.dh)">{{ props.item.username+" "+formatDateUpdated(props.item.updated_at) }}</td>
+                                    <td :class="colorear(props.item)">{{ formatDate(props.item.fecha) }}</td>
+                                    <td :class="colorear(props.item)">{{ props.item.dh }}</td>
+                                    <td :class="colorear(props.item)">{{ props.item.nombre }}</td>
+                                    <td :class="colorear(props.item, true)">{{ props.item.importe | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                    <td :class="colorear(props.item)">{{ props.item.username+" "+formatDateUpdated(props.item.updated_at) }}</td>
 
                                     <td class="justify-center layout px-0">
+                                         <v-icon
+                                                v-show="props.item.apunte_id >= 1"
+                                                small
+                                                class="mr-2"
+                                                @click="props.expanded = !props.expanded"
+                                            >
+                                                visibility
+                                        </v-icon>
+
                                         <v-icon
                                             v-if="puedeEditar(props.item)"
                                             small
@@ -95,6 +106,7 @@
                                         >
                                             edit
                                         </v-icon>
+
                                         <v-icon
                                             v-show="puedeBorrar(props.item)"
                                             small
@@ -102,6 +114,7 @@
                                         >
                                         delete
                                         </v-icon>
+
                                         <v-icon
                                             v-show="props.item.deposito_id > 0"
                                             small
@@ -109,6 +122,7 @@
                                         >
                                         shopping_cart
                                         </v-icon>
+
                                         <v-icon
                                             v-show="props.item.cobro_id > 0"
                                             small
@@ -117,6 +131,13 @@
                                         credit_card
                                         </v-icon>
                                     </td>
+                                </template>
+                                <template v-slot:expand="props">
+                                    <v-card flat v-if="props.item.apunte_id >= 1">
+                                        <v-card-text class="font-italic">
+                                            {{ props.item.apunte.nombre }}
+                                        </v-card-text>
+                                    </v-card>
                                 </template>
                                 <template slot="pageText" slot-scope="props">
                                     Registros {{ props.pageStart }} - {{ props.pageStop }} de {{ props.itemsLength }}
@@ -149,6 +170,7 @@ import {mapActions} from "vuex";
     },
     data () {
       return {
+        expand: false,
         titulo: "Apuntes de caja",
         paginaActual:{},
         pagination:{
@@ -249,10 +271,17 @@ import {mapActions} from "vuex";
             'setPagination',
             'unsetPagination'
         ]),
-        colorear(dh, ali=false){
+        colorear(item, ali=false){
             var a = ali ? 'text-xs-right' : '';
 
-            return dh == 'D' ? a+' red--text accent-4' : a+' indigo--text accent-4';
+            if (item.apunte_id > 0){
+                if (item.apunte.color != null)
+                    return a+' '+item.apunte.color;
+                else
+                    return item.dh == 'D' ? a+' red--text accent-4' : a+' indigo--text accent-4';
+            }
+            else
+                return item.dh == 'D' ? a+' red--text accent-4' : a+' indigo--text accent-4';
         },
         formatDate(f){
 
@@ -268,7 +297,7 @@ import {mapActions} from "vuex";
         },
         puedeEditar(item){
 
-            if (item.manual != 'S' || item.apunte_id == 3) return false;
+            if (item.manual != 'S' || item.apunte_id == 30) return false;
 
             if (this.isSuprevisor || this.isAdmin)
                 return true;
@@ -277,7 +306,7 @@ import {mapActions} from "vuex";
 
         },
         puedeBorrar(item){
-            if (item.apunte_id == 3){ // es apunte de cierre
+            if (item.apunte_id == 30){ // es apunte de cierre
                 return (this.isSuprevisor || this.isAdmin)
             }else{
                 return item.manual == "N";

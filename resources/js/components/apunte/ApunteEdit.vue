@@ -27,6 +27,18 @@
                             >
                             </v-text-field>
                         </v-flex>
+                         <v-flex sm3>
+                            <v-text-field
+                                v-model="apunte.color"
+                                v-validate="'required'"
+                                :error-messages="errors.collect('color')"
+                                label="Color"
+                                data-vv-name="color"
+                                data-vv-as="color"
+                                v-on:keyup.enter="submit"
+                            >
+                            </v-text-field>
+                        </v-flex>
                     </v-layout>
                     <v-layout row wrap>
                         <v-flex sm1></v-flex>

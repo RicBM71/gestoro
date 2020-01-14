@@ -338,20 +338,20 @@ class GenericasSeeder extends Seeder
         $taller->save();
 
 
-        $apunte = new Apunte;
-        $apunte->nombre = "Origen Compra";
-        $apunte->fijo = true;
-        $apunte->save();
+        // $apunte = new Apunte;
+        // $apunte->nombre = "Origen Compra";
+        // $apunte->fijo = true;
+        // $apunte->save();
 
-        $apunte = new Apunte;
-        $apunte->nombre = "Origen Venta";
-        $apunte->fijo = true;
-        $apunte->save();
+        // $apunte = new Apunte;
+        // $apunte->nombre = "Origen Venta";
+        // $apunte->fijo = true;
+        // $apunte->save();
 
-        $apunte = new Apunte;
-        $apunte->nombre = "Cierre";
-        $apunte->fijo = true;
-        $apunte->save();
+        // $apunte = new Apunte;
+        // $apunte->nombre = "Cierre";
+        // $apunte->fijo = true;
+        // $apunte->save();
 
         // $apunte = new Apunte;
         // $apunte->nombre = "Compra";

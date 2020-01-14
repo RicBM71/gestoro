@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Apunte extends Model
 {
     protected $fillable = [
-        'nombre', 'username'
+        'nombre', 'username', 'color'
     ];
 
       /**
@@ -28,14 +28,15 @@ class Apunte extends Model
     {
 
         return Apunte::select('id AS value', 'nombre AS text')
-            ->where('fijo', false)
+            ->where('id', '>', 30)
             ->orderBy('nombre', 'asc')
             ->get();
     }
 
+
     public static function scopeLibres($query){
 
-        return $query->where('fijo','false');
+        return $query->where('id', '>', 30);
 
     }
 

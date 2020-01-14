@@ -29,7 +29,8 @@ class CajasController extends Controller
                 $hoy = Carbon::now()->format('Y-m-d');
 
                 return [
-                    'caja'  => Caja::orderBy('fecha','desc')
+                    'caja'  => Caja::with('apunte')
+                                        ->orderBy('fecha','desc')
                                         ->where('fecha','=',$hoy)
                                         ->get(),
                     'fecha_saldo'=> getFecha($hoy),
@@ -73,7 +74,8 @@ class CajasController extends Controller
         $data = session('filtro_caj');
 
         return [
-            'caja' => Caja::rangoFechas($data['fecha_d'],$data['fecha_h'])
+            'caja' => Caja::with('apunte')
+                        ->rangoFechas($data['fecha_d'],$data['fecha_h'])
                         ->dh($data['dh'])
                         // ->manual($data['manual'])
                         ->apunte($data['apunte_id'])
@@ -165,7 +167,7 @@ class CajasController extends Controller
             'importe' => ['required','numeric'],
             'fecha'=> ['required','date'],
             'dh'=> ['required','string'],
-            'apunte_id'=> ['nullable','integer','min:4'],
+            'apunte_id'=> ['nullable','integer','min:31'],
         ]);
 
         $data['empresa_id'] = session()->get('empresa')->id;

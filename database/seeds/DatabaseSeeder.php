@@ -37,18 +37,19 @@ class DatabaseSeeder extends Seeder
         // $this->call(KltAlbalinSeeder::class);
         // $this->call(KltCobrosSeeder::class);
 
-        // $this->call(EoEmpresasSeeder::class);
-        // $this->call(EoUsuariosSeeder::class);
-        // $this->call(EoLibrosSeeder::class);
-        // $this->call(EoContadoresSeeder::class);
-        // $this->call(EoClientesSeeder::class);
-        // $this->call(EoComprasSeeder::class);
-        // $this->call(EoComlinesSeeder::class);
-        // $this->call(EoDepositosSeeder::class);
-        // $this->call(EoProductosSeeder::class);
-        // $this->call(EoAlbaranesSeeder::class);
-        // $this->call(EoAlbalinSeeder::class);
-        // $this->call(EoCobrosSeeder::class);
+        $this->call(EoEmpresasSeeder::class);
+        $this->call(EoUsuariosSeeder::class);
+        $this->call(EoLibrosSeeder::class);
+        $this->call(EoContadoresSeeder::class);
+        $this->call(EoClientesSeeder::class);
+        $this->call(EoComprasSeeder::class);
+        $this->call(EoComlinesSeeder::class);
+        $this->call(EoDepositosSeeder::class);
+        $this->call(EoProductosSeeder::class);
+        $this->call(EoAlbaranesSeeder::class);
+        $this->call(EoAlbalinSeeder::class);
+        $this->call(EoCobrosSeeder::class);
+        $this->call(EoCajaSeeder::class);
 
         // $this->call(GdEmpresasSeeder::class);
         // $this->call(GdUsuariosSeeder::class);
@@ -63,18 +64,18 @@ class DatabaseSeeder extends Seeder
         // $this->call(GdAlbalinSeeder::class);
         // $this->call(GdCobrosSeeder::class);
 
-        $this->call(YjEmpresasSeeder::class);
-        $this->call(YjUsuariosSeeder::class);
-        $this->call(YjLibrosSeeder::class);
-        $this->call(YjContadoresSeeder::class);
-        $this->call(YjClientesSeeder::class);
-        $this->call(YjComlinesSeeder::class);
-        $this->call(YjComprasSeeder::class);
-        $this->call(YjDepositosSeeder::class);
-        $this->call(YjProductosSeeder::class);
-        $this->call(YjAlbaranesSeeder::class);
-        $this->call(YjAlbalinSeeder::class);
-        $this->call(YjCobrosSeeder::class);
+        // $this->call(YjEmpresasSeeder::class);
+        // $this->call(YjUsuariosSeeder::class);
+        // $this->call(YjLibrosSeeder::class);
+        // $this->call(YjContadoresSeeder::class);
+        // $this->call(YjClientesSeeder::class);
+        // $this->call(YjComlinesSeeder::class);
+        // $this->call(YjComprasSeeder::class);
+        // $this->call(YjDepositosSeeder::class);
+        // $this->call(YjProductosSeeder::class);
+        // $this->call(YjAlbaranesSeeder::class);
+        // $this->call(YjAlbalinSeeder::class);
+        // $this->call(YjCobrosSeeder::class);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

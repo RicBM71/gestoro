@@ -58,14 +58,14 @@
                             required
                             ></v-select>
                         </v-flex>
-                        <v-flex v-if="caja.manual" sm4 d-flex>
+                        <v-flex v-if="caja.manual=='S'" sm4 d-flex>
                             <v-select
                                 v-model="caja.apunte_id"
                                 :error-messages="errors.collect('apunte_id')"
                                 data-vv-name="apunte_id"
                                 data-vv-as="apunte_id"
                                 :items="apuntes"
-                                :disabled="caja.apunte_id <= 3"
+                                
                                 label="Apunte"
                             ></v-select>
                         </v-flex>

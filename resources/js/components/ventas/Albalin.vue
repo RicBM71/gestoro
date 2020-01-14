@@ -35,7 +35,7 @@
                                     class="mr-2"
                                     @click="props.expanded = !props.expanded"
                                 >
-                                    zoom_in
+                                    visibility
                                 </v-icon>
                                 <v-icon
                                     v-if="computedEdit"

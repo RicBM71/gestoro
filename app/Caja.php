@@ -26,6 +26,12 @@ class Caja extends Model
         static::addGlobalScope(new EmpresaScope);
     }
 
+    public function apunte()
+    {
+    	return ($this->belongsTo(Apunte::class));
+    }
+
+
     public function setImporteAttribute($value)
     {
         $this->attributes['importe'] = round($value,2);

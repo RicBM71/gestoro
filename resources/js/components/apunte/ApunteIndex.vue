@@ -39,6 +39,8 @@
                                         <td>{{ props.item.nombre }}</td>
                                         <td>{{ props.item.username }}</td>
                                         <td class="justify-center layout px-0">
+
+
                                             <v-icon
                                                 small
                                                 class="mr-2"

@@ -16,7 +16,7 @@ class CreateApuntesTable extends Migration
         Schema::create('apuntes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nombre');
-            $table->boolean('fijo')->default(false);
+            $table->string('color', 50)->nullable();
             $table->string('username',30)->nullable();
             $table->timestamps();
         });
