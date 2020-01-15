@@ -17,9 +17,12 @@ class CreateParametrosTable extends Migration
             $table->bigIncrements('id');
             $table->decimal('lim_efe', 10, 2)->default(2500);
             $table->decimal('lim_efe_nores', 10, 2)->default(15000);
-            $table->string('pie_rebu')->nullable();
+            $table->string('pie_rebu1')->nullable();
             $table->decimal('retencion', 6,2)->default(0);
             $table->boolean('online')->default(false);
+            $table->string('img1',100)->nullable();
+            $table->string('img2',100)->nullable();
+            $table->string('username',50)->nullable();
             $table->timestamps();
         });
     }

@@ -490,12 +490,12 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
             if (id > 0)
                 axios.get('/admin/empresas/'+id+'/edit')
                     .then(res => {
-                       
+
                         this.empresa = res.data.empresa;
 
                         this.almacenes = res.data.almacenes;
                         this.empresas = res.data.empresas;
-
+                        
                         // var a  = Array.from(this.empresa.flags);
 
                         // this.sw = a.map(function (x) {

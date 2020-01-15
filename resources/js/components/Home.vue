@@ -209,6 +209,7 @@ export default {
                 { text: 'Clases', name: 'clase.index' },
                 { text: 'Tipos de Iva', name: 'iva.index' },
                 { text: 'Motivos Devolución', name: 'motivo.index' },
+                { text: 'Parámetros', name: 'parametro.edit' },
             ]
         },
 
@@ -260,6 +261,8 @@ export default {
                 { icon: 'forward', text: 'Resumen por concepto', name:'exportar.situacion' },
                 { icon: 'forward', text: 'Resumen Contable', name:'exportar.resconta' },
                 { icon: 'forward', text: 'Detalle de compras', name:'exportar.detacom' },
+                { icon: 'forward', text: 'Detalle de ventas', name:'exportar.detaven' },
+                { icon: 'forward', text: 'Servicios Taller', name:'exportar.service' },
                 { icon: 'forward', text: 'Liquidados', name:'exportar.liquidados' },
                 { icon: 'forward', text: 'Inventario', name:'exportar.inventario' },
                 { icon: 'home_work', text: 'Ventas en depósito', name:'exportar.vendepo' },

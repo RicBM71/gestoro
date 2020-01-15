@@ -372,7 +372,7 @@ class PrintAlbController extends Controller
         PDF::Ln();
 
         PDF::SetFont('helvetica', 'RI', 9, '', false);
-        PDF::MultiCell(188, 6, session('parametros')->pie_rebu, '', 'L', 0, 1, '', '', true);
+        PDF::MultiCell(188, 6, session('parametros')->pie_rebu1, '', 'L', 0, 1, '', '', true);
 
         if ($this->albaran->fase_id == 10){
             $txt = "Los apartados deberán de retirarse en un plazo máximo de 3 MESES desde la fecha de reserva. Superado ese periodo la ".

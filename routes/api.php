@@ -1,6 +1,7 @@
 <?php
 
 use App\Empresa;
+use App\Parametro;
 use Illuminate\Http\Request;
 
 /*
@@ -19,13 +20,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/emp', function (Request $request) {
+
+    $parametros = Parametro::findOrFail(1);
+
     $empresa = Empresa::findOrfail(1);
+
     return [
-        'nombre' => $empresa->nombre,
-        'telefono'=> $empresa->telefono1,
-        'direccion'=> $empresa->direccion,
-        'poblacion'=> $empresa->poblacion,
-        'cpostal'=> $empresa->cpostal,
-        'email'=> $empresa->email
+        'nombre'    => $empresa->nombre,
+        'telefono'  => $empresa->telefono1,
+        'direccion' => $empresa->direccion,
+        'poblacion' => $empresa->poblacion,
+        'cpostal'   => $empresa->cpostal,
+        'email'     => $empresa->email,
+        'img1'      => $parametros->img1,
+        'img2'      => $parametros->img2
     ];
 });

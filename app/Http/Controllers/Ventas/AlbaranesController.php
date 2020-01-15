@@ -107,7 +107,9 @@ class AlbaranesController extends Controller
         $data['fpago_id']   = $data['tipo_id'] == 3 ? null : 2;
 
         if ($data['fpago_id'] == 2){
-            $data['cuenta_id'] = Cuenta::defecto()->first()->id;
+            $iban = Cuenta::defecto()->first();
+            if ($iban != null)
+                $data['cuenta_id'] = $iban->id;
         }
 
         $data['empresa_id'] =  session()->get('empresa')->id;

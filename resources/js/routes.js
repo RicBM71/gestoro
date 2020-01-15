@@ -111,7 +111,11 @@ import ResConta from './components/exportar/Resconta.vue';
 import Inventario from './components/exportar/Inventario.vue';
 import Liquidados from './components/exportar/Liquidados.vue';
 import DetalleCompras from './components/exportar/DetalleCompras.vue';
+import DetalleVentas from './components/exportar/DetalleVentas.vue';
 import CuadroMando from './components/exportar/CuadroMando.vue';
+import ServiciosTaller from './components/exportar/ServiciosTaller.vue';
+
+import ParametroEdit from './components/admin/parametros/ParametroEdit.vue';
 
 import Reubicar from './components/reubicar/Reubicar.vue';
 
@@ -552,9 +556,19 @@ export default [
                 component: DetalleCompras,
             },
             {
+                path: '/export/detaven',
+                name: 'exportar.detaven',
+                component: DetalleVentas,
+            },
+            {
                 path: '/export/mando',
                 name: 'exportar.mando',
                 component: CuadroMando,
+            },
+            {
+                path: '/export/service',
+                name: 'exportar.service',
+                component: ServiciosTaller,
             },
             {
                 path: '/reubicar',
@@ -575,6 +589,11 @@ export default [
                 path: '/talleres/:id/edit',
                 name: 'taller.edit',
                 component: TallerEdit,
+            },
+            {
+                path: '/parametros',
+                name: 'parametro.edit',
+                component: ParametroEdit,
             },
             // {
             //     path: '*',

@@ -30,7 +30,7 @@ class EmpresaPolicy
     public function create(User $authUser, Empresa $empresa)
     {
 
-        return $authUser->hasRole('Admin') ?: $this->deny("Acceso denegado. Permiso administrador requerido");
+        return $authUser->hasRole('Root') ?: $this->deny("Acceso denegado. Permiso root requerido");
 
     }
     public function update(User $authUser, Empresa $empresa)

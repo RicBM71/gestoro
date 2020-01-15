@@ -14,7 +14,7 @@
 	    </v-toolbar>
 	    <v-content>
 	      <section>
-	        <v-parallax src="assets/hero.jpeg" height="600">
+	        <v-parallax :src="empresa.img1" height="600">
 	          <v-layout
 	            column
 	            align-center
@@ -22,8 +22,8 @@
 	            class="white--text"
 	          >
 
-	            <h1 class="white--text mb-2 display-1 text-xs-center">{{this.empresa.nombre}}</h1>
-	            <div class="white--text subheading mb-3 text-xs-center">Compra - Venta de joyas y metales preciosos</div>
+	            <h1 class="black--text mb-2 display-1 text-xs-center">{{this.empresa.nombre}}</h1>
+	            <div class="black--text subheading mb-3 text-xs-center">Compra - Venta de joyas y metales preciosos</div>
 	          </v-layout>
 	        </v-parallax>
 	      </section>
@@ -92,10 +92,10 @@
 	      </section>
 
 	      <section>
-	        <v-parallax src="assets/section.jpg" height="380">
+	        <v-parallax :src="empresa.img2" height="380">
 	          <v-layout column align-center justify-center>
-	            <div class="headline white--text mb-3 text-xs-center">Líderes del mercado.</div>
-	            <em>Venga a visitarnos y tasaremos sus joyas sin compromiso.</em>
+	            <div class="headline black--text mb-3 text-xs-center">Líderes del mercado.</div>
+	            <em class="black--text">Venga a visitarnos y tasaremos sus joyas sin compromiso.</em>
 	          </v-layout>
 	        </v-parallax>
 	      </section>
@@ -160,6 +160,7 @@ import {mapGetters} from 'vuex';
         beforeMount(){
             axios.get('api/emp')
                 .then(res => {
+                    console.log(res);
                     this.empresa = res.data;
                 })
                 .catch(err => {

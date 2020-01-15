@@ -32,7 +32,11 @@ Route::group([
     'middleware' => ['auth','password']],
     function (){
 
-
+        Route::resource('parametros', 'ParametrosController', ['only'=>['index','update'], 'as' => 'root']);
+        Route::post('parametros/main', 'ParametrosController@main');
+        Route::put('parametros/main/delete', 'ParametrosController@deletemain');
+        Route::post('parametros/section', 'ParametrosController@section');
+        Route::put('parametros/section/delete', 'ParametrosController@deletesection');
 
         Route::resource('roles', 'RolesController', ['as' => 'root']);
         Route::resource('permissions', 'PermissionsController', ['except'=>'show', 'as' => 'root']);
@@ -272,9 +276,17 @@ Route::group([
             Route::post('/detacom', 'DetalleComprasController@submit');
             Route::post('/detacom/excel', 'DetalleComprasController@excel');
 
+            Route::get('/detaven', 'DetalleVentasController@index');
+            Route::post('/detaven', 'DetalleVentasController@submit');
+            Route::post('/detaven/excel', 'DetalleVentasController@excel');
+
             Route::get('/mando', 'CuadroMandoController@index');
             Route::post('/mando', 'CuadroMandoController@submit');
             Route::post('/mando/excel', 'CuadroMandoController@excel');
+
+            Route::get('/service', 'ServiciosTallerController@index');
+            Route::post('/service', 'ServiciosTallerController@submit');
+            Route::post('/service/excel', 'ServiciosTallerController@excel');
         });
 
     }
