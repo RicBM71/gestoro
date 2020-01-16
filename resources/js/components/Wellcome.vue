@@ -160,7 +160,6 @@ import {mapGetters} from 'vuex';
         beforeMount(){
             axios.get('api/emp')
                 .then(res => {
-                    console.log(res);
                     this.empresa = res.data;
                 })
                 .catch(err => {

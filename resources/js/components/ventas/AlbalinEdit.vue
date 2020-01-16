@@ -148,7 +148,7 @@
     }),
     computed:{
         computedSubmit(){
-            if (this.albaran.tipo_id == 5){
+            if (this.albaran.tipo_id >= 4){
                 return (this.editedItem.producto_id==0);
             }
             else

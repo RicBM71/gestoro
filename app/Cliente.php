@@ -12,7 +12,7 @@ class Cliente extends Model
 
 
     protected $fillable = [
-        'nombre', 'razon', 'apellidos', 'direccion','cpostal','poblacion', 'provincia', 'telefono1', 'telefono2',
+        'empresa_id','nombre', 'razon', 'apellidos', 'direccion','cpostal','poblacion', 'provincia', 'telefono1', 'telefono2',
         'tfmovil','email', 'tipodoc', 'dni', 'fecha_nacimiento','fecha_baja','nacpro','nacpais',
         'fecha_dni','notas','bloqueado','iva_no_residente','facturar','vip','listar_347','asociado', 'fpago_id','iban','bic','username'
     ];

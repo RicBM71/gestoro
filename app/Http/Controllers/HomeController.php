@@ -9,6 +9,7 @@ use App\Traspaso;
 use App\Parametro;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Scopes\AislarEmpresaScope;
 use Illuminate\Support\Facades\DB;
 use App\Jobs\SendUpdateProductosOnline;
 use Illuminate\Support\Facades\Storage;
@@ -71,18 +72,18 @@ class HomeController extends Controller
 
         $parametros = Parametro::find(1);
 
-        $empresa = Empresa::find($authUser->empresa_id);
+        $empresa = Empresa::findOrFail($authUser->empresa_id);
 
         $user = [
-            'id'   => $authUser->id,
-            'name' => $authUser->name,
-            'username' => $authUser->username,
-            'avatar'=> $authUser->avatar,
+            'id'        => $authUser->id,
+            'name'      => $authUser->name,
+            'username'  => $authUser->username,
+            'avatar'    => $authUser->avatar,
             'empresa_id'=> $authUser->empresa_id,
-            'roles' => $role_user,
-            'permisos'=> $permisos_user,
-            'empresas' => $empresas,
-            'stockComple' => $empresa->getFlag(5),
+            'roles'     => $role_user,
+            'permisos'  => $permisos_user,
+            'empresas'  => $empresas,
+            'stockComple'=> $empresa->getFlag(5),
             'parametros'=>$parametros,
             'img_fondo' => $empresa->img_fondo
         ];
@@ -98,18 +99,19 @@ class HomeController extends Controller
 
         session([
             'empresa_id' => $authUser->empresa_id,
-            'empresa' => Empresa::find($authUser->empresa_id),
-            'username'=> $authUser->username,
+            'empresa'    => Empresa::find($authUser->empresa_id),
+            'username'   => $authUser->username,
             'empresas_usuario' => $empresas_usuario,
-            'parametros' => $parametros,
+            'parametros'       => $parametros,
+            'aislar_empresas'  => $parametros->aislar_empresas
             ]);
 
         if (request()->wantsJson())
             return [
-                'user' => $user,
-                'expired' => $this->verificarExpired($request),
-                'authuser'=>$authUser,
-                'jobs' => $jobs,
+                'user'      => $user,
+                'expired'   => $this->verificarExpired($request),
+                'authuser'  =>$authUser,
+                'jobs'      => $jobs,
                 'traspasos' => Traspaso::where('proveedora_empresa_id', session('empresa_id'))
                                         ->where('situacion_id',1)->get()->count()
             ];

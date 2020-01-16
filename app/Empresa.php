@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Scopes\AislarEmpresaScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -26,10 +27,9 @@ class Empresa extends Model
      */
     protected $fillable = [
         'nombre', 'razon', 'cif', 'poblacion', 'direccion', 'cpostal','provincia', 'telefono1','telefono2',
-        'contacto', 'email', 'web', 'txtpie1', 'txtpie2', 'flags','sigla', 'titulo',
+        'contacto', 'email', 'web', 'txtpie1', 'txtpie2', 'flags','sigla', 'titulo','cliente_empresa_id',
         'img_logo','img_fondo','certificado','passwd_cer', 'almacen_id','scan_doc','username','deposito_empresa_id'
     ];
-
 
     public function setCifAttribute($cif)
     {
@@ -72,9 +72,16 @@ class Empresa extends Model
 
     public static function selEmpresas(){
 
-        return Empresa::select('id AS value', 'nombre AS text')
-            ->flag(0)
-            ->orderBy('nombre', 'asc');
+
+        if (session('aislar_empresas'))
+            return Empresa::select('id AS value', 'nombre AS text')
+                ->whereIn('id', session('empresas_usuario'))
+                ->flag(0)
+                ->orderBy('nombre', 'asc');
+        else
+            return Empresa::select('id AS value', 'nombre AS text')
+                ->flag(0)
+                ->orderBy('nombre', 'asc');
             // ->get();
 
     }

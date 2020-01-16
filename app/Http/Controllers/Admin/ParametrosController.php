@@ -32,12 +32,14 @@ class ParametrosController extends Controller
      */
     public function update(Request $request, Parametro $parametro)
     {
+        
         $data = $request->validate([
 
-            'lim_efe'       => ['required','numeric'],
-            'lim_efe_nores' => ['required', 'numeric'],
-            'pie_rebu1' => ['nullable','string'],
-            'retencion' => ['required','numeric'],
+            'lim_efe'        => ['required','numeric'],
+            'lim_efe_nores'  => ['required', 'numeric'],
+            'pie_rebu1'      => ['nullable','string'],
+            'retencion'      => ['required','numeric'],
+            'aislar_empresas'=> ['required','boolean'],
 
         ]);
 

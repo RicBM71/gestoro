@@ -22,7 +22,7 @@ class EmpresasController extends Controller
         if (esRoot())
             $data = Empresa::withTrashed()->get();
         else
-            $data = Empresa::all();
+            $data = Empresa::whereIn('empresas.id', session('empresas_usuario'))->get();
 
         if (request()->wantsJson())
             return $data;
@@ -76,6 +76,14 @@ class EmpresasController extends Controller
      */
     public function edit(Empresa $empresa )
     {
+        //$empresa = Empresa::findOrFail($id);
+        // if (esRoot()){
+        //     $empresa = Empresa::findOrFail($id);
+        // }else{
+        //     $empresa = Empresa::where('id',$id)
+        //                       ->whereIn('empresas.id', session('empresas_usuario'))->firstOrFail();
+        // }
+
         $this->authorize('update', $empresa);
 
         if (request()->wantsJson())
@@ -123,8 +131,8 @@ class EmpresasController extends Controller
             $empresa = Empresa::withTrashed()->find($id);
         }else{
             $empresa = Empresa::findOrFail($id);
-
         }
+
         $this->authorize('delete', $empresa);
 
         if ($empresa->trashed()) {

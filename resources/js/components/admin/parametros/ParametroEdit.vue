@@ -57,6 +57,13 @@
                                         >
                                         </v-text-field>
                                     </v-flex>
+                                    <v-flex sm2>
+                                    <v-switch
+                                        label="Aislar Empresas"
+                                        v-model="parametro.aislar_empresas"
+                                        color="primary">
+                                    ></v-switch>
+                                </v-flex>
                                 </v-layout>
                                 <v-layout row wrap>
                                     <v-flex sm12>

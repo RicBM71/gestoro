@@ -20,6 +20,7 @@ class CreateParametrosTable extends Migration
             $table->string('pie_rebu1')->nullable();
             $table->decimal('retencion', 6,2)->default(0);
             $table->boolean('online')->default(false);
+            $table->boolean('aislar_empresas')->default(false);
             $table->string('img1',100)->nullable();
             $table->string('img2',100)->nullable();
             $table->string('username',50)->nullable();
