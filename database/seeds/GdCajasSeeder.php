@@ -66,7 +66,7 @@ class GdCajasSeeder extends Seeder
                 'nombre' => $concepto,
                 'importe'=> ($row->importe),
                 'manual'=>  $manual,
-                'apunte_id' => $apunte_id,
+                'apunte_id' => null,
                 'username' => $row->sysusr,
                 'created_at' => $row->sysfum.' '.$row->syshum,
                 'updated_at' => $row->sysfum.' '.$row->syshum,

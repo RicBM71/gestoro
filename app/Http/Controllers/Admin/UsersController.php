@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Events\UsuarioFueCreado;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -236,7 +237,15 @@ class UsersController extends Controller
     public function updateEmpresa(Request $request, User $user){
 
         if ($request->empresa_id > 0){
-            $user->update(['empresa_id' => $request->empresa_id]);
+            //$user->update(['empresa_id' => $request->empresa_id]);
+
+            DB::table('empresa_user')->where('user_id', $user->id)
+                 ->update(['activa' => false]);
+
+            DB::table('empresa_user')->where('user_id', $user->id)
+                        ->where('empresa_id', $request->empresa_id)
+                        ->update(['activa' => true]);
+
 
             session(['empresa' => Empresa::find($request->empresa_id)]);
 

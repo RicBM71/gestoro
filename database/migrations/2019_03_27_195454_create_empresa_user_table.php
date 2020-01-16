@@ -17,6 +17,7 @@ class CreateEmpresaUserTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('empresa_id');
             $table->unsignedInteger('user_id');
+            $table->boolean('activa')->default(false);
         });
     }
 

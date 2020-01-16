@@ -18,6 +18,9 @@ class Empresa extends Model
 
     use SoftDeletes;
 
+    //protected $connection = session('bbdd');
+    //protected $connection = "db2";
+
     protected $dates =['scan_doc'];
 
         /**

@@ -67,8 +67,8 @@ class GdEmpresasSeeder extends Seeder
 
 
 
-        DB::table('empresa_user')->insert(
-            ['empresa_id' => 1, 'user_id' => '1']
-        );
+        // DB::table('empresa_user')->insert(
+        //     ['empresa_id' => 1, 'user_id' => '1']
+        // );
     }
 }

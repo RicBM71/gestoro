@@ -50,6 +50,7 @@ class GdUsuariosSeeder extends Seeder
             $empresas = explode(',',$row->empresas);
 
             foreach ($empresas as $emp){
+                
                 DB::table('empresa_user')->insert(['empresa_id'=>$emp,'user_id'=>$row->id]);
             }
         }

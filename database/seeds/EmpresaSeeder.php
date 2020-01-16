@@ -74,10 +74,10 @@ class EmpresaSeeder extends Seeder
 
 
 
-        DB::table('empresa_user')->insert(
-            ['empresa_id' => 1, 'user_id' => '1'],
-            ['empresa_id' => 11, 'user_id' => '1'],
-            ['empresa_id' => 1, 'user_id' => '2']
-        );
+        // DB::table('empresa_user')->insert(
+        //     ['empresa_id' => 1, 'user_id' => '1'],
+        //     ['empresa_id' => 11, 'user_id' => '1'],
+        //     ['empresa_id' => 1, 'user_id' => '2']
+        // );
     }
 }
