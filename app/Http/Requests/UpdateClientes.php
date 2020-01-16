@@ -41,7 +41,7 @@ class UpdateClientes extends FormRequest
             'email'             => ['nullable','email', 'max:50'],
             'tipodoc'           => ['string'],
             'dni'               => ['required', new ValidarDniCif($this->tipodoc),Rule::unique('clientes')->ignore($this->route('cliente')->id)->where(function ($query) {
-                return $query->where('empresa_id', session()->get('empresa')->cliente_empresa_id);
+                return $query->where('empresa_id', session()->get('empresa')->comun_empresa_id);
             })],
             'fecha_nacimiento'  => ['nullable','date'],
             'fecha_baja'        => ['nullable','date'],

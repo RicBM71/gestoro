@@ -101,12 +101,7 @@ class ClientesController extends Controller
     {
         $data = $request->validated();
 
-        \Log::info(session()->get('empresa')->cliente_empresa_id);
-
-        // $data['empresa_id'] = session()->get('empresa')->id;
-        // $data['cliente_empresa_id'] = session()->get('empresa')->cliente_empresa_id;
-        $data['empresa_id'] = session()->get('empresa')->cliente_empresa_id;
-        $data['cliente_empresa_id'] = session()->get('empresa')->cliente_empresa_id;
+        $data['empresa_id'] = session()->get('empresa')->comun_empresa_id;
 
         $data['username'] = $request->user()->username;
 

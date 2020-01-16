@@ -46,7 +46,7 @@ class GdEmpresasSeeder extends Seeder
                 'sigla'     => $row->sigla,
                 'titulo'    => $row->titulo,
                 'almacen_id'=> 0,
-                'cliente_empresa_id' => 1,
+                'comun_empresa_id' => 1,
                 'username'  => $row->sysusr,
                 'created_at'=> $row->sysfum.' 00:00:00',
                 'updated_at'=> $row->sysfum.' '.$row->syshum,

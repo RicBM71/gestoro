@@ -3,7 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
-use App\Scopes\ClienteEmpresaScope;
+use App\Scopes\EmpresaComunScope;
 use Illuminate\Database\Eloquent\Model;
 
 class Cliente extends Model
@@ -27,7 +27,7 @@ class Cliente extends Model
     {
         parent::boot();
 
-        static::addGlobalScope(new ClienteEmpresaScope);
+        static::addGlobalScope(new EmpresaComunScope);
 
     }
 

@@ -17,7 +17,7 @@ class HelpApuntesController extends Controller
             if (esAdmin())
                 return Apunte::selApuntes();
             else
-                return Apunte::selApuntesUser();
+                return Apunte::selApuntes();
 
     }
 }

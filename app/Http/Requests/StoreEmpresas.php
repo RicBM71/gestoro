@@ -47,7 +47,7 @@ class StoreEmpresas extends FormRequest
             'certificado'   => ['nullable','string', 'max:20'],
             'passwd_cer'    => ['nullable','string'],
             'almacen_id'    => ['nullable','integer'],
-            'cliente_empresa_id'  => ['required','integer'],
+            'comun_empresa_id'  => ['required','integer'],
             'deposito_empresa_id' => ['required','integer'],
             'scan_doc'   => ['nullable','date'],
         ];

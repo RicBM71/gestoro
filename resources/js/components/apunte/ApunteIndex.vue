@@ -51,7 +51,7 @@
 
 
                                             <v-icon
-                                            v-show="isRoot"
+                                            v-show="isAdmin"
                                             small
                                             @click="openDialog(props.item)"
                                             >
@@ -139,7 +139,6 @@ import {mapActions} from "vuex";
     },
     computed: {
         ...mapGetters([
-            'isRoot',
             'isAdmin',
             'isSupervisor',
         ]),

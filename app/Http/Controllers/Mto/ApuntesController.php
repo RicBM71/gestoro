@@ -16,10 +16,7 @@ class ApuntesController extends Controller
     public function index()
     {
 
-        if (esRoot())
-            $data = Apunte::all();
-        else
-            $data = Apunte::libres()->get();
+        $data = Apunte::all();
 
         if (request()->wantsJson())
             return $data;
@@ -50,6 +47,7 @@ class ApuntesController extends Controller
         ]);
 
         $data['username'] = $request->user()->username;
+        $data['empresa_id'] =  session()->get('empresa')->id;
 
         $reg = Apunte::create($data);
 
@@ -65,10 +63,6 @@ class ApuntesController extends Controller
      */
     public function edit(Apunte $apunte)
     {
-
-        if ($apunte->id <= 30 && !esRoot()){
-            return abort(403,'NO se puede editar este registro!');
-        }
 
 
         if (request()->wantsJson())
@@ -108,18 +102,15 @@ class ApuntesController extends Controller
      */
     public function destroy(Apunte $apunte)
     {
-        if ($apunte->id <= 30){
-            return abort(403,'NO se puede borrar este registro!');
-        }
 
-        if (esRoot()){
-            return abort(403,auth()->user()->name.' NO tiene permiso de root');
+        if (esAdmin()){
+            return abort(403,auth()->user()->name.' NO tiene permiso de administrador');
         }
 
         $apunte->delete();
 
         if (request()->wantsJson()){
-            return response()->json(Apunte::libres()->get());
+            return response()->json(Apunte::get());
         }
     }
 }

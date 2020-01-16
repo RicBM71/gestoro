@@ -27,7 +27,7 @@ class Empresa extends Model
      */
     protected $fillable = [
         'nombre', 'razon', 'cif', 'poblacion', 'direccion', 'cpostal','provincia', 'telefono1','telefono2',
-        'contacto', 'email', 'web', 'txtpie1', 'txtpie2', 'flags','sigla', 'titulo','cliente_empresa_id',
+        'contacto', 'email', 'web', 'txtpie1', 'txtpie2', 'flags','sigla', 'titulo','comun_empresa_id',
         'img_logo','img_fondo','certificado','passwd_cer', 'almacen_id','scan_doc','username','deposito_empresa_id'
     ];
 

@@ -128,7 +128,7 @@ class CajasController extends Controller
     {
         if (request()->wantsJson())
             return [
-                'apuntes' => Apunte::selApuntesUser()
+                'apuntes' => Apunte::selApuntes()
             ];
 
     }
@@ -147,7 +147,7 @@ class CajasController extends Controller
             return [
                 'caja' =>$caja,
                 'saldo'=>getCurrency(Caja::saldo($caja->fecha)),
-                'apuntes' => Apunte::selApuntesUser()
+                'apuntes' => Apunte::selApuntes()
             ];
     }
 
@@ -167,7 +167,7 @@ class CajasController extends Controller
             'importe' => ['required','numeric'],
             'fecha'=> ['required','date'],
             'dh'=> ['required','string'],
-            'apunte_id'=> ['nullable','integer','min:31'],
+            'apunte_id'=> ['nullable','integer'],
         ]);
 
         $data['empresa_id'] = session()->get('empresa')->id;

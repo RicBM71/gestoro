@@ -262,9 +262,9 @@
                                     <v-flex sm3 d-flex>
                                         <v-select
                                             :readonly="!isRoot"
-                                            v-model="empresa.cliente_empresa_id"
+                                            v-model="empresa.comun_empresa_id"
                                             :items="empresas"
-                                            label="Empresa Cliente"
+                                            label="Empresa Común"
                                         ></v-select>
                                     </v-flex>
                                     <v-flex sm2>
@@ -442,7 +442,7 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
                     passwd_cer:"",
                     almacen_id:"",
                     scan_doc:"",
-                    cliente_empresa_id:"",
+                    comun_empresa_id:"",
                     username: "",
                     updated_at:"",
                     created_at:"",
@@ -495,7 +495,7 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 
                         this.almacenes = res.data.almacenes;
                         this.empresas = res.data.empresas;
-                        
+
                         // var a  = Array.from(this.empresa.flags);
 
                         // this.sw = a.map(function (x) {
