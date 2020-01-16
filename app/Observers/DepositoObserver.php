@@ -29,7 +29,7 @@ class DepositoObserver
 
             // CRUCE DE CAJA
         $cruce = Cruce::compra()->find($deposito->empresa_id);
-        $empresa_destino = (!$cruce) ? $deposito->empresa_id :  $cruce->empresa_destino_id;
+        $empresa_destino = (!$cruce) ? $deposito->empresa_id :  $cruce->destino_empresa_id;
 
             // NOMBRE CONCEPTO
         $concepto = (Concepto::find($deposito->concepto_id));

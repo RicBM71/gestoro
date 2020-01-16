@@ -96,6 +96,8 @@ Route::group([
         Route::resource('cajas', 'CajasController', ['as' => 'mto']);
         Route::resource('apuntes', 'ApuntesController', ['as' => 'mto']);
 
+        Route::resource('cruces', 'CrucesController', ['as' => 'mto']);
+
         Route::resource('motivos', 'MotivosController', ['as' => 'mto']);
         Route::post('cajas/filtrar', 'CajasController@filtrar');
         Route::post('cajas/cerrar', 'CajasController@cerrar');

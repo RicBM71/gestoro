@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Cruce extends Model
 {
 
+    protected $fillable = [
+        'empresa_id', 'comven', 'destino_empresa_id', 'username'
+    ];
+
     public function scopeCompra($query)
     {
         $query->where('comven', 'C' );
@@ -18,5 +22,11 @@ class Cruce extends Model
         $query->where('comven', 'V' );
 
     }
+
+    public function destino()
+    {
+    	return ($this->belongsTo(Empresa::class, 'destino_empresa_id'));
+    }
+
 
 }

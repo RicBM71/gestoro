@@ -209,6 +209,7 @@ export default {
                 { text: 'Clases', name: 'clase.index' },
                 { text: 'Tipos de Iva', name: 'iva.index' },
                 { text: 'Motivos Devolución', name: 'motivo.index' },
+                { text: 'Cruces Caja', name: 'cruce.index' },
                 { text: 'Parámetros', name: 'parametro.edit' },
             ]
         },

@@ -17,7 +17,8 @@ class CreateCrucesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('empresa_id');
             $table->String('comven',1)->default('C');
-            $table->unsignedInteger('empresa_destino_id');
+            $table->unsignedInteger('destino_empresa_id');
+            $table->string('username',30)->nullable();
             $table->timestamps();
         });
     }

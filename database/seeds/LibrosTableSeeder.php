@@ -30,11 +30,11 @@ class LibrosTableSeeder extends Seeder
                 continue;
 
             if (strpos($row->nomtienda, 'Usados') === false)
-                $cruce = "M";
+                $crulib = "M";
             else
-                $cruce = "U";
+                $crulib = "U";
 
-            if ($cruce == "M"){
+            if ($crulib == "M"){
                 $grupo_id = 1;
                 $nombre = "Metales";
                 $nombre_csv = "metalprecioso";
@@ -56,7 +56,7 @@ class LibrosTableSeeder extends Seeder
                 'ult_compra'=>$row->compras - 1,
                 'ult_factura'=>$row->factcompra -1,
                 'serie_fac'=>$row->serie,
-                'serie_com'=>$cruce,
+                'serie_com'=>$crulib,
                 'semdia_bloqueo'=>$semdia_bloqueo,
                 'dias_custodia'=>30,
                 'dias_cortesia'=>7,

@@ -91,7 +91,7 @@ class CobroObserver
 
         // CRUCE DE CAJA
         $cruce = Cruce::venta()->find($albaran->empresa_id);
-        $empresa_destino = (!$cruce) ? $albaran->empresa_id :  $cruce->empresa_destino_id;
+        $empresa_destino = (!$cruce) ? $albaran->empresa_id :  $cruce->destino_empresa_id;
 
         $dh = ($cobro->importe >= 0) ? "H" : "D";
 

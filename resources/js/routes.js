@@ -102,6 +102,11 @@ import ApunteIndex from './components/apunte/ApunteIndex.vue';
 import ApunteEdit from './components/apunte/ApunteEdit.vue';
 import ApunteCreate from './components/apunte/ApunteCreate.vue';
 
+import CruceIndex from './components/cruce/CruceIndex.vue';
+import CruceEdit from './components/cruce/CruceEdit.vue';
+import CruceCreate from './components/cruce/CruceCreate.vue';
+
+
 import Mod347 from './components/exportar/Mod347.vue';
 import Balance from './components/exportar/Balance.vue';
 import Operaciones from './components/exportar/Operaciones.vue';
@@ -509,6 +514,21 @@ export default [
                 path: '/apuntes/:id/edit',
                 name: 'apunte.edit',
                 component: ApunteEdit,
+            },
+            {
+                path: '/cruces',
+                name: 'cruce.index',
+                component: CruceIndex,
+            },
+            {
+                path: '/cruces/create',
+                name: 'cruce.create',
+                component: CruceCreate,
+            },
+            {
+                path: '/cruces/:id/edit',
+                name: 'cruce.edit',
+                component: CruceEdit,
             },
             {
                 path: '/exportar/mod347',
