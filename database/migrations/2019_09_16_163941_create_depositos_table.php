@@ -26,6 +26,7 @@ class CreateDepositosTable extends Migration
             $table->String('bic',11)->nullable()->default(null);
             $table->String('notas')->nullable();
             $table->string('username',30)->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

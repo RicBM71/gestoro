@@ -25,8 +25,8 @@ class OperacionesController extends Controller
 
         if ($data['operacion'] == 'C') // de momento solo compras
             return $this->compras($data['fecha_d'], $data['fecha_h']);
-        // else
-        //     return $this->ventas($data['fecha_d'], $data['fecha_h']);
+        else
+            return $this->ventas($data['fecha_d'], $data['fecha_h']);
 
     }
 
@@ -68,6 +68,61 @@ class OperacionesController extends Controller
                     ->whereIn('compras.empresa_id', session('empresas_usuario'))
                     ->whereDate('fecha_compra','>=', $d)
                     ->whereDate('fecha_compra','<=', $h)
+                    ->union($union1)
+                    ->groupBy('empresa','tipo', 'fase', 'clase', 'quilates')
+                    ->orderBy('empresa')
+                    ->orderBy('tipo')
+                    ->orderBy('fase')
+                    ->orderBy('clase')
+                    ->orderBy('quilates')
+                    ->get();
+
+        return $union2;
+
+    }
+
+    private function ventas($d, $h){
+
+        $select=DB::getTablePrefix().'empresas.nombre AS empresa,'.
+                DB::getTablePrefix().'tipos.nombre AS tipo,'.
+                DB::getTablePrefix().'fases.nombre AS fase,'.
+                DB::getTablePrefix().'clases.nombre AS clase,'.
+                '0 AS quilates,'.
+                ' SUM('.DB::getTablePrefix().'albalins.importe_venta) AS importe, COUNT(*) AS operaciones, SUM(peso_gr) AS peso';
+
+        $union1 = DB::table('albaranes')
+                    ->select(DB::raw($select))
+                    ->join('empresas','albaranes.empresa_id','=','empresas.id')
+                    ->join('albalins','albaranes.id','=','albaran_id')
+                    ->join('productos','productos.id','=','producto_id')
+                    ->join('fases','fase_id','=','fases.id')
+                    ->join('tipos','tipo_id','=','tipos.id')
+                    ->join('clases','clase_id','=','clases.id')
+                    ->whereIn('albaranes.empresa_id', session('empresas_usuario'))
+                    ->whereDate('fecha_albaran','>=', $d)
+                    ->whereDate('fecha_albaran','<=', $h)
+                    ->whereNull('albaranes.deleted_at')
+                    ->groupBy('empresa','tipo', 'fase', 'clase', 'quilates');
+
+        $select=DB::getTablePrefix().'empresas.nombre AS empresa,'.
+                    '"TOTAL" AS tipo,'.
+                    '"" AS fase,'.
+                    '"" AS clase,'.
+                    '0 AS quilates,'.
+                    ' SUM('.DB::getTablePrefix().'albalins.importe_venta) AS importe, COUNT(*) AS operaciones, 0 AS peso';
+
+        $union2 = DB::table('albaranes')
+                    ->select(DB::raw($select))
+                    ->join('empresas','albaranes.empresa_id','=','empresas.id')
+                    ->join('albalins','albaranes.id','=','albaran_id')
+                    ->join('productos','productos.id','=','producto_id')
+                    ->join('fases','fase_id','=','fases.id')
+                    ->join('tipos','tipo_id','=','tipos.id')
+                    ->join('clases','clase_id','=','clases.id')
+                    ->whereIn('albaranes.empresa_id', session('empresas_usuario'))
+                    ->whereDate('fecha_albaran','>=', $d)
+                    ->whereDate('fecha_albaran','<=', $h)
+                    ->whereNull('albaranes.deleted_at')
                     ->union($union1)
                     ->groupBy('empresa','tipo', 'fase', 'clase', 'quilates')
                     ->orderBy('empresa')

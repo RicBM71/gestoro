@@ -181,7 +181,7 @@ export default {
                 text: 'Fase',
                 align: 'left',
                 value: 'fase',
-                width: '10%'
+                width: '12%'
             },
             {
                 text: 'Clase',
@@ -218,7 +218,7 @@ export default {
             },
             operaciones:[
                     {value: 'C', text:"Compras"},
-                    //{value: 'V', text:"Ventas"},
+                    {value: 'V', text:"Ventas"},
                 ],
             operacion: 'C',
             show_loading: false,

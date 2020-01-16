@@ -134,7 +134,7 @@ class Albaran extends Model
 
     public function getFacSereAttribute(){
 
-        if ($this->factura == 0) return "";
+        if ($this->factura == null) return "";
 
         $l = strlen($this->factura);
 
@@ -149,7 +149,7 @@ class Albaran extends Model
 
     public function getFacSerAttribute(){
 
-        if ($this->factura == 0) return "";
+        if ($this->factura == null) return "";
 
         $l = strlen($this->factura);
 
@@ -245,36 +245,36 @@ class Albaran extends Model
 
     }
 
-    public static function pendientesDeFacturar($d, $h, $tipo_id, $cobro){
+    // public static function pendientesDeFacturar($d, $h, $tipo_id, $cobro){
 
-        if ($cobro == 'T')
-            $fpago = array(1,2,3,4);
-        elseif($cobro == "B")
-            $fpago = array(2,3,4);
-        else
-            $fpago = array(1);
+    //     if ($cobro == 'T')
+    //         $fpago = array(1,2,3,4);
+    //     elseif($cobro == "B")
+    //         $fpago = array(2,3,4);
+    //     else
+    //         $fpago = array(1);
 
 
-        return DB::table('albaranes')
-                ->select(DB::raw(DB::getTablePrefix().'albaranes.id,'.
-                                 DB::getTablePrefix().'albaranes.albaran,'.
-                                 DB::getTablePrefix().'albaranes.iva_no_residente, MAX('.
-                                 DB::getTablePrefix().'cobros.fecha) AS fecha'))
-            //    ->join('clientes', 'cliente_id', '=', 'clientes.id')
-                ->join('cobros', 'albaran_id', '=', 'albaranes.id')
-                ->where('albaranes.empresa_id', session('empresa')->id)
-                ->where('tipo_id', $tipo_id)
-                ->where('fase_id', 11)
-                ->where('factura', 0)
-                ->where('facturar', true)
-                ->whereNull('albaranes.deleted_at')
-                ->whereIn('cobros.fpago_id', $fpago)
-                ->groupBy('albaranes.id','albaran','iva_no_residente')
-                ->havingRaw('MAX('.DB::getTablePrefix().'cobros.fecha) >= ? AND MAX('.DB::getTablePrefix().'cobros.fecha) <= ?',[$d,$h])
-                ->orderBy('fecha')
-                ->get();
+    //     return DB::table('albaranes')
+    //             ->select(DB::raw(DB::getTablePrefix().'albaranes.id,'.
+    //                              DB::getTablePrefix().'albaranes.albaran,'.
+    //                              DB::getTablePrefix().'albaranes.iva_no_residente, MAX('.
+    //                              DB::getTablePrefix().'cobros.fecha) AS fecha'))
+    //         //    ->join('clientes', 'cliente_id', '=', 'clientes.id')
+    //             ->join('cobros', 'albaran_id', '=', 'albaranes.id')
+    //             ->where('albaranes.empresa_id', session('empresa')->id)
+    //             ->where('tipo_id', $tipo_id)
+    //             ->where('fase_id', 11)
+    //             ->where('factura', 0)
+    //             ->where('facturar', true)
+    //             ->whereNull('albaranes.deleted_at')
+    //             ->whereIn('cobros.fpago_id', $fpago)
+    //             ->groupBy('albaranes.id','albaran','iva_no_residente')
+    //             ->havingRaw('MAX('.DB::getTablePrefix().'cobros.fecha) >= ? AND MAX('.DB::getTablePrefix().'cobros.fecha) <= ?',[$d,$h])
+    //             ->orderBy('fecha')
+    //             ->get();
 
-    }
+    // }
 
 
 }

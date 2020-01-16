@@ -39,6 +39,7 @@ class CreateComprasTable extends Migration
             $table->decimal('retencion', 6,2)->default(0);
             $table->String('notas')->nullable();
             $table->string('username',30)->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->index(['empresa_id', 'cliente_id']);

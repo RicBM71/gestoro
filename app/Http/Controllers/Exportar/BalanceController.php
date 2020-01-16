@@ -34,7 +34,7 @@ class BalanceController extends Controller
 
 
         $select=DB::getTablePrefix().'empresas.nombre AS empresa,'.
-                DB::getTablePrefix().'conceptos.nombre AS concepto, SUM(importe) AS importe, COUNT(*) AS operaciones';
+                DB::getTablePrefix().'conceptos.nombre AS concepto,signo, SUM(importe * signo) AS importe, COUNT(*) AS operaciones';
 
         $union1 = DB::table('depositos')
                     ->select(DB::raw($select))
@@ -43,11 +43,11 @@ class BalanceController extends Controller
                     ->whereIn('depositos.empresa_id', session('empresas_usuario'))
                     ->whereDate('fecha','>=', $d)
                     ->whereDate('fecha','<=', $h)
-                    ->groupBy('empresa','concepto');
+                    ->groupBy('empresa','concepto','signo');
 
 
         $select=DB::getTablePrefix().'empresas.nombre AS empresa,'.
-                    '"TOTAL" as concepto, SUM(importe) AS importe, COUNT(*) AS operaciones';
+                    '"xTOTAL" as concepto, signo, SUM(importe * signo) AS importe, COUNT(*) AS operaciones';
 
         $union2 = DB::table('depositos')
                     ->select(DB::raw($select))
@@ -56,7 +56,7 @@ class BalanceController extends Controller
                     ->whereIn('depositos.empresa_id', session('empresas_usuario'))
                     ->whereDate('fecha','>=', $d)
                     ->whereDate('fecha','<=', $h)
-                    ->groupBy('empresa','concepto')
+                    ->groupBy('empresa','concepto','signo')
                     ->union($union1)
                     ->orderBy('empresa')
                     ->orderBy('concepto')
@@ -85,7 +85,7 @@ class BalanceController extends Controller
 
 
         $select=DB::getTablePrefix().'empresas.nombre AS empresa,'.
-                    '"TOTAL" as concepto, SUM(importe) AS importe, COUNT(*) AS operaciones';
+                    '"xTOTAL" as concepto, SUM(importe) AS importe, COUNT(*) AS operaciones';
 
         $union2 = DB::table('cobros')
                     ->select(DB::raw($select))

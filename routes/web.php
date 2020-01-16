@@ -150,7 +150,7 @@ Route::group([
         Route::resource('comprar', 'ComprarController', ['only'=>['index','store','destroy']]);
         Route::resource('recuperar', 'RecuperarController', ['only'=>['index','show','store','destroy']]);
 
-        Route::get('print/{id}', 'PrintController@print')->name('compra.print');
+        Route::get('print/{id}', 'PrintComprasController@print')->name('compra.print');
 
         Route::resource('ampliaciones', 'AmpliacionesController', ['only'=>['index','show','store','destroy']]);
         // Route::get('ampliaciones/{compra}/create', 'AmpliacionesController@create');

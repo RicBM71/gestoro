@@ -60,7 +60,8 @@
                             <td class="text-xs-right font-weight-bold">{{ totales.unidades| currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                             <td class="text-xs-right font-weight-bold"></td>
                             <td class="text-xs-right font-weight-bold">IVA</td>
-                            <td class="text-xs-right font-weight-bold">{{ totales.iva_rebu| currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
+                            <td v-if="albaran.tipo_id==3" class="text-xs-right font-weight-bold">{{ totales.iva_rebu| currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
+                            <td v-else class="text-xs-right font-weight-bold">{{ totales.iva| currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                             <td class="text-xs-right font-weight-bold">TOTAL</td>
                             <td class="text-xs-right font-weight-bold">{{ totales.total| currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                             <td class="text-xs-right font-weight-bold">RESTO: {{ computedResto | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
@@ -78,7 +79,7 @@
                     </v-data-table>
                 </v-flex>
             </v-layout>
-            <v-layout row wrap v-if="albaran.factura == 0">
+            <v-layout row wrap v-if="albaran.factura == null">
                 <v-flex xs10></v-flex>
                 <v-flex xs2>
                     <v-btn round flat color="primary" v-on:click="create" small >

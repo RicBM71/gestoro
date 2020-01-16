@@ -79,7 +79,7 @@ class FacturacionVentasController extends Controller
 
         $i=0;
 
-        $albaranes = Albaran::pendientesDeFacturar($d,$h, $tipo_id, $cobro);
+        $albaranes = $this->pendientesDeFacturar($d,$h, $tipo_id, $cobro);
 
         $ejercicio = getEjercicio($d);
 
@@ -113,6 +113,39 @@ class FacturacionVentasController extends Controller
         $contador->update(['ult_factura_auto'=>$contador->ult_factura_auto]);
 
         return ['estado'=>'ok', 'reg'=>$i, 'msg'=> 'Procesadas '.$i.' facturas'];
+    }
+
+    private function pendientesDeFacturar($d, $h, $tipo_id, $cobro){
+
+            if ($cobro == 'T')
+                $fpago = array(1,2,3,4);
+            elseif($cobro == "B")
+                $fpago = array(2,3,4);
+            else
+                $fpago = array(1);
+
+
+            return DB::table('albaranes')
+                    ->select(DB::raw(DB::getTablePrefix().'albaranes.id,'.
+                                     DB::getTablePrefix().'albaranes.albaran,'.
+                                     DB::getTablePrefix().'albaranes.iva_no_residente, MAX('.
+                                     DB::getTablePrefix().'cobros.fecha) AS fecha'))
+                //    ->join('clientes', 'cliente_id', '=', 'clientes.id')
+                    ->join('cobros', 'albaran_id', '=', 'albaranes.id')
+                    ->where('albaranes.empresa_id', session('empresa')->id)
+                    ->where('tipo_id', $tipo_id)
+                    ->where('fase_id', 11)
+                    // ->where('factura', 0)
+                    ->whereNull('factura')
+                    ->where('facturar', true)
+                    ->whereNull('albaranes.deleted_at')
+                    ->whereIn('cobros.fpago_id', $fpago)
+                    ->groupBy('albaranes.id','albaran','iva_no_residente')
+                    ->havingRaw('MAX('.DB::getTablePrefix().'cobros.fecha) >= ? AND MAX('.DB::getTablePrefix().'cobros.fecha) <= ?',[$d,$h])
+                    ->orderBy('fecha')
+                    ->get();
+
+
     }
 
     private function desfacturarAlbaranes($d, $h, $tipo_id){

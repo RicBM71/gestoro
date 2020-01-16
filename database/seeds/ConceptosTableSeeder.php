@@ -20,6 +20,7 @@ class ConceptosTableSeeder extends Seeder
         $con->comven="C";
         $con->color = "blue--text darken-4";
         $con->nombre='Depósito Efectivo'; //1
+        $con->signo = -1;
         $con->save();
 
         $apunte = new Apunte;  //1
@@ -33,12 +34,14 @@ class ConceptosTableSeeder extends Seeder
         $con->comven="C";
         $con->nombre='Depósito Transferencia'; //2
         $con->color = "blue--text darken-4";
+        $con->signo = -1;
         $con->save();
 
         $con = new Concepto;
         $con->comven="C";
         $con->nombre='Depósito Talón'; //3
         $con->color = "blue--text darken-4";
+        $con->signo = -1;
         $con->save();
 
         $con = new Concepto;

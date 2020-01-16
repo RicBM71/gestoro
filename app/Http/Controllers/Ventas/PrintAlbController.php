@@ -120,7 +120,7 @@ class PrintAlbController extends Controller
         $this->printAlbalin($this->lineasAlbaran);
 
         if ($this->albaran->tipo_id == 3){
-            if ($this->albaran->factura == 0)
+            if ($this->albaran->factura == "")
                 $this->PagosCliente();
             if ($this->albaran->motivo_id > 0)
                 $this->impMotivo();
@@ -383,7 +383,7 @@ class PrintAlbController extends Controller
 
     private function formaDePago(){
 
-        if ($this->albaran->factura == 0)
+        if ($this->albaran->factura == "")
             return;
 
         $txt_fpago = "FORMA DE PAGO: ";
@@ -481,7 +481,7 @@ class PrintAlbController extends Controller
             $pdf->SetFont('helvetica', 'B', 16, '', false);
 
 
-            if ($this->albaran->factura == 0)
+            if ($this->albaran->factura == "")
                 $txt = "ALBARÁN";
             else{
                 if (strlen($this->albaran->cliente->dni) == 4)

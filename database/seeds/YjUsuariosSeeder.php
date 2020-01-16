@@ -59,9 +59,12 @@ class YjUsuariosSeeder extends Seeder
         $users = User::all();
         foreach ($users as $user){
             if ($user->id == 1){
-                $user->assignRole(['root','admin']);
+                $user->assignRole(['root','admin','gestor']);
             }
             $user->syncPermissions('addcom');
+            $user->syncPermissions('addven');
+            $user->syncPermissions('liquidar');
+            $user->syncPermissions('factura');
         }
 
     }

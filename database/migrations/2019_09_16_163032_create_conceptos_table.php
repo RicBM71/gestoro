@@ -18,6 +18,7 @@ class CreateConceptosTable extends Migration
             $table->string('nombre',30);
             $table->string('color',40)->nullable();
             $table->string('comven',1);
+            $table->integer('signo')->default(1);
             $table->timestamps();
         });
     }

@@ -124,23 +124,29 @@
                     </v-layout>
                     <v-layout row wrap v-if="items.length>0">
                         <v-flex xs12>
-                            <v-data-table
-                                :pagination.sync="pagination"
-                                :headers="headers"
-                                :items="items"
-                                rows-per-page-text="Registros por página"
-                            >
-                                <template slot="items" slot-scope="props">
-                                    <td v-if="props.item.concepto != 'TOTAL'" :class="clase(props.item.concepto)">{{ props.item.empresa }}</td>
-                                    <td v-else></td>
-                                    <td :class="clase(props.item.concepto)">{{ props.item.concepto }}</td>
-                                    <td :class="clase_num(props.item.concepto)">{{ props.item.operaciones | currency(' ', 0, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
-                                    <td :class="clase_num(props.item.concepto)">{{ props.item.importe | currency('€', 0, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
-                                </template>
-                                <template slot="pageText" slot-scope="props">
-                                    Registros {{ props.pageStart }} - {{ props.pageStop }} de {{ props.itemsLength }}
-                                </template>
-                            </v-data-table>
+                            <table class="v-datatable v-table theme--light">
+                                <thead>
+                                    <tr>
+                                        <th>Empresa</th>
+                                        <th>Concepto</th>
+                                        <th>Operaciones</th>
+                                        <th>Ingresos</th>
+                                        <th>Gastos</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(item, index) in items" :key="index">
+                                        <td v-if="item.concepto != 'TOTAL'" :class="clase(item.concepto)">{{ item.empresa }}</td>
+                                        <td v-else></td>
+                                        <td :class="clase(item.concepto)">{{ item.concepto }}</td>
+                                        <td :class="clase_num(item.concepto)">{{ item.operaciones | currency(' ', 0, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                        <td v-if="item.importe >=0" :class="clase_num(item.concepto)">{{ item.importe | currency('€', 0, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                        <td v-else></td>
+                                        <td v-if="item.importe < 0" :class="clase_num(item.concepto)">{{ item.importe | currency('€', 0, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                        <td v-else></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </v-flex>
                     </v-layout>
                 </v-container>
@@ -161,32 +167,6 @@ export default {
     },
     data () {
       return {
-            headers: [
-            {
-                text: 'Empresa',
-                align: 'left',
-                value: 'empresa',
-            },
-            {
-                text: 'Concepto',
-                align: 'left',
-                value: 'concepto',
-                width: '30%'
-            },
-            {
-                text: 'Operaciones',
-                align: 'right',
-                value: 'operaciones',
-                width: '18%'
-            },
-            {
-                text: 'Importe',
-                align: 'right',
-                value: 'importe'
-            }],
-            pagination:{
-                rowsPerPage: 10,
-            },
             operaciones:[
                     {value: 'C', text:"Compras"},
                     {value: 'V', text:"Ventas"},

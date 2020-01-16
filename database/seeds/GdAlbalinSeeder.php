@@ -29,18 +29,30 @@ class GdAlbalinSeeder extends Seeder
                 $iva_id = 3;
             }elseif ($row->ivarige=='G'){
                 $iva_id = 1;
+            }elseif ($row->ivarige=='I'){
+                $iva_id = 1;
+
             }
 
             $unidades = 1;
-            if ($row->tipo == 4 and $row->peso <> 0)
+            if ($row->tipo == 4 and $row->peso <> 0 && $row->ivarige != 'I')
                 $unidades = $row->peso;
+
+            if ($row->tipo==3)
+                $imp_uni = $row->importe;
+            else{
+                if ($row->ivarige == 'I')
+                    $imp_uni = $row->importe;
+                else
+                    $imp_uni = $row->impgramo;
+            }
 
             $data[]=array(
                 'empresa_id' => $empresa_id,
                 'albaran_id' => $row->albaran,
                 'producto_id' => $row->producto,
                 'unidades' => $unidades,
-                'importe_unidad'=>$row->tipo==3 ? $row->importe : $row->impgramo,
+                'importe_unidad'=> $imp_uni,
                 'precio_coste'=>$row->tipo==3 ? $row->pcoste : 0,
                 'importe_venta'=>$row->importe,
                 'iva_id' => $iva_id,

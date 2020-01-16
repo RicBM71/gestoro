@@ -30,6 +30,7 @@ class CreateComlinesTable extends Migration
             $table->unsignedInteger('quilates')->default(0);
             $table->date('fecha_liquidado')->nullable();
             $table->string('username',30)->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -25,7 +25,7 @@ class CreateAlbaransTable extends Migration
             $table->unsignedInteger('cuenta_id')->nullable();
             $table->date('fecha_albaran')->nullable();
             $table->date('fecha_factura')->nullable();
-            $table->Integer('factura')->default(0);
+            $table->Integer('factura')->nullable();
             $table->string('serie_factura',3)->nullable();
             $table->smallInteger('tipo_factura')->default(0);
             $table->String('clitxt',50)->nullable();

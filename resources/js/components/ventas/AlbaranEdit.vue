@@ -97,7 +97,7 @@
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            v-show="albaran.factura==0 && isAdmin"
+                            v-show="albaran.factura==null && isAdmin"
                             v-on="on"
                             color="white"
                             icon
@@ -168,7 +168,7 @@
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm2 v-if="albaran.factura==0">
+                        <v-flex sm2 v-if="albaran.factura==null">
                             <v-menu
                                 v-model="menu1"
                                 :close-on-content-click="false"
@@ -251,7 +251,7 @@
                             </v-text-field>
                         </v-flex>
                         <v-flex sm3 d-flex v-if="albaran.id > 0 && albaran.tipo_id>=4">
-                            <v-select v-if="albaran.factura == 0"
+                            <v-select v-if="albaran.factura == null"
                                 v-model="albaran.fpago_id"
                                 :items="fpagos"
                                 label="Forma de Pago"
@@ -265,7 +265,7 @@
                         </v-flex>
                         <v-flex sm2 d-flex v-if="albaran.fpago_id==2">
                             <v-select
-                                v-if="albaran.factura == 0"
+                                v-if="albaran.factura == null"
                                 v-model="albaran.cuenta_id"
                                 :items="cuentas"
                                 label="IBAN"
@@ -384,7 +384,7 @@
                         <v-flex sm2>
                             <div class="text-xs-center">
                                 <v-btn
-                                    v-show="albaran.factura == 0"
+                                    v-show="albaran.factura == null"
                                     small
                                     @click="submit"  round  :loading="enviando" block  color="primary">
                                     Guardar
@@ -420,7 +420,7 @@
                         <v-flex sm2>
                             <div class="text-xs-center">
                                 <v-btn
-                                    v-show="albaran.factura == 0"
+                                    v-show="albaran.factura == null"
                                     small
                                     @click="submit"  round  :loading="enviando" block  color="primary">
                                     Guardar
@@ -589,7 +589,7 @@ import {mapGetters} from 'vuex';
 
                 if (!this.isRoot) return false;
 
-                if (this.albaran.factura == 0 && this.albaran.fase_id == 11)
+                if (this.albaran.factura == null && this.albaran.fase_id == 11)
                     return true;
 
                 return false;
@@ -600,7 +600,7 @@ import {mapGetters} from 'vuex';
                 return false;
             },
             computedLabelAlbaran(){
-                return (this.albaran.factura == 0) ? 'Nº Albarán' : 'Albarán '+ this.computedFechaAlbaran;
+                return (this.albaran.factura == null) ? 'Nº Albarán' : 'Albarán '+ this.computedFechaAlbaran;
             },
             computedMotivo(){
                 return (this.albaran.motivo_id > 0) ? (": "+this.albaran.motivo.nombre) :  "";
@@ -637,12 +637,12 @@ import {mapGetters} from 'vuex';
 
                 if (this.albaran.tipo_id == 3){ //REBU
 
-                    if (this.albaran.factura == 0 && this.albaran.fase_id==11)
+                    if (this.albaran.factura == null && this.albaran.fase_id==11)
                         return true;
 
                     return false;
                 }else{
-                    if (this.albaran.factura == 0)
+                    if (this.albaran.factura == null)
                         return true;
 
                     return false;

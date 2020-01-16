@@ -99,7 +99,7 @@ class GdProductosSeeder extends Seeder
                 'etiqueta_id' => $row->etiqueta,
                 'referencia' => str_replace("-","",$row->referencia),
                 'cliente_id' => $row->proveedor <=-1 ? null : $row->proveedor,
-                'iva_id' => $row->tipoiva,
+                'iva_id' => $row->tipoiva == 4 ? 1 : $row->tipoiva,
                 'etiqueta_id' => $row->etiqueta==null ? 1 : $etiqueta[$row->etiqueta],
                 'online' => $row->online=="S" ? true : false,
                 'deleted_at' => $row->baja=="S" ? $row->sysfum : null,

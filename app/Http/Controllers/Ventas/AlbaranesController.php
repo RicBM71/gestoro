@@ -258,7 +258,7 @@ class AlbaranesController extends Controller
                         $albarane->factura);
 
        $data = [
-           'factura'            => 0,
+           'factura'            => null,
            'tipo_factura'       => 0,
            'fecha_factura'      => null,
            'serie_factura'      => null,

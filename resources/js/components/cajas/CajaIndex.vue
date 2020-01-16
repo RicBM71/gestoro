@@ -309,7 +309,7 @@ import {mapActions} from "vuex";
             if (item.apunte_id == 30){ // es apunte de cierre
                 return (this.isSuprevisor || this.isAdmin)
             }else{
-                return item.manual == "N";
+                return item.manual == "S" && this.isAdmin;
             }
 
         },
