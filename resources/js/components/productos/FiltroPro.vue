@@ -22,7 +22,7 @@
                         v-validate="'min:2|max:20'"
                         :error-messages="errors.collect('ref_pol')"
                         label="Ref. Policía"
-                        data-vv-name="referencia"
+                        data-vv-name="ref_pol"
                         data-vv-as="Ref. policía"
                         v-on:keyup.enter="submit"
                     >

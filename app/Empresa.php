@@ -89,6 +89,18 @@ class Empresa extends Model
 
     }
 
+    /**
+     * Caso evaoro, normalmente es la empresa 1 la común, en el caso de eva oro no está activa
+     * esto permite seleccionar todas las empresas, básicamente para mto empresa.
+     *
+     * @return void
+     */
+    public static function selAllEmpresas(){
+        return Empresa::select('id AS value', 'nombre AS text')
+                ->orderBy('nombre', 'asc')
+                ->get();
+    }
+
     public function getFlag($flag){
         return $this->flags[$flag];
     }

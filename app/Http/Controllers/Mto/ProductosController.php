@@ -77,19 +77,21 @@ class ProductosController extends Controller
         $data = request()->session()->get('filtro_pro');
 
         // \Log::info(Producto::onlyTrashed()->with(['clase','estado'])
-        //                 ->referencia($data['referencia'])
-        //                 ->fechaMod($data['fecha_d'])
-        //                 ->clase($data['clase_id'])
-        //                 ->estado($data['estado_id'])
-        //                 ->notasNombre($data['notas'])
-        //                 ->refPol($data['ref_pol'])
-        //                 ->precioPeso($data['precio'])
-        //                 ->quilates($data['quilates'])
-        //                 ->online($data['online'])
-        //                 ->orderBy('id','desc')
+        // ->referencia($data['referencia'])
+        // ->fechaMod($data['fecha_d'])
+        // ->clase($data['clase_id'])
+        // ->estado($data['estado_id'])
+        // ->notasNombre($data['notas'])
+        // ->refPol($data['ref_pol'])
+        // ->precioPeso($data['precio'])
+        // ->quilates($data['quilates'])
+        // ->online($data['online'])
+        // ->orderBy('id','desc')
         //                 ->toSql());
 
-        if (auth()->user()->hasRole('Admin') && $data['alta'] == false)
+        //                 \Log::info($data['alta']);
+
+        if ($data['alta'] == false)
             $data = Producto::onlyTrashed()->with(['clase','estado'])
                         ->referencia($data['referencia'])
                         ->fechaMod($data['fecha_d'])
@@ -103,7 +105,19 @@ class ProductosController extends Controller
                         ->orderBy('id','desc')
                         ->get()
                         ->take(500);
-        else
+        else{
+            \Log::info(Producto::with(['clase','estado'])
+            ->referencia($data['referencia'])
+            ->fechaMod($data['fecha_d'])
+            ->clase($data['clase_id'])
+            ->estado($data['estado_id'])
+            ->notasNombre($data['notas'])
+            ->refPol($data['ref_pol'])
+            ->precioPeso($data['precio'])
+            ->quilates($data['quilates'])
+            ->online($data['online'])
+            ->asociado($data['cliente_id'])
+            ->orderBy('id','desc')->toSql());
             $data = Producto::with(['clase','estado'])
                     ->referencia($data['referencia'])
                     ->fechaMod($data['fecha_d'])
@@ -118,8 +132,10 @@ class ProductosController extends Controller
                     ->orderBy('id','desc')
                     ->get()
                     ->take(500);
+        }
 
         return $data;
+
     }
 
     /**

@@ -90,7 +90,7 @@ class EmpresasController extends Controller
             return [
                 'empresa' =>$empresa,
                 'almacenes'=>Almacen::selAlmacenes(),
-                'empresas'=>Empresa::selEmpresas()->get()
+                'empresas'=>Empresa::selAllEmpresas()
             ];
 
     }

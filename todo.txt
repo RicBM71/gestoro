@@ -58,3 +58,7 @@ update klt_compras set empresa_id = 7,serie_com="Z" where empresa_id = 1 and tip
 
 // desfase en fase.
 SELECT * FROM `klt_compras` WHERE tipo_id = 2 and fase_id = 4 and id in (select compra_id from klt_comlines where fecha_liquidado is not null)
+
+Para ver con eva:
+
+REbu en EVa oro sol R01809-18

@@ -218,6 +218,7 @@
                                             data-vv-as="empresa"
                                             :items="empresas"
                                             label="Empresa Depósitos"
+                                            :disabled="!isRoot"
                                         ></v-select>
                                     </v-flex>
                                 </v-layout>
@@ -263,8 +264,13 @@
                                         <v-select
                                             :readonly="!isRoot"
                                             v-model="empresa.comun_empresa_id"
+                                            v-validate="'required'"
+                                            :error-messages="errors.collect('comun_empresa_id')"
+                                            data-vv-name="comun_empresa_id"
+                                            data-vv-as="empresa"
                                             :items="empresas"
                                             label="Empresa Común"
+                                            :disabled="!isRoot"
                                         ></v-select>
                                     </v-flex>
                                     <v-flex sm2>
