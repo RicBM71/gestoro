@@ -275,6 +275,9 @@ import {mapActions} from "vuex";
         colorear(item, ali=false){
             var a = ali ? 'text-xs-right' : '';
 
+            if (item.manual == 'C')
+                return a+' brown--text darken-1 font-weight-bold';
+
             if (item.apunte_id > 0){
                 if (item.apunte.color != null)
                     return a+' '+item.apunte.color;
@@ -298,7 +301,7 @@ import {mapActions} from "vuex";
         },
         puedeEditar(item){
 
-            if (item.manual != 'S' || item.apunte_id == 30) return false;
+            if (item.manual != 'S') return false;
 
             if (this.isSuprevisor || this.isAdmin)
                 return true;
@@ -307,7 +310,7 @@ import {mapActions} from "vuex";
 
         },
         puedeBorrar(item){
-            if (item.apunte_id == 30){ // es apunte de cierre
+            if (item.manual == 'C'){ // es apunte de cierre
                 return (this.isSuprevisor || this.isAdmin)
             }else{
                 return item.manual == "S" && this.isAdmin;
