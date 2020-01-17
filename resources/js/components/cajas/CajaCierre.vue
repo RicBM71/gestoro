@@ -584,9 +584,9 @@ import {mapGetters} from 'vuex';
                         this.recuento = this.recuento_manual;
 
                     this.caja.dh = this.regulariza >= 0 ? "H" : "D";
-                    this.caja.importe = Math.abs(this.regulariza);
-                    this.caja.nombre = "Cierre de caja:"+this.saldo+" recuento: "+this.recuento;
-                    this.caja.apunte_id = 30;
+                    this.caja.importe = Math.abs(this.regulariza).toFixed(2);
+                    this.caja.nombre = "CIERRE DE CAJA:"+this.saldo.toFixed(2)+" RECUENTO: "+this.recuento;
+
 
                     this.$validator.validateAll().then((result) => {
                         if (result){

@@ -62,3 +62,4 @@ SELECT * FROM `klt_compras` WHERE tipo_id = 2 and fase_id = 4 and id in (select 
 Para ver con eva:
 
 REbu en EVa oro sol R01809-18
+Compra 1414-19 ojo a inteeses, así se pierden

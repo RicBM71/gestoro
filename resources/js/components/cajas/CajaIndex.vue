@@ -24,7 +24,7 @@
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on }">
                             <v-btn
-                                v-if="arr_reg.length > 0 && isAdmin"
+                                v-show="arr_reg.length > 0 && isGestor"
                                 v-on="on"
                                 color="white"
                                 icon
@@ -261,6 +261,7 @@ import {mapActions} from "vuex";
     computed: {
         ...mapGetters([
             'isAdmin',
+            'isGestor',
             'isSupervisor',
             'userName',
             'getPagination'

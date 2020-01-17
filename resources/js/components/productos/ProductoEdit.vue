@@ -56,7 +56,7 @@
                                         data-vv-name="ref_pol"
                                         data-vv-as="Ref. Pol"
                                         required
-                                        :disabled="!computedEditPro"
+                                        :disabled="!computedEditPro || producto.compra_id > 0"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -173,7 +173,7 @@
                                 </v-flex>
                                 <v-flex sm4 d-flex>
                                     <v-select
-                                        :disabled="!computedEditPro"
+                                        :disabled="!computedEditPro || producto.compra_id > 0"
                                         v-model="producto.cliente_id"
                                         v-validate="'numeric'"
                                         data-vv-name="cliente_id"
@@ -183,6 +183,7 @@
                                         label="Proveedor"
                                         ></v-select>
                                 </v-flex>
+
                                 <v-flex sm3 d-flex>
                                     <v-select
                                         :disabled="!computedEditPro"
@@ -218,7 +219,7 @@
                                     data-vv-as="iva"
                                     :error-messages="errors.collect('iva_id')"
                                     :items="ivas"
-                                    :disabled="!computedEditPro"
+                                    :disabled="!computedEditPro || producto.compra_id > 0"
                                     label="IVA"
                                     ></v-select>
                                 </v-flex>

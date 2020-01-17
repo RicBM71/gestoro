@@ -22,7 +22,7 @@
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            v-show="items.length > 0"
+                            v-show="items.length > 0 && isGestor"
                             v-on="on"
                             color="white"
                             icon
@@ -233,6 +233,7 @@ export default {
     },
     computed: {
         ...mapGetters([
+            'isGestor',
         ]),
         computedFechaD() {
             moment.locale('es');

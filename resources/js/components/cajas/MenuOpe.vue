@@ -41,18 +41,18 @@
             </template>
                 <span>Borrar Registro</span>
         </v-tooltip>
-        <v-tooltip bottom v-if="id > 0">
+        <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
                     v-on="on"
                     color="white"
                     icon
-                    @click="goIndex"
+                    @click="goBack()"
                 >
-                    <v-icon color="primary">list</v-icon>
+                    <v-icon color="primary">arrow_back</v-icon>
                 </v-btn>
             </template>
-            <span>Lista</span>
+                <span>Volver</span>
         </v-tooltip>
     </div>
 </template>
@@ -73,6 +73,9 @@ export default {
       }
     },
     methods:{
+        goBack(){
+            this.$router.go(-1);
+        },  
         goCreate(){
             this.$router.push({ name: this.ruta+'.create' })
         },

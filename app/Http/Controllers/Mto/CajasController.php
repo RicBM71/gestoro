@@ -203,9 +203,10 @@ class CajasController extends Controller
 
         if (request()->wantsJson()){
             return [
-                'caja'  => Caja::orderBy('fecha','desc')
-                                    ->where('fecha','=',$hoy)
-                                    ->get(),
+                'caja'  => Caja::with('apunte')
+                                ->where('fecha','=',$hoy)
+                                ->orderBy('fecha','desc')
+                                ->get(),
                 'fecha_saldo'=> getFecha($hoy),
                 'saldo' => Caja::saldo($hoy)
             ];
