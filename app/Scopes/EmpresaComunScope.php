@@ -19,6 +19,7 @@ class EmpresaComunScope implements Scope
     {
 
         $empresa_id =  session()->get('empresa')->comun_empresa_id;
+
         $builder->where('empresa_id', '=', $empresa_id);
 
     }

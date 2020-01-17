@@ -48,6 +48,7 @@ class YjEmpresasSeeder extends Seeder
                 'titulo'    => $row->titulo,
                 'almacen_id'=> 0,
                 'comun_empresa_id' => 1,
+                'deposito_empresa_id' => 1,
                 'username'  => $row->sysusr,
                 'created_at'=> $row->sysfum.' 00:00:00',
                 'updated_at'=> $row->sysfum.' '.$row->syshum,
@@ -90,8 +91,14 @@ class YjEmpresasSeeder extends Seeder
 
         $data4[]=array(
             'id' => 1,
+            'empresa_id' => 1,
             'nombre' => 'Yajap'
         );
+
+        session([
+            'empresa'    => Empresa::find(1),
+            ]);
+
 
         Almacen::insert($data4);
 

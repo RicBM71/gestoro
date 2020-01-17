@@ -28,6 +28,7 @@
         <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
+                    v-show="computedAdd"
                     v-on="on"
                     color="white"
                     icon
@@ -96,6 +97,7 @@
 </template>
 <script>
 import MyDialog from '@/components/shared/MyDialog'
+import {mapGetters} from 'vuex';
 export default {
     props:{
         id: Number
@@ -108,6 +110,20 @@ export default {
           dialog: false,
           dialog_help: false,
       }
+    },
+    computed: {
+        ...mapGetters([
+            'isRoot',
+            'aislar'
+        ]),
+        computedAdd(){
+
+            if (this.aislar)
+                return this.isRoot;
+            else
+                return true;
+        }
+
     },
     methods:{
         goCreate(){

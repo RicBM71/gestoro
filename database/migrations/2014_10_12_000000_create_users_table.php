@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('huella',3)->nullable();
             $table->timestamp('blocked_at')->nullable();
             $table->boolean('blocked')->default(false);
-            $table->unsignedInteger('empresa_id')->default(1);
+            //$table->unsignedInteger('empresa_id')->default(1);
             $table->timestamp('login_at')->nullable();
             // $table->smallInteger('expira')->default(0);
             // $table->date('fecha_expira')->nullable();

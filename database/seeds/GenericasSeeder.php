@@ -10,6 +10,8 @@ use App\Apunte;
 use App\Estado;
 use App\Motivo;
 use App\Taller;
+use App\Almacen;
+use App\Empresa;
 use App\Quilate;
 use App\Etiqueta;
 use App\Parametro;
@@ -41,29 +43,32 @@ class GenericasSeeder extends Seeder
         Taller::truncate();
 
 
-        // DB::table('empresa_user')->truncate();
+        DB::table('empresa_user')->truncate();
 
-        // $emp = new Empresa;
-        // $emp->nombre = "Kilates";
-        // $emp->razon = "Los Kilates de Arenal SL";
-        // $emp->cif="B82848417";
-        // $emp->titulo = "Kilates T";
-        // $emp->logo = "logo.jpg";
-        // $emp->certificado = "";
-        // $emp->passwd_cer="";
-        // $emp->almacen_id = 1;
-        // $emp->save();
+        /*
+        $emp = new Empresa;
+        $emp->nombre = "Demo";
+        $emp->razon = "Demo";
+        $emp->cif="B82848417";
+        $emp->titulo = "Demo T";
+       // $emp->logo = "logo.jpg";
+        $emp->certificado = "";
+        $emp->passwd_cer="";
+        $emp->almacen_id = 1;
+        $emp->flags='11111000000000000000';
+        $emp->save();
 
 
-        // $alm = new Almacen;
-        // $alm->nombre = "Almacén 1";
-        // $alm->save();
+        $alm = new Almacen;
+        $alm->empresa_id=1;
+        $alm->nombre = "Almacén 1";
+        $alm->save();
 
-        // DB::table('empresa_user')->insert(
-        //     ['empresa_id' => 1, 'user_id' => '1'],
-        //     ['empresa_id' => 1, 'user_id' => '2']
-        // );
-
+        DB::table('empresa_user')->insert(
+            ['empresa_id' => 1, 'user_id' => '1'],
+            ['empresa_id' => 1, 'user_id' => '2']
+        );
+        */
         $grupo = new Grupo;
         $grupo->nombre = "Metal";
         $grupo->leyenda = "metales preciosos";
@@ -334,8 +339,9 @@ class GenericasSeeder extends Seeder
         $mot->save();
 
         $taller = new Taller;
-        $taller->nombre = "Taller 1";
-        $taller->razon = "Taller 1";
+        $taller->empresa_id = 1;
+        $taller->nombre = "Taller Demo";
+        $taller->razon = "Taller Demo";
         $taller->save();
 
 

@@ -37,7 +37,7 @@ class GdUsuariosSeeder extends Seeder
                 'avatar'        =>null,
                 'blocked'       => $row->id==1 ? false : true,
                 'blocked_at'    =>null,
-                'empresa_id'    =>1,
+            //    'empresa_id'    =>1,
                 'login_at'  => null,
                 'expira'    => false,
                 'fecha_expira' => date('Y-m-d'),
@@ -50,7 +50,7 @@ class GdUsuariosSeeder extends Seeder
             $empresas = explode(',',$row->empresas);
 
             foreach ($empresas as $emp){
-                
+
                 DB::table('empresa_user')->insert(['empresa_id'=>$emp,'user_id'=>$row->id]);
             }
         }

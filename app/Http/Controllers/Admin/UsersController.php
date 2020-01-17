@@ -26,10 +26,9 @@ class UsersController extends Controller
     public function index()
     {
 
-        $user = new User;
-       // $this->authorize('view', $user);
+        $this->authorize('view', new User);
 
-        $users = User::Permitidos()->get();
+        $users = User::select('users.*')->Permitidos()->get();
         //$users = User::get();
 
         if (request()->wantsJson())
@@ -46,9 +45,7 @@ class UsersController extends Controller
     public function create()
     {
 
-        $user = new User;
-
-        $this->authorize('create', $user);
+        $this->authorize('create', new User);
 
         $roles = Role::with('permissions')->get(); // para listar también los permisos
         $permisos = Permission::pluck('name','id');
@@ -121,7 +118,7 @@ class UsersController extends Controller
     public function edit(User $user)
     {
 
-        $this->authorize('update', $user);
+        $this->authorize('update', $user->load('empresas'));
 
         $roles = Role::with('permissions')->get(); // para listar también los permisos
         //$permisos = Permission::pluck('name','id');
@@ -141,14 +138,19 @@ class UsersController extends Controller
 
         $emp_user = $user->empresas->pluck('id');
 
+        if (session('aislar_empresas') && !esRoot())
+            $empresas_mostrar = auth()->user()->empresas;
+        else
+            $empresas_mostrar = Empresa::flag(0)->get();
+
         if (request()->wantsJson())
             return [
-                'user'          =>$user,
+                'user'          => $user,
                 'role_user'     => $role_user,
-                'permisos'      =>$permisos,
+                'permisos'      => $permisos,
                 'permisos_user' => $permisos_user,
                 'emp_user'      => $emp_user,
-                'empresas'      => Empresa::flag(0)->get()
+                'empresas'      => $empresas_mostrar,
             ];
 
         return redirect()->route('home');

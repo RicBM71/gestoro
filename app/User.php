@@ -77,9 +77,17 @@ class User extends Authenticatable
         if (esRoot())
             return $query->with('roles');
         else {
-            return $query->where('id', '>', 1)->with('roles');
+            if (session('aislar_empresas')){
+                return $query->join('empresa_user','user_id','=','users.id')
+                            ->where('users.id', '>', 1)
+                            //->where('blocked', false)
+                            ->whereIn('empresa_user.empresa_id',session('empresas_usuario'))
+                            ->with('roles');
+            }
+            else{
+                return $query->where('users.id', '>', 1)->with('roles');
+            }
         }
-        //dd(auth()->user()->can('view', $this));
 
         if (auth()->user()->can('view', $this)){ // busca la política e UserPolicy, pasar instancia
             return $query; // retorna el query builder sin restricciones

@@ -46,8 +46,10 @@ class AlmacenesController extends Controller
 
         $data = $request->validate([
             'nombre' => ['required', 'string', 'max:50'],
-
         ]);
+
+        $data['empresa_id'] = session()->get('empresa')->comun_empresa_id;
+        $data['username'] = $request->user()->username;
 
         $reg = Almacen::create($data);
 
@@ -96,6 +98,8 @@ class AlmacenesController extends Controller
         $data = $request->validate([
             'nombre' => ['required', 'string', 'max:50'],
         ]);
+
+        $data['username'] = $request->user()->username;
 
 
         $almacene->update($data);

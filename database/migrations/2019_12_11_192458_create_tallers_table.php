@@ -15,6 +15,7 @@ class CreateTallersTable extends Migration
     {
         Schema::create('talleres', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedInteger('empresa_id');
             $table->string('razon', 70);
             $table->string('nombre', 30)->nullable();
             $table->string('apellidos', 45)->nullable();

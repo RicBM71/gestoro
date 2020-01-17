@@ -130,7 +130,7 @@
                 .catch(err => {
                      if (err.response.status != 401){
                         this.$toast.error(err.response.data.message);
-                        this.$router.push({ name: 'users'});
+                        this.$router.push({ name: 'users.index'});
                         }
                 })
         },

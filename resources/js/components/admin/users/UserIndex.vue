@@ -50,10 +50,11 @@
 
 
                                     <v-icon
-                                    small
-                                    @click="openDialog(props.item.id)"
-                                    >
-                                    delete
+                                        v-if="isRoot"
+                                        small
+                                        @click="openDialog(props.item.id)"
+                                        >
+                                        delete
                                     </v-icon>
                                 </td>
                             </template>
@@ -69,6 +70,7 @@
 </template>
 <script>
 import moment from 'moment';
+import {mapGetters} from 'vuex';
 import MyDialog from '@/components/shared/MyDialog'
 import MenuOpe from './MenuOpe'
   export default {
@@ -120,6 +122,11 @@ import MenuOpe from './MenuOpe'
                 this.$toast.error(err.response.data.message);
                 this.$router.push({ name: 'dash' })
             })
+    },
+    computed: {
+        ...mapGetters([
+	    	'isRoot'
+        ]),
     },
     methods:{
         formatDate(f){

@@ -22,6 +22,7 @@ const initialState = {
     parametros: Object,
     img_fondo: null,
     stock: null,
+    aislar: null
 };
 
 /*
@@ -41,6 +42,7 @@ const mutations = {
         state.parametros = payload.user.parametros;
         state.img_fondo = payload.user.img_fondo;
         state.stockComple = payload.user.stockComple;
+        state.aislar = payload.user.aislar_empresas
 	},
 	[UNSET_USER](state, payload) {
         state.id = null;
@@ -53,6 +55,7 @@ const mutations = {
         state.parametros = {};
         state.img_fondo=null;
         state.stockComple=null;
+        state.aislar=null
 	}
 };
 
@@ -93,6 +96,9 @@ const getters = {
     },
     parametros: (state) =>{
         return state.parametros
+    },
+    aislar: (state) =>{
+        return state.aislar
     },
     empresaActiva: (state) =>{
         return state.empresa_id

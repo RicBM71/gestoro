@@ -87,7 +87,7 @@ class HomeController extends Controller
                         ->update(['activa' => true]);
         }
 
-        $empresa = Empresa::findOrFail($authUser->empresa_id);
+        $empresa = Empresa::findOrFail($empresa_id);
 
         $user = [
             'id'        => $authUser->id,
@@ -100,7 +100,8 @@ class HomeController extends Controller
             'empresas'  => $empresas,
             'stockComple'=> $empresa->getFlag(5),
             'parametros'=>$parametros,
-            'img_fondo' => $empresa->img_fondo
+            'img_fondo' => $empresa->img_fondo,
+            'aislar_empresas'  => $parametros->aislar_empresas
         ];
 
         // envio mail de modificación de productos

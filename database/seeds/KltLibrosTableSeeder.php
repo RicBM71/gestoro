@@ -3,7 +3,7 @@
 use App\Libro;
 use Illuminate\Database\Seeder;
 
-class LibrosTableSeeder extends Seeder
+class KltLibrosTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

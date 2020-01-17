@@ -369,7 +369,6 @@
                         this.permisos = res.data.permisos;
 
 
-
                         this.permisos_selected = res.data.permisos_user;
 
                         this.emp_user = res.data.emp_user;

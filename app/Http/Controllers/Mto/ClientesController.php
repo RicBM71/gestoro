@@ -102,7 +102,6 @@ class ClientesController extends Controller
         $data = $request->validated();
 
         $data['empresa_id'] = session()->get('empresa')->comun_empresa_id;
-
         $data['username'] = $request->user()->username;
 
 

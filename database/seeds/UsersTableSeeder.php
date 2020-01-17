@@ -43,37 +43,37 @@ class UsersTableSeeder extends Seeder
         Permission::create(['name'=>'scan','nombre'=>'Scanea Docu']);
         Permission::create(['name'=>'users','nombre'=>'Usuarios']);
 
-        $user = new User;
+    //     $user = new User;
 
-        $user->name = "Ric";
-		$user->email = "info@sanaval.com";
-        $user->username = "ricardo.bm";
-        $user->huella = "RBM";
-		$user->password = Hash::make('123');
-        $user->save();
+    //     $user->name = "Ric";
+	// 	$user->email = "info@sanaval.com";
+    //     $user->username = "ricardo.bm";
+    //     $user->huella = "RBM";
+    //     $user->fecha_expira = date('Y-m-d');
+	// 	$user->password = Hash::make('123');
+    //     $user->save();
 
-        $user->givePermissionTo('reacom');
-        $user->givePermissionTo('liquidar');
-        $user->givePermissionTo('addcom');
-        $user->givePermissionTo('addven');
-        $user->givePermissionTo('users');
-        $user->givePermissionTo('edtpro');
-        $user->assignRole($rootRole);
-        $user->assignRole($adminRole);
-        $user->assignRole($supRole);
+    //     $user->givePermissionTo('reacom');
+    //     $user->givePermissionTo('liquidar');
+    //     $user->givePermissionTo('addcom');
+    //     $user->givePermissionTo('addven');
+    //     $user->givePermissionTo('users');
+    //     $user->givePermissionTo('edtpro');
+    //     $user->assignRole($rootRole);
+    //     $user->assignRole($adminRole);
+    //     $user->assignRole($supRole);
 
-        $user = new User;
+    //     $user = new User;
 
-        $user->name = "User 1";
-		$user->email = "info2@sanaval.com";
-        $user->username = "usuario.1";
-        $user->huella = "ABC";
-		$user->password = Hash::make('123');
-        $user->save();
+    //     $user->name = "User 1";
+	// 	$user->email = "info2@sanaval.com";
+    //     $user->username = "usuario.1";
+    //     $user->huella = "ABC";
+	// 	$user->password = Hash::make('123');
+    //     $user->save();
 
-    //    $adminRole->givePermissionTo('reacom');
-        $supRole->givePermissionTo('addcom');
-        $supRole->givePermissionTo('authtras');
+    //     $supRole->givePermissionTo('addcom');
+    //     $supRole->givePermissionTo('authtras');
 
         //$per_edit->assingPermission();
 

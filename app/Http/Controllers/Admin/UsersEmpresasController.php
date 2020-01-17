@@ -23,10 +23,10 @@ class UsersEmpresasController extends Controller
 
         if ($request->get('seleccionadas') > 0){
 
-            DB::table('empresa_user')->where('user_id', $user_id)
+            DB::table('empresa_user')->where('user_id', $user->id)
                         ->update(['activa' => false]);
 
-            DB::table('empresa_user')->where('user_id', $user_id)
+            DB::table('empresa_user')->where('user_id', $user->id)
                         ->where('empresa_id', $empresas[0])
                         ->update(['activa' => true]);
 

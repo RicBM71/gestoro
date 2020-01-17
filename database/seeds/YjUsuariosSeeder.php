@@ -37,7 +37,7 @@ class YjUsuariosSeeder extends Seeder
                 'avatar'        =>null,
                 'blocked'       => $row->id==1 ? false : true,
                 'blocked_at'    =>null,
-                'empresa_id'    =>1,
+            //    'empresa_id'    =>1,
                 'login_at'  => null,
                 'expira'    => false,
                 'fecha_expira' => date('Y-m-d'),
@@ -59,7 +59,7 @@ class YjUsuariosSeeder extends Seeder
         $users = User::all();
         foreach ($users as $user){
             if ($user->id == 1){
-                $user->assignRole(['root','admin','gestor']);
+                $user->assignRole(['Root','Admin','Gestor']);
             }
             // $user->syncPermissions('addcom');
             // $user->syncPermissions('addven');

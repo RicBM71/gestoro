@@ -2,13 +2,23 @@
 
 namespace App;
 
+use App\Scopes\EmpresaComunScope;
 use Illuminate\Database\Eloquent\Model;
 
 class Almacen extends Model
 {
     protected $fillable = [
-        'nombre', 'username'
+        'empresa_id','nombre', 'username'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new EmpresaComunScope);
+
+    }
+
 
     public static function selAlmacenes(){
 
@@ -17,4 +27,6 @@ class Almacen extends Model
             ->get();
 
     }
+
+
 }

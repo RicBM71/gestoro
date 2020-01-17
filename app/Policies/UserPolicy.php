@@ -28,9 +28,7 @@ class UserPolicy
     public function view(User $authUser, User $user)
     {
 
-        //dd($authUser->id);
-
-        return $authUser->hasRole('Admin') ?: $this->deny("Acceso denegado. Role de administrador requerido");
+        return $authUser->hasPermissionTo('users') ?: $this->deny("Acceso denegado. Permiso de acceso a usuarios requerido");
 
         //return $authUser->hasPermissionTo('Usuarios');
     }
@@ -43,7 +41,10 @@ class UserPolicy
      */
     public function create(User $authUser)
     {
-        return $authUser->hasPermissionTo('users') ?: $this->deny("Acceso denegado. Role de administrador requerido");
+        if (session('aislar_empresas'))
+            return $authUser->hasRole('Root') ?: $this->deny("Acceso denegado. Role root requerido");
+        else
+            return $authUser->hasPermissionTo('users') ?: $this->deny("Acceso denegado. Role de administrador requerido");
        // return $authUser->hasPermissionTo('Usuarios');
     }
 
@@ -56,10 +57,36 @@ class UserPolicy
      */
     public function update(User $authUser, User $user)
     {
-        
+
        if ($user->id == 1 && !$authUser->hasRole('Root')) return false;
 
-       return $authUser->hasPermissionTo('users') ?: $this->deny("Acceso denegado. Permiso usuario requerido");
+       if (session('aislar_empresas')){
+
+            if ($authUser->hasPermissionTo('users')){
+
+                // $empresas_usuario_a_editar = array();
+                // foreach ($user->empresas as $emp){
+                //     $empresas_usuario_a_editar[]=$emp->id;
+                // }
+                $empresas_usuario_a_editar = $user->empresas->pluck('id')->toArray();
+
+                //$authUser->load('empresas');
+                foreach ($authUser->empresas as $empresa){
+                    // usuario logado y consultado comparten empresa, puede editar.
+                    if (in_array($empresa->id, $empresas_usuario_a_editar))
+                        return true;
+                }
+
+                return $this->deny("Acceso prohibido a un usuario no configurado!");
+
+            }else{
+                return $this->deny("Acceso denegado. Permiso usuario requerido");
+            }
+        }
+        else{
+            return $authUser->hasPermissionTo('users') ?: $this->deny("Acceso denegado. Permiso usuario requerido");
+        }
+
 
        // return $authUser->hasPermissionTo('Usuarios');
     }

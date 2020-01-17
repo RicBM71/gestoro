@@ -86,6 +86,10 @@ function hasScan(){
     return auth()->user()->hasPermissionTo('scan');
 }
 
+function hasUsers(){
+    return auth()->user()->hasPermissionTo('userr');
+}
+
 
 function esPropietario($obj)
 {

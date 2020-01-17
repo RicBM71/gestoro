@@ -31,21 +31,12 @@
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm5>
-                        </v-flex>
-                        <v-flex sm2>
+                        <v-flex sm1>
                             <div class="text-xs-center">
-                                        <v-btn @click="submit"  round  :loading="loading" block  color="primary">
+                                        <v-btn @click="submit" small round  :loading="loading" block  color="primary">
                                 Guardar
                                 </v-btn>
                             </div>
-                        </v-flex>
-                        <v-flex sm2>
-                            <v-switch
-                                v-model="cuenta.activa"
-                                color="primary"
-                                label="Activa"
-                            ></v-switch>
                         </v-flex>
                     </v-layout>
                 </v-container>

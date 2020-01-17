@@ -35,7 +35,7 @@ class KltUsuariosSeeder extends Seeder
                 'avatar'        =>null,
                 'blocked'       => $row->id==1 ? false : true,
                 'blocked_at'    =>null,
-                'empresa_id'    =>$row->empdef,
+           //     'empresa_id'    =>$row->empdef,
                 'login_at'  => null,
                 'expira'    => false,
                 'fecha_expira' => date('Y-m-d'),

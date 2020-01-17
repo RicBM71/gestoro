@@ -57,6 +57,7 @@ class TalleresController extends Controller
         ]);
 
         $data['username'] = $request->user()->username;
+        $data['empresa_id'] = session()->get('empresa')->comun_empresa_id;
 
         $reg = Taller::create($data);
 

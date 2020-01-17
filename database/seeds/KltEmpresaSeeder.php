@@ -5,7 +5,7 @@ use App\Empresa;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class EmpresaSeeder extends Seeder
+class KltEmpresaSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -65,11 +65,12 @@ class EmpresaSeeder extends Seeder
         foreach ($reg as $row){
             $data[]=array(
                 'id' => $row->id,
+                'empresa_id'=> 1,
                 'nombre' => $row->nombre
             );
         }
 
-        Almacen::insert($data);
+        //Almacen::insert($data);
 
 
 
