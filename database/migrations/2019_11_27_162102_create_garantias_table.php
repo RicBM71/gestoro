@@ -15,6 +15,7 @@ class CreateGarantiasTable extends Migration
     {
         Schema::create('garantias', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedInteger('empresa_id');
             $table->string('nombre');
             $table->text('leyenda')->nullable();
             $table->string('username',30)->nullable();

@@ -88,19 +88,17 @@ class EoEmpresasSeeder extends Seeder
 
         Empresa::insert($data);
 
-        $data=array();
-        $reg = DB::connection('evaoro')->select('select * from almacenes');
-        foreach ($reg as $row){
-            $data[]=array(
-                'id' => $row->id,
-                'empresa_id' => 1,
-                'nombre' => $row->nombre
-            );
-        }
+        // $data=array();
+        // $reg = DB::connection('evaoro')->select('select * from almacenes');
+        // foreach ($reg as $row){
+        //     $data[]=array(
+        //         'id' => $row->id,
+        //         'empresa_id' => 1,
+        //         'nombre' => $row->nombre
+        //     );
+        // }
 
-        Almacen::insert($data);
-
-
+        // Almacen::insert($data);
 
 
         DB::table('empresa_user')->insert(
@@ -109,7 +107,8 @@ class EoEmpresasSeeder extends Seeder
             ['empresa_id' => 3, 'user_id' => '1'],
             ['empresa_id' => 4, 'user_id' => '1'],
             ['empresa_id' => 5, 'user_id' => '1'],
-            ['empresa_id' => 6, 'user_id' => '1']
+            ['empresa_id' => 6, 'user_id' => '1'],
+            ['empresa_id' => 7, 'user_id' => '1']
         );
     }
 }

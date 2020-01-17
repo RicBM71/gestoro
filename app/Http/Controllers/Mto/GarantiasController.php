@@ -47,6 +47,7 @@ class GarantiasController extends Controller
         ]);
 
         $data['username'] = $request->user()->username;
+        $data['empresa_id'] = session()->get('empresa')->comun_empresa_id;
 
         $reg = Garantia::create($data);
 
@@ -84,6 +85,7 @@ class GarantiasController extends Controller
             'leyenda' => ['required', 'string'],
         ]);
 
+
         $data['username'] = $request->user()->username;
 
         $garantia->update($data);
@@ -100,7 +102,7 @@ class GarantiasController extends Controller
      */
     public function destroy(Garantia $garantia)
     {
-        
+
         if (!auth()->user()->hasRole('Admin')){
             return abort(403,auth()->user()->name.' NO tiene permiso de administrador');
         }

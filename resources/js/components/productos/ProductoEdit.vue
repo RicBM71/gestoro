@@ -477,6 +477,7 @@ import {mapGetters} from 'vuex';
                         this.quilates  = res.data.quilates;
 
                         this.asociados.push({value: null, text: '-'});
+                        this.garantias.push({value: null, text: '-'});
 
                         this.show_quilates = this.producto.clase.quilates;
 
