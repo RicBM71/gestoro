@@ -295,6 +295,27 @@ Route::group([
 );
 
 
+Route::group([
+    'prefix' => 'etiquetas',
+    'namespace' => 'Etiquetas',
+    'middleware' => ['auth','password']],
+    function (){
+
+        Route::get('/aplipdf', 'ApliPdfController@index');
+        Route::post('/aplipdf', 'ApliPdfController@submit');
+
+
+        Route::middleware('role:Admin|Gestor')->group(function () {
+
+            Route::get('/service', 'ServiciosTallerController@index');
+            Route::post('/service', 'ServiciosTallerController@submit');
+            Route::post('/service/excel', 'ServiciosTallerController@excel');
+        });
+
+    }
+);
+
+
 
 // Route::group([
 //     'prefix' => 'ventas',

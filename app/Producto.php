@@ -163,6 +163,14 @@ Class Producto extends Model
         return $query;
     }
 
+    public static function scopeDestino($query, $empresa_id){
+
+        if (!Empty($empresa_id))
+            return $query->where('destino_empresa_id','=', $empresa_id);
+
+        return $query;
+    }
+
     public static function scopeClase($query, $clase_id){
 
         if (!Empty($clase_id) && $clase_id > 0)

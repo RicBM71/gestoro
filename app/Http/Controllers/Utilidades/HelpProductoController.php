@@ -6,6 +6,8 @@ use App\Clase;
 use App\Estado;
 use App\Albalin;
 use App\Cliente;
+use App\Empresa;
+use App\Quilate;
 use App\Producto;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -54,7 +56,9 @@ class HelpProductoController extends Controller
             return [
                 'clases'=> Clase::selGrupoClase(),
                 'estados'=> Estado::selEstados(),
-                'asociados'=> Cliente::selAsociados()
+                'asociados'=> Cliente::selAsociados(),
+                'quilates' => Quilate::selQuilates(),
+                'empresas' => Empresa::selEmpresas()->Venta()->get(),
             ];
 
     }

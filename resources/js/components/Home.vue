@@ -273,6 +273,16 @@ export default {
                 { icon: 'menu_book', text: 'Imprimir Libro', name:'exportar.libro' },
             ],
         },
+
+        mn_etiquetas:{
+            icon: 'keyboard_arrow_up',
+            'icon-alt': 'keyboard_arrow_down',
+            text: 'Etiquetas',
+            model: false,
+            children: [
+                { icon: 'forward', text: 'Generar Etiquetas Apli', name:'etiquetas.aplipdf' },
+            ],
+        },
         expired: false,
     }),
     mounted(){
@@ -281,6 +291,8 @@ export default {
                 .then(res => {
 
                     this.setAuthUser(res.data.user);
+
+                    this.mn_items.push(this.mn_etiquetas);
 
                     if (this.isAdmin || this.isGestor){
                         this.drawer = true;

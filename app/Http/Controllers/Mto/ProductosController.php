@@ -53,19 +53,20 @@ class ProductosController extends Controller
     {
 
         $data = $request->validate([
-            'fecha_d'=>['date','nullable'],
-            'fecha_h'=>['date','nullable'],
-            'clase_id'=>['integer','nullable'],
-            'estado_id'=>['integer','nullable'],
-            'referencia'=>['string','nullable'],
-            'ref_pol'=>['string','nullable'],
-            'precio'=>['string','nullable'],
-            'notas'=>['string','nullable'],
-            'quilates'=>['integer','nullable'],
-            'online'=>['boolean'],
-            'alta'=>['boolean'],
-            'cliente_id' => ['required','integer'],
-            'tipo_fecha'=>['string','required'],
+            'fecha_d'       =>['date','nullable'],
+            'fecha_h'       =>['date','nullable'],
+            'clase_id'      =>['integer','nullable'],
+            'estado_id'     =>['integer','nullable'],
+            'referencia'    =>['string','nullable'],
+            'ref_pol'       =>['string','nullable'],
+            'precio'        =>['string','nullable'],
+            'notas'         =>['string','nullable'],
+            'quilates'      =>['integer','nullable'],
+            'online'        =>['boolean'],
+            'alta'          =>['boolean'],
+            'cliente_id'    => ['required','integer'],
+            'tipo_fecha'    =>['string','required'],
+            'destino_empresa_id'=>['integer','nullable'],
         ]);
 
         session(['filtro_pro' => $data]);
@@ -99,6 +100,7 @@ class ProductosController extends Controller
                         ->fecha($data['fecha_d'],$data['fecha_h'],$data['tipo_fecha'])
                         ->clase($data['clase_id'])
                         ->estado($data['estado_id'])
+                        ->destino($data['destino_empresa_id'])
                         ->notasNombre($data['notas'])
                         ->refPol($data['ref_pol'])
                         ->precioPeso($data['precio'])
@@ -114,6 +116,7 @@ class ProductosController extends Controller
                     ->fecha($data['fecha_d'], $data['fecha_h'],$data['tipo_fecha'])
                     ->clase($data['clase_id'])
                     ->estado($data['estado_id'])
+                    ->destino($data['destino_empresa_id'])
                     ->notasNombre($data['notas'])
                     ->refPol($data['ref_pol'])
                     ->precioPeso($data['precio'])

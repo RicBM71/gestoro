@@ -124,6 +124,7 @@ import ParametroEdit from './components/admin/parametros/ParametroEdit.vue';
 
 import Reubicar from './components/reubicar/Reubicar.vue';
 
+import ApliPdf from './components/etiquetas/ApliPdf.vue';
 
 import EditPassword from './components/profile/edit-password/EditPassword.vue';
 
@@ -614,6 +615,11 @@ export default [
                 path: '/parametros',
                 name: 'parametro.edit',
                 component: ParametroEdit,
+            },
+            {
+                path: '/aplipdf',
+                name: 'etiquetas.aplipdf',
+                component: ApliPdf,
             },
             // {
             //     path: '*',

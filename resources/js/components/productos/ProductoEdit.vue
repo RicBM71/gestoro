@@ -213,15 +213,15 @@
                             <v-layout row wrap>
                                 <v-flex sm2 d-flex>
                                     <v-select
-                                    v-model="producto.iva_id"
-                                    v-validate="'required'"
-                                    data-vv-name="iva_id"
-                                    data-vv-as="iva"
-                                    :error-messages="errors.collect('iva_id')"
-                                    :items="ivas"
-                                    :disabled="!computedEditPro || producto.compra_id > 0"
-                                    label="IVA"
-                                    ></v-select>
+                                        v-model="producto.iva_id"
+                                        v-validate="'required'"
+                                        data-vv-name="iva_id"
+                                        data-vv-as="iva"
+                                        :error-messages="errors.collect('iva_id')"
+                                        :items="ivas"
+                                        :disabled="!computedEditPro || producto.compra_id > 0"
+                                        label="IVA"
+                                        ></v-select>
                                 </v-flex>
                                 <v-flex sm2>
                                     <v-text-field

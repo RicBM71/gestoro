@@ -40,17 +40,16 @@
                         required
                         ></v-select>
                 </v-flex>
-                 <v-flex sm1>
-                    <v-text-field
+                <v-flex sm1>
+                    <v-select
                         v-model="reg.quilates"
+                        :items="quilates"
+                        label="Quilates"
                         v-validate="'numeric'"
                         :error-messages="errors.collect('quilates')"
-                        label="Quilates"
                         data-vv-name="quilates"
                         data-vv-as="quilates"
-                        v-on:keyup.enter="submit"
-                    >
-                    </v-text-field>
+                    ></v-select>
                 </v-flex>
                 <v-flex sm2>
                     <v-select
@@ -63,13 +62,20 @@
                         label="Estado"
                         ></v-select>
                 </v-flex>
-                 <v-flex sm1>
-                    <v-switch
-                        label="Alta"
-                        v-model="reg.alta"
-                        color="primary">
-                    ></v-switch>
+                 <v-flex sm2>
+                    <v-text-field
+                        v-model="reg.precio"
+                        v-validate="'min:2'"
+                        :error-messages="errors.collect('precio')"
+                        label="Precio/Peso"
+                        data-vv-name="precio"
+                        data-vv-as="importe"
+                        hint=":PVP ó =Coste ó Peso"
+                        v-on:keyup.enter="submit"
+                    >
+                    </v-text-field>
                 </v-flex>
+
             </v-layout>
             <v-layout row wrap>
                 <v-flex sm4>
@@ -85,104 +91,95 @@
                     >
                     </v-text-field>
                 </v-flex>
-                <v-flex sm2>
-                    <v-text-field
-                        v-model="reg.precio"
-                        v-validate="'min:2'"
-                        :error-messages="errors.collect('precio')"
-                        label="Precio/Peso"
-                        data-vv-name="precio"
-                        data-vv-as="importe"
-                        hint=":PVP ó =Coste ó Peso"
-                        v-on:keyup.enter="submit"
-                    >
-                    </v-text-field>
+                 <v-flex sm3 d-flex>
+                    <v-select
+                        v-model="reg.destino_empresa_id"
+                        v-validate="'required'"
+                        data-vv-name="destino_empresa_id"
+                        data-vv-as="empresa"
+                        :error-messages="errors.collect('destino_empresa_id')"
+                        :items="empresas"
+                        label="Destino Venta"
+                    ></v-select>
                 </v-flex>
                <v-flex sm2>
-                            <v-menu
-                                v-model="menu_d"
-                                :close-on-content-click="false"
-                                :nudge-right="40"
-                                lazy
-                                transition="scale-transition"
-                                offset-y
-                                full-width
-                                min-width="290px"
-                            >
-                                <v-text-field
-                                    slot="activator"
-                                    :value="computedFechaD"
-                                    label="Desde"
-                                    append-icon="event"
-                                    v-validate="'date_format:dd/MM/yyyy'"
-                                    data-vv-name="fecha_d"
-                                    :error-messages="errors.collect('fecha_d')"
-                                    data-vv-as="Desde"
-                                    readonly
-                                    ></v-text-field>
-                                <v-date-picker
-                                    v-model="reg.fecha_d"
-                                    no-title
-                                    locale="es"
-                                    first-day-of-week=1
-                                    @input="menu_d = false"
-                                    ></v-date-picker>
-                            </v-menu>
-                        </v-flex>
-                        <v-flex sm2>
-                            <v-menu
-                                v-model="menu_h"
-                                :close-on-content-click="false"
-                                :nudge-right="40"
-                                lazy
-                                transition="scale-transition"
-                                offset-y
-                                full-width
-                                min-width="290px"
-                            >
-                                <v-text-field
-                                    slot="activator"
-                                    :value="computedFechaH"
-                                    label="Hasta"
-                                    append-icon="event"
-                                    v-validate="'date_format:dd/MM/yyyy'"
-                                    data-vv-name="fecha_h"
-                                    :error-messages="errors.collect('fecha_h')"
-                                    data-vv-as="Hasta"
-                                    readonly
-                                    ></v-text-field>
-                                <v-date-picker
-                                    v-model="reg.fecha_h"
-                                    no-title
-                                    locale="es"
-                                    first-day-of-week=1
-                                    @input="menu_h = false"
-                                    ></v-date-picker>
-                            </v-menu>
-                        </v-flex>
-                        <v-flex sm1>
-                            <v-select
-                                v-model="reg.tipo_fecha"
-                                v-validate="'required'"
-                                data-vv-name="tipo_fecha"
-                                data-vv-as="fecha"
-                                :error-messages="errors.collect('tipo_fecha')"
-                                :items="fechas"
-                                label="Tipo Fecha"
-                                required
-                                ></v-select>
-                        </v-flex>
-                <v-flex sm2></v-flex>
-                <v-flex sm2>
-                    <v-switch
-                        label="Online"
-                        v-model="reg.online"
-                        color="primary">
-                    ></v-switch>
+                    <v-menu
+                        v-model="menu_d"
+                        :close-on-content-click="false"
+                        :nudge-right="40"
+                        lazy
+                        transition="scale-transition"
+                        offset-y
+                        full-width
+                        min-width="290px"
+                    >
+                        <v-text-field
+                            slot="activator"
+                            :value="computedFechaD"
+                            label="Desde"
+                            append-icon="event"
+                            v-validate="'date_format:dd/MM/yyyy'"
+                            data-vv-name="fecha_d"
+                            :error-messages="errors.collect('fecha_d')"
+                            data-vv-as="Desde"
+                            readonly
+                            ></v-text-field>
+                        <v-date-picker
+                            v-model="reg.fecha_d"
+                            no-title
+                            locale="es"
+                            first-day-of-week=1
+                            @input="menu_d = false"
+                            ></v-date-picker>
+                    </v-menu>
                 </v-flex>
+                <v-flex sm2>
+                    <v-menu
+                        v-model="menu_h"
+                        :close-on-content-click="false"
+                        :nudge-right="40"
+                        lazy
+                        transition="scale-transition"
+                        offset-y
+                        full-width
+                        min-width="290px"
+                    >
+                        <v-text-field
+                            slot="activator"
+                            :value="computedFechaH"
+                            label="Hasta"
+                            append-icon="event"
+                            v-validate="'date_format:dd/MM/yyyy'"
+                            data-vv-name="fecha_h"
+                            :error-messages="errors.collect('fecha_h')"
+                            data-vv-as="Hasta"
+                            readonly
+                            ></v-text-field>
+                        <v-date-picker
+                            v-model="reg.fecha_h"
+                            no-title
+                            locale="es"
+                            first-day-of-week=1
+                            @input="menu_h = false"
+                            ></v-date-picker>
+                    </v-menu>
+                </v-flex>
+                <v-flex sm1>
+                    <v-select
+                        v-model="reg.tipo_fecha"
+                        v-validate="'required'"
+                        data-vv-name="tipo_fecha"
+                        data-vv-as="fecha"
+                        :error-messages="errors.collect('tipo_fecha')"
+                        :items="fechas"
+                        label="Tipo Fecha"
+                        required
+                        ></v-select>
+                </v-flex>
+                <v-flex sm2></v-flex>
             </v-layout>
             <v-layout row wrap>
-                <v-flex sm4>
+                <v-flex sm3>
                     <v-select
                         v-model="reg.cliente_id"
                         v-validate="'required'"
@@ -193,7 +190,21 @@
                         label="Asociado"
                         ></v-select>
                 </v-flex>
-                <v-flex sm6></v-flex>
+                <v-flex sm1>
+                    <v-switch
+                        label="Alta"
+                        v-model="reg.alta"
+                        color="primary">
+                    ></v-switch>
+                </v-flex>
+                <v-flex sm2>
+                    <v-switch
+                        label="Online"
+                        v-model="reg.online"
+                        color="primary">
+                    ></v-switch>
+                </v-flex>
+                <v-flex sm5></v-flex>
                 <v-flex sm1>
                     <v-btn @click="submit"  :loading="loading" round small block  color="info">
                         Filtrar
@@ -236,6 +247,7 @@ export default {
                 fecha_d: "", //new Date().toISOString().substr(0, 10),
                 fecha_h: "",
                 tipo_fecha: 'C',
+                destino_empresa_id:""
             },
             fechas:[
                 {value: 'C', text: 'Creación'},
@@ -243,6 +255,8 @@ export default {
             ],
             menu_d: false,
             menu_h: false,
+            quilates:[],
+            empresas:[],
 
       }
     },
@@ -261,6 +275,12 @@ export default {
                 this.estados.push({value:-1,text:"---"});
                 this.reg.estado_id = -1;
                 this.asociados.push({value:0,text:"---"});
+
+                this.quilates = res.data.quilates;
+                this.quilates.push({value:null,text:"---"});
+
+                this.empresas = res.data.empresas;
+                this.empresas.push({value:null,text:"---"});
             })
             .catch(err => {
                 console.log(err);
