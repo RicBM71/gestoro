@@ -138,6 +138,20 @@ Class Producto extends Model
 
     }
 
+    public static function scopeFecha($query, $d,$h,$tipo){
+
+        if ($tipo == "C")
+            return $query->whereDate('created_at','>=', $d)
+                         ->whereDate('created_at','<=', $h);
+        elseif ($tipo == "R")
+            return $query->whereDate('fecha_ultima_revision','>=', $d)
+                         ->whereDate('fecha_ultima_revision','<=', $h);
+        else
+            return $query->whereDate('updated_at','>=', $d)
+                         ->whereDate('updated_at','<=', $h);
+    }
+
+
     public static function scopeFechaMod($query, $f){
 
         if (!Empty($f))

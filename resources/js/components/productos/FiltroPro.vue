@@ -98,39 +98,80 @@
                     >
                     </v-text-field>
                 </v-flex>
-                <v-flex sm2>
-                    <v-menu
-                        v-model="menu_d"
-                        :close-on-content-click="false"
-                        :nudge-right="40"
-                        lazy
-                        transition="scale-transition"
-                        offset-y
-                        full-width
-                        min-width="290px"
-                    >
-                        <v-text-field
-                            slot="activator"
-                            :value="computedFechaD"
-                            label="Fecha Mod."
-                            prepend-icon="event"
-                            v-validate="'date_format:dd/MM/yyyy'"
-                            data-vv-name="fecha_d"
-                            :error-messages="errors.collect('fecha_d')"
-                            data-vv-as="Desde"
-                            readonly
-                            clearable
-                             @click:clear="clearDate"
-                            ></v-text-field>
-                        <v-date-picker
-                            v-model="reg.fecha_d"
-                            no-title
-                            locale="es"
-                            first-day-of-week=1
-                            @input="menu_d = false"
-                            ></v-date-picker>
-                    </v-menu>
-                </v-flex>
+               <v-flex sm2>
+                            <v-menu
+                                v-model="menu_d"
+                                :close-on-content-click="false"
+                                :nudge-right="40"
+                                lazy
+                                transition="scale-transition"
+                                offset-y
+                                full-width
+                                min-width="290px"
+                            >
+                                <v-text-field
+                                    slot="activator"
+                                    :value="computedFechaD"
+                                    label="Desde"
+                                    append-icon="event"
+                                    v-validate="'date_format:dd/MM/yyyy'"
+                                    data-vv-name="fecha_d"
+                                    :error-messages="errors.collect('fecha_d')"
+                                    data-vv-as="Desde"
+                                    readonly
+                                    ></v-text-field>
+                                <v-date-picker
+                                    v-model="reg.fecha_d"
+                                    no-title
+                                    locale="es"
+                                    first-day-of-week=1
+                                    @input="menu_d = false"
+                                    ></v-date-picker>
+                            </v-menu>
+                        </v-flex>
+                        <v-flex sm2>
+                            <v-menu
+                                v-model="menu_h"
+                                :close-on-content-click="false"
+                                :nudge-right="40"
+                                lazy
+                                transition="scale-transition"
+                                offset-y
+                                full-width
+                                min-width="290px"
+                            >
+                                <v-text-field
+                                    slot="activator"
+                                    :value="computedFechaH"
+                                    label="Hasta"
+                                    append-icon="event"
+                                    v-validate="'date_format:dd/MM/yyyy'"
+                                    data-vv-name="fecha_h"
+                                    :error-messages="errors.collect('fecha_h')"
+                                    data-vv-as="Hasta"
+                                    readonly
+                                    ></v-text-field>
+                                <v-date-picker
+                                    v-model="reg.fecha_h"
+                                    no-title
+                                    locale="es"
+                                    first-day-of-week=1
+                                    @input="menu_h = false"
+                                    ></v-date-picker>
+                            </v-menu>
+                        </v-flex>
+                        <v-flex sm1>
+                            <v-select
+                                v-model="reg.tipo_fecha"
+                                v-validate="'required'"
+                                data-vv-name="tipo_fecha"
+                                data-vv-as="fecha"
+                                :error-messages="errors.collect('tipo_fecha')"
+                                :items="fechas"
+                                label="Tipo Fecha"
+                                required
+                                ></v-select>
+                        </v-flex>
                 <v-flex sm2></v-flex>
                 <v-flex sm2>
                     <v-switch
@@ -193,8 +234,16 @@ export default {
                 online:false,
                 alta: true,
                 fecha_d: "", //new Date().toISOString().substr(0, 10),
+                fecha_h: "",
+                tipo_fecha: 'C',
             },
+            fechas:[
+                {value: 'C', text: 'Creación'},
+                {value: 'M', text: 'Modificación'}
+            ],
             menu_d: false,
+            menu_h: false,
+
       }
     },
     mounted(){
@@ -223,6 +272,10 @@ export default {
             moment.locale('es');
             return this.reg.fecha_d ? moment(this.reg.fecha_d).format('L') : '';
         },
+        computedFechaH() {
+            moment.locale('es');
+            return this.reg.fecha_h ? moment(this.reg.fecha_h).format('L') : '';
+        }
 
     },
     methods:{

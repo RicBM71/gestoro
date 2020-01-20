@@ -54,6 +54,7 @@ class ProductosController extends Controller
 
         $data = $request->validate([
             'fecha_d'=>['date','nullable'],
+            'fecha_h'=>['date','nullable'],
             'clase_id'=>['integer','nullable'],
             'estado_id'=>['integer','nullable'],
             'referencia'=>['string','nullable'],
@@ -64,6 +65,7 @@ class ProductosController extends Controller
             'online'=>['boolean'],
             'alta'=>['boolean'],
             'cliente_id' => ['required','integer'],
+            'tipo_fecha'=>['string','required'],
         ]);
 
         session(['filtro_pro' => $data]);
@@ -94,7 +96,7 @@ class ProductosController extends Controller
         if ($data['alta'] == false)
             $data = Producto::onlyTrashed()->with(['clase','estado'])
                         ->referencia($data['referencia'])
-                        ->fechaMod($data['fecha_d'])
+                        ->fecha($data['fecha_d'],$data['fecha_h'],$data['tipo_fecha'])
                         ->clase($data['clase_id'])
                         ->estado($data['estado_id'])
                         ->notasNombre($data['notas'])
@@ -106,21 +108,10 @@ class ProductosController extends Controller
                         ->get()
                         ->take(500);
         else{
-            \Log::info(Producto::with(['clase','estado'])
-            ->referencia($data['referencia'])
-            ->fechaMod($data['fecha_d'])
-            ->clase($data['clase_id'])
-            ->estado($data['estado_id'])
-            ->notasNombre($data['notas'])
-            ->refPol($data['ref_pol'])
-            ->precioPeso($data['precio'])
-            ->quilates($data['quilates'])
-            ->online($data['online'])
-            ->asociado($data['cliente_id'])
-            ->orderBy('id','desc')->toSql());
+
             $data = Producto::with(['clase','estado'])
                     ->referencia($data['referencia'])
-                    ->fechaMod($data['fecha_d'])
+                    ->fecha($data['fecha_d'], $data['fecha_h'],$data['tipo_fecha'])
                     ->clase($data['clase_id'])
                     ->estado($data['estado_id'])
                     ->notasNombre($data['notas'])

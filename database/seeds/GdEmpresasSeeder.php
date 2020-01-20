@@ -58,13 +58,13 @@ class GdEmpresasSeeder extends Seeder
 
 
 
-        $data2[]=array(
-            'id' => 1,
-            'empresa_id' => 1,
-            'nombre' => 'Gd Porlier'
-        );
+        // $data2[]=array(
+        //     'id' => 1,
+        //     'empresa_id' => 1,
+        //     'nombre' => 'Gd Porlier'
+        // );
 
-        Almacen::insert($data2);
+        // Almacen::insert($data2);
 
 
 

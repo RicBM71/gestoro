@@ -161,7 +161,7 @@
                                             <td class="text-xs-right">{{ getPrecioGramo(item.peso_gr,item.importe) | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                         </tr>
                                         <tr v-for="(item, index) in items_inventariados" :key="miKey(index,'I')">
-                                            <td>INVENTARIADO</td>
+                                            <td>NUEVOS PRODUCTOS</td>
                                             <td v-if="item.quilates > 0">{{ item.clase+" "+item.quilates+" K" }}</td>
                                             <td v-else>{{ item.clase }}</td>
                                             <td class="text-xs-right">{{ item.peso_gr | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
@@ -274,9 +274,9 @@ export default {
         },
          detalle_dep(t){
             if (t==1)
-                return "DEPÓSITO RECOMPRAS";
+                return "DEPÓSITO RECOMPRAS (AC)";
             else if(t==2)
-                return "DEPÓSITO COMPRAS";
+                return "DEPÓSITO COMPRAS (AC)"; // SON valores acumulados hasta fecha.
             else return "";
         },
         getPrecioGramo(gr, imp){

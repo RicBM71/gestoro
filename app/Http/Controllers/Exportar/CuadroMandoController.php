@@ -212,7 +212,7 @@ class CuadroMandoController extends Controller
              ->where('compras.empresa_id', session('empresa')->id)
              ->whereIn('compras.fase_id', [4,6])
             //  ->whereDate('fecha_compra','>=', $data['fecha_d'])
-            //  ->whereDate('fecha_compra','<=', $data['fecha_h'])
+             ->whereDate('fecha_compra','<=', $data['fecha_h'])
              ->whereNull('fecha_liquidado')
              ->groupBy(DB::raw('tipo_id,clase,quilates '.$rollup))
              ->get();
@@ -233,7 +233,7 @@ class CuadroMandoController extends Controller
 //            ->where('compra_id','>', 0)
             ->where('estado_id','<', 3)
             // ->whereDate('productos.created_at','>=', $data['fecha_d'])
-            // ->whereDate('productos.created_at','<=', $data['fecha_h'])
+            ->whereDate('productos.created_at','<=', $data['fecha_h'])
             ->whereNull('productos.deleted_at')
             ->groupBy(DB::raw('clase '.$rollup))
             ->get();
