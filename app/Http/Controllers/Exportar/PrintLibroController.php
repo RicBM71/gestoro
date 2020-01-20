@@ -41,7 +41,7 @@ class PrintLibroController extends Controller
             'fecha_h'  => ['required','date'],
             ]);
 
-        $libro = Libro::findOrfail($data['']);
+        $libro = Libro::findOrfail($data['libro_id']);
 
         $data['codigo_pol']=$libro->codigo_pol;
         $data['grupo_id']=$libro->grupo_id;

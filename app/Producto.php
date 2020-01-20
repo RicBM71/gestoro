@@ -140,6 +140,9 @@ Class Producto extends Model
 
     public static function scopeFecha($query, $d,$h,$tipo){
 
+        if ($d == null)
+            return $query;
+
         if ($tipo == "C")
             return $query->whereDate('created_at','>=', $d)
                          ->whereDate('created_at','<=', $h);
@@ -278,16 +281,27 @@ Class Producto extends Model
             $nombre = null;
         }
 
-        return Producto::select(DB::raw('id AS value, CONCAT(referencia, " " , nombre) AS text'))
-                ->referencia($referencia)
-                ->nombre($nombre)
-                ->where('iva_id', 2)
-                ->where('estado_id', 2)
-                ->orWhere('estado_id', 6)
-                ->orWhere('stock', '>', 1)
-                // ->whereNull('deleted_at')
-                ->orderBy('referencia', 'asc')
-                ->get();
+        if (session('empresa')->getFlag(5))
+                return Producto::select(DB::raw('id AS value, CONCAT(referencia, " " , nombre) AS text'))
+                        ->referencia($referencia)
+                        ->nombre($nombre)
+                        ->where('iva_id', 2)
+                        ->where('estado_id', 2)
+                        ->orWhere('estado_id', 6)
+                        ->orWhere('stock', '>', 1)
+                        // ->whereNull('deleted_at')
+                        ->orderBy('referencia', 'asc')
+                        ->get();
+            else
+                return Producto::select(DB::raw('id AS value, CONCAT(referencia, " " , nombre) AS text'))
+                    ->referencia($referencia)
+                    ->nombre($nombre)
+                    ->where('iva_id', 2)
+                    ->where('estado_id', 2)
+                    ->orWhere('estado_id', 6)
+                    ->orderBy('referencia', 'asc')
+                    ->get();
+
 
     }
 

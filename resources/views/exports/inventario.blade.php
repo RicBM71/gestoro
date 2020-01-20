@@ -11,6 +11,7 @@
             <th>P. VENTA</th>
             <th>P. COSTE</th>
             <th>REF. POL</th>
+            <th>Estado</th>
             <th>PROVEEDOR</th>
         </tr>
     </thead>
@@ -28,6 +29,7 @@
             <td>{{ $item['precio_venta']}}</td>
             <td>{{ $item['precio_coste']}}</td>
             <td>{{ $item['ref_pol']}}</td>
+            <td>{{ $item['estado']['nombre']}}</td>
             @if($item['cliente_id'] > 0)
             <td>{{ $item['cliente']['razon']}}</td>
             @else
