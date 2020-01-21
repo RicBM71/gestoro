@@ -29,12 +29,12 @@ class PrintComprasController extends Controller
 
         //TODO: estudiar qué hacer para redirigir esto que no va bien.
         $this->documentacion = Clidoc::getDocumentos($this->compra->cliente->id,$this->compra->cliente->fecha_dni,$this->compra->fecha_compra, true);
-        if ($this->documentacion['status'] <= 0){
-            if ($totales_concepto[1] == 0){
-                abort(422,'La documentación no está actualizada');
-                return redirect('home');
-            }
-        }
+        // if ($this->documentacion['status'] <= 0){
+        //     if ($totales_concepto[1] == 0){
+        //         abort(422,'La documentación no está actualizada');
+        //         return redirect('home');
+        //     }
+        // }
 
         $this->lineasCompra = Comline::with('clase')->compraId($this->compra->id)->orderBy('id')->get();
 

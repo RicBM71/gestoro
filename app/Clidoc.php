@@ -48,7 +48,7 @@ class Clidoc extends Model
         $clidoc = Clidoc::cliente($cliente_id)->first();
 
         // no es necesario scan docu
-        if (is_null(session('empresa')->scan_doc) || session('empresa')->scan_doc=="0000-00-00" || hasScan()==false){
+        if (is_null(session('empresa')->scan_doc) || session('empresa')->scan_doc=="0000-00-00"){
             return [
                 'status' => 1,
                 'msg'   => 'Scan desactivado',
@@ -91,7 +91,7 @@ class Clidoc extends Model
             // }
         }
 
-        $delete = (auth()->user()->hasRole('Admin') || esPropietario($clidoc)) ? true : false;
+        $delete = (esAdmin() || esPropietario($clidoc)) ? true : false;
 
         if (Carbon::today() > Carbon::parse($fecha_docu)->addDays(10)){
             return [

@@ -142,6 +142,9 @@ const getters = {
     hasFactura: (state) =>{
         return (state.permisos.indexOf('factura') >= 0) ? true : false;
     },
+    hasScan: (state) =>{
+        return (state.permisos.indexOf('scan') >= 0) ? true : false;
+    },
 
 };
 

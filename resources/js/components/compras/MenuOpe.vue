@@ -192,17 +192,22 @@ export default {
             'hasBorraCompras',
             'userName',
             'isRoot',
-            'isAdmin'
+            'isAdmin',
+            'hasScan'
         ]),
         computedReaCli(){
             return (this.compra.id > 0 && this.isAdmin && this.compra.factura == null);
         },
         computedImprimeCompra(){
-            if ((this.compra.fase_id == 3 || this.compra.fase_id == 4) && this.docu_ok)
+
+            if ((this.compra.fase_id == 3 || this.compra.fase_id == 4) && (this.docu_ok || this.hasScan==false))
                 return true;
+
             return false;
         },
         computedScanDocu(){
+            if (!this.hasScan) return false;
+
             if (this.compra.fase_id == 3 && !this.docu_ok)
                 return true;
             return false;

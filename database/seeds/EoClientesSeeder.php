@@ -40,7 +40,7 @@ class EoClientesSeeder extends Seeder
                 $file2 = str_replace('storage/','',$row->file2);
                 //$file2 = str_replace('.dat','.jpg',$file2);
 
-                //$this->encriptarALaravel($file1,$file2);
+                $this->encriptarALaravel($file1,$file2);
 
                 $data[]=array(
                     'cliente_id' => $row->id,
