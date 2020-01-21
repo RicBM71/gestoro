@@ -14,4 +14,14 @@ class Etiqueta extends Model
             ->get();
 
     }
+
+    public static function selImprimibles()
+    {
+
+        return Etiqueta::select('id AS value', 'nombre AS text')
+            ->whereIn('id', [2,3,4])
+            ->orderBy('nombre', 'asc')
+            ->get();
+
+    }
 }

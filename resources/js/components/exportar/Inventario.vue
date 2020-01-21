@@ -42,10 +42,22 @@
                 <v-container>
                     <v-layout row wrap v-show="show_filtro">
                         <v-spacer></v-spacer>
+                         <v-flex sm2>
+                            <v-select
+                                v-model="grupo_id"
+                                v-validate="'required'"
+                                data-vv-name="grupo_id"
+                                data-vv-as="grupo"
+                                :error-messages="errors.collect('grupo_id')"
+                                :items="grupos"
+                                label="Grupo"
+                                required
+                                ></v-select>
+                        </v-flex>
                         <v-flex sm3>
                             <v-select
                                 v-model="clase_id"
-                                v-validate="'required'"
+                                v-validate="'numeric'"
                                 data-vv-name="clase_id"
                                 data-vv-as="clase"
                                 :error-messages="errors.collect('clase_id')"
@@ -57,7 +69,7 @@
                         <v-flex sm4>
                             <v-select
                                 v-model="cliente_id"
-                                v-validate="'required'"
+                                v-validate="'numeric'"
                                 data-vv-name="cliente"
                                 data-vv-as="cliente_id"
                                 :error-messages="errors.collect('cliente_id')"
@@ -94,6 +106,7 @@
                     <v-layout row wrap v-if="items.length>0">
                         <v-flex xs12>
                             <v-data-table
+
                                 :headers="headers"
                                 :items="items"
                                 :search="search"
@@ -103,7 +116,7 @@
                                <template slot="items" slot-scope="props">
                                     <td>{{ props.item.referencia }}</td>
                                     <td>{{ props.item.nombre }}</td>
-                                    <td>{{ props.item.clase.nombre }} <span v-if="props.item.quilates != null">{{props.item.quilates}}</span></td>
+                                    <td>{{ props.item.clase.nombre }} <span v-if="props.item.quilates > 0">{{props.item.quilates}}</span></td>
                                     <td class="text-xs-right">{{ props.item.peso_gr | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                     <td class="text-xs-right">{{ props.item.precio_coste | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                     <td class="text-xs-right">{{ props.item.precio_venta | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
@@ -186,8 +199,10 @@ export default {
             },
             clases: [],
             asociados: [],
-            clase_id: -1,
-            cliente_id: -1,
+            grupos:[],
+            grupo_id: null,
+            clase_id: null,
+            cliente_id: null,
             show_loading: false,
             ejercicio:new Date().toISOString().substr(0, 4),
             show_filtro: true,
@@ -201,11 +216,13 @@ export default {
     mounted(){
         axios.get('/utilidades/helppro/filtro')
             .then(res => {
-
+                this.grupos = res.data.grupos;
                 this.clases = res.data.clases;
                 this.asociados = res.data.asociados;
-                this.clases.push({value:-1,text:"---"});
-                this.asociados.push({value:-1,text:"---"});
+                this.grupo_id = this.grupos[0].value;
+
+                this.clases.push({value:null,text:"---"});
+                this.asociados.push({value:null,text:"---"});
             })
             .catch(err => {
                 this.$toast.error('Error al montar <inventario>');
@@ -231,20 +248,21 @@ export default {
 
 
             if (this.show_loading === false){
-                this.show_loading = true;
                 this.$validator.validateAll().then((result) => {
                     if (result){
 
+                        this.show_loading = true;
                         axios({
                             url: '/exportar/inventario',
                             method: 'POST',
                             data:{
                                 cliente_id: this.cliente_id,
                                 clase_id: this.clase_id,
+                                grupo_id:  this.grupo_id
                             }
                             })
                         .then(res => {
-                            
+
                             this.items = res.data.inventario;
                             this.valor_inventario = res.data.valor_inventario;
 

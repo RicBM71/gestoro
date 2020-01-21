@@ -173,7 +173,7 @@ Class Producto extends Model
 
     public static function scopeClase($query, $clase_id){
 
-        if (!Empty($clase_id) && $clase_id > 0)
+        if (!Empty($clase_id))
             return $query->where('clase_id','=', $clase_id);
 
         return $query;
@@ -182,8 +182,24 @@ Class Producto extends Model
 
     public static function scopeEstado($query, $estado_id){
 
-        if (!Empty($estado_id) && $estado_id > 0)
+        if (!Empty($estado_id))
             return $query->where('estado_id','=', $estado_id);
+
+        return $query;
+
+    }
+
+    /**
+     * hay que hacer join con clases para que funcione
+     *
+     * @param [type] $query
+     * @param [type] $grupo_id
+     * @return void
+     */
+    public static function scopeGrupo($query, $grupo_id){
+
+        if (!Empty($grupo_id))
+            return $query->where('grupo_id','=', $grupo_id);
 
         return $query;
 

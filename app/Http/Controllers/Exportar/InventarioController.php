@@ -18,8 +18,9 @@ class InventarioController extends Controller
         }
 
         $data = $request->validate([
-            'cliente_id'  => ['required','integer'],
-            'clase_id'  => ['required','integer'],
+            'cliente_id'  => ['nullable','integer'],
+            'clase_id'    => ['nullable','integer'],
+            'grupo_id'    => ['required','integer'],
         ]);
 
         return $this->detalle($data);
@@ -30,9 +31,12 @@ class InventarioController extends Controller
     {
 
         $data = Producto::with(['clase','iva','estado','garantia','cliente'])
+                    ->select('productos.*')
+                    ->join('clases','clase_id','=','clases.id')
                     ->asociado($data['cliente_id'])
                     ->clase($data['clase_id'])
                     ->whereIn('estado_id',[1,2,3])
+                    ->grupo($data['grupo_id'])
                     ->get();
 
         if (request()->wantsJson())

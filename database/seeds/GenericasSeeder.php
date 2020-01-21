@@ -305,14 +305,15 @@ class GenericasSeeder extends Seeder
         $et->save();
 
         $et = new Etiqueta();
-        $et->nombre = "Impresa sin PVP";
-        $et->save();
-        $et = new Etiqueta();
-        $et->nombre = "Impresa con PVP";
-        $et->save();
-        $et = new Etiqueta();
         $et->nombre = "Devolución";
         $et->save();
+
+        $et = new Etiqueta();
+        $et->nombre = "Impresa";
+        $et->save();
+        // $et = new Etiqueta();
+        // $et->nombre = "Impresa con PVP";
+        // $et->save();
 
         $mot = new Motivo();
         $mot->nombre = "Falta de información importante en el documento";

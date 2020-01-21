@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Etiquetas;
 
 use PDF;
+use App\Clase;
 use App\Etiqueta;
 use App\Producto;
 use Illuminate\Http\Request;
@@ -20,7 +21,8 @@ class ApliPdfController extends Controller
 
         if (request()->wantsJson())
             return [
-                'etiquetas'=> Etiqueta::selEstados(),
+                'clases'    => Clase::selGrupoClase(),
+                'etiquetas' => Etiqueta::selImprimibles(),
             ];
 
     }
@@ -36,18 +38,26 @@ class ApliPdfController extends Controller
             'etiqueta_id'  => ['required','integer'],
             'fila'         => ['required','integer'],
             'columna'      => ['required','integer'],
-            'limite'       => ['required','integer'],
+            'clase_id'     => ['nullable','integer'],
+            // 'limite'       => ['required','integer'],
         ]);
 
         ob_end_clean();
 
         $this->setPrepararPdf();
 
-        $this->generarEtiquetas($data);
+        if ($this->generarEtiquetas($data) !== false){
 
-        PDF::Output('apli.pdf','I');
+            Producto::where('etiqueta_id', $data['etiqueta_id'])->update(['etiqueta_id' => 5]);
 
-        PDF::reset();
+            PDF::Output('apli.pdf','I');
+
+            PDF::reset();
+
+        }else{
+            return abort(404, ' NO hay etiquetas para imprimir');
+        }
+
 
 
     }
@@ -57,9 +67,13 @@ class ApliPdfController extends Controller
         PDF::AddPage();
 
         $result = Producto::with('clase')
+            ->clase($data['clase_id'])
             ->where('etiqueta_id', $data['etiqueta_id'])
             ->orderBy('referencia')
             ->get();
+
+        if ($result->count()==0)
+            return false;
 
 		PDF::SetFont('helvetica', '', 8, '', false);
        // PDF::SetXY(4, 10);

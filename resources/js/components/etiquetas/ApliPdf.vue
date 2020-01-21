@@ -11,8 +11,23 @@
             <v-form>
                 <v-container>
                     <v-layout row wrap>
-                        <v-spacer></v-spacer>
-                        <v-flex sm2 d-flex>
+                        <v-flex sm3></v-flex>
+                        <v-flex sm3>
+                            <v-select
+                                v-model="form.clase_id"
+                                v-validate="'numeric'"
+                                data-vv-name="clase_id"
+                                data-vv-as="clase"
+                                :error-messages="errors.collect('clase_id')"
+                                :items="clases"
+                                label="Clase"
+                                required
+                                ></v-select>
+                        </v-flex>
+                    </v-layout>
+                     <v-layout row wrap>
+                        <v-flex sm3></v-flex>
+                        <v-flex sm3 d-flex>
                             <v-select
                                 v-model="form.etiqueta_id"
                                 v-validate="'required'"
@@ -23,6 +38,9 @@
                                 label="Etiqueta"
                             ></v-select>
                         </v-flex>
+                     </v-layout>
+                    <v-layout row wrap>
+                        <v-flex sm3></v-flex>
                         <v-flex sm1 d-flex>
                             <v-text-field
                                 v-model="form.fila"
@@ -37,12 +55,13 @@
                             >
                             </v-text-field>
                         </v-flex>
+                        <v-flex sm1 d-flex></v-flex>
                         <v-flex sm1 d-flex>
                             <v-text-field
                                 v-model="form.columna"
                                 v-validate="'required|between:1,4'"
                                 :error-messages="errors.collect('columna')"
-                                label="columna"
+                                label="Columna"
                                 data-vv-name="columna"
                                 data-vv-as="columna"
                                 class="inputPrice"
@@ -51,20 +70,7 @@
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm1 d-flex>
-                            <v-text-field
-                                v-model="form.limite"
-                                v-validate="'required|numeric'"
-                                :error-messages="errors.collect('limite')"
-                                label="limite"
-                                data-vv-name="limite"
-                                data-vv-as="limite"
-                                class="inputPrice"
-                                type="number"
-                                v-on:keyup.enter="submit"
-                            >
-                            </v-text-field>
-                        </v-flex>
+                        <v-flex sm1 d-flex></v-flex>
                         <v-flex sm1>
                             <v-btn @click="submit" :loading="show_loading" flat round small block  color="info">
                                 Enviar
@@ -91,11 +97,13 @@ export default {
       return {
         form:{
             etiqueta_id: "",
+            clase_id: "",
             fila: 1,
             columna: 1,
             limite: 0
         },
         etiquetas: [],
+        clases:[],
         show_loading: true
       }
     },
@@ -103,6 +111,9 @@ export default {
         axios.get('/etiquetas/aplipdf')
             .then(res => {
                 this.etiquetas = res.data.etiquetas;
+                this.clases = res.data.clases;
+                this.form.etiqueta_id = this.etiquetas[0].value;
+                this.clases.push({value:null,text:"---"});
             })
             .catch(err => {
                 this.$toast.error('Error al montar <apli-pdf>');
@@ -159,7 +170,10 @@ export default {
                                         msg: `${msg_valid[prop]}`
                                     })
                                 }
-                            }else{
+                            }else if(err.request.status == 404){
+                                this.$toast.error('No hay etiquetas');
+                            }
+                            else{
                                 this.$toast.error(err.response.data.message);
                             }
                         })

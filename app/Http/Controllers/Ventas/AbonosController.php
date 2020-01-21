@@ -154,8 +154,10 @@ class AbonosController extends Controller
             Albalin::create($albalin_new);
 
             Producto::where('id',$albalin->producto_id)
-                    ->where('estado_id','<>',5)
-                    ->update(['estado_id'=>2, 'username'=>$albaran_new->username]);
+                    ->where('estado_id','<>', 5)
+                    ->update(['estado_id'   => 2,
+                              'etiqueta_id' => 4,
+                              'username'    => $albaran_new->username]);
 
         }
     }

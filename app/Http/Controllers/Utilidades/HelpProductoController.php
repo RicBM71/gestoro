@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Utilidades;
 
 use App\Clase;
+use App\Grupo;
 use App\Estado;
 use App\Albalin;
 use App\Cliente;
@@ -54,11 +55,12 @@ class HelpProductoController extends Controller
 
         if (request()->wantsJson())
             return [
-                'clases'=> Clase::selGrupoClase(),
-                'estados'=> Estado::selEstados(),
-                'asociados'=> Cliente::selAsociados(),
-                'quilates' => Quilate::selQuilates(),
-                'empresas' => Empresa::selEmpresas()->Venta()->get(),
+                'grupos'    => Grupo::SelGrupos(),
+                'clases'    => Clase::selGrupoClase(),
+                'estados'   => Estado::selEstados(),
+                'asociados' => Cliente::selAsociados(),
+                'quilates'  => Quilate::selQuilates(),
+                'empresas'  => Empresa::selEmpresas()->Venta()->get(),
             ];
 
     }
