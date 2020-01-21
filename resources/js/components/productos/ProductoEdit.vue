@@ -139,7 +139,7 @@
                                         v-model="producto.nombre_interno"
                                         v-validate="'max:190'"
                                         :error-messages="errors.collect('nombre_interno')"
-                                        label="Obs. Interna"
+                                        label="Nombre. Interno"
                                         data-vv-name="nombre_interno"
                                         data-vv-as="nombre interno"
                                         required

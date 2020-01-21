@@ -157,7 +157,7 @@ Class Producto extends Model
 
     public static function scopeFechaMod($query, $f){
 
-        if (!Empty($f))
+        if ($f !=null)
             return $query->whereDate('updated_at','=', $f);
 
         return $query;
@@ -165,7 +165,7 @@ Class Producto extends Model
 
     public static function scopeDestino($query, $empresa_id){
 
-        if (!Empty($empresa_id))
+        if ($empresa_id !=null)
             return $query->where('destino_empresa_id','=', $empresa_id);
 
         return $query;
@@ -173,7 +173,7 @@ Class Producto extends Model
 
     public static function scopeClase($query, $clase_id){
 
-        if (!Empty($clase_id))
+        if ($clase_id != null)
             return $query->where('clase_id','=', $clase_id);
 
         return $query;
@@ -182,7 +182,7 @@ Class Producto extends Model
 
     public static function scopeEstado($query, $estado_id){
 
-        if (!Empty($estado_id))
+        if ($estado_id !=null)
             return $query->where('estado_id','=', $estado_id);
 
         return $query;
@@ -198,7 +198,7 @@ Class Producto extends Model
      */
     public static function scopeGrupo($query, $grupo_id){
 
-        if (!Empty($grupo_id))
+        if ($grupo_id != null)
             return $query->where('grupo_id','=', $grupo_id);
 
         return $query;
@@ -207,7 +207,7 @@ Class Producto extends Model
 
     public static function scopeNotasNombre($query, $notas){
 
-        if (!Empty($notas)){
+        if ($notas != null){
             if (strpos($notas,':') === false){
                 return $query->where('notas','like', '%'.$notas.'%');
             }
@@ -224,7 +224,7 @@ Class Producto extends Model
 
         //return $query->where('ref_pol','like', $ref.'%');
 
-        if (!Empty($ref)){
+        if ($ref != null){
             if (strpos($ref,':') === false){
                 $ref = str_replace(':','',$ref);
                 return $query->where('ref_pol','like', '%'.$ref.'%');
@@ -239,7 +239,7 @@ Class Producto extends Model
 
     public static function scopeNombre($query, $nombre){
 
-        if (!Empty($nombre)){
+        if ($nombre != null){
             return $query->where('nombre','like', '%'.$nombre.'%');
         }
 
@@ -251,7 +251,7 @@ Class Producto extends Model
 
     public static function scopePrecioPeso($query, $precio){
 
-        if (!Empty($precio)){
+        if ($precio != null){
             if (strpos($precio,':') !== false){
                 $precio = str_replace(':','',$precio);
                 return $query->where('precio_venta','=', $precio);
@@ -268,7 +268,7 @@ Class Producto extends Model
 
     public static function scopeQuilates($query, $quilates){
 
-        if (!Empty($quilates)){
+        if ($quilates != null){
             return $query->where('quilates', $quilates);
         }
 

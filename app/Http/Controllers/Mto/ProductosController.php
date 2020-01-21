@@ -66,7 +66,7 @@ class ProductosController extends Controller
             'alta'          =>['boolean'],
             'cliente_id'    => ['required','integer'],
             'tipo_fecha'    =>['string','required'],
-            'destino_empresa_id'=>['integer','nullable'],
+            'destino_empresa_id'=>['nullable','integer'],
         ]);
 
         session(['filtro_pro' => $data]);
@@ -79,18 +79,19 @@ class ProductosController extends Controller
 
         $data = request()->session()->get('filtro_pro');
 
-        // \Log::info(Producto::onlyTrashed()->with(['clase','estado'])
-        // ->referencia($data['referencia'])
-        // ->fechaMod($data['fecha_d'])
-        // ->clase($data['clase_id'])
-        // ->estado($data['estado_id'])
-        // ->notasNombre($data['notas'])
-        // ->refPol($data['ref_pol'])
-        // ->precioPeso($data['precio'])
-        // ->quilates($data['quilates'])
-        // ->online($data['online'])
-        // ->orderBy('id','desc')
-        //                 ->toSql());
+        \Log::info(Producto::onlyTrashed()->with(['clase','estado'])
+        ->referencia($data['referencia'])
+        ->fechaMod($data['fecha_d'])
+        ->clase($data['clase_id'])
+        ->estado($data['estado_id'])
+        ->destino($data['destino_empresa_id'])
+        ->notasNombre($data['notas'])
+        ->refPol($data['ref_pol'])
+        ->precioPeso($data['precio'])
+        ->quilates($data['quilates'])
+        ->online($data['online'])
+        ->orderBy('id','desc')
+                        ->toSql());
 
         //                 \Log::info($data['alta']);
 

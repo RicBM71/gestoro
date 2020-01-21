@@ -30,7 +30,8 @@ class KltProductosSeeder extends Seeder
         $etiqueta['S']=2; // sí
         $etiqueta['C']=3; // si con pvp
         $etiqueta['I']=4; // ya impresa
-        $etiqueta['Y']=5; // ya impresa con pvp
+        $etiqueta['Y']=4; // ya impresa con pvp
+        $etiqueta['D']=5; // ya impresa con pvp
 
         Producto::truncate();
 
@@ -108,6 +109,17 @@ class KltProductosSeeder extends Seeder
                 $univen = 'U';
             else
                 $univen = $row->univen;
+
+            // if (in_array($row->fechaalta, ['0000-00-00',"1936-03-10","1900-01-01"]) || $row->fechaalta==null || $row->fechaalta == "")
+            //     $fecha_alta = '2000-01-01';
+            // else
+            //     $fecha_alta = $row->fechaalta;
+
+            if ($row->fechaalta == "0000-00-00")
+                $row->fechaalta = "2000-01-01";
+
+            if ($row->sysfum == "0000-00-00")
+                $row->sysfum = "2000-01-01";
 
             $data[]=array(
                 'id' => $row->id,

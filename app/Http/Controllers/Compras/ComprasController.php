@@ -61,7 +61,7 @@ class ComprasController extends Controller
 
         if ($data['retraso'] > 0){
             $collection = Compra::with(['cliente','grupo','tipo','fase'])
-                            ->tipo($data['tipo_id'])
+                            ->tipo(1)
                             ->grupo($data['grupo_id'])
                             ->fase($data['fase_id'])
                             ->get();

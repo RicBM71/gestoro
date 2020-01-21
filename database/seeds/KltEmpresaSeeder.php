@@ -18,11 +18,14 @@ class KltEmpresaSeeder extends Seeder
         Almacen::truncate();
         DB::table('empresa_user')->truncate();
 
-        $reg = DB::connection('quilates')->select('select * from empresas');
+        //$reg = DB::connection('quilates')->select('SELECT DISTINCT empresa,tienda, empresas.razon, tiendas.nombre FROM `albaranes` join empresas on empresas.id = albaranes.empresa join tiendas on tiendas.id = albaranes.tienda');
+        $reg = DB::connection('quilates')->select('SELECT * from empresas');
 
         foreach ($reg as $row){
 
-            if ($row->id == 1)// es Kilates.
+
+
+            if ($row->id == 1)// es Kilates ó celenque (esta la duplicamos a manuqui)
                 $obj = $row;
 
             if ($row->id == 3){

@@ -260,9 +260,10 @@ export default {
             const garantia = item.producto.garantia_id != null ?
                         "Garantía: "+item.producto.garantia.nombre + " " + item.producto.meses_garantia + " meses. U. Revisión: " + this.getFecha(item.producto.fecha_ultima_revision) : "";
 
-            const notas = item.notas != null ? '('+item.notas+')' : '';
+            const notas = item.producto.notas != null ? '('+item.producto.notas+')' : '';
+            const nombre_interno = item.producto.nombre_interno != null ? '('+item.producto.nombre_interno+')' : '';
 
-            return item.producto.clase.nombre+" "+quilates+" "+caracteristicas+" "+peso + " " + garantia + notas;
+            return item.producto.clase.nombre+" "+quilates+" "+caracteristicas+" "+peso + " " + garantia + notas + nombre_interno;
         },
         goProducto(producto_id){
             this.$router.push({ name: 'producto.edit', params: { id: producto_id } })

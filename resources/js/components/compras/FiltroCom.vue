@@ -111,6 +111,7 @@
                         label="Retraso"
                         data-vv-name="retraso"
                         data-vv-as="retraso"
+                        v-on:keyup.enter="submit"
                     >
                     </v-text-field>
                 </v-flex>

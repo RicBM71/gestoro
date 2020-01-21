@@ -31,7 +31,7 @@
                 <v-flex sm3>
                     <v-select
                         v-model="reg.clase_id"
-                        v-validate="'required'"
+                        v-validate="'numeric'"
                         data-vv-name="clase_id"
                         data-vv-as="clase"
                         :error-messages="errors.collect('clase_id')"
@@ -54,7 +54,7 @@
                 <v-flex sm2>
                     <v-select
                         v-model="reg.estado_id"
-                        v-validate="'required'"
+                        v-validate="'numeric'"
                         data-vv-name="estado_id"
                         data-vv-as="estado"
                         :error-messages="errors.collect('estado_id')"
@@ -94,7 +94,7 @@
                  <v-flex sm3 d-flex>
                     <v-select
                         v-model="reg.destino_empresa_id"
-                        v-validate="'required'"
+                        v-validate="'numeric'"
                         data-vv-name="destino_empresa_id"
                         data-vv-as="empresa"
                         :error-messages="errors.collect('destino_empresa_id')"
@@ -182,7 +182,7 @@
                 <v-flex sm3>
                     <v-select
                         v-model="reg.cliente_id"
-                        v-validate="'required'"
+                        v-validate="'numeric'"
                         data-vv-name="cliente_id"
                         data-vv-as="asociado"
                         :error-messages="errors.collect('cliente_id')"
@@ -239,8 +239,8 @@ export default {
                 notas:"",
                 ref_pol:"",
                 precio:"",
-                clase_id: "",
-                estado_id:"",
+                clase_id: null,
+                estado_id: null,
                 quilates:"",
                 online:false,
                 alta: true,
@@ -269,12 +269,11 @@ export default {
                 this.asociados = res.data.asociados;
                 this.clases.push({value:-1,text:"---"});
 
-                this.reg.clase_id = -1;
                 this.estados = res.data.estados;
 
-                this.estados.push({value:-1,text:"---"});
-                this.reg.estado_id = -1;
-                this.asociados.push({value:0,text:"---"});
+                this.estados.push({value:null,text:"---"});
+
+                this.asociados.push({value:null,text:"---"});
 
                 this.quilates = res.data.quilates;
                 this.quilates.push({value:null,text:"---"});

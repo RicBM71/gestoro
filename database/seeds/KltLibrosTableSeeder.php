@@ -15,16 +15,17 @@ class KltLibrosTableSeeder extends Seeder
 
         Libro::truncate();
 
-        $ejercicio = 2019;
-        $reg = DB::connection('quilates')
+                $reg = DB::connection('quilates')
             //->select('select * from contadores WHERE id=148');
             ->select('select contadores.*,tiendas.nombre  AS nomtienda from contadores, tiendas'.
                     ' WHERE contadores.tienda = tiendas.id AND compras >= 1 '.
-                 //   ' AND ejercicio = 2012 '.
+                    ' AND ejercicio >= 2010 AND empresa in(1,9,12,16)'.
                     'ORDER BY contadores.id');
 
 
         foreach ($reg as $row){
+
+            //\Log::info($row->empresa.' Ti: '.$row->tienda.' ejer: '.$row->ejercicio);
 
             if ($row->tienda == 6) // saltamos bombonera, que será la empresa 3 cuando importemos ventas.
                 continue;
