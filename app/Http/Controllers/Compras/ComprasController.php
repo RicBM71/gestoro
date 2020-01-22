@@ -74,6 +74,14 @@ class ComprasController extends Controller
             }
 
             return $k;
+        }elseif($data['vivos']){
+
+            return Compra::with(['cliente','grupo','tipo','fase'])
+                            ->tipo(1)
+                            ->grupo($data['grupo_id'])
+                            ->fase(4)
+                            ->get();
+
         }
         else
             return Compra::with(['cliente','grupo','tipo','fase'])

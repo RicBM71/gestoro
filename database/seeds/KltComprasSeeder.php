@@ -31,7 +31,11 @@ class KltComprasSeeder extends Seeder
 
         $empresa_ant = $tienda_ant = -1;
         $ejercicio = 2019;
-        $contadores = DB::connection('quilates')->select('select * from contadores WHERE empresa in('.$e.') ORDER BY id');
+        //$contadores = DB::connection('quilates')->select('select * from contadores WHERE empresa in('.$e.') ORDER BY id');
+
+        $contadores = DB::connection('quilates')->select('select * from crulara where empresa ='.$row->empresa.' AND tienda ='.$row->tienda);
+
+        
         foreach ($contadores as $contador){
 
            // if ($empresa_ant <> $contador->empresa || $tienda_ant <> $contador->tienda){

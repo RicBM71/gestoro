@@ -52,9 +52,9 @@ class CajasController extends Controller
             'quefecha'  => ['string','required'],
             'fecha_d'   => ['string','required',new RangoFechaRule($request->fecha_d, $request->fecha_h)],
             'fecha_h'   => ['string','required', new MaxDiasRangoFechaRule($request->fecha_d, $request->fecha_h)],
-            'dh'        => ['string','required'],
+            'dh'        => ['nullable','string'],
             'apunte_id' => ['nullable','integer'],
-          //  'manual' => ['string','required'],
+            'manual'    => ['nullable','string'],
         ]);
 
         session(['filtro_caj' => $data]);
@@ -73,11 +73,19 @@ class CajasController extends Controller
 
         $data = session('filtro_caj');
 
+        // \Log::info(Caja::with('apunte')
+        // ->rangoFechas($data['fecha_d'],$data['fecha_h'])
+        // ->dh($data['dh'])
+        // ->manual($data['manual'])
+        // ->apunte($data['apunte_id'])
+        // ->orderby('fecha')
+        // ->toSql());
+
         return [
             'caja' => Caja::with('apunte')
                         ->rangoFechas($data['fecha_d'],$data['fecha_h'])
                         ->dh($data['dh'])
-                        // ->manual($data['manual'])
+                        ->manual($data['manual'])
                         ->apunte($data['apunte_id'])
                         ->orderby('fecha')
                         ->get()

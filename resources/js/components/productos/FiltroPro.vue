@@ -65,7 +65,6 @@
                  <v-flex sm2>
                     <v-text-field
                         v-model="reg.precio"
-                        v-validate="'min:2'"
                         :error-messages="errors.collect('precio')"
                         label="Precio/Peso"
                         data-vv-name="precio"
@@ -236,7 +235,7 @@ export default {
             reg: {
                 cliente_id: 0,
                 referencia:"",
-                notas:"",
+                notas:null,
                 ref_pol:"",
                 precio:"",
                 clase_id: null,

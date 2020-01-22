@@ -208,13 +208,14 @@ Class Producto extends Model
     public static function scopeNotasNombre($query, $notas){
 
         if ($notas != null){
-            if (strpos($notas,':') === false){
-                return $query->where('notas','like', '%'.$notas.'%');
-            }
-            else{
-                $notas = str_replace(':','',$notas);
-                return $query->where('nombre','like', '%'.$notas.'%');
-            }
+            return $query->where('nombre','like', '%'.$notas.'%');
+            // if (strpos($notas,':') === false){
+            //     return $query->where('notas','like', '%'.$notas.'%');
+            // }
+            // else{
+            //     $notas = str_replace(':','',$notas);
+            //     return $query->where('nombre','like', '%'.$notas.'%');
+            // }
         }
         return $query;
 

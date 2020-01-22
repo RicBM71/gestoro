@@ -27,13 +27,14 @@ class FiltrarRequest extends FormRequest
     {
 
         return [
-            'tipo_id' => ['required','integer'],
+            'tipo_id'  => ['required','integer'],
             'grupo_id' => ['required','integer'],
-            'fase_id' => ['nullable','integer'],
-            'fecha_d' => ['required','date', new RangoFechaRule($this->fecha_d, $this->fecha_h)],
-            'fecha_h' => ['required','date', new MaxDiasRangoFechaRule($this->fecha_d, $this->fecha_h)],
+            'fase_id'  => ['nullable','integer'],
+            'fecha_d'  => ['required','date', new RangoFechaRule($this->fecha_d, $this->fecha_h)],
+            'fecha_h'  => ['required','date', new MaxDiasRangoFechaRule($this->fecha_d, $this->fecha_h)],
             'quefecha' => ['required'],
-            'retraso'  => ['nullable','integer']
+            'retraso'  => ['nullable','integer'],
+            'vivos'    => ['boolean']
         ];
     }
 }

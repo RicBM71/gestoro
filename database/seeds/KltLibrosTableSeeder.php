@@ -17,9 +17,9 @@ class KltLibrosTableSeeder extends Seeder
 
                 $reg = DB::connection('quilates')
             //->select('select * from contadores WHERE id=148');
-            ->select('select contadores.*,tiendas.nombre  AS nomtienda from contadores, tiendas'.
-                    ' WHERE contadores.tienda = tiendas.id AND compras >= 1 '.
-                    ' AND ejercicio >= 2010 AND empresa in(1,9,12,16)'.
+            ->select('select * from contadores '.
+                    ' WHERE compras > 1 AND empresa = 1 '.
+                    ' AND ejercicio >= 2019 '.
                     'ORDER BY contadores.id');
 
 
@@ -27,13 +27,22 @@ class KltLibrosTableSeeder extends Seeder
 
             //\Log::info($row->empresa.' Ti: '.$row->tienda.' ejer: '.$row->ejercicio);
 
-            if ($row->tienda == 6) // saltamos bombonera, que será la empresa 3 cuando importemos ventas.
-                continue;
+            // if ($row->tienda == 6) // saltamos bombonera, que será la empresa 3 cuando importemos ventas.
+            //     continue;
 
-            if (strpos($row->nomtienda, 'Usados') === false)
-                $crulib = "M";
-            else
-                $crulib = "U";
+            $c = DB::connection('quilates')->select('select * from crulara where empresa ='.$row->empresa.' AND tienda ='.$row->tienda);
+
+            foreach ($c as $cruce){
+                \Log::info($cruce->libro.' T:'.$row->tienda);
+            }
+
+
+
+            // if (strpos($row->nomtienda, 'Usados') === false)
+            //     $crulib = "M";
+            // else
+            //     $crulib = "U";
+            $crulib = $cruce->libro;
 
             if ($crulib == "M"){
                 $grupo_id = 1;
@@ -49,9 +58,9 @@ class KltLibrosTableSeeder extends Seeder
             }
 
             $data[]=array(
-                'id'        => $row->id,
+                'id'        => 0,
                 'nombre'    => $nombre,
-                'empresa_id'=> $empresa_id,
+                'empresa_id'=> $cruce->emp_com,
                 'grupo_id'=> $grupo_id,
                 'ejercicio'=>$row->ejercicio,
                 'ult_compra'=>$row->compras - 1,

@@ -115,6 +115,14 @@
                     >
                     </v-text-field>
                 </v-flex>
+                <v-flex sm1></v-flex>
+                <v-flex sm2>
+                    <v-switch
+                        label="Recuento"
+                        v-model="vivos"
+                        color="primary">
+                    ></v-switch>
+                </v-flex>
                 <v-spacer></v-spacer>
                 <v-flex sm2>
                     <v-btn @click="submit"  :loading="loading" round small block  color="info">
@@ -158,6 +166,7 @@ export default {
             retraso:"",
             fecha_d: new Date().toISOString().substr(0, 7)+"-01",
             fecha_h: new Date().toISOString().substr(0, 10),
+            vivos: false,
       }
     },
     beforeMount(){
@@ -211,7 +220,8 @@ export default {
                                 grupo_id: this.grupo_id,
                                 fase_id: this.fase_id,
                                 tipo_id: this.tipo_id,
-                                retraso: this.retraso
+                                retraso: this.retraso,
+                                vivos: this.vivos
                             }
                         )
                         .then(res => {

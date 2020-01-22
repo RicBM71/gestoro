@@ -26,7 +26,7 @@ class StoreAmpliacion extends FormRequest
     public function rules()
     {
 
-        $imp =  ($this->user()->hasPermissionTo('salefe')) ?
+        $imp =  ($this->user()->hasPermissionTo('salefe') || $this->concepto_id == 5) ?
                   ['required','numeric'] :
                   ['required','numeric','min:0','max:'.session('parametros')->lim_efe];
 

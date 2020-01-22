@@ -582,7 +582,7 @@ import {mapGetters} from 'vuex';
             },
             computedDisabledRecuperar(){
                 // con esto un supervisor, tiene que hacer una ampliación con importe a cero, así queda constancia
-                //if (this.isAdmin) return false; // lo dejo para poder hacer ampliaciones en negativo, es decir, aumenta préstamo.
+                if (this.isAdmin) return false; // lo dejo para poder recupear aún bloqueado.
 
                 if (new Date() < new Date(this.compra.fecha_bloqueo))
                     return true; // está bloqueado por fecha

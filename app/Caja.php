@@ -47,7 +47,7 @@ class Caja extends Model
     }
     public function scopeDh($query, $dh){
 
-        if ($dh != 'T')
+        if ($dh != null)
             $query->whereYear('dh',$dh);
 
         return $query;
@@ -56,7 +56,7 @@ class Caja extends Model
 
     public function scopeManual($query, $manual){
 
-        if ($manual <> 'T')
+        if ($manual != null )
             $query->where('manual',$manual);
 
         return $query;
@@ -65,7 +65,7 @@ class Caja extends Model
 
     public function scopeApunte($query, $apunte_id){
 
-        if ($apunte_id <> '')
+        if ($apunte_id != null)
             $query->where('apunte_id',$apunte_id);
 
         return $query;

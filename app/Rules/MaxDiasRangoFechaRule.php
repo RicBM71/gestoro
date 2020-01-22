@@ -23,6 +23,8 @@ class MaxDiasRangoFechaRule implements Rule
 
         if (esRoot())
             $this->max_dias = 9999;
+        elseif (esAdmin())
+            $this->max_dias = 366 * 2;
     }
 
     /**

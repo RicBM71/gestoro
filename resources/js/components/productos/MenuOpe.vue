@@ -14,13 +14,14 @@
             </template>
                 <span>Nuevo</span>
         </v-tooltip>
-        <v-tooltip bottom v-if="isAdmin">
+        <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
                     v-show="id > 0"
                     v-on="on"
                     color="white"
                     icon
+                    :disabled="!isAdmin"
                     @click="openDialog"
                 >
                     <v-icon color="primary">delete</v-icon>

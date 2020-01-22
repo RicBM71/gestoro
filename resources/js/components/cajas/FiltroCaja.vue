@@ -62,16 +62,25 @@
                                 ></v-date-picker>
                         </v-menu>
                     </v-flex>
-                    <v-flex sm2>
+                    <v-flex sm1>
                         <v-select
                             v-model="dh"
-                            v-validate="'required'"
                             data-vv-name="dh"
                             data-vv-as="D-H"
                             :error-messages="errors.collect('dh')"
                             :items="dh_items"
                             label="D/H"
                             required
+                            ></v-select>
+                    </v-flex>
+                    <v-flex sm1>
+                        <v-select
+                            v-model="manual"
+                            data-vv-name="manual"
+                            data-vv-as="origen"
+                            :error-messages="errors.collect('manual')"
+                            :items="ma_items"
+                            label="Origen"
                             ></v-select>
                     </v-flex>
                     <v-flex sm3>
@@ -123,20 +132,20 @@ export default {
                     {value: 'M', text:"Modificación"},
                 ],
             quefecha: 'A',
-            dh: 'T',
+            dh: null,
             loading: false,
             result: false,
             dh_items:[
                     {value: 'D', text:"Debe"},
                     {value: 'H', text:"Haber"},
-                    {value: 'T', text:"Todos"},
+                    {value: null, text:"Todos"},
                 ],
             ma_items:[
-                    {value: 'T', text:"Todos"},
+                    {value: null, text:"Todos"},
                     {value: 'S', text:"Manual"},
-                    {value: 'N', text:"Automático"},
+                    {value: 'N', text:"Auto"},
                 ],
-            manual:'T',
+            manual: null,
             menu_h: false,
             menu_d: false,
             apunte_id:  null,
