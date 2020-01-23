@@ -176,7 +176,7 @@
                                         </v-text-field>
                                     </v-flex>
                                 </v-layout>
-                                <v-layout row wrap>
+                                <v-layout row wrap v-if="isRoot">
                                     <v-flex sm2>
                                         <v-menu
                                             v-model="menu"
@@ -221,6 +221,19 @@
                                             :disabled="!isRoot"
                                         ></v-select>
                                     </v-flex>
+                                    <v-flex sm3 d-flex>
+                                        <v-select
+                                            :readonly="!isRoot"
+                                            v-model="empresa.comun_empresa_id"
+                                            v-validate="'required'"
+                                            :error-messages="errors.collect('comun_empresa_id')"
+                                            data-vv-name="comun_empresa_id"
+                                            data-vv-as="empresa"
+                                            :items="empresas"
+                                            label="Empresa Común"
+                                            :disabled="!isRoot"
+                                        ></v-select>
+                                    </v-flex>
                                 </v-layout>
                                 <v-layout row wrap>
                                     <v-flex sm12>
@@ -258,19 +271,6 @@
                                         :items="almacenes"
                                         label="Ubicación"
                                         required
-                                        ></v-select>
-                                    </v-flex>
-                                    <v-flex sm3 d-flex>
-                                        <v-select
-                                            :readonly="!isRoot"
-                                            v-model="empresa.comun_empresa_id"
-                                            v-validate="'required'"
-                                            :error-messages="errors.collect('comun_empresa_id')"
-                                            data-vv-name="comun_empresa_id"
-                                            data-vv-as="empresa"
-                                            :items="empresas"
-                                            label="Empresa Común"
-                                            :disabled="!isRoot"
                                         ></v-select>
                                     </v-flex>
                                     <v-flex sm2>
