@@ -15,10 +15,6 @@ class ApliPdfController extends Controller
     public function index(){
 
 
-        if (!esRoot()){
-            return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Root');
-        }
-
         if (request()->wantsJson())
             return [
                 'clases'    => Clase::selGrupoClase(),

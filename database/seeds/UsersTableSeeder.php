@@ -42,6 +42,7 @@ class UsersTableSeeder extends Seeder
         Permission::create(['name'=>'harddel','nombre'=>'* Hard Delete']);
         Permission::create(['name'=>'scan','nombre'=>'Scanea Docu']);
         Permission::create(['name'=>'users','nombre'=>'Usuarios']);
+        Permission::create(['name'=>'edtfac','nombre'=>'*Edita Facturas']);
 
     //     $user = new User;
 

@@ -144,8 +144,9 @@ class ProductosController extends Controller
 
         if (request()->wantsJson())
             return [
-                'clases'=> Clase::selGrupoClase(),
-                'estados'=> Estado::selEstados()
+                'clases'    => Clase::selGrupoClase(),
+                'estados'   => Estado::selEstados(),
+                'quilates'  => Quilate::selQuilates()
             ];
 
     }
@@ -165,6 +166,8 @@ class ProductosController extends Controller
         $data['empresa_id'] = session()->get('empresa')->id;
         $data['destino_empresa_id'] = session()->get('empresa')->id;
         $data['almacen_id'] = session()->get('empresa')->almacen_id;
+
+        //$data['etiqueta_id']  = $data['clase_id'] == 3 ? 3 : 1;
 
         if ($data['precio_venta'] == 0)
             $data['precio_venta'] = $data['precio_coste'] + round($data['precio_coste'] * 30 / 100, 0);

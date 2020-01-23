@@ -61,10 +61,10 @@ class YjUsuariosSeeder extends Seeder
             if ($user->id == 1){
                 $user->assignRole(['Root','Admin','Gestor']);
             }
-            // $user->syncPermissions('addcom');
-            // $user->syncPermissions('addven');
-            // $user->syncPermissions('liquidar');
-            // $user->syncPermissions('factura');
+            // $user->givePermissionTo('addcom');
+            // $user->givePermissionTo('addven');
+            // $user->givePermissionTo('liquidar');
+            //$user->givePermissionTo('factura');
         }
 
     }

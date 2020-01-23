@@ -16,6 +16,7 @@ class GdUsuariosSeeder extends Seeder
      */
     public function run()
     {
+
         User::truncate();
 
 
@@ -62,10 +63,10 @@ class GdUsuariosSeeder extends Seeder
             if ($user->id == 1){
                 $user->assignRole(['root','admin','gestor']);
             }
-            $user->syncPermissions('addcom');
-            $user->syncPermissions('addven');
-            $user->syncPermissions('liquidar');
-            $user->syncPermissions('factura');
+            $user->givePermissionTo('addcom');
+            $user->givePermissionTo('addven');
+            $user->givePermissionTo('liquidar');
+            $user->givePermissionTo('factura');
         }
 
     }

@@ -116,7 +116,8 @@ export default {
                 this.clases.push({value:null,text:"---"});
             })
             .catch(err => {
-                this.$toast.error('Error al montar <apli-pdf>');
+                this.$toast.error(err.response.data.message);
+                //this.$toast.error('Error al montar <apli-pdf>');
             })
             .finally(()=> {
                 this.show_loading = false;

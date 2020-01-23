@@ -250,6 +250,7 @@
                                     precio_venta: this.precio_venta,
                                     peso_gr: this.peso_gr,
                                     quilates: this.quilates,
+                                    etiqueta_id: 3,
                                     univen: 'U'
                                 }
                             )

@@ -56,7 +56,7 @@ class PrintLibroController extends Controller
             'libro_id' => ['required','integer'],
             ]);
 
-        $libro = Libro::findOrfail($data['']);
+        $libro = Libro::findOrfail($data['libro_id']);
 
         ob_end_clean();
         $this->portadaLibroBlanco($libro->codigo_pol);
@@ -79,7 +79,7 @@ class PrintLibroController extends Controller
         $this->encabezado = true;
 
 
-        $this->setPrepararLibro();
+        $this->setPrepararLibro(true);
         $this->crearLibroBlanco($data['primera_pagina'], $data['paginas']);
 
         PDF::Output('libro.pdf','I');
@@ -108,7 +108,7 @@ class PrintLibroController extends Controller
 
         ob_end_clean();
 
-        $this->setPrepararLibro();
+        $this->setPrepararLibro(true);
 
         $this->generarLibro($data['libro_id'],$data['fecha_d'],$data['fecha_h'],$data['primer_registro'],$data['primera_pagina']);
 
@@ -137,9 +137,9 @@ class PrintLibroController extends Controller
 
         ob_end_clean();
 
-        $this->setPrepararLibro();
+        $this->setPrepararLibro(false);
 
-        $this->generarLibro($data['li'],$data['fecha_d'],$data['fecha_h'],$data['primer_registro'],0);
+        $this->generarLibro($data['libro_id'],$data['fecha_d'],$data['fecha_h'],$data['primer_registro'],0);
 
         PDF::Output('libro.pdf','I');
 
@@ -197,10 +197,10 @@ class PrintLibroController extends Controller
 				$this->newPagina();
 			}
 
-			PDF::MultiCell(10, $altofil,  $libro->codigo_pol, 'T', 'L', 0, 0, '', '', true,0,false,true,$altofilmax,'T',false);
+			PDF::MultiCell(14, $altofil,  $libro->codigo_pol, 'T', 'L', 0, 0, '', '', true,0,false,true,$altofilmax,'T',false);
 			//PDF::MultiCell(20, $altofil,  PDF::GetY()." alto ".$altofil, 'T', 'L', 0, 0, '', '', true,0,false,true,$altofilmax,'T',false);
 
-			PDF::MultiCell(14, $altofil,  $row->albaran, 'T', 'L', 0, 0, '', '', true,0,false,true,$altofilmax,'T',false);
+			PDF::MultiCell(12, $altofil,  $row->albaran, 'T', 'L', 0, 0, '', '', true,0,false,true,$altofilmax,'T',false);
 			PDF::MultiCell(16, $altofil,  getFecha($row->fecha_compra), 'T', 'L', 0, 0, '', '', true,0,false,true,$altofilmax,'T',false);
 			//PDF::MultiCell(28, $altofil,  ($row->apellidos.', '.$row->nombre).$altofil, 'T', 'L', 0, 0, '', '', true,0,false,true,$altofilmax,'T',false);
 			PDF::MultiCell(28, $altofil,  $nomape, 'T', 'L', 0, 0, '', '', true,0,false,true,$altofilmax,'T',false);
@@ -330,7 +330,7 @@ class PrintLibroController extends Controller
 	}
 
 
-    private function setPrepararLibro(){
+    private function setPrepararLibro($cabecera){
 
         PDF::setHeaderCallback(function($pdf) {
 
@@ -347,8 +347,8 @@ class PrintLibroController extends Controller
                 PDF::SetFont('helvetica', 'B', 7, '', false);
                 PDF::SetFillColor(240,240,240);
 
-                PDF::MultiCell(10, $altofil,  "C/TI.", 'T', 'L', 1, 0, '', '', true,0,false,true,$altofil,'M',false);
-                PDF::MultiCell(16, $altofil,  "N. ORDEN", 'T', 'L', 1, 0, '', '', true,0,false,true,$altofil,'M',false);
+                PDF::MultiCell(14, $altofil,  "C/TI.", 'T', 'L', 1, 0, '', '', true,0,false,true,$altofil,'M',false);
+                PDF::MultiCell(12, $altofil,  "N. ORDEN", 'T', 'L', 1, 0, '', '', true,0,false,true,$altofil,'M',false);
                 PDF::MultiCell(14, $altofil,  "FECHA", 'T', 'L', 1, 0, '', '', true,0,false,true,$altofil,'M',false);
                 PDF::MultiCell(28, $altofil,  "APELLIDOS, NOMBRE", 'T', 'L', 1, 0, '', '', true,0,false,true,$altofil,'M',false);
 
@@ -372,7 +372,7 @@ class PrintLibroController extends Controller
 
 
                 // set document information
-        PDF::SetCreator(PDF_CREATOR);
+        PDF::SetCreator(session('username'));
         PDF::SetAuthor(session('empresa')->nombre);
         PDF::SetTitle('Libro');
         PDF::SetSubject('');
@@ -381,18 +381,23 @@ class PrintLibroController extends Controller
         //PDF::SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
 
         // set header and footer fonts
-        PDF::setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-        PDF::setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+        // PDF::setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+        // PDF::setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 
         // set default monospaced font
-        PDF::SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+        // PDF::SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
         // set margins
         //PDF::SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-        PDF::SetMargins(5, 20, 5);
         //PDF::SetHeaderMargin(PDF_MARGIN_HEADER);
         //PDF::SetHeaderMargin(35);
-        PDF::SetFooterMargin(0);
+        if ($cabecera){
+            PDF::SetMargins(5, 20, 5);
+            //PDF::SetFooterMargin(0);
+        }else{
+            PDF::setPrintFooter(false);
+            PDF::SetMargins(5,22,5,true);
+        }
         //PDF::SetFooterMargin(32);
 
         // set auto page breaks
@@ -413,6 +418,29 @@ class PrintLibroController extends Controller
         // ---------------------------------------------------------
 
     }
+
+    // private function setCabPieLibroBlanco(&$pdf,$cabecera){
+
+    //     $pdf->setFontSubsetting(false);
+    //     $pdf->setHeaderMargin(5);
+    //     $pdf->setFooterMargin(5);
+    //     $pdf->setPrintFooter(false);
+    //     $pdf->setPrintHeader($cabecera);
+
+    //     if ($cabecera){
+    //         //set margins
+    //         $pdf->SetMargins(5,11,5,true);
+    //     }else{
+    //         $pdf->setPrintFooter(false);
+    //         $pdf->SetMargins(5,22,5,true);
+    //     }
+
+    //     //set auto page breaks
+    //     $pdf->SetAutoPageBreak(TRUE, 5);
+    //     $pdf->AcceptPageBreak();
+
+
+    // }
 
 
     private function crearLibroBlanco($primera_pagina,$paginas){

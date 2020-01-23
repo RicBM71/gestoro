@@ -38,7 +38,7 @@
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            v-show="compra.fase_id ==4"
+                            v-show="compra.fase_id == 4"
                             v-on="on"
                             color="white"
                             icon

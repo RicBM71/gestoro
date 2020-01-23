@@ -12,7 +12,8 @@
         <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
-                    v-show="computedReaCli"
+                    v-show="albaran.id>0"
+                    :disabled="!computedReaCli"
                     v-on="on"
                     color="white"
                     icon
@@ -26,7 +27,8 @@
         <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
-                    v-show="computedMail"
+                    v-show="albaran.id>0"
+                    :disabled="!computedMail"
                     v-on="on"
                     color="white"
                     icon
@@ -80,7 +82,8 @@
         <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
-                    v-show="computedAuthBorrar"
+                    v-show="albaran.id > 0"
+                    :disabled="!computedAuthBorrar"
                     v-on="on"
                     color="white"
                     icon
@@ -216,7 +219,7 @@ export default {
 
             if ( this.albaran.id == 0) return false;
 
-            if (this.isRoot) return true;
+            //if (this.isRoot) return true;
 
             if (this.albaran.factura > 0 || this.albaran.id == 0) return false;
 

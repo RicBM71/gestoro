@@ -58,7 +58,10 @@ class EoUsuariosSeeder extends Seeder
             if ($user->id == 1){
                 $user->assignRole(['root','admin']);
             }
-            $user->syncPermissions('addcom');
+            $user->givePermissionTo('addcom');
+            $user->givePermissionTo('addven');
+            $user->givePermissionTo('liquidar');
+            $user->givePermissionTo('factura');
         }
 
     }

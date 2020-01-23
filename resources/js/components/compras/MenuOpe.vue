@@ -5,7 +5,8 @@
         <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
-                    v-show="computedReaCli"
+                    v-show="compra.id > 0"
+                    :disabled="!computedReaCli"
                     v-on="on"
                     color="white"
                     icon
@@ -59,7 +60,8 @@
         <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
-                    v-show="computedAuthBorrar"
+                    v-show="compra.id > 0"
+                    :disabled="!computedAuthBorrar"
                     v-on="on"
                     color="white"
                     icon

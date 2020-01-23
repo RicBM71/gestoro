@@ -114,6 +114,7 @@ export default {
             'isAdmin',
             'hasBorraCompras',
             'userName',
+            'hasEdtFac'
         ]),
         computedResto(){
             return (this.totales.total - this.acuenta).toFixed(2);
@@ -121,6 +122,9 @@ export default {
     },
     methods:{
          borrarLinea(item){
+
+            if (this.hasEdtFac) return true;
+
             if (this.albaran.factura > 0 && !this.isAdmin) return false;
 
             if (this.cobros_lin.indexOf(item) == 0){ // es el último apunte.

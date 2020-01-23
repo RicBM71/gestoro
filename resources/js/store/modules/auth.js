@@ -145,7 +145,9 @@ const getters = {
     hasScan: (state) =>{
         return (state.permisos.indexOf('scan') >= 0) ? true : false;
     },
-
+    hasEdtFac: (state) =>{
+        return (state.permisos.indexOf('edtfac') >= 0) ? true : false;
+    },
 };
 
 /*

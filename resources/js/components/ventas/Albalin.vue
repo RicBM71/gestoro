@@ -206,6 +206,7 @@ export default {
     computed:{
          ...mapGetters([
             'isSupervisor',
+            'hasEdtFac'
         ]),
         computedResto(){
             return (this.totales.total - this.acuenta).toFixed(2);
@@ -214,6 +215,8 @@ export default {
             return parseFloat(this.totales.importe) - parseFloat(this.totales.impirpf)  + parseFloat(this.totales.impiva);
         },
         computedEdit(){
+
+            if (this.hasEdtFac) return true;
 
             if (this.albaran.factura > 0 || this.albaran.fase_id > 10 ) return false;
 

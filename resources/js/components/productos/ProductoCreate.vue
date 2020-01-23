@@ -36,19 +36,17 @@
                             label="Clase"
                             ></v-select>
                         </v-flex>
-                        <v-flex sm1>
-                            <v-text-field
+                        <!-- <v-flex sm1>
+                            <v-select
                                 v-model="producto.quilates"
+                                :items="quilates"
+                                label="Quilates"
                                 v-validate="'numeric'"
                                 :error-messages="errors.collect('quilates')"
-                                label="Kt"
                                 data-vv-name="quilates"
                                 data-vv-as="quilates"
-                                required
-                                v-on:keyup.enter="submit"
-                            >
-                            </v-text-field>
-                        </v-flex>
+                            ></v-select>
+                        </v-flex> -->
                         <v-flex sm2>
                             <v-text-field
                                 v-model="producto.peso_gr"
@@ -104,6 +102,7 @@ import Loading from '@/components/shared/Loading'
         ruta: "producto",
 
         clases:[],
+        quilates:[],
         producto: {
             id:0,
             peso:"",
@@ -127,6 +126,7 @@ import Loading from '@/components/shared/Loading'
             .then(res => {
                 this.clases = res.data.clases;
                 this.producto.clase_id = this.clases[0].value;
+                this.quilates = res.data.quilates;
                 this.selClase(this.producto.clase_id);
                 this.show_loading=false;
             })
