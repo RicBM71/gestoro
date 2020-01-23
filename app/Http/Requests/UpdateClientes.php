@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Rules\FechaDni;
 use App\Rules\ValidarDniCif;
 use Illuminate\Validation\Rule;
+use App\Rules\FechaNacimientoRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateClientes extends FormRequest
@@ -43,7 +44,7 @@ class UpdateClientes extends FormRequest
             'dni'               => ['required', new ValidarDniCif($this->tipodoc),Rule::unique('clientes')->ignore($this->route('cliente')->id)->where(function ($query) {
                 return $query->where('empresa_id', session()->get('empresa')->comun_empresa_id);
             })],
-            'fecha_nacimiento'  => ['nullable','date'],
+            'fecha_nacimiento'  => ['nullable','date', new FechaNacimientoRule()],
             'fecha_baja'        => ['nullable','date'],
             'nacpro'            => ['nullable','string', 'max:30'],
             'nacpais'            => ['nullable','string', 'max:40'],

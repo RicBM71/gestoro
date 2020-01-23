@@ -65,3 +65,8 @@ REbu en EVa oro sol R01809-18
 Compra 1414-19 ojo a inteeses, así se pierden
 
 SELECT DISTINCT empresa,tienda, empresas.razon, tiendas.nombre FROM `albaranes` join empresas on empresas.id = albaranes.empresa join tiendas on tiendas.id = albaranes.tienda order by 1,2
+
+
+Contadores kilates:
+update contadores set serie = "F", geserie="G", atserie="FA" where ejercicio = 2020
+update contadores set serie = "U", geserie="UG", atserie="UA" where ejercicio = 2020 and tienda in(12,13,14,15,16,18,21);

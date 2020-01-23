@@ -38,6 +38,10 @@ class KltEmpresaSeeder extends Seeder
             // }
             $emp = DB::connection('quilates')->table('empresas')->select('*')->where('id', $row->empresa)->first();
 
+            \Log::info($emp->nombre);
+
+            $tie = DB::connection('quilates')->table('tiendas')->select('*')->where('id', $row->tienda)->first();
+
 
 
             //$emp = $emp[0];
@@ -52,7 +56,7 @@ class KltEmpresaSeeder extends Seeder
 
             $data[]=array(
                 'id'        => $row->emp_com,
-                'nombre'    => $emp->nombre,
+                'nombre'    => $emp->nombre, //.' '.$tie->nombre,
                 'razon'     => $emp->razon,
                 'cif'       => $emp->cif,
                 'poblacion' => $emp->poblacion,
@@ -69,8 +73,9 @@ class KltEmpresaSeeder extends Seeder
                 'flags'     => '11100000000000000000',
                 'sigla'     => $emp->sigla,
                 'titulo'    => $emp->titulo,
-                'almacen_id'=> 0,
+                'almacen_id'=> null,
                 'comun_empresa_id' => 1,
+                'deposito_empresa_id' => $row->emp_com,
                 'username'  => $emp->sysusr,
                 'created_at'=> $emp->sysfum.' 00:00:00',
                 'updated_at'=> $emp->sysfum.' '.$emp->syshum,

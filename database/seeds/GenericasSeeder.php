@@ -141,10 +141,10 @@ class GenericasSeeder extends Seeder
         $libro->nombre = "Metales";
         $libro->empresa_id = 1;
         $libro->grupo_id = 1;
-        $libro->serie_fac = "MP";
-        $libro->serie_com = "A";
+        $libro->serie_fac = "RM";
+        $libro->serie_com = "M";
 
-        $libro->ejercicio = 2019;
+        $libro->ejercicio = 2020;
         $libro->ult_compra = 0;
         $libro->ult_factura= 0;
         $libro->interes = 10;
@@ -158,9 +158,9 @@ class GenericasSeeder extends Seeder
         $libro->nombre = "Usados";
         $libro->empresa_id = 1;
         $libro->grupo_id = 2;
-        $libro->serie_fac = "OU";
-        $libro->serie_com = "B";
-        $libro->ejercicio = 2019;
+        $libro->serie_fac = "RU";
+        $libro->serie_com = "U";
+        $libro->ejercicio = 2020;
         $libro->ult_compra = 0;
         $libro->ult_factura= 0;
         $libro->interes = 10;

@@ -199,6 +199,28 @@ class CuadroMandoController extends Controller
         return $union0;
     }
 
+    // private function depositos($data){
+
+    //     $rollup = ($data['totales'] == true) ?  'WITH ROLLUP' : null;
+
+    //      $select = DB::getTablePrefix().'compras.tipo_id AS tipo_id,'.DB::getTablePrefix().'clases.nombre AS clase, 0 AS quilates, SUM('.DB::getTablePrefix().'depositos.importe) AS importe, SUM('.DB::getTablePrefix().'depositos.peso_gr) AS peso_gr';
+
+    //      $union0 = DB::table('compras')
+    //          ->select(DB::raw($select))
+    //          ->join('depositos','compras.id','=','depositos.compra_id')
+    //          ->join('clases','clase_id','=','clases.id')
+    //          ->where('compras.empresa_id', session('empresa')->id)
+    //          ->whereIn('compras.fase_id', [4,6])
+    //         //  ->whereDate('fecha_compra','>=', $data['fecha_d'])
+    //          ->whereDate('fecha_compra','<=', $data['fecha_h'])
+    //          ->whereNull('fecha_liquidado')
+    //          ->groupBy(DB::raw('tipo_id,clase,quilates '.$rollup))
+    //          ->get();
+
+    //      return $union0;
+    //  }
+
+
     private function depositos($data){
 
         $rollup = ($data['totales'] == true) ?  'WITH ROLLUP' : null;

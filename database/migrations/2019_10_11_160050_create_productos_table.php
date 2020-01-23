@@ -17,7 +17,6 @@ class CreateProductosTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('empresa_id'); // donde se vende
             $table->unsignedInteger('destino_empresa_id');
-            $table->unsignedInteger('almacen_id');
             $table->text('nombre');
             $table->string('nombre_interno')->nullable();
             $table->unsignedInteger('clase_id');
@@ -39,6 +38,7 @@ class CreateProductosTable extends Migration
             $table->unsignedInteger('garantia_id')->nullable();
             $table->smallInteger('meses_garantia')->nullable();
             $table->date('fecha_ultima_revision')->nullable();
+            $table->unsignedInteger('almacen_id')->nullable();
             $table->text('notas')->nullable();
             $table->string('username',30)->nullable();
             $table->softDeletes();

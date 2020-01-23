@@ -36,7 +36,7 @@ class CreateEmpresasTable extends Migration
             $table->string('img_fondo')->nullable()->default(null);
             $table->string('certificado',20)->nullable()->default(null);
             $table->string('passwd_cer')->nullable()->default(null);
-            $table->unsignedInteger('almacen_id')->default(1);
+            $table->unsignedInteger('almacen_id')->nullable();
             $table->unsignedInteger('comun_empresa_id')->default(1);
             $table->unsignedInteger('deposito_empresa_id')->nullable();
             $table->date('scan_doc')->nullable();

@@ -1,6 +1,7 @@
 <?php
 
 use App\Comline;
+use App\Empresa;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -23,10 +24,27 @@ class KltComlinesSeeder extends Seeder
 
         Comline::truncate();
 
+        $contadores = DB::connection('quilates')->select('select * from crulara ORDER BY empresa');
+
+
+        foreach ($contadores as $contador){
+
+            session(['empresa' => Empresa::find($contador->emp_com)]);
+
+
+            for ($ejercicio = 2008; $ejercicio <= 2020; $ejercicio++)
+                $this->crearLineas($contador, $ejercicio);
+
+        }
+    }
+
+    private function crearLineas($contador, $eje){
+
+        $data=array();
         $reg = DB::connection($this->bbdd)->select('select albalin.*,albaranes.empresa from albaranes,albalin '.
-        ' where albaranes.empresa in('.$empresa.')'.
+        ' where albaranes.empresa ='.$contador->empresa.' AND albaranes.tienda = '.$contador->tienda.
         ' and comven="C" '.
-        ' and year(fechacomp) '.$eje.
+        ' and year(fechacomp) = '.$eje.
         ' and albaranes.id = albalin.albaran and linreg="N" and producto=0');
 
         $i=0;
@@ -64,7 +82,7 @@ class KltComlinesSeeder extends Seeder
             $data[]=array(
                 'id'    => $row->id,
                 'compra_id' => $row->albaran,
-                'empresa_id'=> $row->empresa,
+                'empresa_id'=> $contador->emp_com,
                 'concepto' => $row->concepto,
                 'grabaciones' => $row->grabaciones,
                 'colores' => $row->colores,
@@ -81,12 +99,13 @@ class KltComlinesSeeder extends Seeder
                 'updated_at' => $row->sysfum.' '.$row->syshum,
             );
 
-            if ($i % 1000 == 0){
+            if ($i % 2000 == 0){
                 DB::table('comlines')->insert($data);
                 $data=array();
             }
 
         }
+
         DB::table('comlines')->insert($data);
 
     }

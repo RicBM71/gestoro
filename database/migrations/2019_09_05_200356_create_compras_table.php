@@ -19,7 +19,7 @@ class CreateComprasTable extends Migration
             $table->smallInteger('grupo_id');
             $table->Integer('ejercicio')->default(0);
             $table->Integer('albaran')->default(0);
-            $table->string('serie_com',1);
+            $table->string('serie_com', 1);
             $table->unsignedInteger('cliente_id');
             $table->smallInteger('tipo_id');
             $table->date('fecha_compra')->nullable();
@@ -34,7 +34,7 @@ class CreateComprasTable extends Migration
             $table->unsignedInteger('fase_id');
             $table->Integer('factura')->nullable();
             $table->date('fecha_factura')->nullable();
-            $table->string('serie_fac',5)->nullable();
+            $table->string('serie_fac',3)->nullable();
             $table->Integer('papeleta')->nullable();
             $table->decimal('retencion', 6,2)->default(0);
             $table->String('notas')->nullable();

@@ -15,26 +15,22 @@ class KltContadoresSeeder extends Seeder
         Contador::truncate();
 
         $reg = DB::connection('quilates')
-        ->select('select contadores.* from contadores'.
-                ' WHERE albaran > 0 '.
+        //->select('select * from contadores WHERE id=148');
+        ->select('select * from contadores '.
+                ' WHERE albaran > 1001 '.
+                ' AND ejercicio = 2020 '.
                 'ORDER BY contadores.id');
 
-        foreach($reg as $row){
 
-            // if ($row->tienda == 5 || $row->albaran == 1 || $row->albaran == 1001 || $row->albaran == 1000)
-            //     continue;
+        foreach ($reg as $row){
+            $c = DB::connection('quilates')->select('select * from crulara where empresa ='.$row->empresa.' AND tienda ='.$row->tienda);
 
-            if ($row->tienda == 6) // pasamos tienda sol a empresa sol= 7
-                $row->empresa = 3;
+            foreach ($c as $cruce){
+                \Log::info($cruce->libro.' T:'.$row->tienda);
+            }
 
-            if (strlen($row->atserie) > 3)
-                $atserie = substr($row->atserie,0,3);
-            else
-                $atserie = $row->atserie;
-
-                /// mete contado rebu
             $data[]=array(
-                'empresa_id'=> $row->empresa,
+                'empresa_id'=> $cruce->empresa,
                 'tipo_id'=> 3,
                 'ejercicio'=>$row->ejercicio,
                 'ult_albaran'=>$row->albaran - 1,
@@ -42,34 +38,35 @@ class KltContadoresSeeder extends Seeder
                 'ult_factura'=> $row->factura - 1,
                 'serie_factura'=>$row->serie,
                 'ult_factura_auto'=>$row->atfactura - 1,
-                'serie_factura_auto'=>$atserie,
-                'serie_factura_abono'=>'FR',
+                'serie_factura_auto'=> 'FA',
+                'serie_factura_abono'=>'RR',
                 'ult_factura_abono'=>0,
-                'cerrado' => $row->ejercicio == 2019 ? false: true,
+                'cerrado' => $row->ejercicio == 2020 ? false: true,
                 'created_at' => $row->sysfum.' 00:00:00',
                 'updated_at' => $row->sysfum.' '.$row->syshum,
                 'username'=> $row->sysusr
             );
 
                 // mete contador general si hay algo
-            if ($row->gefactura > 1)
+            //if ($row->gefactura > 1)
                 $data[]=array(
-                    'empresa_id'=> $row->empresa,
+                    'empresa_id'=> $cruce->empresa,
                     'tipo_id'=> 4,
                     'ejercicio'=>$row->ejercicio,
-                    'ult_albaran'=>$row->albaran - 1,
-                    'serie_albaran'=>'V',
-                    'ult_factura'=> $row->gefactura - 1,
-                    'serie_factura'=>$row->geserie,
+                    'ult_albaran'=>0,
+                    'serie_albaran'=>'A',
+                    'ult_factura'=> 0,
+                    'serie_factura'=>'G',
                     'ult_factura_auto'=>0,
-                    'serie_factura_auto'=>'VX',
-                    'serie_factura_abono'=>'VFR',
+                    'serie_factura_auto'=>'GA',
+                    'serie_factura_abono'=>'GR',
                     'ult_factura_abono'=>0,
-                    'cerrado' => $row->ejercicio == 2019 ? false: true,
+                    'cerrado' => $row->ejercicio == 2020 ? false: true,
                     'created_at' => $row->sysfum.' 00:00:00',
                     'updated_at' => $row->sysfum.' '.$row->syshum,
                     'username'=> $row->sysusr
                 );
+
 
 
         }

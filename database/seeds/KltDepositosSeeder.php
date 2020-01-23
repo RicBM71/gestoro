@@ -1,5 +1,6 @@
 <?php
 
+use App\Empresa;
 use App\Deposito;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -22,13 +23,29 @@ class KltDepositosSeeder extends Seeder
 
         Deposito::truncate();
 
+        $contadores = DB::connection('quilates')->select('select * from crulara ORDER BY empresa');
+
+
+        foreach ($contadores as $contador){
+
+            session(['empresa' => Empresa::find($contador->emp_com)]);
+
+
+            for ($ejercicio = 2008; $ejercicio <= 2020; $ejercicio++)
+                $this->crearLineas($contador, $ejercicio);
+
+        }
+    }
+
+    private function crearLineas($contador, $eje){
+
+        $data=array();
         /// depósitos
         $reg = DB::connection($this->bbdd)
         ->select('select depositos.*, albaranes.cliente from albaranes,depositos '.
-        ' where albaranes.empresa in('.$empresa.')'.
-    //' and comven="C" and year(fechacomp) >= '.$eje.
+        ' where albaranes.empresa ='.$contador->empresa.' AND albaranes.tienda = '.$contador->tienda.
         ' and comven="C" '.
-        ' and year(fechacomp) '.$eje.
+        ' and year(fechacomp) = '.$eje.
         ' and albaranes.id = depositos.albaran');
 
         $data=array();
@@ -47,7 +64,7 @@ class KltDepositosSeeder extends Seeder
             $data[]=array(
                 'id'    => $row->id,
                 'compra_id' => $row->albaran,
-                'empresa_id'=> $row->empresa, // de depo
+                'empresa_id'=> $contador->emp_com, // de depo
                 'fecha' => $row->fecha,
                 'cliente_id' => $row->cliente,
                 'dias' => $row->dias,
@@ -60,7 +77,7 @@ class KltDepositosSeeder extends Seeder
                 'updated_at' => $row->sysfum.' '.$row->syshum,
             );
 
-            if ($i % 1000 == 0){
+            if ($i % 2000 == 0){
                 DB::table('depositos')->insert($data);
                 $data=array();
             }

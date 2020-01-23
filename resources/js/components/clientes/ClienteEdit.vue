@@ -643,6 +643,9 @@ import {mapGetters} from 'vuex';
 
                                     this.$toast.success(res.data.message);
                                     this.cliente = res.data.cliente;
+
+                                    this.$validator.errors.clear();
+
                                     this.loading = this.show_loading = false;
                                 })
                                 .catch(err => {

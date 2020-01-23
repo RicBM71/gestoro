@@ -18,8 +18,8 @@ class KltLibrosTableSeeder extends Seeder
                 $reg = DB::connection('quilates')
             //->select('select * from contadores WHERE id=148');
             ->select('select * from contadores '.
-                    ' WHERE compras > 1 AND empresa = 1 '.
-                    ' AND ejercicio >= 2019 '.
+                    ' WHERE compras > 1 '.
+                    ' AND ejercicio >= 2020 '.
                     'ORDER BY contadores.id');
 
 
@@ -53,6 +53,7 @@ class KltLibrosTableSeeder extends Seeder
             }else{
                 $grupo_id = 2;
                 $nombre = "Usados";
+                $nombre_csv = "usados";
                 $empresa_id = $row->empresa;
                 $semdia_bloqueo="1/1";
             }
@@ -65,7 +66,7 @@ class KltLibrosTableSeeder extends Seeder
                 'ejercicio'=>$row->ejercicio,
                 'ult_compra'=>$row->compras - 1,
                 'ult_factura'=>$row->factcompra -1,
-                'serie_fac'=>$row->serie,
+                'serie_fac'=>'R'.$row->serie,
                 'serie_com'=>$crulib,
                 'semdia_bloqueo'=>$semdia_bloqueo,
                 'dias_custodia'=>30,

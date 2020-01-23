@@ -20,8 +20,9 @@ class KltComprasSeeder extends Seeder
     {
 
 
-        $empresa = array(1,9,12,16);
+        $empresas = array(1,9,12,16);
         $e='1,9,12,16';
+        $empresas = array(1);
 
 
 
@@ -33,23 +34,29 @@ class KltComprasSeeder extends Seeder
         $ejercicio = 2019;
         //$contadores = DB::connection('quilates')->select('select * from contadores WHERE empresa in('.$e.') ORDER BY id');
 
-        $contadores = DB::connection('quilates')->select('select * from crulara where empresa ='.$row->empresa.' AND tienda ='.$row->tienda);
+        $contadores = DB::connection('quilates')->select('select * from crulara ORDER BY empresa');
 
-        
+
         foreach ($contadores as $contador){
+
 
            // if ($empresa_ant <> $contador->empresa || $tienda_ant <> $contador->tienda){
 
-                session(['empresa' => Empresa::find($contador->empresa)]);
+                session(['empresa' => Empresa::find($contador->emp_com)]);
 
-                $libro = Libro::find($contador->id);
+                //$libro = Libro::find($contador->id);
 
             //     $empresa_ant = $contador->empresa;
             //     $tienda_ant = $contador->tienda;
             // }
 
-            if (in_array($contador->empresa, $empresa)) // comentar if para cargar todas las empresas
-                $this->crearCompras($contador->empresa,$contador->tienda,$libro,$contador->ejercicio);
+          //  \Log::info($contador->emp_com);
+         // comentar if para cargar todas las empresas
+         //   if (in_array($contador->emp_com, $empresas)){
+
+                for ($ejercicio = 2008; $ejercicio <= 2020; $ejercicio++)
+                    $this->crearCompras($contador, $ejercicio);
+           // }
 
         }
 
@@ -63,26 +70,35 @@ class KltComprasSeeder extends Seeder
 
     }
 
-    private function crearCompras($empresa,$tienda,$libro,$eje){
+    private function crearCompras($contador, $eje){
 
         //$bloqueo = "1/3"; // "1/1
         //$eje = 2000;
 
         $data=array();
 
-        $reg = DB::connection('quilates')->select('select * from albaranes where empresa='.$empresa.
-                        ' and tienda = '.$tienda.
+        $reg = DB::connection('quilates')->select('select * from albaranes where empresa='.$contador->empresa.
+                        ' and tienda = '.$contador->tienda.
                         ' and comven="C" and year(fechacomp) = '.$eje.' order by empresa,tienda,id');
+        if ($reg == null)
+            return;
 
 
         $i=0;
         foreach ($reg as $row){
             $i++;
 
+            if ($contador->libro == "M"){
+                $grupo_id = 1;
+                $serie_com = 'M';
+                $semdia_bloqueo="3/1";
+            }else{
+                $grupo_id = 2;
+                $serie_com = 'U';
+                $semdia_bloqueo="1/1";
+            }
 
-            $grupo_id = $libro->grupo_id;
-            $serie_com = $libro->serie_com;
-            $empresa_id = $libro->empresa_id;
+            $empresa_id = $contador->emp_com;
 
 
             // if(in_array($row->empresa, [12,13,14,15,16])){
@@ -105,7 +121,7 @@ class KltComprasSeeder extends Seeder
                 'cliente_id'=> $row->cliente,
                 'tipo_id' => $row->tipo,
                 'fecha_compra' => $row->fechacomp,
-                'fecha_bloqueo'=> $this->Bloqueo($row->fechacomp, $libro->semdia_bloqueo),
+                'fecha_bloqueo'=> $this->Bloqueo($row->fechacomp, $semdia_bloqueo),
                 'fecha_renovacion' => $row->fecharecu,
                 'fecha_recogida' => $row->fecharecogida=="0000-00-00" ? null : $row->fecharecogida,
                 'importe' => $row->importe,
@@ -123,7 +139,7 @@ class KltComprasSeeder extends Seeder
                 'updated_at' => $row->sysfum.' '.$row->syshum,
             );
 
-            if ($i % 1000 == 0){
+            if ($i % 2000 == 0){
                 DB::table('compras')->insert($data);
                 $data=array();
             }

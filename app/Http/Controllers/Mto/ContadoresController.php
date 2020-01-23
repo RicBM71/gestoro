@@ -91,9 +91,27 @@ class ContadoresController extends Controller
 
         $data = $request->validated();
 
-        $data['serie_factura']='F';
-        $data['serie_factura_auto']='FA';
-        $data['serie_factura_abono']='FR';
+        if ($data['tipo_id'] == 3){
+            $sa = 'R';
+            $sf = 'F';
+            $sfa = 'FA';
+            $sfr = 'FR';
+        }elseif($data['tipo_id'] == 4){
+            $sa = 'A';
+            $sf = 'G';
+            $sfa = 'GA';
+            $sfr = 'GR';
+        }elseif($data['tipo_id'] == 5){
+            $sa = 'T';
+            $sf = 'FT';
+            $sfa = 'TA';
+            $sfr = 'TR';
+        }
+
+        $data['serie_albaran']=$sa;
+        $data['serie_factura']=$sf;
+        $data['serie_factura_auto']=$sfa;
+        $data['serie_factura_abono']=$sfr;
 
         $data['empresa_id'] =  session()->get('empresa')->id;
         $data['username']   = $request->user()->username;

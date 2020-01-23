@@ -42,6 +42,18 @@
                 <v-container>
                     <v-layout row wrap v-show="show_filtro">
                         <v-spacer></v-spacer>
+                        <!-- <v-flex sm2>
+                            <v-select
+                                v-model="detalle"
+                                v-validate="'required'"
+                                data-vv-name="detalle"
+                                data-vv-as="detalle"
+                                :error-messages="errors.collect('detalle')"
+                                :items="detalles"
+                                label="Detalle"
+                                required
+                                ></v-select>
+                        </v-flex> -->
                          <v-flex sm2>
                             <v-menu
                                 v-model="menu_d"
@@ -152,6 +164,7 @@
                                             <td class="text-xs-right">{{ item.importe | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                             <td class="text-xs-right">{{ getPrecioGramo(item.peso_gr,item.importe) | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                         </tr>
+
                                         <tr v-for="(item, index) in items_liquidados" :key="miKey(index,'L')">
                                             <td>LIQUIDADO BRUTO</td>
                                             <td v-if="item.quilates > 0">{{ item.clase+" "+item.quilates+" K" }}</td>
@@ -222,7 +235,17 @@ export default {
     },
     data () {
       return {
-
+            detalles:[
+                {value: '1', text:"Compras"},
+                {value: '2', text:"Liquidado Bruto"},
+                {value: '3', text:"Nuevos Productos"},
+                {value: '4', text:"Liquidado Neto"},
+                {value: '5', text:"Ventas"},
+                {value: '6', text:"Depósitos"},
+                {value: '7', text:"Inventario"},
+                {value: 'T', text:"Todo"},
+            ],
+            detalle: 'T',
             operaciones:[
                     {value: 'F', text:"Facturadas"},
                     {value: 'T', text:"Todas"},

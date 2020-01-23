@@ -21,8 +21,8 @@ class GdProductosSeeder extends Seeder
         $etiqueta['S']=2; // sí
         $etiqueta['C']=3; // si con pvp
         $etiqueta['I']=4; // ya impresa
-        $etiqueta['Y']=5; // ya impresa con pvp
-        $etiqueta['D']=6; // ya impresa con pvp
+        $etiqueta['Y']=4; // ya impresa con pvp
+        $etiqueta['D']=5; // ya impresa con pvp
 
         Producto::truncate();
 

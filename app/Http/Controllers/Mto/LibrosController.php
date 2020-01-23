@@ -95,8 +95,13 @@ class LibrosController extends Controller
 
 
         //TODO: quitar requerido y en update CREAR rule para que sea única por empresa, por lomenos srie compra
-        $data['serie_com'] =  "C";
-        $data['serie_fac'] =  "F";
+        if ($data['grupo_id'] == 1){
+            $data['serie_com'] =  "M";
+            $data['serie_fac'] =  "RF";
+        }else{
+            $data['serie_com'] =  "U";
+            $data['serie_fac'] =  "RU";
+        }
         $data['empresa_id'] =  session()->get('empresa')->id;
         $data['username'] = $request->user()->username;
 

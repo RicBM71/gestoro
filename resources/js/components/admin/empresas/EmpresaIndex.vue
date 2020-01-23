@@ -13,17 +13,32 @@
             <v-card>
                 <v-container>
                     <v-layout row wrap>
+                        <v-flex xs6></v-flex>
+                        <v-flex xs6>
+                            <v-spacer></v-spacer>
+                            <v-text-field
+                                v-model="search"
+                                append-icon="search"
+                                label="Buscar"
+                                single-line
+                                hide-details
+                            ></v-text-field>
+                        </v-flex>
+                    </v-layout>
+                    <br/>
+                    <v-layout row wrap>
                         <v-flex xs12>
                             <v-data-table
                             :headers="headers"
                             :items="empresas"
+                            :search="search"
                             :pagination.sync="pagination"
                             rows-per-page-text="Registros por página"
                             >
                                 <template slot="items" slot-scope="props">
                                     <td>{{ props.item.id }}</td>
-                                    <td v-if="props.item.flags[0]==true">{{ props.item.titulo }}</td>
-                                    <td v-else class="tachado red--text darken-4">{{ props.item.titulo }}</td>
+                                    <td v-if="props.item.flags[0]==true">{{ props.item.nombre }}</td>
+                                    <td v-else class="tachado red--text darken-4">{{ props.item.nombre }}</td>
                                     <td>{{ props.item.cif }}</td>
                                     <td v-if="props.item.deleted_at==null">{{ props.item.contacto }}</td>
                                     <td v-else class="red">Borrada {{props.item.deleted_at}}</td>
@@ -72,6 +87,7 @@ import {mapGetters} from 'vuex';
     data () {
       return {
         titulo: "Empresas",
+        search:"",
         headers: [
           {
             text: 'ID',
