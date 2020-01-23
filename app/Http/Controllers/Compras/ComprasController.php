@@ -136,6 +136,7 @@ class ComprasController extends Controller
         //$ejercicio = substr($request->fecha_compra,0,4);
 
         $contador = Libro::incrementaContador($ejercicio, $request->grupo_id, $request->albaran);
+        \Log::info($contador);
 
 
         $data['ejercicio']    = $ejercicio;
