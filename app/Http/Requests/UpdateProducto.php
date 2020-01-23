@@ -45,7 +45,7 @@ class UpdateProducto extends FormRequest
             'notas'             => ['string','nullable'],
             'cliente_id'        => ['nullable','integer'],
             'almacen_id'        => ['required', 'integer'],
-            'stock'             => ['required', 'integer', 'min:1'],
+            'stock'             => ['required', 'integer'],
             'destino_empresa_id'=> ['required', 'integer'],
             'garantia_id'       => ['nullable', 'integer'],
             'online'            => ['boolean'],

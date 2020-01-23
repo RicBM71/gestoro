@@ -313,7 +313,7 @@ Class Producto extends Model
                         ->where('iva_id', 2)
                         ->where('estado_id', 2)
                         ->orWhere('estado_id', 6)
-                        ->orWhere('stock', '>', 1)
+                        //->orWhere('stock', '>', 1)
                         // ->whereNull('deleted_at')
                         ->orderBy('referencia', 'asc')
                         ->get();

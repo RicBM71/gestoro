@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Ventas;
 
 use App\Rules\PrecioCosteRule;
-use App\Rules\Albaranes\StockRule;
 use App\Rules\Albaranes\UnidadesRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -29,7 +28,7 @@ class UpdateAlbalinRequest extends FormRequest
         return [
             'albaran_id'    => ['required', 'integer'],
             'producto_id'   => ['required', 'integer'],
-            'unidades'      => ['required', 'numeric', new UnidadesRule($this->producto_id), new StockRule($this->producto_id, $this->id)],
+            'unidades'      => ['required', 'numeric', new UnidadesRule($this->producto_id)],
             'precio_coste'  => ['required', 'numeric'],
             'importe_unidad'=> ['required', 'numeric', new PrecioCosteRule($this->precio_coste)],
             'iva_id'        => ['required', 'integer'],

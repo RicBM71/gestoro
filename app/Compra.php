@@ -12,7 +12,7 @@ class Compra extends Model
     protected $dates =['fecha_compra','fecha_bloqueo','fecha_renovacion','fecha_recogida','fecha_factura'];
 
     protected $fillable = [
-        'empresa_id', 'grupo_id','dias_custodia', 'ejercicio','serie_com','albaran','cliente_id','tipo_id',
+        'empresa_id', 'grupo_id','dias_custodia', 'ejercicio','c','albaran','cliente_id','tipo_id',
         'fecha_compra','fecha_bloqueo','fecha_renovacion','fecha_recogida','importe',
         'importe_renovacion','importe_acuenta', 'interes','fase_id', 'factura','fecha_factura',
         'serie_fac','papeleta','notas', 'username','retencion'

@@ -134,6 +134,7 @@ Route::group([
         Route::put('compras/{compra}/fase', 'ComprasController@fase');
         Route::put('compras/{compra}/recogida', 'ComprasController@recogida');
         Route::post('compras/filtrar', 'ComprasController@filtrar');
+        Route::post('compras/excel', 'ComprasController@excel');
         Route::post('compras/find', 'FindComprasController@find');
         Route::resource('comlines', 'ComlinesController', ['only'=>['update','store','destroy']]);
         Route::post('comlines/load', 'ComlinesController@load');

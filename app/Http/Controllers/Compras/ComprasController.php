@@ -13,7 +13,9 @@ use App\Deposito;
 use Carbon\Carbon;
 use App\Scopes\EmpresaScope;
 use Illuminate\Http\Request;
+use App\Exports\ComprasExport;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Rules\Compras\ReabrirLoteRule;
 use App\Http\Requests\Compras\StoreCompra;
 use App\Http\Requests\Compras\UpdateCompra;
@@ -420,6 +422,18 @@ class ComprasController extends Controller
                 'compra' => Compra::with(['cliente','grupo','tipo','fase'])->findOrFail($compra->id),
                 'message' => 'Se ha modificado la fecha de recogida'
             ];
+    }
+
+     /**
+     * Recibe las facturas por request, previamente de $this->lisfac()
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function excel(Request $request){
+
+        return Excel::download(new ComprasExport($request->data), 'compras.xlsx');
+
     }
 
 

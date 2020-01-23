@@ -65,7 +65,7 @@
                                     <td :class="props.item.fase.color">{{ props.item.fase.nombre }}</td>
                                     <td class="justify-center layout px-0">
                                         <v-icon
-                                            v-show="props.item.notas_int > ''"
+                                            v-show="props.item.notas_int != null || props.item.clitxt != null"
                                             small
                                             class="mr-2"
                                             @click="props.expanded = !props.expanded"
@@ -92,7 +92,7 @@
                                 <template v-slot:expand="props">
                                     <v-card flat>
                                         <v-card-text class="font-italic">
-                                            {{ props.item.notas_int }}
+                                            {{ misNotas(props.item) }}
                                         </v-card-text>
                                     </v-card>
                                 </template>
@@ -239,6 +239,9 @@ import {mapActions} from "vuex";
             'setPagination',
             'unsetPagination'
         ]),
+        misNotas(item){
+            return item.clitxt != null ? item.clitxt : "" + " " +  item.notas_int != null ? item.notas_int : "";
+        },
         totalImpLinea(lineas){
 
             var total = 0;

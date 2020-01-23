@@ -277,21 +277,6 @@
                                     >
                                     </v-text-field>
                                 </v-flex>
-                                <v-flex sm2 v-if="stockComple > 0">
-                                     <v-text-field
-                                        v-model="producto.stock"
-                                        v-validate="'required|decimal:2|min:1'"
-                                        :error-messages="errors.collect('stock')"
-                                        label="Stock"
-                                        data-vv-name="stock"
-                                        data-vv-as="stock"
-                                        class="inputPrice"
-                                        type="number"
-                                        :disabled="!computedEditPro"
-                                        v-on:keyup.enter="submit"
-                                    >
-                                    </v-text-field>
-                                </v-flex>
                             </v-layout>
                             <v-layout row wrap>
                                 <v-flex sm2 d-flex>
