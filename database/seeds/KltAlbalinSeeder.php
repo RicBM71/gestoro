@@ -17,14 +17,19 @@ class KltAlbalinSeeder extends Seeder
 
         $i=0;
         $alb = DB::connection('quilates')->select('select albalin.*,albaranes.empresa,albaranes.tienda,albaranes.tipo from albaranes,albalin WHERE comven = "V" and albaranes.id=albalin.albaran ORDER BY albaranes.id');
+        $emp_ant = $tie_ant = -1;
         foreach ($alb as $row){
 
-            $i++;
+            if ($emp_ant <> $row->empresa || $tie_ant <> $row->tienda){
+                $r = DB::connection('quilates')->select('select * from crulara WHERE empresa ='.$row->empresa.' AND tienda='.$row->tienda);
+                foreach ($r as $cruce){
+                }
+                $emp_ant = $row->empresa;
+                $tie_ant = $row->tienda;
+            }
 
-            if ($row->tienda == 6)
-                $empresa_id = 3;
-            else
-                $empresa_id = $row->empresa;
+
+            $i++;
 
             if ($row->ivarige=='R'){
                 $iva_id = 2;
@@ -39,7 +44,7 @@ class KltAlbalinSeeder extends Seeder
                 $unidades = $row->peso;
 
             $data[]=array(
-                'empresa_id' => $empresa_id,
+                'empresa_id' => $cruce->emp_alb,
                 'albaran_id' => $row->albaran,
                 'producto_id' => $row->producto,
                 'unidades' => $unidades,

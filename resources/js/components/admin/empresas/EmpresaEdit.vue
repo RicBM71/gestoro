@@ -251,7 +251,7 @@
                                     <v-flex sm3 d-flex>
                                         <v-select
                                         v-model="empresa.almacen_id"
-                                        v-validate="'required|max:1'"
+                                        v-validate="'numeric'"
                                         :error-messages="errors.collect('almacen_id')"
                                         data-vv-name="almacen_id"
                                         data-vv-as="almacén"
