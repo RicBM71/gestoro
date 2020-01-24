@@ -2,7 +2,7 @@
 <template>
     <div>
         <loading :show_loading="show_loading"></loading>
-        <v-container v-if="registros">
+        <div v-if="registros">
             <my-dialog :dialog.sync="dialog" registro="registro" @destroyReg="destroyReg"></my-dialog>
             <v-card>
                 <v-card-title>
@@ -120,7 +120,7 @@
                     </v-layout>
                 </v-container>
             </v-card>
-        </v-container>
+        </div>
     </div>
 </template>
 <script>

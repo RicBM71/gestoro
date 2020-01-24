@@ -207,10 +207,10 @@ import {mapActions} from "vuex";
         },
         editItem (id) {
             this.setPagination(this.paginaActual);
-            if (this.isSupervisor)
+           // if (this.isSupervisor)
                 this.$router.push({ name: 'taller.edit', params: { id: id } })
-            else
-                this.$router.push({ name: 'taller.show', params: { id: id } })
+            // else
+            //     this.$router.push({ name: 'taller.show', params: { id: id } })
         },
         openDialog (item){
             this.dialog = true;

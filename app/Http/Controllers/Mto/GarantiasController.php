@@ -29,7 +29,7 @@ class GarantiasController extends Controller
      */
     public function create()
     {
-        //$this->authorize('create', new garantia);
+        $this->authorize('create', new Garantia);
 
     }
 
@@ -63,6 +63,7 @@ class GarantiasController extends Controller
      */
     public function edit(Garantia $garantia)
     {
+        $this->authorize('update', $garantia);
 
         if (request()->wantsJson())
             return [
@@ -79,6 +80,7 @@ class GarantiasController extends Controller
      */
     public function update(Request $request, Garantia $garantia)
     {
+        $this->authorize('update', $garantia);
 
         $data = $request->validate([
             'nombre' => ['required', 'string', 'max:50'],
@@ -103,9 +105,7 @@ class GarantiasController extends Controller
     public function destroy(Garantia $garantia)
     {
 
-        if (!auth()->user()->hasRole('Admin')){
-            return abort(403,auth()->user()->name.' NO tiene permiso de administrador');
-        }
+        $this->authorize('delete', $garantia);
 
         $garantia->delete();
 

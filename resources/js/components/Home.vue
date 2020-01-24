@@ -227,6 +227,8 @@ export default {
                 { icon: 'book', text: 'Libros', name: 'libro.index' },
                 { icon: 'alarm', text: 'Contadores', name: 'contador.index' },
                 { icon: 'account_balance', text: 'Cuentas IBAN', name: 'cuenta.index' },
+                { icon: 'sentiment_satisfied_alt', text: 'Garantías', name: 'garantia.index' },
+                { icon: 'build', text: 'Talleres', name: 'taller.index' },
             ]
         },
 
@@ -246,14 +248,15 @@ export default {
         mn_items: [
             { icon: 'people', text: 'Clientes', name:'cliente.index' },
             { icon: 'local_offer', text: 'Productos', name:'producto.index' },
-            { icon: 'sentiment_satisfied_alt', text: 'Garantías', name: 'garantia.index' },
-            { icon: 'build', text: 'Talleres', name: 'taller.index' },
+
         ],
 
-        mn_consultas:{
+
+
+         mn_consultas:{
             icon: 'keyboard_arrow_up',
             'icon-alt': 'keyboard_arrow_down',
-            text: 'Consultas',
+            text: 'Consultas I',
             model: false,
             children: [
                 { icon: 'forward', text: 'Balance por empresa', name:'exportar.balance' },
@@ -267,6 +270,19 @@ export default {
                 { icon: 'forward', text: 'Liquidados', name:'exportar.liquidados' },
                 { icon: 'forward', text: 'Inventario', name:'exportar.inventario' },
                 { icon: 'home_work', text: 'Ventas en depósito', name:'exportar.vendepo' },
+                { text: 'Relación facturas recuperacion', name: 'facturacion.lisfacom', icon: 'print'},
+                { text: 'Relación facturas de venta', name: 'facturacion.lisfaven', icon: 'print'},
+                { icon: 'archive', text: 'Mod. 347', name:'exportar.mod347' },
+                { icon: 'menu_book', text: 'Imprimir Libro', name:'exportar.libro' },
+            ],
+        },
+
+         mn_consultas2:{
+            icon: 'keyboard_arrow_up',
+            'icon-alt': 'keyboard_arrow_down',
+            text: 'Consultas II',
+            model: false,
+            children: [
                 { text: 'Relación facturas recuperacion', name: 'facturacion.lisfacom', icon: 'print'},
                 { text: 'Relación facturas de venta', name: 'facturacion.lisfaven', icon: 'print'},
                 { icon: 'archive', text: 'Mod. 347', name:'exportar.mod347' },
@@ -295,8 +311,9 @@ export default {
                     this.mn_items.push(this.mn_etiquetas);
 
                     if (this.isAdmin || this.isGestor){
-                        this.drawer = true;
+                        //this.drawer = true;
                         this.mn_items.push(this.mn_consultas);
+                        this.mn_items.push(this.mn_consultas2);
                     }
 
                     this.empresa_id = this.user.empresa_id;

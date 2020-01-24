@@ -50,6 +50,8 @@ class TalleresController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', new Taller);
+
         $data = $request->validate([
             'razon'   => ['required', 'string', 'max:70'],
             'tipodoc' => ['string'],
@@ -75,6 +77,7 @@ class TalleresController extends Controller
     public function show(Taller $tallere)
     {
 
+
         if (request()->wantsJson())
             return [
                 'taller' =>$tallere,
@@ -91,6 +94,7 @@ class TalleresController extends Controller
      */
     public function edit(Taller $tallere)
     {
+        $this->authorize('update', $tallere);
 
         if (request()->wantsJson())
             return [
@@ -110,6 +114,7 @@ class TalleresController extends Controller
      */
     public function update(UpdateTalleresRequest $request, Taller $tallere)
     {
+        $this->authorize('update', $tallere);
 
         $data = $request->validated();
 
@@ -133,11 +138,14 @@ class TalleresController extends Controller
     public function destroy($id)
     {
 
+
         if (esRoot()){
             $tallere = Taller::withTrashed()->findOrFail($id);
         }else{
             $tallere = Taller::findOrFail($id);
         }
+
+        $this->authorize('delete', $tallere);
 
         if ($tallere->trashed()){
             $tallere->restore();
