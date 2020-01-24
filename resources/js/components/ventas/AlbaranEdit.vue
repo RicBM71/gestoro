@@ -54,7 +54,8 @@
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            v-show="computedAbonar"
+                            v-show="albaran.id>0"
+                            :disabled="!computedAbonar"
                             v-on="on"
                             color="white"
                             icon
@@ -68,7 +69,8 @@
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            v-show="computedCancelar"
+                            v-show="albaran.id>0"
+                            :disabled="!computedCancelar"
                             v-on="on"
                             color="white"
                             icon
@@ -97,7 +99,8 @@
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            v-show="albaran.factura==null && isAdmin"
+                            v-show="albaran.id>0"
+                            :disabled="!(albaran.factura==null && isAdmin)"
                             v-on="on"
                             color="white"
                             icon

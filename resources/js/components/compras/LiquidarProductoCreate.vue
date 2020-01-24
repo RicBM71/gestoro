@@ -146,7 +146,7 @@
         quilates:"",
         clase_id:0,
         imp_gr: 0,
-        margen: 30.00,
+        margen: 40.00,
         peso_gr: 0,
         precio_coste: 0,
         precio_venta:0,

@@ -18,7 +18,7 @@ class AbonosController extends Controller
 
         $albaran_new = $this->albaran($albarane, $request);
 
-        $this->albalin($albarane, $albaran_new);
+        $this->albalin($albarane, $albaran_new, false);
 
         $this->cobros($albarane, $albaran_new);
 
@@ -45,7 +45,7 @@ class AbonosController extends Controller
 
         $albaran_new = $this->albaran($albarane, $request, true);
 
-        $this->albalin($albarane, $albaran_new);
+        $this->albalin($albarane, $albaran_new, true);
 
         if (request()->wantsJson())
             return [
@@ -133,7 +133,7 @@ class AbonosController extends Controller
 
     }
 
-    private function albalin($albaran, $albaran_new){
+    private function albalin($albaran, $albaran_new, $cancelacion){
 
         $lineas = Albalin::AlbaranId($albaran->id)->get();
 
@@ -153,11 +153,16 @@ class AbonosController extends Controller
 
             Albalin::create($albalin_new);
 
+            $data = ['estado_id'   => 2,
+                    'username'    => $albaran_new->username];
+
+            if ($cancelacion === false && $albaran_new->tipo_id == 3){ // es rebu
+                $data['etiqueta_id'] = 4;
+            }
+
             Producto::where('id',$albalin->producto_id)
                     ->where('estado_id','<>', 5)
-                    ->update(['estado_id'   => 2,
-                              'etiqueta_id' => 4,
-                              'username'    => $albaran_new->username]);
+                    ->update($data);
 
         }
     }

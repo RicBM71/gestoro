@@ -29,7 +29,7 @@
                             @click="goExcel()"
                         >
                             <v-avatar size="32px">
-                                <img class="img-fluid" src="/assets/export.jpg">
+                                <img class="img-fluid" src="/assets/excel.png">
                             </v-avatar>
                         </v-btn>
                     </template>
