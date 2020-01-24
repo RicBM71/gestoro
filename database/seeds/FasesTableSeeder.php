@@ -25,7 +25,7 @@ class FasesTableSeeder extends Seeder
         $f->save();
 
         $f = new Fase;
-        $f->nombre = "Pendiente Imprimir";
+        $f->nombre = "Sin Imprimir";
         $f->color = "orange--text darken-4";
         $f->comven = "C";
         $f->save();
@@ -57,7 +57,7 @@ class FasesTableSeeder extends Seeder
 
         $f = new Fase;
         $f->id =   10;
-        $f->nombre = "Pendiente de Cobro";
+        $f->nombre = "Por Cobrar";
         $f->color = "orange--text darken-4";
         $f->comven = "V";
         $f->save();

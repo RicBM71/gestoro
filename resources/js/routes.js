@@ -119,6 +119,7 @@ import DetalleCompras from './components/exportar/DetalleCompras.vue';
 import DetalleVentas from './components/exportar/DetalleVentas.vue';
 import CuadroMando from './components/exportar/CuadroMando.vue';
 import ServiciosTaller from './components/exportar/ServiciosTaller.vue';
+import Recogidas from './components/exportar/Recogidas.vue';
 
 import ParametroEdit from './components/admin/parametros/ParametroEdit.vue';
 
@@ -590,6 +591,11 @@ export default [
                 path: '/export/service',
                 name: 'exportar.service',
                 component: ServiciosTaller,
+            },
+            {
+                path: '/export/recogidas',
+                name: 'exportar.recogidas',
+                component: Recogidas,
             },
             {
                 path: '/reubicar',

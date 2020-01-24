@@ -251,7 +251,8 @@
                             <v-text-field
                                 v-model="computedFModFormat"
                                 :label="computedTxtMod"
-                                readonly                            >
+                                readonly
+                            >
                             </v-text-field>
                         </v-flex>
                         <v-flex sm2>
@@ -327,7 +328,6 @@
                                 v-model="compra.notas"
                                 append-icon="save"
                                 label="Observaciones Compra"
-                                :readonly="compra.fase_id>4"
                                 @click:append="updateNota"
                             >
                             </v-text-field>
@@ -560,8 +560,8 @@ import {mapGetters} from 'vuex';
             },
             computedAmpliarCapital(){
                 if (this.compra.fase_id != 4) return false;
-
-                return !this.isSupervisor;
+                // lo dejamos para cualquier User JL.
+                //return !this.isSupervisor;
 
             },
             computedDisabledAcuenta(){
@@ -781,7 +781,7 @@ import {mapGetters} from 'vuex';
                     })
             },
             updateNota(){
-                if (this.compra.fase_id <= 4){
+                if (this.compra.fase_id > 0){
                     // this.loading = true;
                     axios.put(this.url+"/"+this.compra.id+"/obs", this.compra)
                         .then(res => {

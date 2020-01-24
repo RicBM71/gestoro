@@ -131,15 +131,17 @@
                                 rows-per-page-text="Registros por página"
                             >
                                 <template slot="items" slot-scope="props">
-                                    <td v-if="props.item.concepto != 'TOTAL'">{{ props.item.empresa }}</td>
-                                    <td v-else></td>
-                                    <td>{{ props.item.tipo }}</td>
-                                    <td>{{ props.item.fase }}</td>
-                                    <td>{{ clase(props.item) }}</td>
-                                    <td class="text-xs-right  ">{{ props.item.operaciones | currency(' ', 0, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
-                                    <td class="text-xs-right">{{ props.item.importe | currency('€', 0, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
-                                    <td class="text-xs-right">{{ props.item.peso | currency(' ', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
-                                    <td class="text-xs-right">{{ peso_gr(props.item) | currency(' ', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                    <tr :class="colorLin(props.item)">
+                                        <td v-if="props.item.concepto != 'TOTAL'">{{ props.item.empresa }}</td>
+                                        <td v-else></td>
+                                        <td>{{ props.item.tipo }}</td>
+                                        <td>{{ props.item.fase }}</td>
+                                        <td>{{ clase(props.item) }}</td>
+                                        <td class="text-xs-right">{{ props.item.operaciones | currency(' ', 0, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                        <td class="text-xs-right">{{ props.item.importe | currency('€', 0, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                        <td class="text-xs-right">{{ props.item.peso | currency(' ', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                        <td class="text-xs-right">{{ peso_gr(props.item) | currency(' ', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                    </tr>
                                 </template>
                                 <template slot="pageText" slot-scope="props">
                                     Registros {{ props.pageStart }} - {{ props.pageStop }} de {{ props.itemsLength }}
@@ -175,7 +177,7 @@ export default {
                 text: 'Tipo',
                 align: 'left',
                 value: 'tipo',
-                width: '10%'
+                width: '15%'
             },
             {
                 text: 'Fase',
@@ -225,7 +227,7 @@ export default {
             ejercicio:new Date().toISOString().substr(0, 4),
             show_filtro: true,
             items: [],
-            fecha_d: new Date().toISOString().substr(0, 7)+"-01",
+            fecha_d: new Date().toISOString().substr(0, 10),
             fecha_h: new Date().toISOString().substr(0, 10),
             menu_d: false,
             menu_h: false,
@@ -245,6 +247,10 @@ export default {
         }
     },
     methods:{
+        colorLin(item){
+            console.log(item.tipo);
+            return item.tipo == "TOTAL" ? "blue--text darken-4 " : "";
+        },
         clase(item){
             return item.quilates > 0 ? item.clase + " " + item.quilates + "K" : item.clase;
         },

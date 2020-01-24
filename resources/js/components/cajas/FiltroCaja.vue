@@ -118,6 +118,7 @@
 </template>
 <script>
 import moment from 'moment'
+import {mapGetters} from 'vuex';
 export default {
     $_veeValidate: {
         validator: 'new'
@@ -161,6 +162,8 @@ export default {
             .then(res => {
                 this.apuntes = res.data;
                 this.apuntes.push({value: null, text: '-'});
+                if (this.isAdmin)
+                    this.ma_items.push({value: 'A', text: 'Regularización'});
 
             })
             .catch(err =>{
@@ -171,6 +174,9 @@ export default {
 
     },
     computed: {
+        ...mapGetters([
+            'isAdmin',
+        ]),
         computedFechaD() {
             moment.locale('es');
             return this.fecha_d ? moment(this.fecha_d).format('L') : '';

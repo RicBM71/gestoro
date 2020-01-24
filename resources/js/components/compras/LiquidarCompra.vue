@@ -3,7 +3,7 @@
         <loading :show_loading="show_loading"></loading>
         <v-card v-show="!show_loading">
             <v-card-title color="indigo">
-                <h2 color="indigo">{{titulo}}</span></h2>
+                <h2 color="indigo">{{titulo}}</h2>
                 <v-spacer></v-spacer>
                 <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
@@ -102,6 +102,24 @@
                                 </v-btn>
                             </v-flex>
                         </v-layout>
+                        <v-layout row wrap>
+                                <v-flex xs2>
+                                    <v-text-field
+                                        :value="getDecimalFormat(peso_compra)"
+                                        class="inputPrice"
+                                        label="Peso Bruto"
+                                        readonly
+                                    ></v-text-field>
+                                </v-flex>
+                                <v-flex xs2>
+                                    <v-text-field
+                                        :value="getDecimalFormat(peso_inventario)"
+                                        class="inputPrice"
+                                        label="Peso Neto"
+                                        readonly
+                                    ></v-text-field>
+                                </v-flex>
+                            </v-layout>
                         <div v-if="compra.id>0">
                             <lineas-liquidar
                                 :lin_selected.sync="lin_selected"
@@ -149,6 +167,8 @@ import {mapGetters} from 'vuex';
                 lineas:[],
                 productos:[],
                 grabaciones: false,
+                peso_compra:"",
+                peso_inventario:"",
 
         		status: false,
                 loading: false,
@@ -175,7 +195,9 @@ import {mapGetters} from 'vuex';
             if (compra_id > 0)
                 axios.get(this.url+'/'+compra_id+'/edit')
                     .then(res => {
-
+                        
+                        this.peso_compra = res.data.peso_compra;
+                        this.peso_inventario = res.data.peso_inventario;
                         this.compra = res.data.compra;
                         this.grabaciones = res.data.grabaciones;
                         this.lineas = res.data.lineas;
@@ -213,6 +235,9 @@ import {mapGetters} from 'vuex';
                 //     this.$router.push({ name: 'cliente.show', params: { id: this.compra.cliente_id } })
                 // else
                     this.$router.push({ name: 'cliente.edit', params: { id: this.compra.cliente_id } })
+            },
+            getDecimalFormat(value){
+                return new Intl.NumberFormat("de-DE",{style: "decimal",minimumFractionDigits:2}).format(parseFloat(value))
             },
             getMoneyFormat(value){
                 return new Intl.NumberFormat("de-DE",{style: "currency", currency: "EUR"}).format(parseFloat(value))
@@ -260,3 +285,10 @@ import {mapGetters} from 'vuex';
     }
   }
 </script>
+<style scoped>
+
+.inputPrice >>> input {
+  text-align: center;
+  -moz-appearance:textfield;
+}
+</style>

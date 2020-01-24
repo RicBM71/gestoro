@@ -30,6 +30,7 @@ class CajasController extends Controller
 
                 return [
                     'caja'  => Caja::with('apunte')
+                                        ->admin()
                                         ->orderBy('fecha','desc')
                                         ->where('fecha','=',$hoy)
                                         ->get(),
@@ -171,11 +172,12 @@ class CajasController extends Controller
         $this->authorize('update', $caja);
 
         $data = $request->validate([
-            'nombre' => ['required', 'string', 'max:50'],
-            'importe' => ['required','numeric'],
-            'fecha'=> ['required','date'],
-            'dh'=> ['required','string'],
-            'apunte_id'=> ['nullable','integer'],
+            'nombre'    => ['required', 'string', 'max:190'],
+            'importe'   => ['required', 'numeric'],
+            'fecha'     => ['required', 'date'],
+            'dh'        => ['required', 'string'],
+            'manual'    => ['required', 'string'],
+            'apunte_id' => ['nullable', 'integer'],
         ]);
 
         $data['empresa_id'] = session()->get('empresa')->id;

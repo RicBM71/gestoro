@@ -56,13 +56,29 @@
             </v-flex>
         </v-layout>
         <v-layout row wrap>
-            <v-flex sm4 xs12></v-flex>
+            <v-flex sm2 xs12></v-flex>
             <v-flex sm2 xs12>
                 <v-btn
                     round block large color="grey" class="blue-grey lighten-3"
                     @click="goClientes()">
                         Clientes
                     <v-icon right dark>group</v-icon>
+                </v-btn>
+            </v-flex>
+            <v-flex sm2 xs12>
+                <v-btn
+                    round block large color="grey" class="blue-grey lighten-3"
+                    @click="goRecogidas()">
+                        Recogidas
+                    <v-icon right dark>av_timer</v-icon>
+                </v-btn>
+            </v-flex>
+            <v-flex sm2 xs12>
+                <v-btn
+                    round block large color="grey" class="blue-grey lighten-3"
+                    @click="goOperaciones()">
+                        Operaciones
+                    <v-icon right dark>ballot</v-icon>
                 </v-btn>
             </v-flex>
             <v-flex sm2 xs12>
@@ -158,6 +174,12 @@ export default {
         },
          goFindVenta(){
             this.$router.push({ name: 'albaran.find' })
+        },
+         goOperaciones(){
+            this.$router.push({ name: 'exportar.operaciones' })
+        },
+        goRecogidas(){
+            this.$router.push({ name: 'exportar.recogidas' })
         },
     },
 

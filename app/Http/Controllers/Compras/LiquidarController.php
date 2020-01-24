@@ -104,12 +104,22 @@ class LiquidarController extends Controller
         //             ->where('ejercicio', getEjercicio($compra->fecha_compra))
         //             ->firstOrFail();
 
+        $lineas = Comline::with('clase')->CompraId($compra->id)->get();
+        $productos = Producto::withoutGlobalScope(EmpresaScope::class)->with('clase')->compraId($compra->id)->get();
+
+        $peso_compra = $lineas->sum('peso_gr');
+        $peso_inventario = $productos->sum('peso_gr');
+
+        $peso_inventario = $peso_compra - $peso_inventario;
+
         if (request()->wantsJson())
             return [
-                'compra'      => $compra,
-                'lineas'      => Comline::with('clase')->CompraId($compra->id)->get(),
-                'productos'   => Producto::withoutGlobalScope(EmpresaScope::class)->with('clase')->compraId($compra->id)->get(),
-                'grabaciones' => $libro->grabaciones,
+                'compra'         => $compra,
+                'lineas'         => $lineas,
+                'peso_compra'    => $peso_compra,
+                'productos'      => $productos,
+                'peso_inventario'=> $peso_inventario,
+                'grabaciones'    => $libro->grabaciones,
             ];
     }
 

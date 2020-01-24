@@ -49,7 +49,6 @@
                         <v-flex sm2>
                             <v-text-field
                                 v-model="dni"
-                                autofocus
                                 ref="dni"
                                 v-validate="'required|min:4'"
                                 :error-messages="errors.collect('dni')"
@@ -103,7 +102,6 @@
                                 :error-messages="errors.collect('albaran')"
                                 label="Nº Registro"
                                 v-on:keyup.enter="submit"
-                                autofocus
                                 :readonly="!hasBorraCompras"
 
                             >

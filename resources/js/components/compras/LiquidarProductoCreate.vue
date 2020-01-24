@@ -20,7 +20,6 @@
                                 :error-messages="errors.collect('nombre')"
                                 label="Indicar nombre"
                                 data-vv-name="nombre"
-                                autofocus
                             ></v-textarea>
                         </v-flex>
                     </v-layout>

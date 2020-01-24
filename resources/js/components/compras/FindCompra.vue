@@ -31,7 +31,6 @@
                                     </v-flex>
                                     <v-flex sm4>
                                         <v-text-field
-                                            autofocus
                                             v-model="albaran"
                                             v-validate="{ required: true, regex:/^[0-9]*[-.]*[0-9]*$/}"
                                             :error-messages="errors.collect('albaran')"

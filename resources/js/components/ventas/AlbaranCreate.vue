@@ -60,7 +60,6 @@
                         </v-flex>
                         <v-flex sm2>
                             <v-text-field
-                                autofocus
                                 v-model="dni"
                                 ref="dni"
                                 v-validate="'required|min:4'"

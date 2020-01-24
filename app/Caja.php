@@ -63,6 +63,15 @@ class Caja extends Model
 
     }
 
+    public function scopeAdmin($query){
+
+        if (!esAdmin())
+            $query->where('manual','<>','A');
+
+        return $query;
+
+    }
+
     public function scopeApunte($query, $apunte_id){
 
         if ($apunte_id != null)

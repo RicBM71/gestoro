@@ -22,7 +22,6 @@
                             data-vv-name="dni"
                             data-vv-as="Documento"
                             v-on:keyup.enter="submit"
-                            autofocus
                         >
                         </v-text-field>
                     </v-flex>

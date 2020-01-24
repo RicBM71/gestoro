@@ -48,24 +48,24 @@
                         </v-flex>
                         <v-flex sm2 d-flex>
                             <v-select
-                            v-model="caja.dh"
-                            v-validate="'required'"
-                            data-vv-name="dh"
-                            data-vv-as="dh"
-                            :error-messages="errors.collect('dh')"
-                            :items="dhs"
-                            label="D/H"
-                            required
-                            ></v-select>
+                                v-model="caja.dh"
+                                v-validate="'required'"
+                                data-vv-name="dh"
+                                data-vv-as="dh"
+                                :error-messages="errors.collect('dh')"
+                                :items="dhs"
+                                label="D/H"
+                                required
+                                ></v-select>
                         </v-flex>
-                        <v-flex v-if="caja.manual=='S'" sm4 d-flex>
+                        <v-flex v-if="caja.manual!='N'" sm4 d-flex>
                             <v-select
                                 v-model="caja.apunte_id"
                                 :error-messages="errors.collect('apunte_id')"
                                 data-vv-name="apunte_id"
                                 data-vv-as="apunte_id"
                                 :items="apuntes"
-                                
+
                                 label="Apunte"
                             ></v-select>
                         </v-flex>
@@ -112,6 +112,18 @@
                     </v-layout>
                     <v-layout row wrap>
                         <v-flex sm1></v-flex>
+                        <v-flex sm2 d-flex>
+                            <v-select
+                                v-model="caja.manual"
+                                v-validate="'required'"
+                                data-vv-name="manual"
+                                data-vv-as="origen"
+                                :error-messages="errors.collect('manual')"
+                                :items="origenes"
+                                label="Origen"
+                                :readonly="!isAdmin"
+                                ></v-select>
+                        </v-flex>
                          <v-flex sm2>
                             <v-text-field
                                 v-model="caja.username"
@@ -142,8 +154,8 @@
                         <v-flex sm1></v-flex>
                         <v-flex sm2>
                             <div class="text-xs-center">
-                                        <v-btn @click="submit"  round  :loading="loading" block  color="primary">
-                                Guardar
+                                <v-btn @click="submit"  round  :loading="loading" block  color="primary">
+                                    Guardar
                                 </v-btn>
                             </div>
                         </v-flex>
@@ -176,7 +188,10 @@ import {mapGetters} from 'vuex';
                     {value: 'D', text:"Debe"},
                     {value: 'H', text:"Haber"},
                 ],
-
+                origenes:[
+                    {value: 'S', text:"Manual"},
+                    {value: 'R', text:"Regularización"},
+                ],
                 saldo: 0,
                 loading: false,
                 menu1: false,
@@ -208,7 +223,8 @@ import {mapGetters} from 'vuex';
         },
         computed: {
         ...mapGetters([
-            'isSupervisor',
+                'isSupervisor',
+                'isAdmin'
             ]),
             computedFecha() {
                 moment.locale('es');

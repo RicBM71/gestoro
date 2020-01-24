@@ -180,6 +180,13 @@ Route::group([
             Route::post('facturacion/albaranes/listar/excel', 'FacturacionVentasController@excel');
         });
 
+        Route::middleware(['role_or_permission:Gestor|factura'])->group(function () {
+            Route::post('facturacion/compras/listar', 'FacturacionComprasController@lisrecu');
+            Route::post('facturacion/compras/listar/excel', 'FacturacionComprasController@excel');
+            Route::post('facturacion/albaranes/listar', 'FacturacionVentasController@lisfac');
+            Route::post('facturacion/albaranes/listar/excel', 'FacturacionVentasController@excel');
+        });
+
         Route::get('print/{id}', 'PrintRecuController@print');
         Route::get('print/{id}/albaran', 'PrintAlbController@print')->name('albaran.print');
         Route::put('print/{albarane}/mail', 'PrintAlbController@mail')->name('albaran.mail');
@@ -290,6 +297,8 @@ Route::group([
             Route::get('/service', 'ServiciosTallerController@index');
             Route::post('/service', 'ServiciosTallerController@submit');
             Route::post('/service/excel', 'ServiciosTallerController@excel');
+
+            Route::post('/recogidas', 'RecogidasController@submit');
         });
 
     }

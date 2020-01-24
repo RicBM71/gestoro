@@ -31,9 +31,9 @@ class CajaPolicy
     public function update(User $authUser, Caja $caja)
     {
 
-        if ($caja->manual != 'S'){
-            return $this->deny('El apunte es automático, no se puede modificar');
-        }
+        // if ($caja->manual != 'S'){
+        //     return $this->deny('El apunte es automático, no se puede modificar');
+        // }
 
         if($authUser->hasRole('Admin') || $authUser->hasRole('Supervisor') )
             return true;
@@ -52,9 +52,9 @@ class CajaPolicy
      */
     public function delete(User $authUser, Caja $caja)
     {
-        if ($caja->manual != 'S'){
-            return $this->deny('El apunte es automático, no se puede borrar');
-        }
+        // if ($caja->manual != 'S'){
+        //     return $this->deny('El apunte es automático, no se puede borrar');
+        // }
 
         if($authUser->hasRole('Admin') || $authUser->hasRole('Supervisor') )
             return true;

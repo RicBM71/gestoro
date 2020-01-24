@@ -58,7 +58,19 @@
                             required
                             ></v-select>
                         </v-flex>
-                         <v-flex sm2 d-flex>
+                        <v-flex sm2 d-flex>
+                            <v-select
+                                v-model="caja.manual"
+                                v-validate="'required'"
+                                data-vv-name="manual"
+                                data-vv-as="origen"
+                                :error-messages="errors.collect('manual')"
+                                :items="origenes"
+                                label="Origen"
+                                :readonly="!isAdmin"
+                                ></v-select>
+                        </v-flex>
+                         <v-flex sm3 d-flex>
                             <v-select
                             v-model="caja.apunte_id"
                             :error-messages="errors.collect('apunte_id')"
@@ -79,7 +91,6 @@
                                 label="Nombre"
                                 data-vv-name="nombre"
                                 data-vv-as="nombre"
-                                autofocus
                                 v-on:keyup.enter="submit"
                             >
                             </v-text-field>
@@ -142,6 +153,10 @@ import {mapGetters} from 'vuex';
                 },
                 url: "/mto/cajas",
                 ruta: "caja",
+                origenes:[
+                    {value: 'S', text:"Manual"},
+                    {value: 'R', text:"Regularización"},
+                ],
                 dhs:[
                     {value: 'D', text:"Debe"},
                     {value: 'H', text:"Haber"},
@@ -172,7 +187,8 @@ import {mapGetters} from 'vuex';
         },
         computed: {
          ...mapGetters([
-            'isSupervisor',
+                'isAdmin',
+                'isSupervisor',
             ]),
             computedFecha() {
                 moment.locale('es');

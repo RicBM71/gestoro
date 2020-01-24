@@ -19,7 +19,6 @@
                             :error-messages="errors.collect('email')"
                             :value="f_email"
                             required
-                            autofocus
                         >
                         </v-text-field>
 

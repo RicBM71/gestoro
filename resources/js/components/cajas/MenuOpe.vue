@@ -47,12 +47,12 @@
                     v-on="on"
                     color="white"
                     icon
-                    @click="goBack()"
+                    @click="goIndex"
                 >
-                    <v-icon color="primary">arrow_back</v-icon>
+                    <v-icon color="primary">list</v-icon>
                 </v-btn>
             </template>
-                <span>Volver</span>
+            <span>Lista</span>
         </v-tooltip>
     </div>
 </template>
@@ -73,9 +73,6 @@ export default {
       }
     },
     methods:{
-        goBack(){
-            this.$router.go(-1);
-        },  
         goCreate(){
             this.$router.push({ name: this.ruta+'.create' })
         },
