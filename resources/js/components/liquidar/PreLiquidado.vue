@@ -1,8 +1,17 @@
 <template>
     <v-container>
         <v-layout row wrap>
-            <v-flex xs4>
-                <v-spacer></v-spacer>
+            <v-flex xs2>
+                <v-text-field
+                    :value="computedTotalGr"
+                    class="inputPrice"
+                    label="Total Gr."
+                    readonly
+                ></v-text-field>
+            </v-flex>
+            <v-flex xs1></v-flex>
+            <v-spacer></v-spacer>
+            <v-flex xs6>
                 <v-text-field
                     v-model="search"
                     append-icon="search"
@@ -11,7 +20,6 @@
                     hide-details
                 ></v-text-field>
             </v-flex>
-            <v-flex xs6></v-flex>
             <v-flex sm2>
                 <v-btn @click="liquidar" :disabled="selected.length==0" :loading="loading" round small block flat color="orange">
                     Liquidar {{reg_sel}}
@@ -59,7 +67,8 @@ import moment from 'moment'
 export default {
     props:{
         parametros: Object,
-        lineas: Array
+        lineas: Array,
+        total_gr: Number
     },
     data () {
         return {
@@ -122,6 +131,12 @@ export default {
         //     this.unsetPagination();
 
     },
+    computed: {
+        computedTotalGr(){
+            //console.log(this.total_gr);
+            return parseFloat(this.total_gr).toLocaleString('de-DE',{ style: 'decimal'});
+        },
+    },
     watch:{
         selected: function () {
             this.reg_sel = (this.selected.length > 0) ? "("+this.selected.length+")" : null;
@@ -171,5 +186,10 @@ export default {
 
 table.v-table tbody td, table.v-table tbody th {
     height: 38px;
+}
+
+.inputPrice >>> input {
+  text-align: center;
+  -moz-appearance:textfield;
 }
 </style>

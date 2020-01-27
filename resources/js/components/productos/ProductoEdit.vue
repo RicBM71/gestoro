@@ -163,7 +163,7 @@
                                     <v-select
                                         :disabled="!computedEditPro"
                                         v-model="producto.almacen_id"
-                                        v-validate="'required'"
+                                        v-validate="'numeric'"
                                         data-vv-name="almacen_id"
                                         data-vv-as="ubicación"
                                         :error-messages="errors.collect('almacen_id')"

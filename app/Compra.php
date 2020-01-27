@@ -297,7 +297,7 @@ class Compra extends Model
         //     ->whereIn('fase_id', [4,6])
         //     ->where('tipo_id',$tipo_id)
         //     ->where('clase_id',$clase_id)
-        //     ->where('fecha_liquidado',null)->toSql());
+        //     ->whereNull('fecha_liquidado')->toSql());
 
         return DB::table('compras')
             ->join('comlines', 'compras.id', '=', 'comlines.compra_id')
@@ -307,12 +307,13 @@ class Compra extends Model
                              //'concepto,tipo_id,'.
                              'CONCAT(klt_clases.nombre," ",klt_comlines.quilates) AS nombre,peso_gr,klt_comlines.importe'))
                 ->where('compras.empresa_id',session('empresa')->id)
-                ->whereDate('fecha_compra','<=', $h)
-                ->whereDate('fecha_bloqueo','<', Carbon::today()->format('Y-m-d'))
+                ->whereDate('fecha_bloqueo','<=', $h)
+                //->whereDate('fecha_compra','<=', $h)
+                // ->whereDate('fecha_bloqueo','<', Carbon::today()->format('Y-m-d'))
                 ->whereIn('fase_id', [4,6])
                 ->where('tipo_id',$tipo_id)
                 ->where('clase_id',$clase_id)
-                ->where('fecha_liquidado',null)
+                ->whereNull('fecha_liquidado')
             ->get()
             ->take(500);
 

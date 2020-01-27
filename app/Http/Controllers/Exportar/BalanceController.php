@@ -47,7 +47,7 @@ class BalanceController extends Controller
 
 
         $select=DB::getTablePrefix().'empresas.nombre AS empresa,'.
-                    '"xTOTAL" as concepto, signo, SUM(importe * signo) AS importe, COUNT(*) AS operaciones';
+                    '"xTOTALES" as concepto, signo, SUM(importe * signo) AS importe, COUNT(*) AS operaciones';
 
         $union2 = DB::table('depositos')
                     ->select(DB::raw($select))
@@ -85,7 +85,7 @@ class BalanceController extends Controller
 
 
         $select=DB::getTablePrefix().'empresas.nombre AS empresa,'.
-                    '"xTOTAL" as concepto, SUM(importe) AS importe, COUNT(*) AS operaciones';
+                    '"xTOTALES" as concepto, SUM(importe) AS importe, COUNT(*) AS operaciones';
 
         $union2 = DB::table('cobros')
                     ->select(DB::raw($select))

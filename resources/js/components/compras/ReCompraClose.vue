@@ -564,7 +564,11 @@ import {mapGetters} from 'vuex';
             },
             computedAmpliarCapital(){
                 if (this.compra.fase_id != 4) return false;
-                return true;
+
+                if (this.isAdmin)
+                    return true;
+
+                return (this.retraso > 0)
                 // lo dejamos para cualquier User JL.
                 //return !this.isSupervisor;
 

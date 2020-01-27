@@ -19,7 +19,7 @@ class KltLibrosTableSeeder extends Seeder
             //->select('select * from contadores WHERE id=148');
             ->select('select * from contadores '.
                     ' WHERE compras > 1 '.
-                    ' AND ejercicio >= 2020 '.
+                    ' AND ejercicio >= 1 '.
                     'ORDER BY contadores.id');
 
 
@@ -57,6 +57,9 @@ class KltLibrosTableSeeder extends Seeder
                 $empresa_id = $row->empresa;
                 $semdia_bloqueo="1/1";
             }
+
+            if (strlen($row->serie) > 3)
+                $row->serie = substr($row->serie,0,2);
 
             $data[]=array(
                 'id'        => 0,

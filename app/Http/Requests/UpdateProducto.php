@@ -44,7 +44,7 @@ class UpdateProducto extends FormRequest
             'caracteristicas'   => ['nullable','string', 'max:190'],
             'notas'             => ['string','nullable'],
             'cliente_id'        => ['nullable','integer'],
-            'almacen_id'        => ['required', 'integer'],
+            'almacen_id'        => ['nullable', 'integer'],
             'etiqueta_id'       => ['required', 'integer'],
             'stock'             => ['required', 'integer'],
             'destino_empresa_id'=> ['required', 'integer'],

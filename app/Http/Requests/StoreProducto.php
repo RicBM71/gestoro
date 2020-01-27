@@ -40,9 +40,7 @@ class StoreProducto extends FormRequest
             'iva_id'           => ['required','integer'],
             'quilates'         => ['nullable','integer',new LeyesRule($this->clase_id)],
             'caracteristicas'  => ['nullable','string','max:190'],
-            'peso_gr'           => ['numeric',Rule::requiredIf(function (){
-                                        return $this->clase->peso;
-                                    }), new PesoRule($this->clase->peso)],
+            'peso_gr'          => ['numeric', new PesoRule($this->clase->peso)],
             'precio_coste'     => ['numeric','required'],
             'precio_venta'     => ['numeric','required'],
             'ref_pol'          => ['nullable','string', 'max:20'],

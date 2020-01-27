@@ -44,12 +44,12 @@
                                 <v-text-field
                                     slot="activator"
                                     :value="computedFechaH"
-                                    label="Hasta"
+                                    label="Libera a partir"
                                     append-icon="event"
                                     v-validate="'date_format:dd/MM/yyyy'"
                                     data-vv-name="fecha_h"
                                     :error-messages="errors.collect('fecha_h')"
-                                    data-vv-as="Hasta"
+                                    data-vv-as="libera"
                                     readonly
                                     ></v-text-field>
                                 <v-date-picker
@@ -113,6 +113,7 @@
                 :lineas.sync="lineas"
                 :parametros="parametros"
                 :loading.sync="loading"
+                :total_gr="total_gr"
             >
             </pre-liquidado>
             <ver-liquidado
@@ -170,7 +171,8 @@ export default {
             menu_d: false,
             menu_liq:false,
             preliquidar:false,
-            lineas:[]
+            lineas:[],
+            total_gr:0
       }
     },
     beforeMount(){
@@ -242,12 +244,12 @@ export default {
 
                     axios.post('/compras/liquidar/preliquidado', this.parametros)
                         .then(res => {
-
+                            console.log(res.data.total_gr);
                             this.lineas = res.data.compras;
+                            this.total_gr = res.data.total_gr;
+
                             if (this.lineas.length == 0)
-                                this.$toast.warning('*No hay registros!');
-
-
+                                this.$toast.warning('No hay registros!');
 
                             this.loading = false;
                         })

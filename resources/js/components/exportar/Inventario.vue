@@ -239,9 +239,9 @@ export default {
             moment.locale('es');
             return this.fecha_h ? moment(this.fecha_h).format('L') : '';
         },
-         computedValorInventario(){
-                return parseFloat(this.valor_inventario).toLocaleString('es-ES',{ style: 'decimal'});
-            },
+        computedValorInventario(){
+            return parseFloat(this.valor_inventario).toLocaleString('es-ES',{ style: 'decimal'});
+        },
     },
     methods:{
         submit(){
@@ -333,7 +333,6 @@ export default {
 }
 </script>
 <style scoped>
-
 .inputPrice >>> input {
   text-align: center;
   -moz-appearance:textfield;

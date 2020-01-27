@@ -36,7 +36,7 @@
                             label="Clase"
                             ></v-select>
                         </v-flex>
-                        <!-- <v-flex sm1>
+                        <v-flex sm1>
                             <v-select
                                 v-model="producto.quilates"
                                 :items="quilates"
@@ -46,7 +46,7 @@
                                 data-vv-name="quilates"
                                 data-vv-as="quilates"
                             ></v-select>
-                        </v-flex> -->
+                        </v-flex> 
                         <v-flex sm2>
                             <v-text-field
                                 v-model="producto.peso_gr"

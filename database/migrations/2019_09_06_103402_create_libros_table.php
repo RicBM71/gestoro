@@ -22,7 +22,7 @@ class CreateLibrosTable extends Migration
             $table->Integer('ult_compra')->default(1);
             $table->Integer('ult_factura')->default(1);
             $table->string('serie_com', 1)->nullable();
-            $table->string('serie_fac', 3)->nullable();
+            $table->string('serie_fac', 5)->nullable();
             $table->smallInteger('dias_custodia')->default(30);
             $table->smallInteger('dias_cortesia')->default(10);
             $table->string('semdia_bloqueo',3)->default("3/1");

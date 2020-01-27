@@ -34,7 +34,7 @@ class CreateComprasTable extends Migration
             $table->unsignedInteger('fase_id');
             $table->Integer('factura')->nullable();
             $table->date('fecha_factura')->nullable();
-            $table->string('serie_fac',4)->nullable();
+            $table->string('serie_fac', 5)->nullable();
             $table->Integer('papeleta')->nullable();
             $table->decimal('retencion', 6,2)->default(0);
             $table->String('notas')->nullable();

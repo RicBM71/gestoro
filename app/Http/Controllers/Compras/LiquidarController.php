@@ -39,9 +39,13 @@ class LiquidarController extends Controller
             'clase_id'  => ['required','integer'],
         ]);
 
+        $lineas = Compra::obtenerLineasPreLiquidado($data['fecha_h'],$data['tipo_id'],$data['clase_id']);
+        $total_gr = $lineas->sum('peso_gr');
+
         if (request()->wantsJson())
             return [
-                'compras' => Compra::obtenerLineasPreLiquidado($data['fecha_h'],$data['tipo_id'],$data['clase_id'])
+                'compras'   => $lineas,
+                'total_gr'  => $total_gr
             ];
 
     }

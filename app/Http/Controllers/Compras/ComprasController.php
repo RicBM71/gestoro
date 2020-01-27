@@ -275,8 +275,8 @@ class ComprasController extends Controller
 
         if ($data['tipo_id']==1){
             if ($compra->interes <> $data['interes']){
-              $data['retencion'] = 0;
-              $data['importe_renovacion'] = round($compra->importe * $data['interes'] / 100, 0);
+                $data['retencion'] = 0;
+                $data['importe_renovacion'] = round(($compra->importe - $compra->importe_acuenta) * $data['interes'] / 100, 0);
             }
         }else{
             $data['fecha_renovacion'] = null;

@@ -79,19 +79,19 @@ class ProductosController extends Controller
 
         $data = request()->session()->get('filtro_pro');
 
-        \Log::info(Producto::onlyTrashed()->with(['clase','estado'])
-        ->referencia($data['referencia'])
-        ->fechaMod($data['fecha_d'])
-        ->clase($data['clase_id'])
-        ->estado($data['estado_id'])
-        ->destino($data['destino_empresa_id'])
-        ->notasNombre($data['notas'])
-        ->refPol($data['ref_pol'])
-        ->precioPeso($data['precio'])
-        ->quilates($data['quilates'])
-        ->online($data['online'])
-        ->orderBy('id','desc')
-                        ->toSql());
+        // \Log::info(Producto::onlyTrashed()->with(['clase','estado'])
+        // ->referencia($data['referencia'])
+        // ->fechaMod($data['fecha_d'])
+        // ->clase($data['clase_id'])
+        // ->estado($data['estado_id'])
+        // ->destino($data['destino_empresa_id'])
+        // ->notasNombre($data['notas'])
+        // ->refPol($data['ref_pol'])
+        // ->precioPeso($data['precio'])
+        // ->quilates($data['quilates'])
+        // ->online($data['online'])
+        // ->orderBy('id','desc')
+        //                 ->toSql());
 
         //                 \Log::info($data['alta']);
 
