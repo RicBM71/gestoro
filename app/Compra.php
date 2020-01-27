@@ -307,8 +307,8 @@ class Compra extends Model
                              //'concepto,tipo_id,'.
                              'CONCAT(klt_clases.nombre," ",klt_comlines.quilates) AS nombre,peso_gr,klt_comlines.importe'))
                 ->where('compras.empresa_id',session('empresa')->id)
-                ->whereDate('fecha_bloqueo','<=', $h)
-                //->whereDate('fecha_compra','<=', $h)
+                //->whereDate('fecha_bloqueo','<=', $h)
+                ->whereDate('fecha_compra','<=', $h)
                 // ->whereDate('fecha_bloqueo','<', Carbon::today()->format('Y-m-d'))
                 ->whereIn('fase_id', [4,6])
                 ->where('tipo_id',$tipo_id)
