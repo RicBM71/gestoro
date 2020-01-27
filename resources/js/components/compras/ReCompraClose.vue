@@ -360,12 +360,14 @@
                                 :compra.sync="compra"
                                 :compra_id="compra.id"
                                 :grabaciones="grabaciones"
+                                :refresh_lin.sync="refresh_lin"
                             >
                             </com-lines>
                             <depo-lines v-show="show_lindepo"
                                 :compra.sync="compra"
                                 :conceptos="conceptos"
-                                :lineas.sync="lineas_deposito">
+                                :lineas.sync="lineas_deposito"
+                                :refresh_lin.sync="refresh_lin">
                             </depo-lines>
                             <comprar-create
                                 v-if="dialog_com"
@@ -393,7 +395,8 @@
                                 :compra.sync="compra"
                                 :deposito_capital="deposito"
                                 :dialog.sync="dialog_capital"
-                                :lineas.sync="lineas_deposito">
+                                :lineas.sync="lineas_deposito"
+                                :refresh_lin.sync="refresh_lin">
                             </capital-create>
                             <recuperar-create
                                 v-if="dialog_recu"
@@ -481,6 +484,7 @@ import {mapGetters} from 'vuex';
 
                 docu_ok: false,
                 refresh: 0,
+                refresh_lin: 0,
                 grabaciones: false,
                 dias_cortesia: 0,
 
@@ -755,6 +759,7 @@ import {mapGetters} from 'vuex';
                         this.deposito.importe = "";
 
                         this.dialog_capital = true;
+
                         this.show_loading = false;
                     })
                     .catch(err => {

@@ -63,7 +63,7 @@ class Comline extends Model
 
             $compra->update($data);
 
-        } catch (\Throwable $th) {
+        } catch (\Exception $th) {
 
         }
 

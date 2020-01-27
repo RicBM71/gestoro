@@ -91,7 +91,8 @@ export default {
         compra: Object,
         dialog: Boolean,
         deposito_capital: Object,
-        lineas: Array
+        lineas: Array,
+        refresh_lin: Number
     },
     data () {
       return {
@@ -157,6 +158,7 @@ export default {
                                 this.$emit('update:compra', res.data.compra)
                                 this.$emit('update:lineas', res.data.lineas);
                                 this.$emit('update:dialog', false)
+                                this.$emit('update:refresh_lin', this.refresh_lin + 1)
                                 this.loading = false;
 
 

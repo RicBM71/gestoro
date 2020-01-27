@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Compras;
 
 use App\Compra;
+use App\Comline;
 use App\Concepto;
 use App\Deposito;
 use Illuminate\Http\Request;
@@ -90,13 +91,31 @@ class AmpliarCapitalController extends Controller
 
     private function actualizaCompra($id, $importe){
 
+
         $compra = Compra::findOrFail($id);
 
-        $data_com['importe_acuenta'] = $compra->importe_acuenta - $importe;
+        $comline = Comline::where('compra_id', $id)->orderby('id')->firstOrFail(); // actualizo sobre la primera
+
+        //$data_com['importe_acuenta'] = $compra->importe_acuenta - $importe;
+        $data_com['importe'] = $compra->importe + $importe;
         $data_com['importe_renovacion'] = round(($compra->importe - ($compra->importe_acuenta - $importe))  * $compra->interes / 100, 0);
         $data_com['username'] = session('username');
 
+        $imp_new = $comline->importe + $importe;
+        $data_lin = ['importe'=> $imp_new, 'username'=> session('username')];
+
+        if ($comline->peso_gr > 0)
+            $data_lin['importe_gr'] = setImporteGr($comline->peso_gr, $imp_new);
+        else
+            $data_lin['importe_gr'] = 0;
+
+
+        $comline->update($data_lin);
+
         $compra->update($data_com);
+
+
+
     }
 
 }

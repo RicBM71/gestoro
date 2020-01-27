@@ -86,7 +86,7 @@ import MyDialog from '@/components/shared/MyDialog'
 import linesCreate from './LinCreate'
 import linesEdit from './LinEdit'
 export default {
-    props:['compra_id','grabaciones','compra'],
+    props:['compra_id','grabaciones','compra','refresh_lin'],
     // props:{
     //     compra_id: Number,
     //     grabaciones: Boolean,
@@ -255,6 +255,27 @@ export default {
         computedTotAlb(){
 
             return parseFloat(this.totales.importe) - parseFloat(this.totales.impirpf)  + parseFloat(this.totales.impiva);
+        }
+    },
+    watch: {
+        refresh_lin: function () {
+            axios.post('/compras/comlines/load',{
+                compra_id: this.compra.id,
+                grupo_id: this.compra.grupo_id
+            })
+            .then(res => {
+                this.lineas = res.data.lineas;
+                this.totales = res.data.totales;
+            })
+            .catch(err => {
+                if (err.response.status == 404)
+                    this.$toast.error("Compra No encontrada!");
+                else
+                    this.$toast.error(err.response.data.message);
+                this.$router.push({ name: 'compra.index'})
+            })
+
+
         }
     },
     methods:{

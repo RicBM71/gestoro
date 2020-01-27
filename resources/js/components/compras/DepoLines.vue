@@ -41,6 +41,7 @@ export default {
         conceptos: Array,
         compra: Object,
         lineas: Array,
+        refresh_lin: Number
     },
     components: {
         'my-dialog': MyDialog,
@@ -220,7 +221,7 @@ export default {
             axios.post('/compras/capital/'+this.editedItem.id,{_method: 'delete'})
                 .then(res => {
                     this.reLoadLineas(res.data.lineas, res.data.compra);
-
+                    this.$emit('update:refresh_lin', this.refresh_lin + 1)
             })
             .catch(err => {
                 this.status = true;

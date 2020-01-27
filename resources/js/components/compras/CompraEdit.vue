@@ -340,7 +340,7 @@ import {mapGetters} from 'vuex';
                 else{
                     this.enviando = true;
                     var com = this.compra;
-                    if (this.totales_concepto[0] != this.compra.importe){
+                    if ((this.totales_concepto[0]+this.totales_concepto[5]) != this.compra.importe){
                         this.$toast.error('Importe en compra difiere de importe en depósito');
                     }
                     //     this.enviando = false;
