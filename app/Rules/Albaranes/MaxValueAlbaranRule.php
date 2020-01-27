@@ -13,7 +13,7 @@ class MaxValueAlbaranRule implements Rule
      */
     public function __construct($totales, $acuenta)
     {
-        $this->resto = $totales['total'] - $acuenta;
+        $this->resto = round($totales['total'] - $acuenta, 2);
     }
 
     /**
@@ -25,7 +25,9 @@ class MaxValueAlbaranRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        if ($value > $this->resto)
+        $value = round($value,2);
+
+        if (floatval($value) > $this->resto)
             return false;
 
         return true;

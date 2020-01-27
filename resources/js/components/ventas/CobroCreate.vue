@@ -149,9 +149,12 @@ export default {
             })
     },
     mounted(){
-        this.fecha_min = this.albaran.fecha_albaran;
+
     },
     watch: {
+        albaran: function () {
+            this.fecha_min = this.albaran.fecha_albaran;
+        },
         resto: function () {
 
             this.cobro.importe = this.resto;

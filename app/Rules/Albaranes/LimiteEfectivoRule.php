@@ -27,6 +27,7 @@ class LimiteEfectivoRule implements Rule
      */
     public function passes($attribute, $value)
     {
+        $value = round($value, 2);
         if (auth()->user()->hasPermissionTo('salefe'))
             return true;
 

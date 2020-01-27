@@ -34,6 +34,8 @@ class LimiteCobroFechaRule implements Rule
      */
     public function passes($attribute, $value)
     {
+        $value = round($value, 2);
+        
         if ($this->fpago_id != 1 || $this->cliente_id == 1)
             return true;
 

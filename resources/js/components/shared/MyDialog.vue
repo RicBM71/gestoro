@@ -5,8 +5,8 @@
             <v-card-text>¿Está seguro de borrar el {{ registro }} seleccionado?</v-card-text>
         <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click="closeDialog()">Cancelar</v-btn>
-            <v-btn color="blue darken-1" flat @click="deleteItem">Aceptar</v-btn>
+            <v-btn color="blue darken-1" flat round @click="closeDialog()">Cancelar</v-btn>
+            <v-btn color="blue darken-1" flat round @click="deleteItem">Aceptar</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
