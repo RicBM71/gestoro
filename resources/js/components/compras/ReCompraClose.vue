@@ -27,7 +27,7 @@
                             v-on="on"
                             color="white"
                             icon
-                            :disabled="computedAmpliarCapital"
+                            :disabled="!computedAmpliarCapital"
                             @click="goCapital()"
                         >
                             <v-icon color="purple darken-2">post_add</v-icon>
@@ -560,6 +560,7 @@ import {mapGetters} from 'vuex';
             },
             computedAmpliarCapital(){
                 if (this.compra.fase_id != 4) return false;
+                return true;
                 // lo dejamos para cualquier User JL.
                 //return !this.isSupervisor;
 
