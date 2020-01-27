@@ -35,7 +35,7 @@ class ReubicarAlbaranesController extends Controller
                     ->where('albaranes.tipo_id', 3)
                     ->whereDate('fecha_albaran','<=', $data['fecha_h'])
                     ->where('fase_id', 11)
-                    ->where('factura',0)
+                    ->whereNull('factura')
                     ->whereNull('albaranes.deleted_at')
                     ->where('productos.empresa_id','<>',session('empresa')->id)
                     ->get();
