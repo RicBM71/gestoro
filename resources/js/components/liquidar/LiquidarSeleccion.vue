@@ -244,7 +244,7 @@ export default {
 
                     axios.post('/compras/liquidar/preliquidado', this.parametros)
                         .then(res => {
-                            console.log(res.data.total_gr);
+
                             this.lineas = res.data.compras;
                             this.total_gr = res.data.total_gr;
 

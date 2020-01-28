@@ -171,20 +171,16 @@ Route::group([
         Route::middleware('permission:factura')->group(function () {
             Route::get('facturacion', 'FacturacionComprasController@index');
             Route::put('facturacion/compras', 'FacturacionComprasController@compras');
-            Route::post('facturacion/compras/listar', 'FacturacionComprasController@lisrecu');
-            Route::post('facturacion/compras/listar/excel', 'FacturacionComprasController@excel');
-
-            Route::get('facturacion/alb', 'FacturacionVentasController@index');
             Route::put('facturacion/albaranes', 'FacturacionVentasController@albaranes');
-            Route::post('facturacion/albaranes/listar', 'FacturacionVentasController@lisfac');
-            Route::post('facturacion/albaranes/listar/excel', 'FacturacionVentasController@excel');
+            Route::get('facturacion/alb', 'FacturacionVentasController@index');
         });
 
-        Route::middleware(['role_or_permission:Gestor|factura'])->group(function () {
-            Route::post('facturacion/compras/listar', 'FacturacionComprasController@lisrecu');
-            Route::post('facturacion/compras/listar/excel', 'FacturacionComprasController@excel');
-            Route::post('facturacion/albaranes/listar', 'FacturacionVentasController@lisfac');
-            Route::post('facturacion/albaranes/listar/excel', 'FacturacionVentasController@excel');
+        Route::middleware(['role:Gestor'])->group(function () {
+            Route::get('facturacion/listar', 'ListarFacturasController@index');
+            Route::post('facturacion/compras/listar', 'ListarFacturasController@lisrecu');
+            Route::post('facturacion/compras/listar/excel', 'ListarFacturasController@excel');
+            Route::post('facturacion/albaranes/listar', 'ListarFacturasController@lisfac');
+            Route::post('facturacion/albaranes/listar/excel', 'ListarFacturasController@excel');
         });
 
         Route::get('print/{id}', 'PrintRecuController@print');

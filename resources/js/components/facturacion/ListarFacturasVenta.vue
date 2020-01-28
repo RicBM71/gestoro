@@ -228,7 +228,7 @@ import {mapActions} from "vuex";
                 search:"",
                 paginaActual:{},
                 pagination:{
-                    model: "lisfac",
+                    model: "lisfacven",
                     descending: true,
                     page: 1,
                     rowsPerPage: 10,
@@ -306,14 +306,14 @@ import {mapActions} from "vuex";
       		}
         },
         beforeMount(){
-
-            if (this.getLineasIndex.length > 0){
-                this.lineas = this.getLineasIndex;
-            }
+            if (this.getPagination.model == this.pagination.model)
+                if (this.getLineasIndex.length > 0){
+                    this.lineas = this.getLineasIndex;
+                }
         },
         mounted(){
 
-            axios.get('/ventas/facturacion/alb')
+            axios.get('/ventas/facturacion/listar')
                 .then(res => {
 
                     this.tipos = res.data.tipos;

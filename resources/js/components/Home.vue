@@ -31,6 +31,7 @@
                 <v-spacer></v-spacer>
                 <v-btn
                     color="primary"
+                    round
                     flat
                     @click="myEmpresa=false"
                 >
@@ -242,7 +243,6 @@ export default {
                 { icon: 'lock', text: 'Facturar Albaranes', name:'facturacion.albaranes' },
                 { text: 'Reubicar Albaranes', name: 'reubicar', icon: 'shuffle'},
                 { icon: 'fireplace', text: 'Liquidar Lotes', name:'liquidar.index' },
-                { icon: 'fireplace', text: 'Check Contadores', name:'contador.check' },
             ]
         },
 
@@ -284,6 +284,7 @@ export default {
                 { text: 'Relación facturas de venta', name: 'facturacion.lisfaven', icon: 'print'},
                 { icon: 'archive', text: 'Mod. 347', name:'exportar.mod347' },
                 { icon: 'menu_book', text: 'Imprimir Libro', name:'exportar.libro' },
+                { icon: 'check_circle_outline', text: 'Check Contadores', name:'contador.check' },
             ],
         },
 

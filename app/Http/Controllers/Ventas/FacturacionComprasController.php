@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Rules\RangoFechaRule;
 use App\Exports\FacturasExport;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -112,7 +113,7 @@ class FacturacionComprasController extends Controller
 
         $i=0;
 
-        $compras = Compra::comprasRecuperadasSinFacturar($d, $h, $libro->grupo_id);
+        $compras = $this->comprasRecuperadasSinFacturar($d, $h, $libro->grupo_id);
 
         $iva = Iva::findOrFail(2); // rebu.
 
@@ -153,76 +154,28 @@ class FacturacionComprasController extends Controller
     }
 
      /**
+     * Seleccciona las compras que han sido recuperadas y no están facturadas
      *
-     * Relación de facturas de recuperaciones.
+     * @param date $d
+     * @param date $h
      *
      */
-    public function lisrecu(Request $request){
+    private function comprasRecuperadasSinFacturar($d, $h, $grupo_id){
 
-        $data=$request->validate([
-            'grupo_id'  => ['required','integer'],
-            'fecha_d'  => ['required','date', new RangoFechaRule($request->fecha_d, $request->fecha_h)],
-            'fecha_h'  => ['required','date'],
-        ]);
-
-        //$rango = trimestre($data['ejercicio'],$data['trimestre']);
-
-        $facturas = Compra::with(['cliente','comlines'])
-                        ->grupo($data['grupo_id'])
-                        ->fecha($data['fecha_d'], $data['fecha_h'], "F")
-                        ->where('factura','>', 0)
-                        ->orderBy('factura')
-                        ->get();
-
-        $collection=[];
-        foreach ($facturas as $row){
-
-            $pvp = $coste = $bene = 0;
-
-            foreach($row->comlines as $li){
-                $pvp+= $li->importe_venta;
-                $coste+= $li->importe;
-                $bene = $pvp - $coste;
-            }
-
-            // como no hay más de dos tipos de iva, puedo 'atajar' así:
-
-            $base = round($bene / (1+($li->iva/100)),2);
-            $iva = round($bene - $base,2);
-
-            $collection[]=[
-                'facser'         => $row->serie_fac.'-'.$row->factura,
-                'factura'        => $row->factura,
-                'fecha_factura'  => Carbon::parse($row->fecha_factura)->format('Y-m-d'),
-                'fecha_compra'   => Carbon::parse($row->fecha_compra)->format('Y-m-d'),
-                'alb_ser'        => $row->alb_ser,
-                'dni'            => $row->cliente->dni,
-                'razon'          => $row->cliente->razon,
-                'pvp'            => round($pvp,2),
-                'coste'          => round($coste),
-                'bene'           => round($bene),
-                'base'           => $base,
-                'iva'            => $iva,
-                'tipo_id'        => $row->tipo_id,
-                'por_iva'        => $li->iva,
-                'rebu'           => 'REBU',
-                'id'             => $row->id
-            ];
-
-        }
-        return collect($collection);
+        return DB::table('compras')
+            ->join('depositos', 'compras.id', '=', 'depositos.compra_id')
+            ->select('compras.*','depositos.fecha')
+                ->where('compras.empresa_id',session('empresa')->id)
+                ->where('compras.grupo_id', $grupo_id)
+                ->whereDate('fecha','>=', $d)
+                ->whereDate('fecha','<=', $h)
+                ->where('fecha_factura',null)
+                ->where('fase_id', 5)
+                ->whereIn('concepto_id',[8,9])
+            ->orderBy(('fecha'))
+            ->get();
 
     }
 
-    /**
-     * Recibe las facturas por request, previamente de $this->lisrecu()
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function excel(Request $request){
 
-        return Excel::download(new FacturasExport($request->data), 'fac.xlsx');
-
-    }
 }

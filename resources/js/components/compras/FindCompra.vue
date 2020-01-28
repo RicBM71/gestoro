@@ -20,7 +20,7 @@
                                     <v-flex sm2>
                                         <v-text-field
                                             v-model="serie"
-                                            v-validate="'required|max:1'"
+                                            v-validate="'required|max:3'"
                                             :error-messages="errors.collect('serie')"
                                             label="Serie"
                                             data-vv-name="serie"

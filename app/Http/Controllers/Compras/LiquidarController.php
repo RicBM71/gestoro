@@ -39,7 +39,7 @@ class LiquidarController extends Controller
             'clase_id'  => ['required','integer'],
         ]);
 
-        $lineas = Compra::obtenerLineasPreLiquidado($data['fecha_h'],$data['tipo_id'],$data['clase_id']);
+        $lineas = $this->obtenerLineasPreLiquidado($data['fecha_h'],$data['tipo_id'],$data['clase_id']);
         $total_gr = $lineas->sum('peso_gr');
 
         if (request()->wantsJson())
@@ -47,6 +47,38 @@ class LiquidarController extends Controller
                 'compras'   => $lineas,
                 'total_gr'  => $total_gr
             ];
+
+    }
+
+    /**
+     * Seleccciona las compras con líneas que cumplan condiciones y estén desbloqueadas.
+     *
+     * @param $d desde date
+     * @param $h hasta date
+     * @param $tipo_id
+     * @param $clase_id
+     *
+     */
+    private function obtenerLineasPreLiquidado($h,$tipo_id,$clase_id){
+
+
+        return DB::table('compras')
+            ->join('comlines', 'compras.id', '=', 'comlines.compra_id')
+            ->join('clases', 'clases.id', '=', 'comlines.clase_id')
+            ->select(DB::raw(DB::getTablePrefix().'compras.id AS compra_id, '.DB::getTablePrefix().'comlines.id, '.DB::getTablePrefix().'compras.fecha_compra,albaran,'.
+                             'CONCAT(concepto," ",grabaciones) AS concepto,tipo_id,serie_com,'.
+                             //'concepto,tipo_id,'.
+                             'CONCAT('.DB::getTablePrefix().'clases.nombre," ",'.DB::getTablePrefix().'comlines.quilates) AS nombre,peso_gr,'.DB::getTablePrefix().'comlines.importe'))
+                ->where('compras.empresa_id',session('empresa')->id)
+                //->whereDate('fecha_bloqueo','<=', $h)
+                ->whereDate('fecha_compra','<=', $h)
+                ->whereDate('fecha_bloqueo','<', Carbon::today()->format('Y-m-d'))
+                ->whereIn('fase_id', [4,6])
+                ->where('tipo_id',$tipo_id)
+                ->where('clase_id',$clase_id)
+                ->whereNull('fecha_liquidado')
+            ->get()
+            ->take(500);
 
     }
 
@@ -269,7 +301,7 @@ class LiquidarController extends Controller
             'clase_id'  => ['required','integer'],
         ]);
 
-        $compras = Compra::obtenerLineasPreLiquidado($data['fecha_h'],$data['tipo_id'],$data['clase_id']);
+        $compras = $this->obtenerLineasPreLiquidado($data['fecha_h'],$data['tipo_id'],$data['clase_id']);
 
         $lineas_id = $compras->pluck('id');
 

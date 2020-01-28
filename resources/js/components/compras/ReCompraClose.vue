@@ -160,7 +160,7 @@
                         <v-flex sm2>
                             <v-text-field
                                 v-if="compra.factura > 0"
-                                v-model="compra.factura_compra"
+                                v-model="compra.fac_ser"
                                 label="Factura"
                                 readonly
                             >

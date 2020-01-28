@@ -90,16 +90,6 @@
 	          </v-flex>
 	        </v-layout>
 	      </section>
-
-	      <section>
-	        <v-parallax :src="empresa.img2" height="380">
-	          <v-layout column align-center justify-center>
-	            <div class="headline black--text mb-3 text-xs-center">Líderes del mercado.</div>
-	            <em class="black--text">Venga a visitarnos y tasaremos sus joyas sin compromiso.</em>
-	          </v-layout>
-	        </v-parallax>
-	      </section>
-
 	      <section>
 	        <v-container grid-list-xl>
 	          <v-layout row wrap justify-center class="my-5">

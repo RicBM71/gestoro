@@ -24,7 +24,7 @@ class Compra extends Model
         'fecha_recogida' => 'date:Y-m-d',
     ];
 
-    protected $appends = ['alb_ser','eje_alb','retraso', 'resto_custodia', 'imp_recu', 'imp_pres','factura_compra', 'imp_ret'];
+    protected $appends = ['alb_ser','fac_ser','eje_alb','retraso', 'resto_custodia', 'imp_recu', 'imp_pres','factura_compra', 'imp_ret'];
 
      /**
      *
@@ -91,11 +91,24 @@ class Compra extends Model
         $l = strlen($this->albaran);
 
         if ($l <= 4)
-            return $this->serie_com."0".str_repeat('0', 4-$l).$this->albaran.'-'.substr($this->ejercicio,-2);
+            return $this->serie_com."0".str_repeat('0', 4-$l).$this->albaran.substr($this->ejercicio,-2);
         else
-            return $this->serie_com.$this->albaran.'-'.substr($this->ejercicio,-2);
+            return $this->serie_com.$this->albaran.substr($this->ejercicio,-2);
 
         //str_pad($this->albaran, 4, "0", STR_PAD_LEFT);
+
+    }
+
+    public function getFacSerAttribute(){
+
+        // $l = strlen($this->factura);
+
+        // if ($l <= 4)
+        //     return $this->serie_fac."0".str_repeat('0', 4-$l).$this->factura;
+        // else
+            return $this->serie_fac.$this->factura;
+
+        
 
     }
 
@@ -272,114 +285,7 @@ class Compra extends Model
 
 
 
-    /**
-     * Seleccciona las compras con líneas que cumplan condiciones y estén desbloqueadas.
-     *
-     * @param $d desde date
-     * @param $h hasta date
-     * @param $tipo_id
-     * @param $clase_id
-     *
-     */
-    public static function obtenerLineasPreLiquidado($h,$tipo_id,$clase_id){
 
-
-
-        // \Log::info(DB::table('compras')
-        // ->join('comlines', 'compras.id', '=', 'comlines.compra_id')
-        // ->join('clases', 'clases.id', '=', 'comlines.clase_id')
-        // ->select(DB::raw('klt_compras.id AS compra_id, klt_comlines.id, klt_compras.fecha_compra,albaran,'.
-        //                  'CONCAT(concepto," ",grabaciones) AS concepto,tipo_id,'.
-        //                  'CONCAT(klt_clases.nombre," ",klt_comlines.quilates) AS nombre,peso_gr,klt_comlines.importe'))
-        //     ->where('compras.empresa_id',session('empresa')->id)
-        //     ->whereDate('fecha_compra','<=', $h)
-        //     ->whereDate('fecha_bloqueo','<', Carbon::today()->format('Y-m-d'))
-        //     ->whereIn('fase_id', [4,6])
-        //     ->where('tipo_id',$tipo_id)
-        //     ->where('clase_id',$clase_id)
-        //     ->whereNull('fecha_liquidado')->toSql());
-
-        return DB::table('compras')
-            ->join('comlines', 'compras.id', '=', 'comlines.compra_id')
-            ->join('clases', 'clases.id', '=', 'comlines.clase_id')
-            ->select(DB::raw('klt_compras.id AS compra_id, klt_comlines.id, klt_compras.fecha_compra,albaran,'.
-                             'CONCAT(concepto," ",grabaciones) AS concepto,tipo_id,'.
-                             //'concepto,tipo_id,'.
-                             'CONCAT(klt_clases.nombre," ",klt_comlines.quilates) AS nombre,peso_gr,klt_comlines.importe'))
-                ->where('compras.empresa_id',session('empresa')->id)
-                //->whereDate('fecha_bloqueo','<=', $h)
-                ->whereDate('fecha_compra','<=', $h)
-                ->whereDate('fecha_bloqueo','<', Carbon::today()->format('Y-m-d'))
-                ->whereIn('fase_id', [4,6])
-                ->where('tipo_id',$tipo_id)
-                ->where('clase_id',$clase_id)
-                ->whereNull('fecha_liquidado')
-            ->get()
-            ->take(500);
-
-    }
-
-    /**
-     * Seleccciona las compras con líneas que cumplan condiciones y estén desbloqueadas.
-     *
-     * @param $d desde date
-     * @param $h hasta date
-     * @param $tipo_id
-     * @param $clase_id
-     *
-     */
-    // public static function obtenerLineasLiquidadas($f,$tipo_id,$clase_id){
-
-    //     return DB::table('compras')
-    //         ->join('comlines', 'compras.id', '=', 'comlines.compra_id')
-    //         ->join('clases', 'clases.id', '=', 'comlines.clase_id')
-    //         ->select(DB::raw('klt_compras.id AS compra_id, klt_comlines.id, klt_compras.fecha_compra,albaran,'.
-    //                          'CONCAT(concepto," ",grabaciones) AS concepto,tipo_id,klt_compras.grupo_id,clase_id,klt_comlines.quilates,'.
-    //                          'CONCAT(klt_clases.nombre," ",klt_comlines.quilates) AS nombre,peso_gr,klt_comlines.importe'))
-    //             ->where('empresa_id',session('empresa')->id)
-    //             ->whereDate('fecha_liquidado','=', $f)
-    //             ->whereIn('fase_id', [6,7])
-    //             ->where('tipo_id',$tipo_id)
-    //             ->where('clase_id',$clase_id)
-    //         ->get()
-    //         ->take(500);
-
-    // }
-
-     /**
-     * Seleccciona las compras que han sido recuperadas y no están facturadas
-     *
-     * @param date $d
-     * @param date $h
-     *
-     */
-    public static function comprasRecuperadasSinFacturar($d, $h, $grupo_id){
-
-        // \Log::info(DB::table('compras')
-        // ->join('depositos', 'compras.id', '=', 'depositos.compra_id')
-        // ->select('compras.*','depositos.fecha')
-        //     ->where('compras.empresa_id',session('empresa')->id)
-        //     ->whereDate('fecha','>=', $d)
-        //     ->whereDate('fecha','<=', $h)
-        //     ->where('fecha_factura',null)
-        //     ->where('fase_id', 5)
-        //     ->whereIn('concepto_id',[8,9])
-        // ->orderBy(('fecha')));
-
-        return DB::table('compras')
-            ->join('depositos', 'compras.id', '=', 'depositos.compra_id')
-            ->select('compras.*','depositos.fecha')
-                ->where('compras.empresa_id',session('empresa')->id)
-                ->where('compras.grupo_id', $grupo_id)
-                ->whereDate('fecha','>=', $d)
-                ->whereDate('fecha','<=', $h)
-                ->where('fecha_factura',null)
-                ->where('fase_id', 5)
-                ->whereIn('concepto_id',[8,9])
-            ->orderBy(('fecha'))
-            ->get();
-
-    }
 
     /**
      * Lista líneas para generar libro excel

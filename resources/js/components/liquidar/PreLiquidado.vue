@@ -47,7 +47,7 @@
                             ></v-checkbox>
                         </td>
                         <td>{{getFecha(props.item.fecha_compra)}}</td>
-                        <td>{{props.item.albaran}}</td>
+                        <td>{{props.item.serie_com+''+props.item.albaran}}</td>
                         <td class="gray--text darken-4">{{ props.item.concepto }}</td>
                         <td class="gray--text darken-4">{{ props.item.nombre}}</td>
                         <td class="gray--text darken-4 text-xs-right">{{ props.item.peso_gr | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
