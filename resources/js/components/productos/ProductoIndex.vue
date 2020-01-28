@@ -72,14 +72,14 @@
                                             edit
                                         </v-icon>
                                         <v-icon
-                                            v-if="props.item.deleted_at==null"
+                                            v-if="props.item.deleted_at==null && isAdmin"
                                             small
                                             @click="openDialog(props.item)"
                                         >
                                         delete
                                         </v-icon>
                                         <v-icon
-                                            v-else
+                                            v-if="props.item.deleted_at!=null && isAdmin"
                                             small
                                             @click="openDialog(props.item)"
                                         >

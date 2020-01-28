@@ -301,7 +301,11 @@ import {mapActions} from "vuex";
         },
         puedeEditar(item){
 
+            if (item.manual == 'R' && this.isAdmin)
+                return true;
+                
             if (item.manual != 'S') return false;
+
 
             if (this.isSuprevisor || this.isAdmin)
                 return true;

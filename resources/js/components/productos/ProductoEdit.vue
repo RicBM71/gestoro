@@ -482,10 +482,14 @@ import {mapGetters} from 'vuex';
                     'stockComple'
                 ]),
             computedEditPro(){
-                if (this.producto.estado_id == 3 || this.producto.estado_id == 4)
-                    return this.hasEditPro;
+                
+                if (this.producto.estado_id == 5)
+                    return true;
 
-                return true;
+                if (this.producto.estado_id == 3 || this.producto.estado_id == 4)
+                    return this.isAdmin;
+
+                return this.hasEditPro;
             },
             computedMargen(){
                 return this.getMoneyFormat(this.producto.margen);

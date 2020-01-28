@@ -91,9 +91,9 @@ class Compra extends Model
         $l = strlen($this->albaran);
 
         if ($l <= 4)
-            return $this->serie_com."0".str_repeat('0', 4-$l).$this->albaran.substr($this->ejercicio,-2);
+            return $this->serie_com."0".str_repeat('0', 4-$l).$this->albaran.'-'.substr($this->ejercicio,-2);
         else
-            return $this->serie_com.$this->albaran.substr($this->ejercicio,-2);
+            return $this->serie_com.$this->albaran.'-'.substr($this->ejercicio,-2);
 
         //str_pad($this->albaran, 4, "0", STR_PAD_LEFT);
 
@@ -108,7 +108,7 @@ class Compra extends Model
         // else
             return $this->serie_fac.$this->factura;
 
-        
+
 
     }
 
@@ -126,7 +126,7 @@ class Compra extends Model
 
     public function getFacturaCompraAttribute(){
 
-        return $this->serie_fac.'-'.$this->factura;
+        return $this->serie_fac.$this->factura;
 
 
     }

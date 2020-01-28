@@ -30,12 +30,20 @@ class CajaPolicy
      */
     public function update(User $authUser, Caja $caja)
     {
+        if ($caja->manual == 'N'){
+            return $this->deny('El apunte es automático, no se puede modificar');
+        }
 
-        // if ($caja->manual != 'S'){
-        //     return $this->deny('El apunte es automático, no se puede modificar');
-        // }
+        if ($caja->manual == 'C'){
+             return $this->deny('El apunte de cierre no se puede modificar');
+        }
 
-        if($authUser->hasRole('Admin') || $authUser->hasRole('Supervisor') )
+        if ($caja->manual == 'R' && !$authUser->hasRole('Admin') ){
+            return $this->deny('Acceso denegado. Contactar con un administrador');
+        }
+
+
+        if ($authUser->hasRole('Admin') || $authUser->hasRole('Supervisor') )
             return true;
 
         return esPropietario($caja) ?: $this->deny("Acceso denegado. No puedes editar el registro");
@@ -52,13 +60,13 @@ class CajaPolicy
      */
     public function delete(User $authUser, Caja $caja)
     {
-        // if ($caja->manual != 'S'){
-        //     return $this->deny('El apunte es automático, no se puede borrar');
-        // }
 
-        if($authUser->hasRole('Admin') || $authUser->hasRole('Supervisor') )
+        if ($caja->manual == 'N'){
+            return $this->deny('El apunte es automático, no se puede borrar');
+        }
+
+        if ($authUser->hasRole('Admin'))
             return true;
-
 
         return esPropietario($caja) ?: $this->deny("Acceso denegado. No puedes borrar el registro");
 

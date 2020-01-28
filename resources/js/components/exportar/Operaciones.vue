@@ -248,7 +248,6 @@ export default {
     },
     methods:{
         colorLin(item){
-            console.log(item.tipo);
             return item.tipo == "TOTAL" ? "blue--text darken-4 " : "";
         },
         clase(item){
