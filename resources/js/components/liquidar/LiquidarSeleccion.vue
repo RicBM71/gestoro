@@ -44,12 +44,12 @@
                                 <v-text-field
                                     slot="activator"
                                     :value="computedFechaH"
-                                    label="Libera a partir"
+                                    label="Fecha Compra"
                                     append-icon="event"
                                     v-validate="'date_format:dd/MM/yyyy'"
                                     data-vv-name="fecha_h"
                                     :error-messages="errors.collect('fecha_h')"
-                                    data-vv-as="libera"
+                                    data-vv-as="fecha"
                                     readonly
                                     ></v-text-field>
                                 <v-date-picker

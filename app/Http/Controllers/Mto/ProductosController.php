@@ -14,8 +14,11 @@ use App\Garantia;
 use App\Producto;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Rules\RangoFechaRule;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProducto;
+use App\Rules\MaxDiasRangoFechaRule;
 use App\Http\Requests\UpdateProducto;
 
 class ProductosController extends Controller
@@ -66,6 +69,8 @@ class ProductosController extends Controller
             'alta'          =>['boolean'],
             'cliente_id'    => ['required','integer'],
             'tipo_fecha'    =>['string','required'],
+            'fecha_d'       =>['nullable','date',new RangoFechaRule($request->fecha_d, $request->fecha_h)],
+            'fecha_h'       =>['nullable','date',new MaxDiasRangoFechaRule($request->fecha_d, $request->fecha_h)],
             'destino_empresa_id'=>['nullable','integer'],
         ]);
 

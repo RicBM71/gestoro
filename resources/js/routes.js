@@ -78,6 +78,7 @@ import TraspasoEdit from './components/traspasos/TraspasoEdit.vue';
 import ContadorIndex from './components/contadores/ContadorIndex.vue';
 import ContadorEdit from './components/contadores/ContadorEdit.vue';
 import ContadorCreate from './components/contadores/ContadorCreate.vue';
+import ContadorCheck from './components/contadores/Check.vue';
 
 import AlbaranIndex from './components/ventas/AlbaranIndex.vue';
 import AlbaranCreate from './components/ventas/AlbaranCreate.vue';
@@ -441,6 +442,11 @@ export default [
                 path: '/contadores/:id/edit',
                 name: 'contador.edit',
                 component: ContadorEdit,
+            },
+            {
+                path: '/check/:ejercicio?',
+                name: 'contador.check',
+                component: ContadorCheck,
             },
             {
                 path: '/albaranes',

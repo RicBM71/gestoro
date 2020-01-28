@@ -56,10 +56,20 @@ class Caja extends Model
 
     public function scopeManual($query, $manual){
 
-        if ($manual != null )
-            $query->where('manual',$manual);
-
-        return $query;
+        switch ($manual) {
+            case '':
+                return $query;
+                break;
+            case 'C':
+                return $query->where('deposito_id', '>', 0);
+                break;
+            case 'V':
+                return $query->where('cobro_id', '>', 0);
+                break;
+            default:
+                return $query->where('manual', $manual);
+                break;
+        }
 
     }
 

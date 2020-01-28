@@ -243,6 +243,8 @@ Route::group([
         Route::post('helptaller/ventas', 'HelpTalleresController@ventas');
         Route::put('reacli', 'ReasignarClienteController@reasignar');
         Route::get('helpapuntes', 'HelpApuntesController@index');
+
+        Route::get('check/{ejercicio?}', 'ContadorCheckController@index');
      //   Route::get('helpbanco', 'HelpBancosController@index');
     }
 );

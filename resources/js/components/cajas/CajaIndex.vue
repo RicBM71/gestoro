@@ -313,7 +313,7 @@ import {mapActions} from "vuex";
             if (item.manual == 'C'){ // es apunte de cierre
                 return (this.isSuprevisor || this.isAdmin)
             }else{
-                return item.manual == "S" && this.isAdmin;
+                return (item.manual == "S" || item.manual == "R") && this.isAdmin;
             }
 
         },

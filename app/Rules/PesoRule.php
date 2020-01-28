@@ -29,6 +29,7 @@ class PesoRule implements Rule
      */
     public function passes($attribute, $value)
     {
+
         if ($this->peso == false) // no requiere peso
             return true;
 

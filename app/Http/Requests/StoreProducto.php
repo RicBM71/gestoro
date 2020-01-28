@@ -31,6 +31,8 @@ class StoreProducto extends FormRequest
     {
         $this->clase = Clase::findOrFail($this->clase_id);
 
+        \Log::info($this->clase);
+
         $data = [
 
             'nombre'           => ['required', 'string', 'max:190'],

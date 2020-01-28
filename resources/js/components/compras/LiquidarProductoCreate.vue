@@ -239,20 +239,19 @@
                     if (result){
 
                         axios.post(url, {
-                                    compra_id: this.compra.id,
-                                    ref_pol: this.compra.alb_ser,
-                                    nombre: this.nombre,
-                                    clase_id: this.clase_id,
-                                    iva_id: 2,
-                                    estado_id: 2,
-                                    precio_coste: this.precio_coste,
-                                    precio_venta: this.precio_venta,
-                                    peso_gr: this.peso_gr,
-                                    quilates: this.quilates,
-                                    etiqueta_id: 3,
-                                    univen: 'U'
-                                }
-                            )
+                                compra_id: this.compra.id,
+                                ref_pol: this.compra.alb_ser,
+                                nombre: this.nombre,
+                                clase_id: this.clase_id,
+                                iva_id: 2,
+                                estado_id: 2,
+                                precio_coste: this.precio_coste,
+                                precio_venta: this.precio_venta,
+                                peso_gr: this.peso_gr,
+                                quilates: this.quilates,
+                                etiqueta_id: 3,
+                                univen: 'U'
+                            })
                             .then(res => {
                                 this.$emit('update:dialog_pro', false)
                                 this.loading = false;

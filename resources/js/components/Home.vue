@@ -242,6 +242,7 @@ export default {
                 { icon: 'lock', text: 'Facturar Albaranes', name:'facturacion.albaranes' },
                 { text: 'Reubicar Albaranes', name: 'reubicar', icon: 'shuffle'},
                 { icon: 'fireplace', text: 'Liquidar Lotes', name:'liquidar.index' },
+                { icon: 'fireplace', text: 'Check Contadores', name:'contador.check' },
             ]
         },
 
@@ -270,10 +271,6 @@ export default {
                 { icon: 'forward', text: 'Liquidados', name:'exportar.liquidados' },
                 { icon: 'forward', text: 'Inventario', name:'exportar.inventario' },
                 { icon: 'home_work', text: 'Ventas en depósito', name:'exportar.vendepo' },
-                { text: 'Relación facturas recuperacion', name: 'facturacion.lisfacom', icon: 'print'},
-                { text: 'Relación facturas de venta', name: 'facturacion.lisfaven', icon: 'print'},
-                { icon: 'archive', text: 'Mod. 347', name:'exportar.mod347' },
-                { icon: 'menu_book', text: 'Imprimir Libro', name:'exportar.libro' },
             ],
         },
 

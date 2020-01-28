@@ -73,7 +73,7 @@
                             required
                             ></v-select>
                     </v-flex>
-                    <v-flex sm1>
+                    <v-flex sm2>
                         <v-select
                             v-model="manual"
                             data-vv-name="manual"
@@ -145,6 +145,8 @@ export default {
                     {value: null, text:"Todos"},
                     {value: 'S', text:"Manual"},
                     {value: 'N', text:"Auto"},
+                    {value: 'C', text:"Auto-Compras"},
+                    {value: 'V', text:"Auto-Ventas"},
                 ],
             manual: null,
             menu_h: false,
@@ -163,7 +165,7 @@ export default {
                 this.apuntes = res.data;
                 this.apuntes.push({value: null, text: '-'});
                 if (this.isAdmin)
-                    this.ma_items.push({value: 'A', text: 'Regularización'});
+                    this.ma_items.push({value: 'R', text: 'Regularización'});
 
             })
             .catch(err =>{

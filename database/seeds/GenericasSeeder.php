@@ -222,7 +222,7 @@ class GenericasSeeder extends Seeder
         $par = new Parametro;
         $par->pie_rebu1 = "Dispone de un plazo máximo de 15 días para su devolución. No se reembolsará dinero.";
         $par->retencion = 0;
-        $par->img1 = 'hero.jpeg';
+        //$par->img1 = 'hero.jpeg';
         $par->save(); // con valores defecto migración de momento.
 
         $reg = new Iva;

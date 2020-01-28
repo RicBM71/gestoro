@@ -65,7 +65,7 @@ class ComprasController extends Controller
             $collection = Compra::with(['cliente','grupo','tipo','fase'])
                             ->tipo(1)
                             ->grupo($data['grupo_id'])
-                            ->fase($data['fase_id'])
+                            ->fase(4)
                             ->get();
 
             $items =  $collection->whereBetween('retraso', [$data['retraso'], 99999]);

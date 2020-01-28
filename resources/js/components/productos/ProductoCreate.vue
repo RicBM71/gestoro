@@ -12,6 +12,7 @@
             <v-form>
                  <v-container>
                      <v-layout row wrap>
+                         <v-flex sm1></v-flex>
                         <v-flex sm5>
                             <v-text-field
                                 v-model="producto.nombre"
@@ -25,7 +26,11 @@
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm3 d-flex>
+                        <v-flex sm1 v-show="false">
+                            <v-text-field>
+                            </v-text-field>
+                        </v-flex>
+                        <!-- <v-flex sm3 d-flex>
                             <v-select
                             v-model="producto.clase_id"
                             v-validate="'required'"
@@ -46,7 +51,7 @@
                                 data-vv-name="quilates"
                                 data-vv-as="quilates"
                             ></v-select>
-                        </v-flex> 
+                        </v-flex>
                         <v-flex sm2>
                             <v-text-field
                                 v-model="producto.peso_gr"
@@ -60,11 +65,9 @@
                                 v-on:keyup.enter="submit"
                             >
                             </v-text-field>
-                        </v-flex>
-                    </v-layout>
-                    <v-layout row wrap>
+                        </v-flex> -->
                         <v-flex sm1></v-flex>
-                        <v-flex sm2>
+                        <v-flex sm1>
                             <div class="text-xs-center">
                                         <v-btn @click="submit"  round  :loading="loading" block  color="primary">
                                 Guardar
@@ -111,12 +114,12 @@ import Loading from '@/components/shared/Loading'
             compra_id:0,
             nombre:"",
             almacen_id:"",
-            clase_id:"",
-            estado_id: 2,
+            clase_id: 5,
+            estado_id: 5,
             quilates:"",
-            peso_gr:0,
+            peso_gr: 0,
             ref_pol:"",
-            iva_id: 2,
+            iva_id: 1,
             cliente_id: 0,
             univen: 'U'
         },
@@ -124,10 +127,10 @@ import Loading from '@/components/shared/Loading'
     mounted(){
         axios.get(this.url+'/create')
             .then(res => {
-                this.clases = res.data.clases;
-                this.producto.clase_id = this.clases[0].value;
-                this.quilates = res.data.quilates;
-                this.selClase(this.producto.clase_id);
+                // this.clases = res.data.clases;
+                // this.producto.clase_id = this.clases[0].value;
+                // this.quilates = res.data.quilates;
+                // this.selClase(this.producto.clase_id);
                 this.show_loading=false;
             })
             .catch(err => {
