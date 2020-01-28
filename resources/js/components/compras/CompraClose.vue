@@ -313,6 +313,8 @@ import {mapGetters} from 'vuex';
                 if (this.compra.created_at.substr(0, 10) == hoy){
                     if (this.compra.username == this.userName || this.isSupervisor)
                         return true;
+                    else
+                        return this.isAdmin;
                 }else{
                     return this.hasReaCompras;
                 }

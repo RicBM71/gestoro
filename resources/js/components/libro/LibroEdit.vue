@@ -127,7 +127,7 @@
                         <v-flex sm2>
                             <v-text-field
                                 v-model="libro.semdia_bloqueo"
-                                v-validate="{ required: true, regex:/^[1-9]\/[1-9]$/ }"
+                                v-validate="{ required: true, regex:/^[0-9]\/[1-7]$/ }"
                                 :error-messages="errors.collect('semdia_bloqueo')"
                                 label="Bloqueo Lotes"
                                 data-vv-name="semdia_bloqueo"

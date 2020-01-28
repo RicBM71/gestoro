@@ -44,7 +44,7 @@ class YjLibrosSeeder extends Seeder
                 $nombre = "Complementos";
                 $nombre_csv = "complementos";
                 $empresa_id = $empresa_id;
-                $semdia_bloqueo="1/1";
+                $semdia_bloqueo="0/1";
             }
 
 

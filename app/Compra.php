@@ -205,6 +205,9 @@ class Compra extends Model
         //$f = Carbon::createFromFormat('Y-m-d h:i:s', $fecha);
         $f = Carbon::parse($fecha);
 
+        if ($s[0]==0)   // no hay bloqueo, para complementos.
+            return $fecha;
+
         $f->addWeek($s[0]);
 
         return $f->subDays($f->dayOfWeek - $s[1]);
