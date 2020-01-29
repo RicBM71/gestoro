@@ -349,8 +349,8 @@ export default [
                 component: LiquidarCompra,
             },
             {
-                path: '/compras/find',
-                name: 'compra.find',
+                path: '/find/compra',
+                name: 'find.compra',
                 component: FindCompra,
             },
             {
@@ -464,8 +464,8 @@ export default [
                 component: AlbaranEdit,
             },
             {
-                path: '/albaran/find',
-                name: 'albaran.find',
+                path: '/find/albaran',
+                name: 'find.albaran',
                 component: FindAlbaran,
             },
             {

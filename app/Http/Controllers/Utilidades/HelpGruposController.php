@@ -6,6 +6,7 @@ use App\Fase;
 use App\Tipo;
 use App\Clase;
 use App\Grupo;
+use App\Libro;
 use App\Estado;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -18,7 +19,8 @@ class HelpGruposController extends Controller
             return [
                 'grupos'=> Grupo::selGruposRebu(),
                 'fases' => Fase::selFases('C'),
-                'tipos' => Tipo::selTiposCom()
+                'tipos' => Tipo::selTiposCom(),
+                'libro_def' =>  Libro::distinct()->first()
             ];
 
     }

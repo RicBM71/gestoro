@@ -135,7 +135,8 @@ Route::group([
         Route::put('compras/{compra}/recogida', 'ComprasController@recogida');
         Route::post('compras/filtrar', 'ComprasController@filtrar');
         Route::post('compras/excel', 'ComprasController@excel');
-        Route::post('compras/find', 'FindComprasController@find');
+        Route::get('find', 'FindComprasController@index');
+        Route::post('find/compra', 'FindComprasController@find');
         Route::resource('comlines', 'ComlinesController', ['only'=>['update','store','destroy']]);
         Route::post('comlines/load', 'ComlinesController@load');
         Route::get('liquidar/{compra}/edit','LiquidarController@edit');
@@ -193,7 +194,8 @@ Route::group([
         Route::put('albaranes/{albarane}/facauto', 'AlbaranesController@facauto');
         Route::put('albaranes/{albarane}/fase', 'AlbaranesController@fase');
         Route::post('albaranes/filtrar', 'AlbaranesController@filtrar');
-        Route::post('albaranes/find', 'FindAlbaranesController@find');
+        Route::get('find', 'FindAlbaranesController@index');
+        Route::post('find/albaranes', 'FindAlbaranesController@find');
         Route::put('albaranes/{albarane}/actfac', 'AlbaranesController@actfac');
 
         Route::get('print/{id}/taller', 'PrintHojaTallerController@print');

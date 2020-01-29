@@ -248,7 +248,7 @@ export default {
             this.$router.push({ name: this.ruta+'.index' })
         },
         goFind(){
-            this.$router.push({ name: this.ruta+'.find' })
+            this.$router.push({ name: 'find.compra' })
         },
         printPDF(){
             var url = '/compras/print/'+this.compra.id;

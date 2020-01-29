@@ -50,6 +50,7 @@
                                         <v-switch
                                             label="Factura"
                                             v-model="factura"
+                                            @change="changeSw()"
                                             color="primary">
                                         ></v-switch>
                                     </v-flex>
@@ -93,23 +94,38 @@ import MenuOpe from './MenuOpe'
                 factura: false,
 
                 show_loading: true,
+                contador: {},
       		}
         },
         mounted(){
+            axios.get('/ventas/find')
+                .then(res => {
+                    this.contador = res.data.contador_def;
+                    this.serie = this.contador.serie_albaran;
+                })
+                .catch(err => {
+                    this.$toast.error(err.response.data.message);
+                    this.$router.push({ name: 'dash'})
+                })
+
+            //this.$nextTick(() => this.$refs.dni.focus())
         },
-         computed:{
+        computed:{
             computedTitulo(){
                 return this.factura ? 'Buscar Factura' : 'Buscar Albarán';
             }
          },
     	methods:{
+            changeSw(){
+                this.serie = this.factura ? this.contador.serie_factura : this.contador.serie_albaran;
+            },
             submit() {
                 if (this.loading === false){
                     this.loading = true;
                     this.$validator.validateAll().then((result) => {
                         if (result){
 
-                            axios.post("/ventas/albaranes/find",
+                            axios.post("/ventas/find/albaranes",
                                     {   albaran: this.albaran,
                                         serie: this.serie,
                                         esfactura: this.factura

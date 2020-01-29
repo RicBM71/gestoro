@@ -158,7 +158,7 @@ export default {
             this.$router.push({ name: 'producto.index' })
         },
         goFindCompra(){
-            this.$router.push({ name: 'compra.find' })
+            this.$router.push({ name: 'find.compra' })
         },
         goCajaIndex(){
             this.$router.push({ name: 'caja.index' })
@@ -173,7 +173,7 @@ export default {
             this.$router.push({ name: 'albaran.index' })
         },
          goFindVenta(){
-            this.$router.push({ name: 'albaran.find' })
+            this.$router.push({ name: 'find.albaran' })
         },
          goOperaciones(){
             this.$router.push({ name: 'exportar.operaciones' })

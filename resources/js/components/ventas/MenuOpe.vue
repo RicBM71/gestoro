@@ -247,7 +247,7 @@ export default {
             this.$router.push({ name: this.ruta+'.index' })
         },
         goFind(){
-            this.$router.push({ name: this.ruta+'.find' })
+            this.$router.push({ name: 'find.albaran' })
         },
         printAlbPDF(){
             var url = '/ventas/print/'+this.albaran.id+'/albaran';

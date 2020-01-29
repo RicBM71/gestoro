@@ -2,12 +2,24 @@
 
 namespace App\Http\Controllers\Compras;
 
+use App\Libro;
 use App\Compra;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class FindComprasController extends Controller
 {
+
+    public function index(){
+
+        if (request()->wantsJson())
+            return [
+                'serie' => Libro::distinct()->first() //DB::table('libros')->distinct()->first()
+            ];
+
+    }
+
      /**
      * Store a newly created resource in storage.
      *

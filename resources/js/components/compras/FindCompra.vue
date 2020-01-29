@@ -50,6 +50,7 @@
                                         <v-switch
                                             label="Factura"
                                             v-model="factura"
+                                            @change="changeSw()"
                                             color="primary">
                                         ></v-switch>
                                     </v-flex>
@@ -93,9 +94,22 @@ import {mapGetters} from 'vuex';
                 compra: {},
                 status: false,
                 loading: false,
-
+                libro: "",
                 show_loading: true,
       		}
+        },
+        mounted(){
+            axios.get('/compras/find')
+                .then(res => {
+                    this.libro = res.data.serie;
+                    this.serie = this.libro.serie_com;
+                })
+                .catch(err => {
+                    this.$toast.error(err.response.data.message);
+                    this.$router.push({ name: 'dash'})
+                })
+
+            //this.$nextTick(() => this.$refs.dni.focus())
         },
         computed: {
             ...mapGetters([
@@ -103,13 +117,16 @@ import {mapGetters} from 'vuex';
             ]),
         },
     	methods:{
+            changeSw(){
+                this.serie = this.factura ? this.libro.serie_fac : this.libro.serie_com;
+            },
             submit() {
                 if (this.loading === false){
                     this.loading = true;
                     this.$validator.validateAll().then((result) => {
                         if (result){
 
-                            axios.post("/compras/compras/find",
+                            axios.post("/compras/find/compra",
                                     {   albaran: this.albaran,
                                         serie: this.serie,
                                         esfactura: this.factura
