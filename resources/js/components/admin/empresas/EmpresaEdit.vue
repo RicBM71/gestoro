@@ -313,6 +313,9 @@
                     <v-tab-item>
                         <v-container>
                             <v-layout row wrap>
+                                <v-flex sm12 class="font-weight-black text-xs-center"><p>{{empresa.nombre}}</p></v-flex>
+                            </v-layout>
+                            <v-layout row wrap>
                                 <v-flex sm2></v-flex>
                                 <v-flex sm3 v-if="empresa.img_logo==null">
                                     <vue-dropzone
@@ -344,6 +347,9 @@
                     </v-tab-item>
                     <v-tab-item>
                         <v-container>
+                            <v-layout row wrap>
+                                <v-flex sm12 class="font-weight-black text-xs-center"><p>{{empresa.nombre}}</p></v-flex>
+                            </v-layout>
                             <v-layout row wrap>
                                 <v-flex sm3>
                                     <v-switch

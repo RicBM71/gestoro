@@ -23,6 +23,7 @@ class PrintAlbController extends Controller
 {
 
     protected $albaran;
+    protected $totales;
     protected $hay_productos_con_garantia = false;
 
     public function mail(Request $request, Albaran $albarane){
@@ -192,7 +193,7 @@ class PrintAlbController extends Controller
 
         $this->cabeLin();
 
-        $totales = Albalin::totalAlbaranByAlb($this->albaran->id);
+        $this->totales = Albalin::totalAlbaranByAlb($this->albaran->id);
 
         $this->hay_productos_con_garantia=collect([]);
 		foreach ($lineas as $row) {
@@ -275,9 +276,9 @@ class PrintAlbController extends Controller
         PDF::MultiCell(40, 8, 'TOTAL', 0, 'C', 1, 0, '', '', true, 0, false, true, 8, 'M');
         PDF::MultiCell(3, 8, '', 0, 'R', 0, 0, '', '', true, 0, false, true, 8, 'M');
         if ($this->albaran->factura > 0)
-            PDF::MultiCell(26, 8, getCurrency($totales['total']), 0, 'R', 1, 1, '', '', true, 0, false, true, 8, 'M');
+            PDF::MultiCell(26, 8, getCurrency($this->totales['total']), 0, 'R', 1, 1, '', '', true, 0, false, true, 8, 'M');
         else
-            PDF::MultiCell(26, 8, getCurrency($totales['importe_venta']), 0, 'R', 1, 1, '', '', true, 0, false, true, 8, 'M');
+            PDF::MultiCell(26, 8, getCurrency($this->totales['importe_venta']), 0, 'R', 1, 1, '', '', true, 0, false, true, 8, 'M');
 
 
         PDF::SetFont('helvetica', 'R', 8, '', false);
@@ -291,7 +292,7 @@ class PrintAlbController extends Controller
 
         if ($this->albaran->factura > 0){
             $linea = 0;
-            foreach ($totales['desglose_iva'] as $tipos_iva){
+            foreach ($this->totales['desglose_iva'] as $tipos_iva){
                 if ($tipos_iva['rebu'] == true)
                     continue;
 
@@ -310,7 +311,7 @@ class PrintAlbController extends Controller
 
             PDF::Ln();
 
-            foreach ($totales['desglose_iva'] as $tipos_iva){
+            foreach ($this->totales['desglose_iva'] as $tipos_iva){
                 if ($tipos_iva['cuota_iva'] == 0){
                     $iva = Iva::findOrFail($tipos_iva['id']);
                     PDF::MultiCell(140, 6, '* ('.$iva->id.') '.$iva->leyenda, '', 'L', 0, 1, '', '', true);
@@ -358,12 +359,22 @@ class PrintAlbController extends Controller
             PDF::MultiCell(80, 6, 'Pagos a Cuenta', 'B', 'L', 0, 1, '', '', true);
         }
 
+        $total_cobrado = 0;
         foreach ($data as $cobro){
             PDF::MultiCell(20, 5, getFecha($cobro->fecha), 'R', 'R', 0, 0, '', '', true);
             PDF::MultiCell(40, 5, $cobro->fpago->nombre, 'R', 'L', 0, 0, '', '', true);
             PDF::MultiCell(20, 5, getDecimal($cobro->importe), '', 'R', 0, 1, '', '', true);
-
+            $total_cobrado+= $cobro->importe;
         }
+
+        if ($this->albaran->tipo_id == 3 && $this->albaran->fase_id == 10){
+            PDF::SetFont('helvetica', 'B', 9, '', false);
+            $total_cobrado = $this->totales['importe_venta'] - $total_cobrado;
+            PDF::Ln();
+            PDF::MultiCell(140, 5, 'PENDIENTE COBRO '.getDecimal($total_cobrado)." €", '', 'L', 0, 0, '', '', true);
+            PDF::Ln();
+        }
+
 
     }
 
@@ -551,7 +562,7 @@ class PrintAlbController extends Controller
 
 
                 // set document information
-        PDF::SetCreator(PDF_CREATOR);
+        PDF::SetCreator(session('username'));
         PDF::SetAuthor($empresa->nombre);
         PDF::SetTitle('Albarán/Factura');
         PDF::SetSubject('');

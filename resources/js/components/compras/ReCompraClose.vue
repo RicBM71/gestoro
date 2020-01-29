@@ -567,8 +567,9 @@ import {mapGetters} from 'vuex';
 
                 if (this.isAdmin)
                     return true;
+                else
 
-                return (this.retraso > 0)
+                return (this.compra.retraso <= 0)
                 // lo dejamos para cualquier User JL.
                 //return !this.isSupervisor;
 
@@ -610,7 +611,7 @@ import {mapGetters} from 'vuex';
                     if (this.compra.username == this.userName || this.isSupervisor)
                         return true;
                     else
-                        return this.isAdmin;
+                        return this.isSupervisor;
                 }else{
                     return this.hasReaCompras;
                 }

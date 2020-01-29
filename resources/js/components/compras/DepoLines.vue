@@ -119,6 +119,7 @@ export default {
         ...mapGetters([
             'isSupervisor',
             'hasBorraCompras',
+            'hasReaCompras',
             'userName',
         ]),
     },
@@ -151,6 +152,7 @@ export default {
             if (this.compra.fase_id >= 6 || this.compra.factura > 0) return false;
 
             if (this.lineas.indexOf(item) == 0){
+                //if (item.concepto_id <= 3 && item.created_at.substr(0, 10) == this.hoy) // esto es menos restrictivo
                 if (item.username == this.userName && item.created_at.substr(0, 10) == this.hoy)
                     return true;
                 else

@@ -315,47 +315,54 @@
                                 </v-flex>
                             </v-layout>
 
-                            <v-layout row wrap v-show="isSupervisor">
+                            <v-layout row wrap>
                                 <v-flex sm2>
                                      <v-select
-                                    v-model="cliente.bloqueado"
-                                    :items="bloqcli"
-                                    label="Bloqueos"
+                                        v-model="cliente.bloqueado"
+                                        :items="bloqcli"
+                                        label="Bloqueos"
+                                        :disabled="!isSupervisor"
                                     ></v-select>
                                 </v-flex>
                                  <v-flex sm2>
                                     <v-switch
                                         label="Prv. Asociado"
                                         v-model="cliente.asociado"
-                                        color="primary">
+                                        color="primary"
+                                        :disabled="!isAdmin">
+
                                     ></v-switch>
                                 </v-flex>
                                 <v-flex sm2>
                                     <v-switch
                                         label="Exento IVA"
                                         v-model="cliente.iva_no_residente"
-                                        color="primary">
+                                        color="primary"
+                                        :disabled="!isAdmin">
                                     ></v-switch>
                                 </v-flex>
                                 <v-flex sm2>
                                     <v-switch
                                         label="Facturar"
                                         v-model="cliente.facturar"
-                                        color="primary">
+                                        color="primary"
+                                        :disabled="!isAdmin">
                                     ></v-switch>
                                 </v-flex>
                                 <v-flex sm2>
                                     <v-switch
                                         label="VIP"
                                         v-model="cliente.vip"
-                                        color="primary">
+                                        color="primary"
+                                        :disabled="!isAdmin">
                                     ></v-switch>
                                 </v-flex>
                                 <v-flex sm2>
                                     <v-switch
                                         label="Incluir 347"
                                         v-model="cliente.listar_347"
-                                        color="primary">
+                                        color="primary"
+                                        :disabled="!isAdmin">
                                     ></v-switch>
                                 </v-flex>
                             </v-layout>
@@ -572,7 +579,8 @@ import {mapGetters} from 'vuex';
         },
         computed: {
             ...mapGetters([
-                'isSupervisor'
+                'isSupervisor',
+                'isAdmin'
             ]),
             computedFModFormat() {
                 moment.locale('es');

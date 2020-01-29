@@ -36,7 +36,7 @@ class UsersTableSeeder extends Seeder
         Permission::create(['name'=>'reacom','nombre'=>'* Reabre Compras']);
         Permission::create(['name'=>'salefe','nombre'=>'* Saltar Límite Efectivo']);
         Permission::create(['name'=>'liquidar','nombre'=>'Puede Liquidar']);
-        Permission::create(['name'=>'edtpro','nombre'=>'* Edita Productos']);
+        Permission::create(['name'=>'edtpro','nombre'=>'Edita Productos']);
         Permission::create(['name'=>'factura','nombre'=>'Facturación']);
         Permission::create(['name'=>'authtras','nombre'=>'Traspasos']);
         Permission::create(['name'=>'harddel','nombre'=>'* Hard Delete']);

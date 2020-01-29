@@ -76,7 +76,7 @@ class ContadorCheckController extends Controller
 
             $data[]=[
                 'empresa'       => $row->empresa,
-                'operacion'     => 'RECUPERACIONES',
+                'operacion'     => 'FACTURAS DE RECUPERACIONES',
                 'nombre'        => $row->serie_com,
                 'contador'      => $row->ult_factura,
                 'recuento'      => $recuperaciones->reg,

@@ -293,6 +293,7 @@ import {mapGetters} from 'vuex';
             ...mapGetters([
                 'hasLiquidar',
                 'isAdmin',
+                'isSupervisor',
                 'hasReaCompras',
                 'userName'
             ]),
@@ -314,7 +315,7 @@ import {mapGetters} from 'vuex';
                     if (this.compra.username == this.userName || this.isSupervisor)
                         return true;
                     else
-                        return this.isAdmin;
+                        return this.isSupervisor;
                 }else{
                     return this.hasReaCompras;
                 }

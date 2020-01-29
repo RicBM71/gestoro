@@ -65,6 +65,9 @@ class CajaPolicy
             return $this->deny('El apunte es automático, no se puede borrar');
         }
 
+        if ($caja->manual == 'C' && $authUser->hasRole('Supervisor'))
+            return true;
+
         if ($authUser->hasRole('Admin'))
             return true;
 

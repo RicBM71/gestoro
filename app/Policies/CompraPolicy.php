@@ -56,6 +56,8 @@ class CompraPolicy
      */
     public function update(User $authUser, Compra $compra)
     {
+        if ($compra->fase_id == 1)
+            return true;
 
         if (esSupervisor() || esPropietario($compra))
             return true;

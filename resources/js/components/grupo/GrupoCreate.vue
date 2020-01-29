@@ -12,7 +12,7 @@
             <v-form>
                  <v-container>
                      <v-layout row wrap>
-                        <v-flex sm1></v-flex>
+                        <v-flex sm1><v-text-field v-show="false"></v-text-field></v-flex>
                         <v-flex sm4>
                             <v-text-field
                                 v-model="grupo.nombre"

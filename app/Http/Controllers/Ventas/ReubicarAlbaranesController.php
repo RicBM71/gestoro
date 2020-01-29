@@ -33,6 +33,7 @@ class ReubicarAlbaranesController extends Controller
                     ->join('productos', 'albalins.producto_id', '=', 'productos.id')
                     ->where('albaranes.empresa_id', session('empresa')->id)
                     ->where('albaranes.tipo_id', 3)
+                    ->whereYear('fecha_albaran', getEjercicio($data['fecha_h']))
                     ->whereDate('fecha_albaran','<=', $data['fecha_h'])
                     ->where('fase_id', 11)
                     ->whereNull('factura')

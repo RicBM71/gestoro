@@ -64,6 +64,14 @@ class Libro extends Model
 
     }
 
+    // public static function selSerieCompras(){
+
+    //     return Libro::select(DB::raw('DISTINCT serie_com AS value, '.DB::getTablePrefix().'nombre AS text'))
+    //                     ->orderBy('text', 'asc')
+    //                     ->get();
+
+    // }
+
     public function scopeEjercicio($query, $ejercicio){
 
         if ($ejercicio == 0) $ejercicio = date('Y');

@@ -303,11 +303,11 @@ import {mapActions} from "vuex";
 
             if (item.manual == 'R' && this.isAdmin)
                 return true;
-                
+
             if (item.manual != 'S') return false;
 
 
-            if (this.isSuprevisor || this.isAdmin)
+            if (this.isSupervisor || this.isAdmin)
                 return true;
 
             return (this.userName == item.username && this.formatDate(item.created_at) == this.formatDate(new Date()));
@@ -315,7 +315,7 @@ import {mapActions} from "vuex";
         },
         puedeBorrar(item){
             if (item.manual == 'C'){ // es apunte de cierre
-                return (this.isSuprevisor || this.isAdmin)
+                return (this.isSupervisor)
             }else{
                 return (item.manual == "S" || item.manual == "R") && this.isAdmin;
             }
