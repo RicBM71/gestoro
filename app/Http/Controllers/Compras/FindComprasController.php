@@ -15,7 +15,7 @@ class FindComprasController extends Controller
 
         if (request()->wantsJson())
             return [
-                'serie' => Libro::distinct()->first() //DB::table('libros')->distinct()->first()
+                'serie' => Libro::distinct()->orderBy('ejercicio','desc')->first() //DB::table('libros')->distinct()->first()
             ];
 
     }
