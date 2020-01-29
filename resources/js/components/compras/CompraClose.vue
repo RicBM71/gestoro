@@ -230,6 +230,7 @@ import {mapGetters} from 'vuex';
                 },
                 docu_ok: false,
                 grabaciones: false,
+                cambio_recompra: false,
       		}
         },
         mounted(){
@@ -243,6 +244,7 @@ import {mapGetters} from 'vuex';
 
                         this.valor_compras = res.data.valor_compras;
                         this.grabaciones = res.data.grabaciones;
+                        this.cambio_recompra = res.data.cambio_recompra;
 
                         this.docu_ok = res.data.documentos.status > 0 ? true : false;
 
@@ -322,6 +324,8 @@ import {mapGetters} from 'vuex';
 
             },
             computedAuthComprar(){
+                if (this.cambio_recompra == false)
+                    return false;
 
                 var comprado = false;
 

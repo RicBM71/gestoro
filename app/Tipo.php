@@ -22,6 +22,15 @@ class Tipo extends Model
 
         }
 
+    public static function selTiposSoloCompras()
+    {
+        return Tipo::select('id AS value', 'nombre AS text')
+            ->where('id','<=','1')
+            ->orderBy('nombre', 'asc')
+            ->get();
+
+    }
+
     public static function selTiposVen()
     {
         return Tipo::select('id AS value', 'nombre AS text')

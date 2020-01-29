@@ -173,13 +173,14 @@ export default {
 
         axios.get('/utilidades/helpgrupos')
             .then(res => {
+                
                 this.grupos = res.data.grupos;
 
                 //this.grupo_id = this.grupos[0].value;
-                this.grupo_id = res.data.libro_def.grupo_id;
+                if (res.data.libro_def != null)
+                    this.grupo_id = res.data.libro_def.grupo_id;
 
                 this.fases = res.data.fases;
-
                 this.tipos = res.data.tipos;
 
                 this.fases.push({value:-1,text:"---"});

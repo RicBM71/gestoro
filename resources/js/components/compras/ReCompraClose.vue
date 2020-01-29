@@ -68,11 +68,22 @@
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <v-btn
+                            v-if="cambio_recompra"
                             v-show="compra.fase_id <=4"
                             v-on="on"
                             color="white"
                             icon
                             @click="goComprar()"
+                        >
+                            <v-icon color="teal darken-1">shopping_cart</v-icon>
+                        </v-btn>
+                        <v-btn
+                            v-else
+                            v-show="compra.fase_id <=4"
+                            v-on="on"
+                            color="white"
+                            icon
+                            @click="cambiarTipo()"
                         >
                             <v-icon color="teal darken-1">shopping_cart</v-icon>
                         </v-btn>
@@ -487,6 +498,7 @@ import {mapGetters} from 'vuex';
                 refresh_lin: 0,
                 grabaciones: false,
                 dias_cortesia: 0,
+                cambio_recompra: false,
 
       		}
         },
@@ -502,6 +514,7 @@ import {mapGetters} from 'vuex';
                         this.compra = res.data.compra;
                         this.grabaciones = res.data.grabaciones;
                         this.dias_cortesia = res.data.dias_cortesia;
+                        this.cambio_recompra = res.data.cambio_recompra;
 
                         this.docu_ok = res.data.documentos.status > 0 ? true : false;
 
@@ -717,6 +730,21 @@ import {mapGetters} from 'vuex';
                 this.dialog_com = true;
 
             },
+            cambiarTipo(){
+                if (this.compra.fase_id <= 4){
+                    this.loading = true;
+
+                    axios.put(this.url+"/"+this.compra.id+"/tipo",{tipo_id: 2})
+                        .then(res => {
+                            this.$router.push({ name: 'compra.close', params: { id: this.compra.id } })
+                            this.loading = false;
+                        })
+                        .catch(err => {
+                            this.$toast.error(err.response.data.message);
+                            this.loading = false;
+                        });
+                }
+            },
             goAmpliar(){
                 this.show_loading = true;
                 this.show_lindepo = true;
@@ -820,22 +848,6 @@ import {mapGetters} from 'vuex';
                         // this.loading = false;
                     });
             },
-            // cambiarTipo(){
-            //     if (this.compra.fase_id <= 4){
-            //         this.loading = true;
-            //         this.compra.tipo_id = 2;
-
-            //         axios.put(this.url+"/"+this.compra.id+"/tipo", this.compra)
-            //             .then(res => {
-            //                 this.$router.push({ name: 'compra.close', params: { id: this.compra.id } })
-            //                 this.loading = false;
-            //             })
-            //             .catch(err => {
-            //                 this.$toast.error(err.response.data.message);
-            //                 this.loading = false;
-            //             });
-            //     }
-            // },
             goFase() {
 
                 if (this.loading === false){

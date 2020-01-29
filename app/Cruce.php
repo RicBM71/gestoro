@@ -13,13 +13,13 @@ class Cruce extends Model
 
     public function scopeCompra($query)
     {
-        $query->where('comven', 'C' );
+        return $query->where('comven', 'C' );
 
     }
 
     public function scopeVenta($query)
     {
-        $query->where('comven', 'V' );
+        return $query->where('comven', 'V' );
 
     }
 

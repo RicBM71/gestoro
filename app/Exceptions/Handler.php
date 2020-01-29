@@ -48,7 +48,7 @@ class Handler extends ExceptionHandler
     {
 
         if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
-            abort(403, '(Handler) No dispone de los permisos necesarios');
+            abort(403, 'No dispone de los permisos necesarios (hn)');
         }
 
         // if ($exception instanceof \lluminate\Database\Eloquent\ModelNotFoundException)

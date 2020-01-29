@@ -23,7 +23,7 @@
                                 offset-y
                                 full-width
                                 min-width="290px"
-                                :readonly="!isSupervisor"
+                                :disabled="computedEditFecha"
                             >
                                 <v-text-field
                                     slot="activator"
@@ -42,7 +42,7 @@
                                     locale="es"
                                     first-day-of-week=1
                                     @input="menu1 = false"
-                                    :readonly="!isSupervisor"
+                                    :disabled="computedEditFecha"
                                 ></v-date-picker>
                             </v-menu>
                         </v-flex>
@@ -186,10 +186,14 @@ import {mapGetters} from 'vuex';
                 })
         },
         computed: {
-         ...mapGetters([
+            ...mapGetters([
                 'isAdmin',
                 'isSupervisor',
             ]),
+            computedEditFecha(){
+                
+                return !this.isSupervisor;
+            },
             computedFecha() {
                 moment.locale('es');
                 return this.caja.fecha ? moment(this.caja.fecha).format('L') : '';

@@ -128,6 +128,7 @@ class ComprasController extends Controller
 
         $this->authorize('create', Compra::class);
 
+
         $data = $request->validated();
 
         $fecha_compra = Carbon::parse($request->fecha_compra);
@@ -136,8 +137,6 @@ class ComprasController extends Controller
         //$ejercicio = substr($request->fecha_compra,0,4);
 
         $contador = Libro::incrementaContador($ejercicio, $request->grupo_id, $request->albaran);
-        //\Log::info($contador);
-
 
         $data['ejercicio']    = $ejercicio;
         $data['albaran']      = $contador['albaran'];
@@ -180,6 +179,7 @@ class ComprasController extends Controller
     {
 
         $compra = Compra::with(['cliente','grupo','grupo','tipo','fase'])->findOrFail($id);
+        //$compra = Compra::withoutGlobalScope(EmpresaScope::class)->with(['cliente','grupo','grupo','tipo','fase'])->findOrFail($id);
 
         try {
             $libro = Libro::where('grupo_id', $compra->grupo_id)
@@ -201,7 +201,8 @@ class ComprasController extends Controller
                 'documentos'        => Clidoc::getDocumentos($compra->cliente->id,$compra->cliente->fecha_dni,$compra->fecha_compra),
                 'lineas_deposito'   => Deposito::CompraId($compra->id)->get(),
                 'grabaciones'       => $grabaciones,
-                'dias_cortesia'     => $dias_cortesia
+                'dias_cortesia'     => $dias_cortesia,
+                'cambio_recompra'   => $libro->recompras
             ];
 
     }
@@ -243,7 +244,8 @@ class ComprasController extends Controller
                 'documentos'        => Clidoc::getDocumentos($compra->cliente->id,$compra->cliente->fecha_dni,$compra->fecha_compra),
                 'lineas_deposito'   => Deposito::CompraId($compra->id)->get(),
                 'grabaciones'       => $libro->grabaciones,
-                'dias_cortesia'     => $libro->dias_cortesia
+                'dias_cortesia'     => $libro->dias_cortesia,
+                'cambio_recompra'   => $libro->recompras
             ];
 
     }
@@ -403,6 +405,7 @@ class ComprasController extends Controller
 
         if (request()->wantsJson())
             return [
+               // 'compra' => $compra = Compra::with(['cliente','grupo','tipo','fase'])->findOrFail($compra->id),
                 'message' => 'EL registro ha sido modificado'
             ];
     }

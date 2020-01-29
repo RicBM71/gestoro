@@ -619,7 +619,7 @@ import {mapGetters} from 'vuex';
             computedAbonar(){
                     // si es factura manual/auto o no está facturado, no permito abonar abonos...
                 if (this.albaran.tipo_factura <= 2 && this.albaran.fase_id < 12){
-                    return this.hasFactura;
+                    return this.isSupervisor;
                 }
 
                 return false;
@@ -627,7 +627,7 @@ import {mapGetters} from 'vuex';
             computedCancelar(){
                     // si es factura manual o no está facturado ni vendido
                 if (this.albaran.tipo_factura <= 1 && this.albaran.fase_id == 10){
-                    return this.hasFactura;
+                    return this.isSupervisor;
                 }
 
                 return false;

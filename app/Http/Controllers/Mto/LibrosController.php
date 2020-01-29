@@ -157,6 +157,7 @@ class LibrosController extends Controller
             'serie_fac'=> ['required'],
             'serie_com'=> ['required'],
             'grabaciones'=> ['required'],
+            'recompras'=> ['required'],
             'peso_frm'=> ['required'],
             'cerrado'=> ['required'],
             'semdia_bloqueo'=> ['required','string','max:3'],

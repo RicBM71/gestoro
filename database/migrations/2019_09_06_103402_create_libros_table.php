@@ -32,6 +32,7 @@ class CreateLibrosTable extends Migration
             $table->boolean('cerrado')->default(false);
             $table->boolean('grabaciones')->default(false);
             $table->boolean('peso_frm')->default(false);
+            $table->boolean('recompras')->default(true);
             $table->string('username',30)->nullable();
             $table->timestamps();
 

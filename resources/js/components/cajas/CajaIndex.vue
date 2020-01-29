@@ -214,7 +214,7 @@ import {mapActions} from "vuex";
             {
                 text: 'Acciones',
                 align: 'Center',
-                value: '',
+                value: 'id',
                 width: '1%'
             }
         ],
@@ -348,7 +348,7 @@ import {mapActions} from "vuex";
                     var ruta = res.data.tipo_id == 1 ? 'recompra' : 'compra';
 
                     if (res.data.fase_id <= 2)
-                        this.$router.push({ name: this.ruta+'.edit', params: { id: res.data.id } })
+                        this.$router.push({ name: 'compra.edit', params: { id: res.data.id } })
                     else
                         this.$router.push({ name: ruta+'.close', params: { id: res.data.id } })
 

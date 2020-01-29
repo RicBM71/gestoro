@@ -199,11 +199,18 @@
                                 label="Grabaciones"
                             ></v-switch>
                         </v-flex>
-                         <v-flex sm2>
+                        <v-flex sm2>
                             <v-switch
                                 v-model="libro.peso_frm"
                                 color="primary"
                                 label="Peso en Frm"
+                            ></v-switch>
+                        </v-flex>
+                        <v-flex sm3>
+                            <v-switch
+                                v-model="libro.recompras"
+                                color="primary"
+                                label="Cambio a Recompras"
                             ></v-switch>
                         </v-flex>
                     </v-layout>
