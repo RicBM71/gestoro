@@ -74,3 +74,8 @@ update contadores set serie = "U", geserie="UG", atserie="UA" where ejercicio = 
 
 CARGAR KILATES:
 revisar contadores, en 2020, poner 1000 en empresa kitales, tambien en el 2014, en bombonera en este caso en libros, poner compra a 1.
+
+Qué vamos a hacer con los productos de depósito?
+Revisar proceso de facturas a fundidora
+Revisar serie facturas al cambiar serie
+Revisar permisos y role de usuario, quién funde, quién factura??

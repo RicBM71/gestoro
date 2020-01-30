@@ -17,7 +17,8 @@ class HelpFiltroAlbController extends Controller
             return [
                 'fpagos'=> Fpago::selFPagos(),
                 'fases' => Fase::selFases('V'),
-                'tipos' => Tipo::selTiposVen(),
+                //'tipos' => Tipo::selTiposVen(),
+                'tipos'  => Tipo::selTiposWithContador(),
                 'asociados'=> Cliente::selAsociados()
             ];
 
