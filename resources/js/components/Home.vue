@@ -280,6 +280,7 @@ export default {
             text: 'Consultas II',
             model: false,
             children: [
+                { text: 'Metal en Depósito', name: 'exportar.metdep', icon: 'print'},
                 { text: 'Relación facturas recuperacion', name: 'facturacion.lisfacom', icon: 'print'},
                 { text: 'Relación facturas de venta', name: 'facturacion.lisfaven', icon: 'print'},
                 { icon: 'archive', text: 'Mod. 347', name:'exportar.mod347' },

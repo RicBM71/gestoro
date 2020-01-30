@@ -479,17 +479,22 @@ import {mapGetters} from 'vuex';
             ...mapGetters([
                     'isAdmin',
                     'hasEditPro',
-                    'stockComple'
+                    'stockComple',
+                    'userName'
                 ]),
             computedEditPro(){
-                
+
                 if (this.producto.estado_id == 5)
                     return true;
 
                 if (this.producto.estado_id == 3 || this.producto.estado_id == 4)
                     return this.isAdmin;
 
-                return this.hasEditPro;
+                const hoy = new Date().toISOString().substr(0, 10);
+                if (this.producto.username == this.userName && this.producto.created_at.substr(0, 10) == hoy)
+                    return true;
+                else
+                    return this.hasEditPro;
             },
             computedMargen(){
                 return this.getMoneyFormat(this.producto.margen);

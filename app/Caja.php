@@ -48,7 +48,7 @@ class Caja extends Model
     public function scopeDh($query, $dh){
 
         if ($dh != null)
-            $query->whereYear('dh',$dh);
+            $query->where('dh',$dh);
 
         return $query;
 

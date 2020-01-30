@@ -96,6 +96,10 @@ class FacturacionVentasController extends Controller
         foreach ($albaranes as $row){
             $i++;
 
+            if ($this->verificarSiHayProductosEnDeposito($row->id)){
+                return abort(411, 'Se han encontrado albaranes sin reubicar, reubicar antes de continuar!!');
+            }
+
             $contador->ult_factura_auto++;
 
             $data = [
@@ -113,6 +117,24 @@ class FacturacionVentasController extends Controller
         $contador->update(['ult_factura_auto'=>$contador->ult_factura_auto]);
 
         return ['estado'=>'ok', 'reg'=>$i, 'msg'=> 'Procesadas '.$i.' facturas'];
+    }
+
+    private function verificarSiHayProductosEnDeposito($albaran_id){
+
+        $lineas = Albalin::with('producto')->where('albaran_id', $albaran_id)->get();
+
+
+        foreach ($lineas as $row){
+
+            if ($row->producto->destino_empresa_id != $row->producto->empresa_id || $row->producto->cliente_id > 0){
+                return true;
+                break;
+            }
+
+        }
+
+        return false;
+
     }
 
     private function pendientesDeFacturar($d, $h, $tipo_id, $cobro){

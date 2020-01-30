@@ -121,6 +121,7 @@ import DetalleVentas from './components/exportar/DetalleVentas.vue';
 import CuadroMando from './components/exportar/CuadroMando.vue';
 import ServiciosTaller from './components/exportar/ServiciosTaller.vue';
 import Recogidas from './components/exportar/Recogidas.vue';
+import MetalDeposito from './components/exportar/MetalDeposito.vue';
 
 import ParametroEdit from './components/admin/parametros/ParametroEdit.vue';
 
@@ -602,6 +603,11 @@ export default [
                 path: '/export/recogidas',
                 name: 'exportar.recogidas',
                 component: Recogidas,
+            },
+            {
+                path: '/export/metdep',
+                name: 'exportar.metdep',
+                component: MetalDeposito,
             },
             {
                 path: '/reubicar',

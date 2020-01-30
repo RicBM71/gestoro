@@ -298,6 +298,10 @@ Route::group([
             Route::post('/service', 'ServiciosTallerController@submit');
             Route::post('/service/excel', 'ServiciosTallerController@excel');
 
+            Route::get('/metdep', 'MetalDepositoController@index');
+            Route::post('/metdep', 'MetalDepositoController@submit');
+            Route::post('/metdep/excel', 'MetalDepositoController@excel');
+
             Route::post('/recogidas', 'RecogidasController@submit');
         });
 

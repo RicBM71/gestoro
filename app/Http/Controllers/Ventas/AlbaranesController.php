@@ -212,8 +212,12 @@ class AlbaranesController extends Controller
     {
 
        // $this->authorize('update', $cliente);
+       if ($this->verificarSiHayProductosEnDeposito($albarane)){
+            return abort(411, 'Hay productos en depósito, no se puede facturar, reubicar albarán');
+       }
 
        $ejercicio = getEjercicio(Carbon::today());
+
        $contador = Contador::incrementaFactura($ejercicio, $albarane->tipo_id,1);
 
 
@@ -275,6 +279,24 @@ class AlbaranesController extends Controller
                 'albaran' => $albarane->load(['cliente','tipo','fase','motivo','fpago','cuenta','procedencia']),
                 'contador'=> $contador
             ];
+
+    }
+
+    private function verificarSiHayProductosEnDeposito($albaran){
+
+        $albaran->load('albalins.producto');
+
+
+        foreach ($albaran->albalins as $row){
+
+            if ($row->producto->destino_empresa_id != $row->producto->empresa_id || $row->producto->cliente_id > 0){
+                return true;
+                break;
+            }
+
+        }
+
+        return false;
 
     }
 
