@@ -178,7 +178,7 @@ class FacturacionVentasController extends Controller
 
         $data = [
             'serie_factura' => null,
-            'factura'       => 0,
+            'factura'       => null,
             'fecha_factura' => null,
             'factura_txt'   => null,
             'tipo_factura'  => 0,

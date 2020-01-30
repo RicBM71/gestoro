@@ -8,7 +8,7 @@
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            v-show="computedAuthComprar"
+                            v-show="computedAuthReCompra"
                             v-on="on"
                             color="white"
                             icon
@@ -323,7 +323,8 @@ import {mapGetters} from 'vuex';
                 }
 
             },
-            computedAuthComprar(){
+            computedAuthReCompra(){
+                
                 if (this.cambio_recompra == false)
                     return false;
 
