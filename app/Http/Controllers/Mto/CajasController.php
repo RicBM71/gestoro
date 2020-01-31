@@ -82,17 +82,22 @@ class CajasController extends Controller
         // ->orderby('fecha')
         // ->toSql());
 
-        return [
-            'caja' => Caja::with('apunte')
+        $apuntes = Caja::with('apunte')
                         ->rangoFechas($data['fecha_d'],$data['fecha_h'])
                         ->dh($data['dh'])
                         ->manual($data['manual'])
                         ->apunte($data['apunte_id'])
                         ->orderby('fecha')
                         ->get()
-                        ->take(500),
-            'fecha_saldo'=> getFecha($data['fecha_h']),
-            'saldo'=>Caja::saldo($data['fecha_h'])
+                        ->take(500);
+
+        $total_debe = $apuntes->where('dh', 'D')->sum('importe');
+
+        return [
+            'caja'          => $apuntes,
+            'fecha_saldo'   => getFecha($data['fecha_h']),
+            'saldo'         => Caja::saldo($data['fecha_h']),
+            'total_debe'    => $total_debe
         ];
     }
 

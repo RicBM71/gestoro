@@ -85,7 +85,10 @@
                                     <td :class="colorear(props.item)">{{ formatDate(props.item.fecha) }}</td>
                                     <td :class="colorear(props.item)">{{ props.item.dh }}</td>
                                     <td :class="colorear(props.item)">{{ props.item.nombre }}</td>
-                                    <td :class="colorear(props.item, true)">{{ props.item.importe | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                    <td v-if="props.item.dh=='D'" :class="colorear(props.item, true)">{{ props.item.importe | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                    <td else></td>
+                                    <td v-if="props.item.dh=='H'" :class="colorear(props.item, true)">{{ props.item.importe | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+
                                     <td :class="colorear(props.item)">{{ props.item.username+" "+formatDateUpdated(props.item.updated_at) }}</td>
 
                                     <td class="justify-center layout px-0">
@@ -200,10 +203,16 @@ import {mapActions} from "vuex";
                 value: 'nombre'
             },
             {
-                text: 'Importe',
+                text: 'Debe',
                 align: 'left',
                 value: 'importe',
-                width: "2%"
+                width: "8%"
+            },
+            {
+                text: 'Haber',
+                align: 'left',
+                value: 'importe',
+                width: "8%"
             },
             {
                 text: 'Usuario',

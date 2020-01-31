@@ -85,7 +85,7 @@
                         label="Nombre/notas"
                         data-vv-name="notas"
                         data-vv-as="notas"
-                        hint=":nombre producto =nombre int. ó notas"
+                        hint="nombre producto, =nombre int. ó :notas"
                         v-on:keyup.enter="submit"
                     >
                     </v-text-field>

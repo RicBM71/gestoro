@@ -205,18 +205,23 @@ Class Producto extends Model
 
     }
 
-    public static function scopeNotasNombre($query, $notas){
+    public static function scopeNotasNombre($query, $texto){
 
-        if ($notas != null){
-            return $query->where('nombre','like', '%'.$notas.'%');
-            // if (strpos($notas,':') === false){
-            //     return $query->where('notas','like', '%'.$notas.'%');
-            // }
-            // else{
-            //     $notas = str_replace(':','',$notas);
-            //     return $query->where('nombre','like', '%'.$notas.'%');
-            // }
+        if ($texto != null || $texto > ''){
+
+            if ($texto[0] ==':'){
+                $texto = str_replace(':','',$texto);
+                return $query->where('notas','like', '%'.$texto.'%');
+            }
+            elseif ($texto[0] =='='){
+                 $texto = str_replace('=','',$texto);
+                 return $query->where('nombre_interno','like', '%'.$texto.'%');
+            }
+            else
+                return $query->where('nombre','like', '%'.$texto.'%');
+
         }
+
         return $query;
 
     }
@@ -226,7 +231,7 @@ Class Producto extends Model
         //return $query->where('ref_pol','like', $ref.'%');
 
         if ($ref != null){
-            if (strpos($ref,':') === false){
+            if ($ref[0] == ':'){
                 $ref = str_replace(':','',$ref);
                 return $query->where('ref_pol','like', '%'.$ref.'%');
             }else
@@ -253,10 +258,10 @@ Class Producto extends Model
     public static function scopePrecioPeso($query, $precio){
 
         if ($precio != null){
-            if (strpos($precio,':') !== false){
+            if ($precio[0] ==':'){
                 $precio = str_replace(':','',$precio);
                 return $query->where('precio_venta','=', $precio);
-            }elseif (strpos($precio,'=') !== false){
+            }elseif ($precio[0] == '='){
                 $precio = str_replace('=','',$precio);
                 return $query->where('precio_coste','=', $precio);
             }else

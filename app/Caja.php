@@ -112,7 +112,7 @@ class Caja extends Model
             $saldo += $valor;
         }
 
-        return $saldo;
+        return round($saldo,2);
 
     }
 
