@@ -178,15 +178,15 @@ export default {
 
             if (this.editedItem.concepto_id <= 3)
                 this.borraDepo();
-            else if(this.editedItem.concepto_id > 3 && this.editedItem.concepto_id <= 5)
+            else if(this.editedItem.concepto_id >= 4 && this.editedItem.concepto_id <= 6)
                 this.borraAmpli();
-            else if(this.editedItem.concepto_id >= 6 && this.editedItem.concepto_id <= 7)
+            else if(this.editedItem.concepto_id >= 7 && this.editedItem.concepto_id <= 9)
                 this.borraAcuenta();
-            else if(this.editedItem.concepto_id >= 8 && this.editedItem.concepto_id <= 9)
+            else if(this.editedItem.concepto_id >= 10 && this.editedItem.concepto_id <= 12)
                 this.borraRecuperar();
-            else if(this.editedItem.concepto_id >= 11 && this.editedItem.concepto_id <= 12)
+            else if(this.editedItem.concepto_id >= 13 && this.editedItem.concepto_id <= 15)
                 this.borraComprar();
-            else if(this.editedItem.concepto_id >= 13 && this.editedItem.concepto_id <= 14)
+            else if(this.editedItem.concepto_id >= 16 && this.editedItem.concepto_id <= 18)
                 this.borraCapital();
         },
         borraDepo(){

@@ -21,7 +21,7 @@ class DepositoObserver
     public function created(Deposito $deposito)
     {
 
-        if (!in_array($deposito->concepto_id,[1,4,6,8,11]))
+        if (!in_array($deposito->concepto_id,[1,4,7,10,13,16]))
             return;
 
              //DATOS COMPRA
@@ -38,7 +38,7 @@ class DepositoObserver
             // NOMBRE CONCEPTO
         $concepto = (Concepto::find($deposito->concepto_id));
 
-        $dh = (in_array($deposito->concepto_id,[1,11])) ? "D" : "H";
+        $dh = (in_array($deposito->concepto_id,[1,16])) ? "D" : "H";
 
             //DATOS COMPRA, lo de abjo sobra no?
       //  $compra = Compra::findOrFail($deposito->compra_id);

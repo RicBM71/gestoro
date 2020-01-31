@@ -15,8 +15,8 @@ class CreateConceptosTable extends Migration
     {
         Schema::create('conceptos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nombre',30);
-            $table->string('color',40)->nullable();
+            $table->string('nombre',50);
+            $table->string('color',50)->nullable();
             $table->string('comven',1);
             $table->integer('signo')->default(1);
             $table->timestamps();

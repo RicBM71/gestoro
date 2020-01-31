@@ -270,7 +270,10 @@ class Compra extends Model
 
     public static function scopeFase($query, $fase_id){
 
-        if (!Empty($fase_id) && $fase_id > 0)
+        if ($fase_id == 7)
+            return $query->whereIn('fase_id',[6,7]);
+
+        if ($fase_id > 0)
             return $query->where('fase_id','=', $fase_id);
 
         return $query;

@@ -38,7 +38,7 @@ class SituacionController extends Controller
             ->select(DB::raw($s0))
             ->join('conceptos','depositos.concepto_id','=','conceptos.id')
             ->where('empresa_id', session('empresa')->id)
-            ->whereIn('concepto_id', [1,2,3,11,12])
+            ->whereIn('concepto_id', [1,2,3,13,14,15])
             ->whereDate('fecha','>=', $data['fecha_d'])
             ->whereDate('fecha','<=', $data['fecha_h'])
             ->groupBy('concepto','dh');
@@ -49,7 +49,7 @@ class SituacionController extends Controller
             ->select(DB::raw($s1))
             ->join('conceptos','depositos.concepto_id','=','conceptos.id')
             ->where('empresa_id', session('empresa')->id)
-            ->whereIn('concepto_id', [13,14])
+            ->whereIn('concepto_id', [16,17,18])
             ->whereDate('fecha','>=', $data['fecha_d'])
             ->whereDate('fecha','<=', $data['fecha_h'])
             ->groupBy('concepto','dh');
@@ -60,7 +60,7 @@ class SituacionController extends Controller
             ->select(DB::raw($s1))
             ->join('conceptos','depositos.concepto_id','=','conceptos.id')
             ->where('empresa_id', session('empresa')->id)
-            ->whereIn('concepto_id', [4,5])
+            ->whereIn('concepto_id', [4,5,6])
             ->whereDate('fecha','>=', $data['fecha_d'])
             ->whereDate('fecha','<=', $data['fecha_h'])
             ->groupBy('concepto','dh');
@@ -71,7 +71,7 @@ class SituacionController extends Controller
             ->select(DB::raw($s1))
             ->join('conceptos','depositos.concepto_id','=','conceptos.id')
             ->where('empresa_id', session('empresa')->id)
-            ->whereIn('concepto_id', [6,7])
+            ->whereIn('concepto_id', [7,8,9])
             ->whereDate('fecha','>=', $data['fecha_d'])
             ->whereDate('fecha','<=', $data['fecha_h'])
             ->groupBy('concepto','dh');
@@ -82,7 +82,7 @@ class SituacionController extends Controller
             ->select(DB::raw($s1))
             ->join('conceptos','depositos.concepto_id','=','conceptos.id')
             ->where('empresa_id', session('empresa')->id)
-            ->whereIn('concepto_id', [8,9])
+            ->whereIn('concepto_id', [10,11,12])
             ->whereDate('fecha','>=', $data['fecha_d'])
             ->whereDate('fecha','<=', $data['fecha_h'])
             ->groupBy('concepto','dh');

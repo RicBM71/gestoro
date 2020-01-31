@@ -64,31 +64,31 @@ class Concepto extends Model
 
     public function scopeAmpliaciones($query){
 
-        return $query->whereIn('id', [4,5]);
-
-    }
-
-    public function scopeComprar($query){
-
-        return $query->whereIn('id', [11,12]);
+        return $query->whereIn('id', [4,5,6]);
 
     }
 
     public function scopeAcuenta($query){
 
-        return $query->whereIn('id', [6,7]);
+        return $query->whereIn('id', [7,8,9]);
 
     }
 
     public function scopeRecuperar($query){
 
-        return $query->whereIn('id', [8,9]);
+        return $query->whereIn('id', [10,11,12]);
 
     }
 
+    public function scopeComprar($query){
+
+        return $query->whereIn('id', [13,14,15]);
+
+    }
+    
     public function scopeCapital($query){
 
-        return $query->whereIn('id', [13,14]);
+        return $query->whereIn('id', [16,17,18]);
 
     }
 

@@ -47,66 +47,95 @@ class ConceptosTableSeeder extends Seeder
         $con = new Concepto;
         $con->comven="C";
         $con->color = "indigo--text darken-4";
-        $con->nombre='Ampliación Banco'; //5
+        $con->nombre='Ampliación Transferencia'; //5
+        $con->save();
+
+        $con = new Concepto;
+        $con->comven="C";
+        $con->color = "indigo--text darken-4";
+        $con->nombre='Ampliación Tarjeta'; //6  4-5-6 ampli  4,5
         $con->save();
 
         $con = new Concepto;
         $con->comven="C";
         $con->color = "orange--text darken-4";
-        $con->nombre='A cuenta Efectivo'; //6
+        $con->nombre='A cuenta Efectivo'; //7    eeran 6-7
         $con->save();
 
         $con = new Concepto;
         $con->comven="C";
         $con->color = "orange--text darken-4";
-        $con->nombre='A cuenta Banco'; //7
+        $con->nombre='A cuenta Transferencia'; //8
+        $con->save();
+
+        $con = new Concepto;
+        $con->comven="C";
+        $con->color = "orange--text darken-4";
+        $con->nombre='A cuenta Tarjeta'; //9   7,8,9
         $con->save();
 
         $con = new Concepto;
         $con->comven="C";
         $con->color = "green--text darken-4";
-        $con->nombre='Recuperado Efectivo'; //8
+        $con->nombre='Recuperado Efectivo'; //10   eran 8-9
         $con->save();
 
         $con = new Concepto;
         $con->comven="C";
         $con->color = "green--text darken-4";
-        $con->nombre='Recuperado Banco'; //9
+        $con->nombre='Recuperado Transferencia'; //11
         $con->save();
 
         $con = new Concepto;
         $con->comven="C";
-        $con->nombre='Liquidado'; //10
+        $con->color = "green--text darken-4";
+        $con->nombre='Recuperado Tarjeta'; //12
+        $con->save();
+
+        // $con = new Concepto;
+        // $con->comven="C";
+        // $con->nombre='Liquidado'; //10
+        // $con->save();
+
+        $con = new Concepto;
+        $con->comven="C";
+        $con->nombre='Comprado Efectivo'; //13  eran 11,12
         $con->save();
 
         $con = new Concepto;
         $con->comven="C";
-        $con->nombre='Comprado Efectivo'; //11
+        $con->nombre='Comprado Transferencia'; //14
         $con->save();
 
         $con = new Concepto;
         $con->comven="C";
-        $con->nombre='Comprado Banco'; //12
+        $con->nombre='Comprado Talón'; //15
         $con->save();
 
         $con = new Concepto;
         $con->comven="C";
-        $con->nombre='Ampliación Capital Efectivo'; //13
+        $con->nombre='Ampliación Capital Efectivo'; // 16   eran 13-14
         $con->color = "purple--text darken-4";
         $con->save();
 
         $con = new Concepto;
         $con->comven="C";
-        $con->nombre='Ampliación Capital Banco'; //14
+        $con->nombre='Ampliación Capital Transferencia'; //17
         $con->color = "purple--text darken-4";
         $con->save();
 
         $con = new Concepto;
-        $con->id=30;
         $con->comven="C";
-        $con->nombre='Cierre';
-        $con->color = "green--text darken-4";
+        $con->nombre='Ampliación Capital Talón'; //18
+        $con->color = "purple--text darken-4";
         $con->save();
+
+        // $con = new Concepto;
+        // $con->id=30;
+        // $con->comven="C";
+        // $con->nombre='Cierre';
+        // $con->color = "green--text darken-4";
+        // $con->save();
 
 
 

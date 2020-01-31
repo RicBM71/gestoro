@@ -171,7 +171,7 @@ class FacturacionComprasController extends Controller
                 ->whereDate('fecha','<=', $h)
                 ->where('fecha_factura',null)
                 ->where('fase_id', 5)
-                ->whereIn('concepto_id',[8,9])
+                ->whereIn('concepto_id',[10,11,12])
             ->orderBy(('fecha'))
             ->get();
 

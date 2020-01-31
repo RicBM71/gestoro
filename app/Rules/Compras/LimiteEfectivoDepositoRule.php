@@ -9,7 +9,7 @@ class LimiteEfectivoDepositoRule implements Rule
 {
     protected $cliente_id;
     protected $fecha_deposito;
-    protected $esEfectivo = array(1,11,13); // depósito
+    protected $esEfectivo = array(1,13,16); // depósito
     protected $concepto_id;
     protected $compra_id;
 

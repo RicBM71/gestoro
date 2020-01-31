@@ -13,43 +13,43 @@ class FasesTableSeeder extends Seeder
     public function run()
     {
         $f = new Fase;
-        $f->nombre = "Recepcionando";
+        $f->nombre = "Recepcionando";   //1
         $f->comven = "C";
         $f->color = "orange--text darken-4";
         $f->save();
 
         $f = new Fase;
-        $f->nombre = "Pendiente Cierre";
+        $f->nombre = "Pendiente Cierre";  //2
         $f->comven = "C";
         $f->color = "orange--text darken-4";
         $f->save();
 
         $f = new Fase;
-        $f->nombre = "Sin Imprimir";
+        $f->nombre = "Sin Imprimir";   //3
         $f->color = "orange--text darken-4";
         $f->comven = "C";
         $f->save();
 
         $f = new Fase;
-        $f->nombre = "Depósito";
+        $f->nombre = "Depósito";   //4
         $f->color = "blue--text darken-4";
         $f->comven = "C";
         $f->save();
 
         $f = new Fase;
-        $f->nombre = "Recuperado";
+        $f->nombre = "Recuperado";   //5
         $f->color = "green--text darken-4";
         $f->comven = "C";
         $f->save();
 
         $f = new Fase;
-        $f->nombre = "Liquidado-Parcial";
+        $f->nombre = "Liquidado-Parcial";  //6
         $f->color = "red--text darken-4";
         $f->comven = "C";
         $f->save();
 
         $f = new Fase;
-        $f->nombre = "Liquidado";
+        $f->nombre = "Liquidado";   //7
         $f->color = "red--text darken-4";
         $f->comven = "C";
         $f->save();

@@ -324,14 +324,14 @@ import {mapGetters} from 'vuex';
 
             },
             computedAuthReCompra(){
-                
+
                 if (this.cambio_recompra == false)
                     return false;
 
                 var comprado = false;
 
                 this.lineas_deposito.forEach(function(x) {
-                    if (x.concepto_id == 11)
+                    if (x.concepto_id >= 13)
                         comprado = true;
                 });
 

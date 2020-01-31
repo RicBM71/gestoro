@@ -26,7 +26,7 @@ class StoreAmpliacion extends FormRequest
     public function rules()
     {
 
-        $imp =  ($this->user()->hasPermissionTo('salefe') || $this->concepto_id == 5) ?
+        $imp =  ($this->user()->hasPermissionTo('salefe') || $this->concepto_id >= 5) ?
                   ['required','numeric'] :
                   ['required','numeric','min:0','max:'.session('parametros')->lim_efe];
 
@@ -38,7 +38,7 @@ class StoreAmpliacion extends FormRequest
         $dias = ['required','numeric','min:0'];
 
         return [
-            'concepto_id' => ['required','integer','between:4,5'],
+            'concepto_id' => ['required','integer','between:4,6'],
             'cliente_id' => ['required','integer'],
             'compra_id' => ['required','integer'],
             'fecha' => ['required','date',new FechaAmpliacion($this->compra_id)],

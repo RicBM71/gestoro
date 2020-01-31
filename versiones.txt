@@ -15,11 +15,30 @@ Permiso traspaso en empresa
 31.01.2020
 supervisor al reasigar ok. JL
 
+'Depósito Efectivo'; //1
+'Depósito Transferencia'; //2
+'Depósito Talón'; //3
+'Ampliación Efectivo'; //4
+'Ampliación Transferencia'; //5
+'Ampliación Tarjeta'; //6  4-5-6 ampli  4,5
+'A cuenta Efectivo'; //7    eeran 6-7
+'A cuenta Transferencia'; //8
+'A cuenta Tarjeta'; //9   7,8,9
+'Recuperado Efectivo'; //10   eran 8-9
+'Recuperado Transferencia'; //11
+'Recuperado Tarjeta'; //12
+'Comprado Efectivo'; //13  eran 10,11¡
+'Comprado Transferencia'; //14
+'Comprado Talón'; //15
+'Ampliación Capital Efectivo'; // 16   eran 12-13
+'Ampliación Capital Transferencia'; //17
+'Ampliación Capital Talón'; //18
+
 ==
 PTE:
 
-liquidados y parciales. unificar búsqueda
-tarjeta en apliacinoes.
+OK. liquidados y parciales. unificar búsqueda
+OK. tarjeta en ampliacinoes.
 intercambiar número operaciones.
 
 

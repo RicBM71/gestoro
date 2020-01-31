@@ -26,7 +26,7 @@ class StoreComprar extends FormRequest
     {
 
         return [
-            'concepto_id' => ['required','integer','between:11,12'],
+            'concepto_id' => ['required','integer','between:13,15'],
             'cliente_id' => ['required','integer'],
             'compra_id'  => ['required','integer'],
             'fecha'      => ['required','date'],

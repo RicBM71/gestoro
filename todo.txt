@@ -43,6 +43,9 @@ ORDER BY 2 DESC
 qtX93q6rZtgF3
 
 GDPORLIER.
+delete from clientes where id not in (select DISTINCT cliente from albaranes where empresa = 2)
+
+
 
 Recuperar a coste.
 Reemcompras de hace mil años.

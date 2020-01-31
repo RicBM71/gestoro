@@ -28,7 +28,7 @@ class StoreCapital extends FormRequest
         $compra = Compra::findOrFail($this->compra_id);
 
         return [
-            'concepto_id' => ['required','integer','between:13,14'],
+            'concepto_id' => ['required','integer','between:16,18'],
             'cliente_id' => ['required','integer'],
             'compra_id' => ['required','integer'],
             'fecha' => ['required','date'],

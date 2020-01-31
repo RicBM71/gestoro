@@ -33,7 +33,7 @@ class StoreAcuenta extends FormRequest
                     ['required','numeric','min:0',new ImporteAcuenta($compra), new LimiteEfectivoAcuenta($this->cliente_id, $this->fecha, $this->concepto_id)];
 
         return [
-            'concepto_id' => ['required','integer','between:6,7'],
+            'concepto_id' => ['required','integer','between:7,9'],
             'cliente_id' => ['required','integer'],
             'compra_id' => ['required','integer'],
             'fecha' => ['required','date'],

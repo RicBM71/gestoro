@@ -73,15 +73,15 @@ class Deposito extends Model
         foreach ($data as $row){
             if ($row->concepto_id >=1 && $row->concepto_id <= 3)
                 $i = 0;  // depósito
-            else if($row->concepto_id >=4 && $row->concepto_id <= 5)
+            else if($row->concepto_id >=4 && $row->concepto_id <= 6)
                     $i = 1; // ampliación
-            else if($row->concepto_id >=6 && $row->concepto_id <= 7)
+            else if($row->concepto_id >=7 && $row->concepto_id <= 9)
                     $i = 2;  // a cuenta
-            else if($row->concepto_id >=8 && $row->concepto_id <= 9)
+            else if($row->concepto_id >=10 && $row->concepto_id <= 12)
                     $i = 3;  // recuperado
-            else if($row->concepto_id >=11 && $row->concepto_id <= 12)
+            else if($row->concepto_id >=13 && $row->concepto_id <= 15)
                     $i = 4;  // comprado
-            else if($row->concepto_id >=13 && $row->concepto_id <= 14)
+            else if($row->concepto_id >=16 && $row->concepto_id <= 18)
                     $i = 5;  // ampliación de capital
 
             $total[$i]+=$row->importe;
@@ -96,7 +96,7 @@ class Deposito extends Model
                 ->select(DB::raw('ROUND(SUM(importe), 0) AS importe'))
                 ->where('compra_id', '=',$compra_id)
                 ->where('fecha', $fecha)
-                ->whereIn('concepto_id',[6,7])
+                ->whereIn('concepto_id',[7,8,9])
                 ->first();
 
         return is_null($q->importe) ? 0 : $q->importe;
@@ -110,8 +110,8 @@ class Deposito extends Model
                 ->where('compra_id', '<>',$compra_id)
                 ->where('cliente_id', $cliente_id)
                 ->where('fecha', $fecha)
-                //->where('concepto_id','<=',3)
-                ->whereIn('concepto_id',[1,2,3,11,12,13,14])
+                // ->whereIn('concepto_id',[1,2,3,11,12,13,14])
+                ->whereIn('concepto_id',[1,2,3,13,14,15,16,17,18])
                 ->first();
 
         return is_null($q->importe) ? 0 : $q->importe;
@@ -128,8 +128,7 @@ class Deposito extends Model
                 ->select(DB::raw('ROUND(SUM(importe), 0) AS importe'))
                 ->where('cliente_id', $cliente_id)
                 ->where('fecha', $fecha)
-                ->whereIn('concepto_id',[6,7])
-                //->whereIn('concepto_id',[6,8,13]) yo creo que esto estaba mal
+                ->whereIn('concepto_id',[7,8,9])
                 ->first();
 
         return is_null($q->importe) ? 0 : $q->importe;
@@ -137,7 +136,7 @@ class Deposito extends Model
 
     public function scopeRecuperaciones($query){
 
-        return $query->whereIn('concepto_id',[8,9]);
+        return $query->whereIn('concepto_id',[10,11,12]);
 
     }
 

@@ -17,6 +17,20 @@ class GdDepositosSeeder extends Seeder
     {
 
 
+        $cruce_con = [
+            '1' => 1,
+            '2' => 2,
+            '3' => 3,
+            '4' => 4,
+            '5' => 5,
+            '6' => 7,
+            '7' => 8,
+            '8' => 10,
+            '9' => 11,
+            '10' => 13,
+            '11' => 14,
+        ];
+
         $eje = '>=2000';
 
         Deposito::truncate();
@@ -52,7 +66,7 @@ class GdDepositosSeeder extends Seeder
                 'fecha' => $row->fecha,
                 'cliente_id' => $row->cliente,
                 'dias' => $row->dias,
-                'concepto_id'=> $row->concepto,
+                'concepto_id'=> $cruce_con[$row->concepto],
                 'importe'=> $importe,
                 'dias'=> $row->dias,
                 'notas'=> $notas,

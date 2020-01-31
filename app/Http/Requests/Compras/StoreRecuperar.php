@@ -33,7 +33,7 @@ class StoreRecuperar extends FormRequest
         $compra = Compra::findOrFail($this->compra_id);
 
         return [
-            'concepto_id' => ['required','integer','between:8,9'],
+            'concepto_id' => ['required','integer','between:10,12'],
             'cliente_id' => ['required','integer'],
             'compra_id' => ['required','integer'],
             'fecha' => ['required','date', new FechaRecuperacion($compra), new RetrasoRule($compra), new AmpliacionAntesDeRecuperacion($compra)],
