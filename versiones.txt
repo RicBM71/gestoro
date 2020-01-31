@@ -12,7 +12,19 @@ Exportar consulta albaranes a excel
 D-h en dos columnas caja
 Permiso traspaso en empresa
 
+31.01.2020
+supervisor al reasigar ok. JL
+
 ==
+PTE:
+
+liquidados y parciales. unificar búsqueda
+tarjeta en apliacinoes.
+intercambiar número operaciones.
+
+
+
+
 
 
 
