@@ -1,0 +1,20 @@
+Versiones:
+
+30.01.2020
+Arreglo facturación no factura si antes no hay reubicación
+Filtro caja
+Filtro productos
+
+31.01.2020
+
+Arreglo Traspasos
+Exportar consulta albaranes a excel
+D-h en dos columnas caja
+Permiso traspaso en empresa
+
+==
+
+
+
+
+

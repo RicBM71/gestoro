@@ -13,8 +13,9 @@ class Empresa extends Model
     // 0: Empresa activa
     // 1: Admite Compras
     // 2: Admite Ventas
-    // 3:
-    // 4:
+    // 3: Nuevas Compras
+    // 4: Nuevas Ventas
+    // 5: Proveedora efectivo
 
     use SoftDeletes;
 
@@ -69,6 +70,13 @@ class Empresa extends Model
     {
         $flag = $flag + 1; // en mySql índice empieza en 1.
         $query->whereRaw('substring(flags,'.$flag.',1)="1"');
+
+    }
+
+    public function scopeProveedora($query)
+    {
+        $flag = 6; // en mySql índice empieza en 1.
+        return $query->whereRaw('substring(flags,'.$flag.',1)="1"');
 
     }
 

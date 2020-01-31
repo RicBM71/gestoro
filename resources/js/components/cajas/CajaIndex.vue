@@ -24,7 +24,7 @@
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on }">
                             <v-btn
-                                v-show="arr_reg.length > 0 && isGestor"
+                                v-show="items.length > 0 && isGestor"
                                 v-on="on"
                                 color="white"
                                 icon
@@ -43,7 +43,7 @@
             </v-card>
             <v-card v-show="filtro">
                 <filtro-caja :filtro.sync="filtro"
-                     :reg.sync="arr_reg"
+                     :reg.sync="items"
                      :saldo.sync="saldo"
                      :fecha_saldo.sync="fecha_saldo"
                 ></filtro-caja>
@@ -53,9 +53,16 @@
                     <v-layout row wrap>
                         <v-flex xs1></v-flex>
                         <v-flex xs2 class="font-weight-bold">
+                            Debe: {{total_debe | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}
+                        </v-flex>
+                        <v-flex xs2 class="font-weight-bold">
+                            Haber: {{total_haber | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}
+                        </v-flex>
+                        <v-flex xs3></v-flex>
+                        <v-flex xs2 class="font-weight-bold">
                             Saldo a {{fecha_saldo}}
                         </v-flex>
-                        <v-flex xs3 class="font-weight-bold">
+                        <v-flex xs2 class="font-weight-bold">
                             {{saldo | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}
                         </v-flex>
                         <v-flex xs6>
@@ -74,7 +81,7 @@
                         <v-flex xs12>
                             <v-data-table
                             :headers="headers"
-                            :items="arr_reg"
+                            :items="items"
                             :search="search"
                             :expand="expand"
                             @update:pagination="updateEventPagina"
@@ -227,7 +234,7 @@ import {mapActions} from "vuex";
                 width: '1%'
             }
         ],
-        arr_reg:[],
+        items:[],
         status: false,
 		registros: false,
         dialog: false,
@@ -239,7 +246,9 @@ import {mapActions} from "vuex";
         ejercicio: new Date().toISOString().substr(0, 4),
         filtro: false,
         saldo: 0,
-        fecha_saldo: ""
+        fecha_saldo: "",
+        total_debe : 0,
+        total_haber: 0
 
       }
     },
@@ -254,7 +263,7 @@ import {mapActions} from "vuex";
         axios.get(this.url)
             .then(res => {
 
-                this.arr_reg = res.data.caja;
+                this.items = res.data.caja;
                 this.saldo = res.data.saldo;
                 this.fecha_saldo = res.data.fecha_saldo;
 
@@ -275,6 +284,18 @@ import {mapActions} from "vuex";
             'userName',
             'getPagination'
         ])
+    },
+     watch: {
+        items () {
+            this.total_debe = this.total_haber = 0;
+            this.items.forEach(element => {
+                if (element.dh == 'D')
+                    this.total_debe +=  Number.parseFloat(element.importe);
+                else
+                    this.total_haber += Number.parseFloat(element.importe);
+            });
+
+        }
     },
     methods:{
         ...mapActions([
@@ -394,7 +415,7 @@ import {mapActions} from "vuex";
 
                 if (res.status == 200){
                     this.$toast.success('Registro eliminado!');
-                    this.arr_reg = res.data.caja;
+                    this.items = res.data.caja;
                     this.saldo = res.data.saldo;
                     this.fecha_saldo = res.data.fecha_saldo;
                 }
@@ -413,7 +434,7 @@ import {mapActions} from "vuex";
                         url: this.url+"/excel",
                         method: 'POST',
                         responseType: 'blob',
-                        data:{ data: this.arr_reg }
+                        data:{ data: this.items }
                         })
                     .then(response => {
 
@@ -455,7 +476,7 @@ import {mapActions} from "vuex";
                                 this.pagination.page = 1;
                                 this.filtro = false;
 
-                                this.arr_reg = res.data;
+                                this.items = res.data;
                                 this.show_loading = false;
 
                             })

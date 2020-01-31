@@ -11,6 +11,22 @@
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on }">
                             <v-btn
+                                v-show="items.length > 0 && isGestor"
+                                v-on="on"
+                                color="white"
+                                icon
+                                @click="goExcel()"
+                            >
+                                <v-avatar size="32px">
+                                    <img class="img-fluid" src="/assets/excel.png">
+                                </v-avatar>
+                            </v-btn>
+                        </template>
+                        <span>Exportar a Excel</span>
+                    </v-tooltip>
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                            <v-btn
                                 v-on="on"
                                 color="white"
                                 icon
@@ -25,7 +41,7 @@
                 </v-card-title>
             </v-card>
             <v-card v-show="filtro">
-                 <filtro-alb :filtro.sync="filtro" :reg.sync="arr_reg"></filtro-alb>
+                 <filtro-alb :filtro.sync="filtro" :reg.sync="items"></filtro-alb>
             </v-card>
             <v-card>
                 <v-container>
@@ -47,7 +63,7 @@
                         <v-flex xs12>
                             <v-data-table
                             :headers="headers"
-                            :items="arr_reg"
+                            :items="items"
                             :search="search"
                             :expand="expand"
                             @update:pagination="updateEventPagina"
@@ -193,7 +209,7 @@ import {mapActions} from "vuex";
                 value: ''
             }
         ],
-        arr_reg:[],
+        items:[],
         status: false,
 		registros: false,
         dialog: false,
@@ -217,7 +233,7 @@ import {mapActions} from "vuex";
         axios.get(this.url)
             .then(res => {
 
-                this.arr_reg = res.data;
+                this.items = res.data;
                 this.registros = true;
                 this.show_loading = false;
             })
@@ -232,6 +248,7 @@ import {mapActions} from "vuex";
             'hasBorraCompras',
             'getPagination',
             'isSupervisor',
+            'isGestor'
         ])
     },
     methods:{
@@ -295,8 +312,8 @@ import {mapActions} from "vuex";
             axios.post(this.url+'/'+this.item_destroy.id,{_method: 'delete'})
                 .then(res => {
 
-                    const index = this.arr_reg.indexOf(this.item_destroy)
-                    this.arr_reg.splice(index, 1)
+                    const index = this.items.indexOf(this.item_destroy)
+                    this.items.splice(index, 1)
 
                     if (res.data.estado)
                         this.$toast.success('Registro eliminado! '+res.data.msg);
@@ -313,7 +330,38 @@ import {mapActions} from "vuex";
 
             });
 
-        }
+        },
+        goExcel(){
+
+            this.show_loading = true;
+            axios({
+                url: this.url+"/excel",
+                method: 'POST',
+                responseType: 'blob', // important
+                data:{ data: this.items }
+                })
+            .then(response => {
+
+                let blob = new Blob([response.data])
+                let link = document.createElement('a')
+                link.href = window.URL.createObjectURL(blob)
+
+                link.download = "Albaranes."+new Date().getFullYear()+(new Date().getMonth()+1)+(new Date().getDate())+'.xlsx';
+
+                document.body.appendChild(link);
+                link.click()
+                document.body.removeChild(link);
+
+                this.$toast.success('Download Ok! '+link.download);
+
+                this.show_loading = false;
+
+            })
+            .catch(err => {
+                this.$toast.error(err.response.data.message);
+                this.show_loading = false;
+            });
+        },
     }
   }
 </script>

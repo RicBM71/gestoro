@@ -194,6 +194,8 @@ Route::group([
         Route::put('albaranes/{albarane}/facauto', 'AlbaranesController@facauto');
         Route::put('albaranes/{albarane}/fase', 'AlbaranesController@fase');
         Route::post('albaranes/filtrar', 'AlbaranesController@filtrar');
+        Route::post('albaranes/excel', 'AlbaranesController@excel');
+
         Route::get('find', 'FindAlbaranesController@index');
         Route::post('find/albaranes', 'FindAlbaranesController@find');
         Route::put('albaranes/{albarane}/actfac', 'AlbaranesController@actfac');

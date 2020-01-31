@@ -57,11 +57,11 @@ class TraspasosController extends Controller
      */
     public function create()
     {
-      //  $this->authorize('create', Traspaso::class);
+        $this->authorize('create', new Traspaso);
 
         if (request()->wantsJson())
             return [
-                'empresas' => Empresa::selEmpresas()->get()
+                'empresas' => Empresa::selEmpresas()->proveedora()->get()
             ];
 
     }
@@ -74,6 +74,7 @@ class TraspasosController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', new Traspaso);
 
         $data = $request->validate([
             'fecha'                  => ['required', 'date'],
@@ -81,6 +82,10 @@ class TraspasosController extends Controller
             'importe_solicitado'     => ['required', 'numeric'],
             'proveedora_empresa_id'  => ['required', 'integer'],
         ]);
+
+        if ($data['proveedora_empresa_id'] == session('empresa')->id){
+            return abort(404, 'Empresa provedora y destinataria son iguales');
+        }
 
         $data['empresa_id'] = session('empresa')->id;
         $data['username'] = $request->user()->username;
@@ -98,9 +103,9 @@ class TraspasosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Traspaso $traspaso)
     {
-        $traspaso = Traspaso::with(['solicitante','autorizado','receptor'])->findOrfail($id);
+        $traspaso = $traspaso->load(['solicitante','autorizado','receptor']);
 
         if (request()->wantsJson())
             return [
@@ -119,7 +124,8 @@ class TraspasosController extends Controller
      */
     public function update(Request $request, Traspaso $traspaso)
     {
-        //$this->authorize('update', $caja);
+
+        $this->authorize('update', $traspaso);
 
         $data = $request->validate([
             'importe_solicitado'    => ['required','numeric'],
@@ -174,10 +180,7 @@ class TraspasosController extends Controller
      */
     public function destroy(Traspaso $traspaso)
     {
-
-        if (!auth()->user()->hasRole('Admin')){
-            return abort(403,auth()->user()->name.' NO tiene permiso para borrar');
-        }
+        $this->authorize('delete', $traspaso);
 
         $traspaso->delete();
 
@@ -199,7 +202,7 @@ class TraspasosController extends Controller
             'dh'         => 'D',
             'nombre'     => "TRASPASO DE FONDOS A ".session('empresa')->nombre,
             'importe'    => $traspaso->importe_entregado,
-            'manual'     => 'S',
+            'manual'     => 'N',
             'username'   => $traspaso->username
         ];
 

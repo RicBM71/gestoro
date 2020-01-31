@@ -13,7 +13,9 @@ use App\Empresa;
 use App\Contador;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Exports\AlbaranesExport;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\Ventas\FiltroAlbRequest;
 use App\Http\Requests\Ventas\StoreAlbaranRequest;
 use App\Http\Requests\Ventas\UpdateAlbaranRequest;
@@ -393,6 +395,18 @@ class AlbaranesController extends Controller
                 'albaran' => $albarane->load(['cliente','tipo','fase','motivo','fpago','cuenta','procedencia']),
                 'message' => 'EL albarán ha sido modificado'
                 ];
+    }
+
+     /**
+     * Recibe las facturas por request, previamente de $this->lisfac()
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function excel(Request $request){
+
+        return Excel::download(new AlbaranesExport($request->data), 'albaranes.xlsx');
+
     }
 
 

@@ -91,13 +91,13 @@ class CajasController extends Controller
                         ->get()
                         ->take(500);
 
-        $total_debe = $apuntes->where('dh', 'D')->sum('importe');
+       // $total_debe = $apuntes->where('dh', 'D')->sum('importe');
 
         return [
             'caja'          => $apuntes,
             'fecha_saldo'   => getFecha($data['fecha_h']),
             'saldo'         => Caja::saldo($data['fecha_h']),
-            'total_debe'    => $total_debe
+         //   'total_debe'    => $total_debe
         ];
     }
 

@@ -116,7 +116,7 @@
                         <v-flex sm4></v-flex>
                         <v-flex sm2>
                             <v-text-field
-                                v-if="hasAuthTras"
+                                v-if="isGestor"
                                 :value="saldo"
                                 label="Saldo"
                                 class="inputPrice"
@@ -238,6 +238,7 @@ import {mapGetters} from 'vuex';
         computed: {
         ...mapGetters([
                 'isAdmin',
+                'isGestor',
                 'hasAuthTras',
                 'userName'
             ]),
@@ -269,14 +270,15 @@ import {mapGetters} from 'vuex';
 
         },
         computedGuardar(){
-            
+
             if (this.traspaso.situacion_id == 3)
                 return false;
 
-            //if (this.isAdmin) return true;
+        /// yo esto no lo pondría.
+        //    if (this.isAdmin && this.hasAuthTras) return true;
 
             // está solicitado, hay que autorizarlo
-            if (this.hasAuthTras && this.traspaso.situacion_id == 1 && this.traspaso.username == this.userName)
+            if (this.hasAuthTras && this.traspaso.situacion_id == 1 && this.traspaso.username != this.userName)
                 return true;
 
             // está autorizado y falta confirmarlo

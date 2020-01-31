@@ -207,11 +207,6 @@ export default {
                         )
                         .then(res => {
 
-                            // if (res.data.length == 0){
-                            //     this.$toast.warning("No se han encontrado registros");
-                            // }
-                            console.log(res);
-
                             this.$emit('update:reg', res.data.caja);
                             this.$emit('update:saldo', res.data.saldo);
                             this.$emit('update:fecha_saldo', res.data.fecha_saldo);

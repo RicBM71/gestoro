@@ -387,6 +387,13 @@
                                         color="primary">
                                     ></v-switch>
                                 </v-flex>
+                                <v-flex sm3>
+                                    <v-switch
+                                        label="Proveedora Efectivo"
+                                        v-model="sw[5]"
+                                        color="primary">
+                                    ></v-switch>
+                                </v-flex>
                             </v-layout>
                             <v-layout row wrap>
                                    <v-flex sm5></v-flex>
