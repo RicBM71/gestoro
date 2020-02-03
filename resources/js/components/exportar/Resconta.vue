@@ -228,7 +228,7 @@ export default {
                 return item.clase;
         },
         beneficio(item){
-            return item.nom_com != "VENTAS REBU" ? 0 : parseFloat(item.importe_venta) - parseFloat(item.importe);
+            return item.nom_com != "FACTURADO REBU" ? 0 : parseFloat(item.importe_venta) - parseFloat(item.importe);
         },
         totalizar(){
             this.items.forEach(element => {

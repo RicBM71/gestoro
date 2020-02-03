@@ -82,3 +82,6 @@ Qué vamos a hacer con los productos de depósito?
 Revisar proceso de facturas a fundidora
 Revisar serie facturas al cambiar serie
 Revisar permisos y role de usuario, quién funde, quién factura??
+
+
+select klt_albaranes.id AS id, fecha_albaran,albaran,serie_albaran,factura, fecha_factura,referencia,klt_productos.nombre AS producto,klt_clases.nombre AS clase, klt_productos.cliente_id from `klt_albaranes` inner join `klt_albalins` on `klt_albaranes`.`id` = `klt_albalins`.`albaran_id` inner join `klt_productos` on `klt_productos`.`id` = `klt_albalins`.`producto_id` inner join `klt_clases` on `clase_id` = `klt_clases`.`id` where `klt_albaranes`.`empresa_id` = 1 and `fase_id` <> 10 and `klt_albaranes`.`deleted_at` is null and year(`klt_albaranes`.`fecha_factura`) = 2020 and `tipo_id` = 3 and klt_albaranes.id > 0

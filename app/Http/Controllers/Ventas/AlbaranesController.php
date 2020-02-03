@@ -192,7 +192,7 @@ class AlbaranesController extends Controller
     public function destroy(Albaran $albarane)
     {
 
-        $this->authorize('delete', $cliente);
+        $this->authorize('delete', $albarane);
 
         $albarane->forceDelete();
 
@@ -214,9 +214,10 @@ class AlbaranesController extends Controller
     {
 
        // $this->authorize('update', $cliente);
-       if ($this->verificarSiHayProductosEnDeposito($albarane)){
-            return abort(411, 'Hay productos en depósito, no se puede facturar, reubicar albarán');
-       }
+       if (session('empresa')->id != session('empresa')->deposito_empresa_id)
+            if ($this->verificarSiHayProductosEnDeposito($albarane)){
+                    return abort(411, 'Hay productos en depósito, no se puede facturar, reubicar albarán');
+            }
 
        $ejercicio = getEjercicio(Carbon::today());
 

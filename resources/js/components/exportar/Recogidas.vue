@@ -42,7 +42,7 @@
                 <v-container>
                     <v-layout row wrap v-show="show_filtro">
                         <v-spacer></v-spacer>
-                         <v-flex sm2>
+                         <v-flex md2 sm2 xs6>
                             <v-menu
                                 v-model="menu_d"
                                 :close-on-content-click="false"
@@ -73,7 +73,7 @@
                                     ></v-date-picker>
                             </v-menu>
                         </v-flex>
-                        <v-flex sm2>
+                        <v-flex md2 sm2 xs6>
                             <v-menu
                                 v-model="menu_h"
                                 :close-on-content-click="false"
@@ -104,7 +104,7 @@
                                     ></v-date-picker>
                             </v-menu>
                         </v-flex>
-                        <v-flex sm1>
+                        <v-flex md2 sm2 xs12>
                             <v-btn @click="submit" :loading="show_loading" flat round small block  color="info">
                                 Enviar
                             </v-btn>

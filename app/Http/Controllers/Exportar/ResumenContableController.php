@@ -45,7 +45,7 @@ class ResumenContableController extends Controller
             ->groupBy(DB::raw('nom_com,clase,quilates WITH ROLLUP'))
             ->get();
 
-        $select='"VENTAS REBU" AS nom_com,'.DB::getTablePrefix().'clases.nombre AS clase, '.DB::getTablePrefix().'productos.quilates AS quilates, SUM(peso_gr) AS peso_gr, SUM('.DB::getTablePrefix().'albalins.precio_coste) AS importe,  SUM(importe_venta) AS importe_venta';
+        $select='"FACTURADO REBU" AS nom_com,'.DB::getTablePrefix().'clases.nombre AS clase, '.DB::getTablePrefix().'productos.quilates AS quilates, SUM(peso_gr) AS peso_gr, SUM('.DB::getTablePrefix().'albalins.precio_coste) AS importe,  SUM(importe_venta) AS importe_venta';
         $union2 = DB::table('albaranes')
             ->select(DB::raw($select))
             ->join('albalins','albaranes.id','=','albaran_id')
@@ -66,7 +66,7 @@ class ResumenContableController extends Controller
 
 
 
-        $select='"VENTAS" AS nom_com,'.DB::getTablePrefix().'clases.nombre AS clase, '.DB::getTablePrefix().'productos.quilates AS quilates, SUM(peso_gr) AS peso_gr, SUM('.DB::getTablePrefix().'albalins.precio_coste) AS importe,  SUM(importe_venta) AS importe_venta';
+        $select='"FACTURADO VENTAS" AS nom_com,'.DB::getTablePrefix().'clases.nombre AS clase, '.DB::getTablePrefix().'productos.quilates AS quilates, SUM(peso_gr) AS peso_gr, SUM('.DB::getTablePrefix().'albalins.precio_coste) AS importe,  SUM(importe_venta) AS importe_venta';
         $union3 = DB::table('albaranes')
             ->select(DB::raw($select))
             ->join('albalins','albaranes.id','=','albaran_id')

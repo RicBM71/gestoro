@@ -157,7 +157,7 @@
                                     </thead>
                                     <tbody>
                                         <tr v-for="(item, index) in items_comprados" :key="index">
-                                            <td>COMPRAS</td>
+                                            <td>{{item.tipo}}</td>
                                             <td v-if="item.quilates > 0">{{ item.clase+" "+item.quilates+" K" }}</td>
                                             <td v-else>{{ item.clase }}</td>
                                             <td class="text-xs-right">{{ item.peso_gr | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
@@ -193,9 +193,11 @@
                                             <td>{{detalle_ven(item.tipo_id)}}</td>
                                             <td v-if="item.quilates > 0">{{ item.clase+" "+item.quilates+" K" }}</td>
                                             <td v-else>{{ item.clase }}</td>
-                                            <td class="text-xs-right">{{ item.peso_gr | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                            <td v-if="item.tipo_id != 3" class="text-xs-right">{{ item.peso_gr | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                            <td v-else></td>
                                             <td class="text-xs-right">{{ item.importe | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
-                                            <td class="text-xs-right">{{ getPrecioGramo(item.peso_gr,item.importe) | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                            <td v-if="item.tipo_id != 3" class="text-xs-right">{{ getPrecioGramo(item.peso_gr,item.importe) | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                            <td v-else></td>
                                         </tr>
                                         <tr v-for="(item, index) in items_depositos" :key="miKey(index,'D')">
                                             <td>{{detalle_dep(item.tipo_id)}}</td>
@@ -288,7 +290,7 @@ export default {
         },
         detalle_ven(t){
             if (t==3)
-                return "VENTAS REBU";
+                return "VENTAS REBU + RESERVAS";
             else if(t==4)
                 return "VENTAS RG";
             else if(t==5)

@@ -58,16 +58,17 @@ class CuadroMandoController extends Controller
 
        $rollup = ($data['totales'] == true) ?  'WITH ROLLUP' : null;
 
-        $select = DB::getTablePrefix().'clases.nombre AS clase, '.DB::getTablePrefix().'comlines.quilates, SUM('.DB::getTablePrefix().'comlines.importe) AS importe, SUM('.DB::getTablePrefix().'comlines.peso_gr) AS peso_gr';
+        $select = DB::getTablePrefix().'tipos.nombre AS tipo,'.DB::getTablePrefix().'clases.nombre AS clase, '.DB::getTablePrefix().'comlines.quilates, SUM('.DB::getTablePrefix().'comlines.importe) AS importe, SUM('.DB::getTablePrefix().'comlines.peso_gr) AS peso_gr';
 
         $union0 = DB::table('compras')
             ->select(DB::raw($select))
             ->join('comlines','compras.id','=','comlines.compra_id')
             ->join('clases','clase_id','=','clases.id')
+            ->join('tipos','tipo_id','=','tipos.id')
             ->where('compras.empresa_id', session('empresa')->id)
             ->whereDate('fecha_compra','>=', $data['fecha_d'])
             ->whereDate('fecha_compra','<=', $data['fecha_h'])
-            ->groupBy(DB::raw('clase,quilates '.$rollup))
+            ->groupBy(DB::raw('tipo,clase,quilates '.$rollup))
             ->get();
 
 
@@ -175,7 +176,7 @@ class CuadroMandoController extends Controller
             ->join('productos','productos.id','=','albalins.producto_id')
             ->join('clases','clase_id','=','clases.id')
             ->where('albaranes.empresa_id', session('empresa')->id)
-            ->where('fase_id','<>', 10)
+      //      ->where('fase_id','<>', 10)
             ->whereDate('fecha_factura','>=', $data['fecha_d'])
             ->whereDate('fecha_factura','<=', $data['fecha_h'])
             ->whereNull('albalins.deleted_at')
@@ -188,7 +189,7 @@ class CuadroMandoController extends Controller
                 ->join('productos','productos.id','=','albalins.producto_id')
                 ->join('clases','clase_id','=','clases.id')
                 ->where('albaranes.empresa_id', session('empresa')->id)
-                ->where('fase_id','<>', 10)
+     //           ->where('fase_id','<>', 10)
                 ->whereDate('fecha_albaran','>=', $data['fecha_d'])
                 ->whereDate('fecha_albaran','<=', $data['fecha_h'])
                 ->whereNull('albalins.deleted_at')

@@ -29,10 +29,10 @@
             </v-flex>
         </v-layout>
         <v-layout row wrap>
-            <v-flex sm2 xs12></v-flex>
-            <v-flex sm2 xs12>
+            <v-flex sm1 xs12></v-flex>
+            <v-flex sm3 xs12>
                  <v-btn round block large color="grey" class="blue-grey lighten-3" @click="goCompraIndex()">
-                     Compras
+                     Consulta Compras
                      <v-icon right dark>shopping_cart</v-icon>
                 </v-btn>
             </v-flex>
@@ -48,9 +48,9 @@
                      <v-icon right dark>send</v-icon>
                 </v-btn>
             </v-flex>
-            <v-flex sm2 xs12>
+            <v-flex sm3 xs12>
                  <v-btn round block large color="grey" class="blue-grey lighten-3" @click="goVentaIndex()">
-                     Ventas
+                     Consulta Ventas
                      <v-icon right dark>credit_card</v-icon>
                 </v-btn>
             </v-flex>

@@ -96,9 +96,10 @@ class FacturacionVentasController extends Controller
         foreach ($albaranes as $row){
             $i++;
 
-            if ($this->verificarSiHayProductosEnDeposito($row->id)){
-                return abort(411, 'Se han encontrado albaranes sin reubicar, reubicar antes de continuar!!');
-            }
+            if (session('empresa')->id != session('empresa')->deposito_empresa_id)
+                if ($this->verificarSiHayProductosEnDeposito($row->id)){
+                    return abort(411, 'Se han encontrado albaranes sin reubicar, reubicar antes de continuar!!');
+                }
 
             $contador->ult_factura_auto++;
 
@@ -217,8 +218,10 @@ class FacturacionVentasController extends Controller
                     ->whereDate('fecha_factura','<=',$h)
                     ->update($data);
 
-        if ($max - $min == $reg){
-            $contador->update(['ult_factura_auto' => $min]);
+                 //   \Log::info('min:'.$min.' max:'.$max.' reg:'.$reg);
+
+        if (($max - $min +1) == $reg){
+            $contador->update(['ult_factura_auto' => ($min-1)]);
             return ['estado'=>'ok', 'reg'=>$reg,'msg'=> 'Desfacturadas '.$reg.' facturas'];
         }else{
             return ['estado'=>'ko', 'reg'=>$reg, 'msg'=> 'Desfacturación OK. Revisar Contador!!'];

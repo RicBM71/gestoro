@@ -198,7 +198,7 @@ export default {
             'hasScan'
         ]),
         computedReaCli(){
-            return (this.compra.id > 0 && this.isSupervisor && this.compra.factura == null);
+            return (this.compra.id > 0 && this.compra.fase_id <= 4 && this.isSupervisor && this.compra.factura == null);
         },
         computedImprimeCompra(){
 

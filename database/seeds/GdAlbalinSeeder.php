@@ -53,7 +53,7 @@ class GdAlbalinSeeder extends Seeder
                 'producto_id' => $row->producto,
                 'unidades' => $unidades,
                 'importe_unidad'=> $imp_uni,
-                'precio_coste'=>$row->tipo==3 ? $row->pcoste : 0,
+                'precio_coste'=> $row->tipo==3 ? $row->pcoste : 0,
                 'importe_venta'=>$row->importe,
                 'iva_id' => $iva_id,
                 'iva'=>$row->iva,

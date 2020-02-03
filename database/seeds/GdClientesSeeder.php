@@ -119,7 +119,7 @@ class GdClientesSeeder extends Seeder
                   'fpago_id'=> 1,
                   'iban'=> null,
                   'bic'=> null,
-                  'notas' => $row->notas1,
+                  'notas' => $row->notas1=='' ? null : $row->notas1,
                   'username' => $row->sysusr,
                   'created_at' => $row->fechaalta,
                   'updated_at' => $row->sysfum.' '.$row->syshum,

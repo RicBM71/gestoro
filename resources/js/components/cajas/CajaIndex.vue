@@ -51,21 +51,19 @@
             <v-card>
                 <v-container>
                     <v-layout row wrap>
-                        <v-flex xs1></v-flex>
                         <v-flex xs2 class="font-weight-bold">
                             Debe: {{total_debe | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}
                         </v-flex>
                         <v-flex xs2 class="font-weight-bold">
                             Haber: {{total_haber | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}
                         </v-flex>
-                        <v-flex xs3></v-flex>
                         <v-flex xs2 class="font-weight-bold">
                             Saldo a {{fecha_saldo}}
                         </v-flex>
                         <v-flex xs2 class="font-weight-bold">
                             {{saldo | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}
                         </v-flex>
-                        <v-flex xs6>
+                        <v-flex xs4>
                             <v-spacer></v-spacer>
                             <v-text-field
                                 v-model="search"

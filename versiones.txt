@@ -34,11 +34,17 @@ supervisor al reasigar ok. JL
 'Ampliación Capital Transferencia'; //17
 'Ampliación Capital Talón'; //18
 
-==
-PTE:
-
+Adapatar a movil recogidas y operaciones
 OK. liquidados y parciales. unificar búsqueda
 OK. tarjeta en ampliacinoes.
+verificarSiHayProductosEnDeposito
+
+03.02.2020
+Afinando consultas.
+
+
+==
+PTE:
 intercambiar número operaciones.
 
 

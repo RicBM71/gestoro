@@ -6,8 +6,11 @@
         </tr>
         <tr>
             <th>Concepto</th>
-            <th>Debe</th>
-            <th>Haber</th>
+            <th>Clase</th>
+            <th>Importe</th>
+            <th>Importe Venta</th>
+            <th>Márgen</th>
+            <th>Peso</th>
         </tr>
     </thead>
     <tbody>

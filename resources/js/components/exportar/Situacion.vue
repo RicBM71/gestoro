@@ -215,6 +215,7 @@ export default {
     },
     methods:{
         totalizar(){
+            this.total = 0;
             this.items.forEach(element => {
 
                 if (element.dh == 'H')
