@@ -243,6 +243,7 @@ export default {
                 { icon: 'lock', text: 'Facturar Albaranes', name:'facturacion.albaranes' },
                 { text: 'Reubicar Albaranes', name: 'reubicar', icon: 'shuffle'},
                 { icon: 'fireplace', text: 'Liquidar Lotes', name:'liquidar.index' },
+                { icon: 'compare_arrows', text: 'Intercambio de Operaciones', name:'intercambio' },
             ]
         },
 

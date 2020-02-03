@@ -5,7 +5,7 @@
         <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
-                    v-show="compra.id > 0"
+                    v-show="compra.id > 0  && hasAddCom"
                     :disabled="!computedReaCli"
                     v-on="on"
                     color="white"
@@ -20,6 +20,7 @@
         <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
+                    v-show="hasAddCom"
                     v-on="on"
                     color="white"
                     icon
@@ -60,7 +61,7 @@
         <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
-                    v-show="compra.id > 0"
+                    v-show="compra.id > 0 && hasAddCom"
                     :disabled="!computedAuthBorrar"
                     v-on="on"
                     color="white"
@@ -88,7 +89,7 @@
         <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
-                    v-show="computedImprimeCompra"
+                    v-show="computedImprimeCompra && hasAddCom"
                     v-on="on"
                     color="white"
                     icon
@@ -102,7 +103,7 @@
         <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
-                    v-show="compra.fase_id == 5 && compra.factura > 0"
+                    v-show="compra.fase_id == 5 && compra.factura > 0  && hasAddCom"
                     v-on="on"
                     color="white"
                     icon
@@ -117,7 +118,7 @@
         <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
-                    v-show="computedScanDocu"
+                    v-show="computedScanDocu  && hasAddCom"
                     v-on="on"
                     color="white"
                     icon
@@ -195,7 +196,8 @@ export default {
             'userName',
             'isRoot',
             'isAdmin',
-            'hasScan'
+            'hasScan',
+            'hasAddCom'
         ]),
         computedReaCli(){
             return (this.compra.id > 0 && this.compra.fase_id <= 4 && this.isSupervisor && this.compra.factura == null);

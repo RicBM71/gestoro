@@ -127,6 +127,8 @@ import ParametroEdit from './components/admin/parametros/ParametroEdit.vue';
 
 import Reubicar from './components/reubicar/Reubicar.vue';
 
+import Intercambio from './components/intercambio/Intercambio.vue';
+
 import ApliPdf from './components/etiquetas/ApliPdf.vue';
 
 import EditPassword from './components/profile/edit-password/EditPassword.vue';
@@ -628,6 +630,11 @@ export default [
                 path: '/talleres/:id/edit',
                 name: 'taller.edit',
                 component: TallerEdit,
+            },
+            {
+                path: '/intercambio',
+                name: 'intercambio',
+                component: Intercambio,
             },
             {
                 path: '/parametros',

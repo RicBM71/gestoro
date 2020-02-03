@@ -297,7 +297,8 @@ import {mapGetters} from 'vuex';
                 'isAdmin',
                 'isSupervisor',
                 'hasReaCompras',
-                'userName'
+                'userName',
+                'hasAddCom'
             ]),
            computedAuthLiquidar(){
 
@@ -324,6 +325,9 @@ import {mapGetters} from 'vuex';
 
             },
             computedAuthReCompra(){
+
+                if (!this.hasAddCom) return false;
+
 
                 if (this.cambio_recompra == false)
                     return false;

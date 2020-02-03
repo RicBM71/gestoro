@@ -8,7 +8,7 @@
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            v-show="compra.fase_id ==4"
+                            v-show="compra.fase_id == 4 && hasAddCom"
                             v-on="on"
                             color="white"
                             icon
@@ -23,7 +23,7 @@
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            v-show="compra.fase_id == 4"
+                            v-show="compra.fase_id == 4  && hasAddCom"
                             v-on="on"
                             color="white"
                             icon
@@ -38,7 +38,7 @@
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            v-show="compra.fase_id == 4"
+                            v-show="compra.fase_id == 4  && hasAddCom"
                             v-on="on"
                             color="white"
                             icon
@@ -53,7 +53,7 @@
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            v-show="compra.fase_id ==4"
+                            v-show="compra.fase_id ==4 && hasAddCom"
                             v-on="on"
                             color="white"
                             icon
@@ -69,7 +69,7 @@
                     <template v-slot:activator="{ on }">
                         <v-btn
                             v-if="cambio_recompra"
-                            v-show="compra.fase_id <=4"
+                            v-show="compra.fase_id <=4  && hasAddCom"
                             v-on="on"
                             color="white"
                             icon
@@ -79,7 +79,7 @@
                         </v-btn>
                         <v-btn
                             v-else
-                            v-show="compra.fase_id <=4"
+                            v-show="compra.fase_id <=4  && hasAddCom"
                             v-on="on"
                             color="white"
                             icon
@@ -344,7 +344,7 @@
                             </v-text-field>
                         </v-flex>
                         <v-flex sm1></v-flex>
-                        <v-flex sm2 v-show="compra.fase_id <=4">
+                        <v-flex sm2 v-show="compra.fase_id <=4 && hasAddCom">
                             <div class="text-xs-center">
                                 <v-btn
                                     small
@@ -555,6 +555,7 @@ import {mapGetters} from 'vuex';
                 'parametros',
                 'hasReaCompras',
                 'userName',
+                'hasAddCom'
             ]),
             computedAuthLiquidar(){
 
@@ -576,6 +577,7 @@ import {mapGetters} from 'vuex';
 
             },
             computedAmpliarCapital(){
+
                 if (this.compra.fase_id != 4) return false;
 
                 if (this.isAdmin)
@@ -588,6 +590,7 @@ import {mapGetters} from 'vuex';
 
             },
             computedDisabledAcuenta(){
+
                 // con esto un supervisor, tiene que hacer una ampliación con importe a cero, así queda constancia
                  // lo dejo para poder hacer ampliaciones en negativo, es decir, aumenta préstamo.
 
@@ -604,6 +607,7 @@ import {mapGetters} from 'vuex';
                     }
             },
             computedDisabledRecuperar(){
+
                 // con esto un supervisor, tiene que hacer una ampliación con importe a cero, así queda constancia
                 if (this.isAdmin) return false; // lo dejo para poder recupear aún bloqueado.
 
@@ -822,7 +826,7 @@ import {mapGetters} from 'vuex';
                     })
             },
             updateNota(){
-                if (this.compra.fase_id > 0){
+                if (this.compra.fase_id > 0 &&  this.hasAddCom){
                     // this.loading = true;
                     axios.put(this.url+"/"+this.compra.id+"/obs", this.compra)
                         .then(res => {

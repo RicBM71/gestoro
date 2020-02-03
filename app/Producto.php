@@ -140,8 +140,13 @@ Class Producto extends Model
 
     public static function scopeFecha($query, $d,$h,$tipo){
 
-        if ($d == null)
+        if ($d == null && $h==null)
             return $query;
+
+        if ($d == null && $h != null)
+            $d = $h;
+        if ($d != null && $h == null)
+            $h = $d;
 
         if ($tipo == "C")
             return $query->whereDate('created_at','>=', $d)

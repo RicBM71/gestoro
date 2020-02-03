@@ -245,6 +245,7 @@ Route::group([
         Route::get('helpapuntes', 'HelpApuntesController@index');
 
         Route::get('check/{ejercicio?}', 'ContadorCheckController@index');
+        Route::post('intercambio', 'IntercambioController@submit');
      //   Route::get('helpbanco', 'HelpBancosController@index');
     }
 );

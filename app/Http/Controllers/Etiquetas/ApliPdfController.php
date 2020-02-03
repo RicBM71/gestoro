@@ -54,8 +54,6 @@ class ApliPdfController extends Controller
             return abort(404, ' NO hay etiquetas para imprimir');
         }
 
-
-
     }
 
     private function generarEtiquetas($data){
@@ -102,8 +100,10 @@ class ApliPdfController extends Controller
 
 				if ($row->precio_venta > 0)
 					$text2 = (getDecimal($row->precio_venta,0)."€");
-				else
-					$text2 = ($metal);
+                elseif ($metal > '')
+                        $text2 = ($metal);
+                else
+                    $text2 = $row->referencia;
 
 				$hay_cuarta = false;
 

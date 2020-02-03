@@ -121,6 +121,7 @@ export default {
             'hasBorraCompras',
             'hasReaCompras',
             'userName',
+            'hasAddCom'
         ]),
     },
     methods:{
@@ -149,6 +150,9 @@ export default {
             return item.username+" "+moment(item.updated_at).format('D/MM/YYYY H:mm');
         },
         borrarLinea(item){
+
+            if (!this.hasAddCom) return false;
+
             if (this.compra.fase_id >= 6 || this.compra.factura > 0) return false;
 
             if (this.lineas.indexOf(item) == 0){
