@@ -54,7 +54,7 @@
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            v-show="albaran.id>0"
+                            v-show="albaran.id>0  && hasAddVen"
                             :disabled="!computedAbonar"
                             v-on="on"
                             color="white"
@@ -69,7 +69,7 @@
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            v-show="albaran.id>0"
+                            v-show="albaran.id>0 && hasAddVen"
                             :disabled="!computedCancelar"
                             v-on="on"
                             color="white"
@@ -99,7 +99,7 @@
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            v-show="albaran.id>0"
+                            v-show="albaran.id > 0 && hasAddVen"
                             :disabled="!(albaran.factura==null && isAdmin)"
                             v-on="on"
                             color="white"
@@ -387,7 +387,7 @@
                         <v-flex sm2>
                             <div class="text-xs-center">
                                 <v-btn
-                                    v-show="albaran.factura == null"
+                                    v-show="albaran.factura == null && hasAddVen"
                                     small
                                     @click="submit"  round  :loading="enviando" block  color="primary">
                                     Guardar
@@ -423,7 +423,7 @@
                         <v-flex sm2>
                             <div class="text-xs-center">
                                 <v-btn
-                                    v-show="albaran.factura == null"
+                                    v-show="albaran.factura == null && hasAddVen"
                                     small
                                     @click="submit"  round  :loading="enviando" block  color="primary">
                                     Guardar
@@ -580,7 +580,8 @@ import {mapGetters} from 'vuex';
                 'isSupervisor',
                 'isAdmin',
                 'isRoot',
-                'hasFactura'
+                'hasFactura',
+                'hasAddVen'
             ]),
             computedTaller(){
                 return (this.factura > 0);
@@ -598,6 +599,9 @@ import {mapGetters} from 'vuex';
                 return false;
             },
             computedShowGoCobros(){
+
+                if (!this.hasAddVen) return false;
+
                 if (this.albaran.fase_id == 10 && this.computedResto != 0)
                     return true;
                 return false;
@@ -634,7 +638,7 @@ import {mapGetters} from 'vuex';
             },
             computedFacturar(){
 
-                if (this.albaran.id == 0) return false;
+                if (this.albaran.id == 0  || !this.hasAddVen) return false;
 
                 if (!this.hasFactura) return false;
 
@@ -653,7 +657,7 @@ import {mapGetters} from 'vuex';
             },
             computedDesFacturar(){
 
-                if (!this.hasFactura) return false;
+                if (!this.hasFactura || !this.hasAddVen) return false;
 
                 //if (this.albaran.factura > 0 && this.albaran.fase_id ==11)
                 if (this.albaran.factura > 0)

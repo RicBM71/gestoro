@@ -12,7 +12,7 @@
         <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
-                    v-show="albaran.id>0"
+                    v-show="albaran.id>0 && hasAddVen"
                     :disabled="!computedReaCli"
                     v-on="on"
                     color="white"
@@ -27,7 +27,7 @@
         <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
-                    v-show="albaran.id>0"
+                    v-show="albaran.id>0  && hasAddVen"
                     :disabled="!computedMail"
                     v-on="on"
                     color="white"
@@ -42,6 +42,7 @@
         <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
+                    v-show="hasAddVen"
                     v-on="on"
                     color="white"
                     icon
@@ -82,7 +83,7 @@
         <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
-                    v-show="albaran.id > 0"
+                    v-show="albaran.id > 0  && hasAddVen"
                     :disabled="!computedAuthBorrar"
                     v-on="on"
                     color="white"
@@ -198,7 +199,8 @@ export default {
             'isAdmin',
             'hasBorraCompras',
             'userName',
-            'isRoot'
+            'isRoot',
+            'hasAddVen'
         ]),
         computedReaCli(){
             if (this.isAdmin)

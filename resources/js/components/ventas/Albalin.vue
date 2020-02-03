@@ -82,7 +82,7 @@
             <v-layout row wrap v-if="albaran.factura == null">
                 <v-flex xs10></v-flex>
                 <v-flex xs2>
-                    <v-btn round flat color="primary" v-on:click="create" small >
+                    <v-btn round flat color="primary" v-on:click="create" small v-show="hasAddVen">
                         <v-icon small>add</v-icon> Crear Línea
                     </v-btn>
                 </v-flex>
@@ -206,7 +206,8 @@ export default {
     computed:{
          ...mapGetters([
             'isSupervisor',
-            'hasEdtFac'
+            'hasEdtFac',
+            'hasAddVen'
         ]),
         computedResto(){
             return (this.totales.total - this.acuenta).toFixed(2);
@@ -215,7 +216,7 @@ export default {
             return parseFloat(this.totales.importe) - parseFloat(this.totales.impirpf)  + parseFloat(this.totales.impiva);
         },
         computedEdit(){
-
+            if (!this.hasAddVen) return false;
             if (this.hasEdtFac) return true;
 
             if (this.albaran.factura > 0 || this.albaran.fase_id > 10 ) return false;

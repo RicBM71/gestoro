@@ -60,10 +60,10 @@ class AlbaranPolicy
     public function update(User $authUser, Albaran $albarane)
     {
 
-        if ($authUser->hasPermissionTo('addven'))
+        //if ($authUser->hasPermissionTo('addven'))
             return true;
 
-        return $this->deny("Acceso denegado, no dispone de los permisos requeridos");
+        //return $this->deny("Acceso denegado, no dispone de los permisos requeridos");
 
     }
 

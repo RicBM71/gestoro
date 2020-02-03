@@ -71,7 +71,7 @@ class LiquidarController extends Controller
                              'CONCAT('.DB::getTablePrefix().'clases.nombre," ",'.DB::getTablePrefix().'comlines.quilates) AS nombre,peso_gr,'.DB::getTablePrefix().'comlines.importe'))
                 ->where('compras.empresa_id',session('empresa')->id)
                 ->whereDate('fecha_compra','<=', $h)
-                ->whereDate('fecha_bloqueo','<', Carbon::today()->format('Y-m-d'))
+            //    ->whereDate('fecha_bloqueo','<', Carbon::today()->format('Y-m-d'))
                 ->whereIn('fase_id', [4,6])
                 ->where('tipo_id',$tipo_id)
                 ->where('clase_id',$clase_id)

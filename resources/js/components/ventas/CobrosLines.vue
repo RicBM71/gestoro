@@ -114,7 +114,8 @@ export default {
             'isAdmin',
             'hasBorraCompras',
             'userName',
-            'hasEdtFac'
+            'hasEdtFac',
+            'hasAddVen'
         ]),
         computedResto(){
             return (this.totales.total - this.acuenta).toFixed(2);
@@ -122,6 +123,8 @@ export default {
     },
     methods:{
          borrarLinea(item){
+
+            if (!this.hasAddVen) return false;
 
             if (this.hasEdtFac) return true;
 

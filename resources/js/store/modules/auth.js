@@ -124,6 +124,9 @@ const getters = {
     hasAddCom: (state) =>{
         return (state.permisos.indexOf('addcom') >= 0) ? true : false;
     },
+    hasAddVen: (state) =>{
+        return (state.permisos.indexOf('addven') >= 0) ? true : false;
+    },
     hasReaCompras: (state) =>{
         return (state.permisos.indexOf('reacom') >= 0) ? true : false;
     },
