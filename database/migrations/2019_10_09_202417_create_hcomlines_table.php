@@ -30,6 +30,7 @@ class CreateHcomlinesTable extends Migration
             $table->decimal('importe_gr', 10, 2)->default(0);
             $table->decimal('importe_venta', 10, 2)->default(0);
             $table->decimal('iva', 6, 2)->default(0);
+            $table->decimal('retencion', 6,2)->default(0);
             $table->smallInteger('quilates')->nullable();
             $table->date('fecha_liquidado')->nullable();
             $table->string('username',30)->nullable();

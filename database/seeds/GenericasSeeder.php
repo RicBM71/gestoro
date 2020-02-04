@@ -14,6 +14,7 @@ use App\Almacen;
 use App\Empresa;
 use App\Quilate;
 use App\Etiqueta;
+use App\Rfid;
 use App\Parametro;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
@@ -344,6 +345,63 @@ class GenericasSeeder extends Seeder
         $taller->nombre = "Taller Demo";
         $taller->razon = "Taller Demo";
         $taller->save();
+
+
+        $rec = new Rfid;
+        $rec->id = 1;
+        $rec->nombre = "OK";
+        $rec->save();
+
+        $rec = new Rfid;
+        $rec->id = 2;
+        $rec->nombre = "Difiere ubicación de tienda";
+        $rec->save();
+
+        $rec = new Rfid;
+        $rec->id = 3;
+        $rec->nombre = "Referencia Perdida";
+        $rec->save();
+
+        $rec = new Rfid;
+        $rec->id = 4;
+        $rec->nombre = "Referencia marcada como baja y en recuento";
+        $rec->save();
+
+        $rec = new Rfid;
+        $rec->id = 5;
+        $rec->nombre = "Referencia VENDIDA";
+        $rec->save();
+
+        $rec = new Rfid;
+        $rec->id = 6;
+        $rec->nombre = "Referencia RESERVADA";
+        $rec->save();
+
+        $rec = new Rfid;
+        $rec->id = 12;
+        $rec->nombre = "LOCALIZADA-Otra ubicacion";
+        $rec->save();
+
+        $rec = new Rfid;
+        $rec->id = 13;
+        $rec->nombre = "LOCALIZADA-Referencia perdida";
+        $rec->save();
+
+        $rec = new Rfid;
+        $rec->id = 14;
+        $rec->nombre = "LOCALIZADA-Baja";
+        $rec->save();
+
+        $rec = new Rfid;
+        $rec->id = 15;
+        $rec->nombre = "LOCALIZADA-Vendida";
+        $rec->save();
+
+        $rec = new Rfid;
+        $rec->id = 16;
+        $rec->nombre = "LOCALIZADA-Reservada";
+        $rec->save();
+
 
 
         // $apunte = new Apunte;

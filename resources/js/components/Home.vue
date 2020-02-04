@@ -297,6 +297,7 @@ export default {
             model: false,
             children: [
                 { icon: 'forward', text: 'Generar Etiquetas Apli', name:'etiquetas.aplipdf' },
+                { icon: 'forward', text: 'Importar fichero RFID', name:'rfid.import' },
             ],
         },
         expired: false,

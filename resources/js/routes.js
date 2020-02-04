@@ -133,6 +133,8 @@ import ApliPdf from './components/etiquetas/ApliPdf.vue';
 
 import EditPassword from './components/profile/edit-password/EditPassword.vue';
 
+import ImportRfid from './components/rfid/ImportRfid.vue';
+
 export default [
 	{
 		path: '/',
@@ -645,6 +647,11 @@ export default [
                 path: '/aplipdf',
                 name: 'etiquetas.aplipdf',
                 component: ApliPdf,
+            },
+            {
+                path: '/rfid/import',
+                name: 'rfid.import',
+                component: ImportRfid,
             },
             // {
             //     path: '*',
