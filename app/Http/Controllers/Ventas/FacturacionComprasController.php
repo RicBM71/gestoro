@@ -136,9 +136,9 @@ class FacturacionComprasController extends Controller
             }
 
             $data_com = [
-                'username' => session('username'),
-                'serie_fac'=> $libro->serie_fac,
-                'factura'=> $libro->ult_factura++,
+                'username'     => session('username'),
+                'serie_fac'    => $libro->serie_fac,
+                'factura'      => $libro->ult_factura++,
                 'fecha_factura'=> $row->fecha
             ];
 
@@ -148,7 +148,7 @@ class FacturacionComprasController extends Controller
         }
 
         // actualiza el contador de facturas de recuperaciones.
-        $libro->update(['factura'=>$libro->factura]);
+        $libro->update(['factura'=>$libro->ult_factura]);
 
         return $i;
     }

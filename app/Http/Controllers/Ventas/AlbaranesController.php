@@ -53,13 +53,19 @@ class AlbaranesController extends Controller
 
         $data = request()->session()->get('filtro_ven');
 
-        return Albaran::with(['cliente','albalins','tipo','fase'])
-                        ->tipo($data['tipo_id'])
-                        ->fecha($data['fecha_d'],$data['fecha_h'],$data['quefecha'])
-                        ->fpago($data['fpago_id'])
-                        ->fase($data['fase_id'])
-                        ->facturados($data['facturado'])
-                        ->get();
+        if ($data['reservas'])
+            return Albaran::with(['cliente','albalins','tipo','fase'])
+                ->tipo(3)
+                ->fase(10)
+                ->get();
+        else
+            return Albaran::with(['cliente','albalins','tipo','fase'])
+                            ->tipo($data['tipo_id'])
+                            ->fecha($data['fecha_d'],$data['fecha_h'],$data['quefecha'])
+                            ->fpago($data['fpago_id'])
+                            ->fase($data['fase_id'])
+                            ->facturados($data['facturado'])
+                            ->get();
 
     }
 

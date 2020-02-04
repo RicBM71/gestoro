@@ -27,8 +27,9 @@ class GdDepositosSeeder extends Seeder
             '7' => 8,
             '8' => 10,
             '9' => 11,
-            '10' => 13,
-            '11' => 14,
+            '10' => 13, // fundido???? no vale pa na
+            '11' => 13,
+            '12' => 14
         ];
 
         $eje = '>=2000';

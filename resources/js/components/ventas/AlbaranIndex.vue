@@ -97,11 +97,11 @@
                                         </v-icon>
 
 
-                                        <v-icon v-if="hasBorraCompras"
-                                        small
-                                        @click="openDialog(props.item)"
-                                        >
-                                        delete
+                                        <v-icon v-if="isAdmin && props.item.factura == null"
+                                            small
+                                            @click="openDialog(props.item)"
+                                            >
+                                            delete
                                         </v-icon>
                                     </td>
                                 </template>
@@ -247,6 +247,7 @@ import {mapActions} from "vuex";
         ...mapGetters([
             'hasBorraCompras',
             'getPagination',
+            'isAdmin',
             'isSupervisor',
             'isGestor'
         ])

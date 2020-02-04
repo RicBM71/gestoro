@@ -16,6 +16,20 @@ class EoDepositosSeeder extends Seeder
     public function run()
     {
 
+        $cruce_con = [
+            '1' => 1,
+            '2' => 2,
+            '3' => 3,
+            '4' => 4,
+            '5' => 5,
+            '6' => 7,
+            '7' => 8,
+            '8' => 10,
+            '9' => 11,
+            '10' => 13, // fundido???? no vale pa na
+            '11' => 13,
+            '12' => 14
+        ];
 
         $eje = '>=2000';
 
@@ -53,7 +67,7 @@ class EoDepositosSeeder extends Seeder
                 'fecha' => $row->fecha,
                 'cliente_id' => $row->cliente,
                 'dias' => $row->dias,
-                'concepto_id'=> $row->concepto,
+                'concepto_id'=> $cruce_con[$row->concepto],
                 'importe'=> $importe,
                 'dias'=> $row->dias,
                 'notas'=> $notas,
