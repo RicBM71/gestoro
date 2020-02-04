@@ -334,30 +334,19 @@ Route::group([
 
 
 
-// Route::group([
-//     'prefix' => 'ventas',
-//     'namespace' => 'Ventas',
-//     'middleware' => 'auth'],
-//     function (){
-//         //Route::resource('albacabs', 'AlbacabsController', ['except'=>'show','as' => 'ventas']);
-//         Route::resource('albacabs', 'AlbacabsController');
-//         Route::put('albacabs/{albacab}/facturar', 'AlbacabsController@facturar');
-//         Route::put('albacabs/{albacab}/desfacturar', 'AlbacabsController@desfacturar');
-//         Route::get('albacabs/{albacab}/print', 'AlbacabsController@print');
-//         Route::put('albacabs/{albacab}/clonar', 'AlbacabsController@clonar');
-//         Route::put('albacabs/{albacab}/mail', 'AlbacabsController@mail');
-//         Route::post('albacabs/filtrar', 'AlbacabsController@filtrar');
-
-//         Route::resource('albalins', 'AlbalinsController', ['except'=>'index','as' => 'ventas']);
-
-//         Route::middleware('role:Root|Admin')->group(function () {
-//             Route::get('facturas/{fecha}/print', 'PrintFacturasController@print');
-//         });
+Route::group([
+    'prefix' => 'rfid',
+    'namespace' => 'Rfid',
+    'middleware' => ['auth','password']],
+    function (){
 
 
-//     }
-// );
+        Route::post('/upload', 'ImportRfidController@upload');
 
+
+
+    }
+);
 
 Route::any('{all}', function () {
     return view('welcome');

@@ -34,7 +34,7 @@ class GdUsuariosSeeder extends Seeder
                 'lastname'      => $row->apellidos,
                 'email'         => null,
                 'huella'        => $row->huella,
-                'password'      =>Hash::make('123gd'),
+                'password'      =>Hash::make('123'),
                 'avatar'        =>null,
                 'blocked'       => $row->id==1 ? false : true,
                 'blocked_at'    =>null,

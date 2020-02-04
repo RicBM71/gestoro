@@ -24,19 +24,19 @@ class DatabaseSeeder extends Seeder
         $this->call(BancosTableSeeder::class);
         $this->call(ProductosTableSeeder::class);
 
-        $this->call(KltEmpresaSeeder::class);
-        $this->call(KltUsuariosSeeder::class);
-        $this->call(KltLibrosTableSeeder::class);
-        $this->call(KltClientesSeeder::class);
-        $this->call(KltComprasSeeder::class);
-        $this->call(KltComlinesSeeder::class);
-        $this->call(KltDepositosSeeder::class);
-        $this->call(KltProductosSeeder::class);
-        $this->call(KltContadoresSeeder::class);
-        $this->call(KltAlbaranesSeeder::class);
-        $this->call(KltAlbalinSeeder::class);
-        $this->call(KltCobrosSeeder::class);
-        $this->call(KltCajaSeeder::class);
+        // $this->call(KltEmpresaSeeder::class);
+        // $this->call(KltUsuariosSeeder::class);
+        // $this->call(KltLibrosTableSeeder::class);
+        // $this->call(KltClientesSeeder::class);
+        // $this->call(KltComprasSeeder::class);
+        // $this->call(KltComlinesSeeder::class);
+        // $this->call(KltDepositosSeeder::class);
+        // $this->call(KltProductosSeeder::class);
+        // $this->call(KltContadoresSeeder::class);
+        // $this->call(KltAlbaranesSeeder::class);
+        // $this->call(KltAlbalinSeeder::class);
+        // $this->call(KltCobrosSeeder::class);
+        // $this->call(KltCajaSeeder::class);
 
         // $this->call(EoEmpresasSeeder::class);
         // $this->call(EoUsuariosSeeder::class);
@@ -52,19 +52,19 @@ class DatabaseSeeder extends Seeder
         // $this->call(EoCobrosSeeder::class);
         // $this->call(EoCajaSeeder::class);
 
-        // $this->call(GdEmpresasSeeder::class);
-        // $this->call(GdUsuariosSeeder::class);
-        // $this->call(GdLibrosSeeder::class);
-        // $this->call(GdContadoresSeeder::class);
-        // $this->call(GdClientesSeeder::class);
-        // $this->call(GdComlinesSeeder::class);
-        // $this->call(GdComprasSeeder::class);
-        // $this->call(GdDepositosSeeder::class);
-        // $this->call(GdProductosSeeder::class);
-        // $this->call(GdAlbaranesSeeder::class);
-        // $this->call(GdAlbalinSeeder::class);
-        // $this->call(GdCobrosSeeder::class);
-        // $this->call(GdCajasSeeder::class);
+        $this->call(GdEmpresasSeeder::class);
+        $this->call(GdUsuariosSeeder::class);
+        $this->call(GdLibrosSeeder::class);
+        $this->call(GdContadoresSeeder::class);
+        $this->call(GdClientesSeeder::class);
+        $this->call(GdComlinesSeeder::class);
+        $this->call(GdComprasSeeder::class);
+        $this->call(GdDepositosSeeder::class);
+        $this->call(GdProductosSeeder::class);
+        $this->call(GdAlbaranesSeeder::class);
+        $this->call(GdAlbalinSeeder::class);
+        $this->call(GdCobrosSeeder::class);
+        $this->call(GdCajasSeeder::class);
 
         // $this->call(YjEmpresasSeeder::class);
         // $this->call(YjUsuariosSeeder::class);
