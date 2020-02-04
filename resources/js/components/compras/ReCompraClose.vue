@@ -172,11 +172,10 @@
                             <v-text-field
                                 v-if="compra.factura > 0"
                                 v-model="compra.fac_ser"
-                                label="Factura"
+                                :label="computedFechaFactura"
                                 readonly
                             >
                             </v-text-field>
-
                         </v-flex>
                         <v-flex sm2 v-if="compra.fase_id <=4">
                              <v-dialog
@@ -666,6 +665,10 @@ import {mapGetters} from 'vuex';
             computedFechaCompra() {
                 moment.locale('es');
                 return this.compra.fecha_compra ? moment(this.compra.fecha_compra).format('L') : '';
+            },
+             computedFechaFactura() {
+                moment.locale('es');
+                return this.compra.fecha_factura ? "Factura "+moment(this.compra.fecha_factura).format('L') : '';
             },
             computedFechaRecogida() {
                 moment.locale('es');
