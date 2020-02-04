@@ -32,14 +32,18 @@ class PrintAlbController extends Controller
 
         if ($albaran->cliente->email=='')
             return response('El cliente no tiene email configurado', 403);
-        elseif (session('empresa')->email=='')
-            return response('Configurar email empresa', 403);
+        // elseif (session('empresa')->email=='')
+        //     return response('Configurar email empresa', 403);
+
+        $from = config('mail.from.address');
+
+        //\Log::info($from);
 
         $this->print($albaran->id, true);
 
         $data = [
             'razon'=> session('empresa')->razon,
-            'from'=> session('empresa')->email,
+            'from'=> $from,
             'msg' => null,
             'albaran' => $albaran
         ];
