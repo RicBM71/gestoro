@@ -19,11 +19,11 @@
 	            column
 	            align-center
 	            justify-center
-	            class="white--text"
+	            :class="computedColorTitulo"
 	          >
 
-	            <h1 class="black--text mb-2 display-1 text-xs-center">{{this.empresa.nombre}}</h1>
-	            <div class="black--text subheading mb-3 text-xs-center">Compra - Venta de joyas y metales preciosos</div>
+	            <h1 class="mb-2 display-1 text-xs-center">{{this.empresa.nombre}}</h1>
+	            <div class="subheading mb-3 text-xs-center">Compra - Venta de joyas y metales preciosos</div>
 	          </v-layout>
 	        </v-parallax>
 	      </section>
@@ -143,6 +143,12 @@ import {mapGetters} from 'vuex';
             ...mapGetters([
 				'isLoggedIn'
             ]),
+            computedColorTitulo(){
+                if (this.empresa.img1 == null)
+                    return "black--text";
+                else
+                    return "white--text";
+            }
         },
         data: () => ({
             empresa: {}

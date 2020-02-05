@@ -111,7 +111,7 @@ export default {
                             })
                         .then(res => {
                             this.items = res.data;
-                            console.log(res);
+                            //console.log(res);
                         })
                         .catch(err => {
                             if (err.request.status == 422){ // fallo de validated.

@@ -172,7 +172,7 @@
                             <v-text-field
                                 v-if="compra.factura > 0"
                                 v-model="compra.fac_ser"
-                                label="Factura"
+                                :label="computedFechaFactura"
                                 readonly
                             >
                             </v-text-field>
@@ -670,6 +670,10 @@ import {mapGetters} from 'vuex';
             computedFechaRecogida() {
                 moment.locale('es');
                 return this.compra.fecha_recogida ? moment(this.compra.fecha_recogida).format('L') : '';
+            },
+            computedFechaFactura() {
+                moment.locale('es');
+                return this.compra.fecha_factura ? "Factura "+moment(this.compra.fecha_factura).format('L') : '';
             },
             computedFechaBloqueo() {
                 moment.locale('es');

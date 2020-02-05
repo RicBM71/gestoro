@@ -296,8 +296,9 @@ export default {
             text: 'Etiquetas',
             model: false,
             children: [
-                { icon: 'forward', text: 'Generar Etiquetas Apli', name:'etiquetas.aplipdf' },
+                { icon: 'forward', text: 'Recuentos', name:'recuento.index' },
                 { icon: 'forward', text: 'Importar fichero RFID', name:'rfid.import' },
+                { icon: 'forward', text: 'Generar Etiquetas Apli', name:'etiquetas.aplipdf' },
             ],
         },
         expired: false,

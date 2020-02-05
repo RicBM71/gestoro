@@ -95,3 +95,9 @@ select klt_albaranes.id AS id, fecha_albaran,albaran,serie_albaran,factura, fech
 SELECT albaran,fecha_factura,klt_comlines.importe,importe_venta FROM `klt_compras`, klt_comlines
 where cliente_id = 78097 and klt_compras.id = compra_id
 ORDER BY `klt_compras`.`fecha_factura`  DESC
+
+
+YAJAP:
+
+DELETE FROM `klt_albaranes` where id not in (select albaran_id from klt_albalins)
+DELETE FROM `klt_cobros` where albaran_id not in (select id from klt_albaranes)
