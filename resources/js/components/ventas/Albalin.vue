@@ -64,7 +64,7 @@
                             <td v-else class="text-xs-right font-weight-bold">{{ totales.iva| currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                             <td class="text-xs-right font-weight-bold">TOTAL</td>
                             <td class="text-xs-right font-weight-bold">{{ totales.total| currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
-                            <td class="text-xs-right font-weight-bold">RESTO: {{ computedResto | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
+                            <td class="blue--text darken-1 text-xs-right font-weight-bold">RESTO: {{ computedResto | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                         </template>
                         <template v-slot:expand="props">
                             <v-card flat>
@@ -130,6 +130,7 @@ export default {
            comlines_id:0,
            dialog_lin: false,
            resto: 0,
+           hoy: new Date().toISOString().substr(0, 10),
 
            dialog_edt: false,
 
@@ -207,7 +208,9 @@ export default {
          ...mapGetters([
             'isSupervisor',
             'hasEdtFac',
-            'hasAddVen'
+            'hasAddVen',
+            'userName',
+            'isAdmin'
         ]),
         computedResto(){
             return (this.totales.total - this.acuenta).toFixed(2);
@@ -216,12 +219,18 @@ export default {
             return parseFloat(this.totales.importe) - parseFloat(this.totales.impirpf)  + parseFloat(this.totales.impiva);
         },
         computedEdit(){
+
             if (!this.hasAddVen) return false;
+
             if (this.hasEdtFac) return true;
 
             if (this.albaran.factura > 0 || this.albaran.fase_id > 10 ) return false;
 
-            return true;
+
+            if (this.albaran.username == this.userName && this.albaran.create_at.substr(0, 10) == this.hoy)
+                return true;
+            else
+                return (this.isAdmin);
 
         }
     },

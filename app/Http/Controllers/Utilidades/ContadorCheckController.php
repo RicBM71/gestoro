@@ -66,21 +66,23 @@ class ContadorCheckController extends Controller
                                 ->where('grupo_id', $row->grupo_id)
                                 ->first();
 
-            $data[]=[
-                'empresa'       => $row->empresa,
-                'operacion'     => 'COMPRAS',
-                'nombre'        => $row->serie_com,
-                'contador'      => $row->ult_compra,
-                'recuento'      => $compras->reg,
-            ];
+            if ($row->ult_compra > 0 && $compras->reg > 0)
+               $data[]=[
+                    'empresa'       => $row->empresa,
+                    'operacion'     => 'COMPRAS',
+                    'nombre'        => $row->serie_com,
+                    'contador'      => $row->ult_compra,
+                    'recuento'      => $compras->reg,
+                ];
 
-            $data[]=[
-                'empresa'       => $row->empresa,
-                'operacion'     => 'FACTURAS DE RECUPERACIONES',
-                'nombre'        => $row->serie_com,
-                'contador'      => $row->ult_factura,
-                'recuento'      => $recuperaciones->reg,
-            ];
+            if ($row->ult_factura > 0 && $recuperaciones->reg > 0)
+                $data[]=[
+                    'empresa'       => $row->empresa,
+                    'operacion'     => 'FACTURAS DE RECUPERACIONES',
+                    'nombre'        => $row->serie_com,
+                    'contador'      => $row->ult_factura,
+                    'recuento'      => $recuperaciones->reg,
+                ];
 
         }
 
@@ -110,12 +112,15 @@ class ContadorCheckController extends Controller
                     $tipofac = 'SERIE ABONOS';
                 }
 
+                if ($factura == 0 && $albaran->reg == 0)
+                    continue;
+
                 $data[]=[
-                    'empresa'       => $row->empresa,
-                    'operacion'         => $row->nombre,
-                    'nombre'            => $tipofac,
-                    'contador' => $factura,
-                    'recuento'  => $albaran->reg,
+                    'empresa'    => $row->empresa,
+                    'operacion'  => $row->nombre,
+                    'nombre'     => $tipofac,
+                    'contador'   => $factura,
+                    'recuento'   => $albaran->reg,
                 ];
 
             }

@@ -99,6 +99,10 @@ import TallerIndex from './components/taller/TallerIndex.vue';
 import TallerEdit from './components/taller/TallerEdit.vue';
 import TallerCreate from './components/taller/TallerCreate.vue';
 
+import RecuentoIndex from './components/recuentos/RecuentoIndex.vue';
+import RecuentoEdit from './components/recuentos/RecuentoEdit.vue';
+
+
 import ApunteIndex from './components/apunte/ApunteIndex.vue';
 import ApunteEdit from './components/apunte/ApunteEdit.vue';
 import ApunteCreate from './components/apunte/ApunteCreate.vue';
@@ -632,6 +636,16 @@ export default [
                 path: '/talleres/:id/edit',
                 name: 'taller.edit',
                 component: TallerEdit,
+            },
+            {
+                path: '/recuentos',
+                name: 'recuento.index',
+                component: RecuentoIndex,
+            },
+            {
+                path: '/recuentos/:id/edit',
+                name: 'recuento.edit',
+                component: RecuentoEdit,
             },
             {
                 path: '/intercambio',

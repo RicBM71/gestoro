@@ -674,6 +674,10 @@ import {mapGetters} from 'vuex';
                 moment.locale('es');
                 return this.compra.fecha_recogida ? moment(this.compra.fecha_recogida).format('L') : '';
             },
+            computedFechaFactura() {
+                moment.locale('es');
+                return this.compra.fecha_factura ? "Factura "+moment(this.compra.fecha_factura).format('L') : '';
+            },
             computedFechaBloqueo() {
                 moment.locale('es');
                 return this.compra.fecha_bloqueo ? moment(this.compra.fecha_bloqueo).format('L') : '';

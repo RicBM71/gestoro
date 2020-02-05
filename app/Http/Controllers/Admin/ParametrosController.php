@@ -32,7 +32,7 @@ class ParametrosController extends Controller
      */
     public function update(Request $request, Parametro $parametro)
     {
-        
+
         $data = $request->validate([
 
             'lim_efe'        => ['required','numeric'],
@@ -55,7 +55,7 @@ class ParametrosController extends Controller
     public function main(Request $request){
 
         $this->validate(request(),[
-    		'imagen' => 'required|image|max:256'	//jpeg png, gif, svg
+    		'imagen' => 'required|image|max:1024'	//jpeg png, gif, svg
         ]);
 
         $parametro = Parametro::findOrFail(1);
@@ -80,7 +80,7 @@ class ParametrosController extends Controller
     public function section(Request $request){
 
         $this->validate(request(),[
-    		'imagen' => 'required|image|max:256'	//jpeg png, gif, svg
+    		'imagen' => 'required|image|max:1024'	//jpeg png, gif, svg
         ]);
 
         $parametro = Parametro::findOrFail(1);

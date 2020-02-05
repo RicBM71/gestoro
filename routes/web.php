@@ -114,7 +114,7 @@ Route::group([
         Route::resource('contadores', 'ContadoresController', ['as' => 'mto']);
         Route::post('contadores/filtrar', 'ContadoresController@filtrar');
 
-
+        Route::resource('recuentos', 'RecuentosController', ['as' => 'mto']);
 
         // Route::middleware('role:Root|Admin')->group(function () {
         //     Route::resource('transferencias', 'TransferenciasController', ['as' => 'mto']);

@@ -178,7 +178,7 @@ import {mapActions} from "vuex";
         url: "/mto/productos",
         ruta: "producto",
 
-        filtro: false
+        filtro: true
 
       }
     },

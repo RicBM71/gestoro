@@ -10,7 +10,7 @@
                             <v-spacer></v-spacer>
                         </v-card-title>
                     </v-card>
-                    <v-card>
+                    <v-card v-show="load">
                         <v-form>
                             <v-container grid-list-md text-xs-center>
                                 <v-layout row wrap>
@@ -51,6 +51,36 @@
                             </v-container>
                         </v-form>
                     </v-card>
+                    <v-card v-show="!load">
+                        <v-layout row wrap>
+                            <v-flex sm12>
+                                <table class="v-datatable v-table theme--light">
+                                    <thead>
+                                        <tr>
+                                            <th>Concepto</th>
+                                            <th>Registros</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(item, index) in items" :key="index">
+                                            <td class="text-xs-left">{{item.nombre}}</td>
+                                            <td class="text-xs-center">{{ item.registros | currency('', 0, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </v-flex>
+                        </v-layout>
+                        <v-layout row wrap>
+                            <v-flex sm9></v-flex>
+                            <v-flex sm2>
+                                <div class="text-xs-center">
+                                    <v-btn @click="detalle"  round flat  :loading="loading" block  color="primary">
+                                        Detalle Recuento
+                                    </v-btn>
+                                </div>
+                            </v-flex>
+                        </v-layout>
+                    </v-card>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -72,10 +102,12 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
       		return {
                 titulo:"Importar ficheros de etiquetas",
 
+                load: true,
+
                 dropzoneOptions: {
                     url: '/rfid/upload',
                     paramName: 'file',
-                    acceptedFiles: '.txt,.csv',
+                    acceptedFiles: '.txt,.csv,.rf',
                     thumbnailWidth: 150,
                     maxFiles: 1,
                     maxFilesize: 2,
@@ -89,6 +121,8 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
                     {value: 'R', text: 'Importar Recuento'},
                     {value: 'L', text: 'Importar Localizadas'},
                 ],
+
+                items:[],
 
                 operacion: 'R',
 
@@ -110,53 +144,13 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
         },
     	methods:{
             upload(file, response){
-                console.log(response);
+
+                this.load = false;
+                this.items = response;
+
             },
-            submit() {
-                if (this.loading === false){
-                    this.loading = true;
-                    this.$validator.validateAll().then((result) => {
-                        if (result){
-
-                            axios.post("/utilidades/intercambio",
-                                    {   albaran: this.albaran,
-                                        serie: this.serie,
-                                        albaran_des: this.albaran_d,
-                                        serie_des: this.serie_d,
-                                        ejercicio: this.ejercicio
-                                    }
-                                )
-                                .then(res => {
-                                    this.$toast.success('Intercambio Ok!');
-                                    this.loading = false;
-                                })
-                                .catch(err => {
-
-                                    this.loading = false;
-
-                                    if (err.request.status == 422){ // fallo de validated.
-                                        const msg_valid = err.response.data.errors;
-                                        for (const prop in msg_valid) {
-                                            this.errors.add({
-                                                field: prop,
-                                                msg: `${msg_valid[prop]}`
-                                            })
-                                        }
-                                    }else{
-                                        this.$toast.error(err.response.data.message);
-                                    }
-
-                                });
-                            }
-                        else{
-                            this.loading = false;
-                        }
-                    });
-                }
-
-
-
-
+            detalle() {
+                this.$router.push({ name: 'recuento.index' })
             }
         }
   }

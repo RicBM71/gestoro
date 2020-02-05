@@ -13,7 +13,7 @@ class FindAlbaranesController extends Controller
 
         if (request()->wantsJson())
             return [
-                'contador_def' => Contador::distinct()->orderBy('ejercicio','desc')->first() //DB::table('libros')->distinct()->first()
+                'contador_def' => Contador::distinct()->orderBy('ejercicio','desc')->orderBy('serie_albaran')->first() //DB::table('libros')->distinct()->first()
             ];
 
     }
