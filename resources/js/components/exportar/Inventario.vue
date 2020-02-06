@@ -70,11 +70,22 @@
                             <v-select
                                 v-model="cliente_id"
                                 v-validate="'numeric'"
-                                data-vv-name="cliente"
-                                data-vv-as="cliente_id"
+                                data-vv-name="cliente_id"
+                                data-vv-as="cliente"
                                 :error-messages="errors.collect('cliente_id')"
                                 :items="asociados"
                                 label="Proveedor"
+                                ></v-select>
+                        </v-flex>
+                        <v-flex sm2>
+                            <v-select
+                                v-model="estado_id"
+                                v-validate="'numeric'"
+                                data-vv-name="essado"
+                                data-vv-as="estado"
+                                :error-messages="errors.collect('cliente_id')"
+                                :items="estados"
+                                label="Inventario"
                                 ></v-select>
                         </v-flex>
                         <v-flex sm1>
@@ -194,6 +205,11 @@ export default {
                 value: 'ref_pol',
                 width: '10%'
             },],
+            estados:[
+                {value: 2, text: 'En Venta'},
+                {value: 3, text: 'Reservas'},
+                {value: null, text: 'Todo'},
+            ],
             pagination:{
                 rowsPerPage: 10,
             },
@@ -203,6 +219,7 @@ export default {
             grupo_id: null,
             clase_id: null,
             cliente_id: null,
+            estado_id: null,
             show_loading: false,
             ejercicio:new Date().toISOString().substr(0, 4),
             show_filtro: true,
@@ -258,7 +275,8 @@ export default {
                             data:{
                                 cliente_id: this.cliente_id,
                                 clase_id: this.clase_id,
-                                grupo_id:  this.grupo_id
+                                grupo_id:  this.grupo_id,
+                                estado_id: this.estado_id
                             }
                             })
                         .then(res => {

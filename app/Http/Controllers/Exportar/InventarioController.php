@@ -20,6 +20,7 @@ class InventarioController extends Controller
         $data = $request->validate([
             'cliente_id'  => ['nullable','integer'],
             'clase_id'    => ['nullable','integer'],
+            'estado_id'    => ['nullable','integer'],
             'grupo_id'    => ['required','integer'],
         ]);
 
@@ -34,6 +35,7 @@ class InventarioController extends Controller
                     ->select('productos.*')
                     ->join('clases','clase_id','=','clases.id')
                     ->asociado($data['cliente_id'])
+                    ->estado($data['estado_id'])
                     ->clase($data['clase_id'])
                     ->whereIn('estado_id',[1,2,3])
                     ->grupo($data['grupo_id'])

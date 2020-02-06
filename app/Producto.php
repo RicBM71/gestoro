@@ -306,7 +306,6 @@ Class Producto extends Model
 
     }
 
-
     public static function productosREBU($referencia)
     {
         if (strpos($referencia,'.') !== false){
