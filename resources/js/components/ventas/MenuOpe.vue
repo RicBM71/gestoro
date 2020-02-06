@@ -203,10 +203,10 @@ export default {
             'hasAddVen'
         ]),
         computedReaCli(){
-            if (this.isAdmin)
+            if (this.isSupervisor)
                 return (this.albaran.id > 0);
             else
-                return (this.albaran.id > 0 && this.albaran.factura == 0 && this.albaran.fase_id == 10);
+                return (this.albaran.id > 0 && this.albaran.factura == null && this.albaran.fase_id == 10);
         },
         computedMail(){
 

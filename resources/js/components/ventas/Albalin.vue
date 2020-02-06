@@ -230,7 +230,7 @@ export default {
             if (this.albaran.username == this.userName && this.albaran.create_at.substr(0, 10) == this.hoy)
                 return true;
             else
-                return (this.isAdmin);
+                return (this.isSupervisor);
 
         }
     },
