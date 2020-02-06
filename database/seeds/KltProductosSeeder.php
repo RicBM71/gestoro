@@ -2,8 +2,10 @@
 
 use App\Empresa;
 use App\Producto;
+use App\Scopes\EmpresaScope;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Scopes\EmpresaProductoScope;
 
 class KltProductosSeeder extends Seeder
 {
@@ -18,15 +20,7 @@ class KltProductosSeeder extends Seeder
     public function run()
     {
         // $empresa = '1,2';
-        // $cruce_alm_emp[1]=1; // bombo
-        // $cruce_alm_emp[2]=9;  // edel
-        // $cruce_alm_emp[3]=11; // gold
-        // $cruce_alm_emp[4]=12; //recupera
-        // $cruce_alm_emp[5]=13; // maravillas
-        // $cruce_alm_emp[6]=0; //banco
-        // $cruce_alm_emp[7]=14; // chollo o.
-        // $cruce_alm_emp[8]=15; // bravo m
-        // $cruce_alm_emp[9]=16;  // prestige
+
 
         // $etiqueta['N']=1; //no
         // $etiqueta['S']=2; // sí
@@ -34,6 +28,23 @@ class KltProductosSeeder extends Seeder
         // $etiqueta['I']=4; // ya impresa
         // $etiqueta['Y']=4; // ya impresa con pvp
         // $etiqueta['D']=5; // ya impresa con pvp
+
+        session(['empresa' => Empresa::find(1)]);
+
+        // $pro_old = DB::connection('quilates')->select('select * from productos ORDER BY id');
+        // foreach ($pro_old as $row) {
+        //     # code...
+
+        //     $p = DB::table('productos')->select()->where('id', $row->id)->first();
+
+        //     if ($p == "")
+        //         \Log::info($row->empresa.' T:'.$row->tienda.' ID: '.$row->id);
+        //     // else
+        //     //     \Log::info($p->nombre);
+
+        // }
+
+        // return;
 
         Producto::truncate();
 
@@ -55,6 +66,16 @@ class KltProductosSeeder extends Seeder
 
 
     private function crearLineas($contador){
+
+        $cruce_alm_emp[1]=1; // bombo
+        $cruce_alm_emp[2]=9;  // edel
+        $cruce_alm_emp[3]=11; // gold
+        $cruce_alm_emp[4]=12; //recupera
+        $cruce_alm_emp[5]=13; // maravillas
+        $cruce_alm_emp[6]=0; //banco
+        $cruce_alm_emp[7]=14; // chollo o.
+        $cruce_alm_emp[8]=15; // bravo m
+        $cruce_alm_emp[9]=16;  // prestige
 
         $etiqueta['N']=1; //no
         $etiqueta['S']=2; // sí
@@ -153,8 +174,8 @@ class KltProductosSeeder extends Seeder
                 'empresa_id' => $contador->emp_alb,
                 //'empresa_id' => $cruce_alm_emp[$row->almacen],
                 'almacen_id' => null,
-                //'destino_empresa_id' => $cruce_alm_emp[$row->almacen],
-                'destino_empresa_id' => $contador->emp_alb,
+                'destino_empresa_id' => ($row->almacen == 0 || $row->almacen== 6) ? $contador->emp_alb : $cruce_alm_emp[$row->almacen],
+                // 'destino_empresa_id' => $contador->emp_alb,
                 'nombre' => $row->nombre,
                 'nombre_interno' => $row->nomint,
                 'clase_id' => $clase,

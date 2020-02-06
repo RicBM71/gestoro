@@ -171,6 +171,13 @@ class PrintAlbController extends Controller
         PDF::setXY(165,14);
         PDF::MultiCell(36, 8,  $num_doc,'', 'C', 1, 1, '', '', true,0,false,true,8,'M',false);
 
+        if ($this->albaran->factura > 0 && $this->albaran->tipo_id >= 4){
+            PDF::setXY(12,54);
+            PDF::SetFont('helvetica', 'R',8, '', false);
+            PDF::MultiCell(50, 6,  "ALBARÁN ".$this->albaran->alb_ser.' - '.getFecha($this->albaran->fecha_albaran),'', 'C', 1, 1, '', '', true,0,false,true,6,'M',false);
+        }
+
+
         PDF::SetFont('helvetica', '', 9, '', false);
         PDF::setXY(115,30);
         PDF::MultiCell(90, 5,  'NIF.: '.$this->albaran->cliente->dni,'', 'L', 0, 1, '', '', true,0,false,true,5,'M',false);

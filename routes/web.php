@@ -341,7 +341,8 @@ Route::group([
     function (){
 
 
-        Route::post('/upload', 'ImportRfidController@upload');
+        Route::post('/recuento', 'ImportRfidController@recuento');
+        Route::post('/localizar', 'ImportRfidController@localizar');
 
 
 

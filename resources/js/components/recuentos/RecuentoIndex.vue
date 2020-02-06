@@ -127,7 +127,7 @@ import MenuOpe from './MenuOpe'
             {
             text: 'Situación',
             align: 'left',
-            value: 'telefono1'
+            value: 'rfid.nombre'
             },
             {
             text: 'Acciones',

@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use App\Imports\RecuentoRfidImport;
 use App\Http\Controllers\Controller;
+use App\Imports\LocalizarRfidImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,7 +22,7 @@ class ImportRfidController extends Controller
 
     }
 
-    public function upload(Request $request){
+    public function recuento(Request $request){
 
         $data = $this->validate(request(),[
     		'file' => 'required|mimetypes:text/plain|max:256'
@@ -82,14 +83,45 @@ class ImportRfidController extends Controller
 
         DB::table('recuentos')->insert($data);
 
+        // borro los ok
+
+        // DB::table('recuentos')->where('empresa_id', session('empresa_id'))
+        //                       ->where('rfid_id', 1)
+        //                       ->delete();
+
+       // \Log::info(session('empresa_id'));
+
+         DB::table('recuentos')->where('empresa_id', session('empresa_id'))
+                               ->whereIn('rfid_id',[1,6])
+                               ->delete();
+
+
+        return $this->load();
+
+
+    }
+
+    public function localizar(Request $request){
+        
+
+        $data = $this->validate(request(),[
+    		'file' => 'required|mimetypes:text/plain|max:256'
+        ]);
+
+        Excel::import(new LocalizarRfidImport, request()->file('file'));
+
+        return $this->load();
+
+    }
+
+    private function load(){
+
         return DB::table('recuentos')->select(DB::raw(DB::getTablePrefix().'rfids.nombre AS nombre, COUNT(*) AS registros'))
                     ->join('rfids', 'rfids.id', '=', 'recuentos.rfid_id')
                     ->where('empresa_id', session('empresa_id'))
                     ->where('fecha', date('Y-m-d'))
                     ->groupBy('nombre')
                     ->get();
-
-
     }
 
 

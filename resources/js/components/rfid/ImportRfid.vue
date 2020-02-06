@@ -18,7 +18,7 @@
                                     <v-flex sm4 d-flex>
                                         <v-select
                                             v-model="operacion"
-                                            v-validate="'numeric|required'"
+                                            v-validate="'max:1|required'"
                                             :error-messages="errors.collect('operacion')"
                                             data-vv-name="operacion"
                                             data-vv-as="operación"
@@ -31,10 +31,18 @@
                                     <v-flex sm3></v-flex>
                                     <v-flex sm6 d-flex>
                                         <vue-dropzone
+                                                v-show="operacion=='R'"
                                                 ref="myVueDropzone"
                                                 id="dropzone"
                                                 :options="dropzoneOptions"
                                                 v-on:vdropzone-success="upload"
+                                        ></vue-dropzone>
+                                        <vue-dropzone
+                                                v-show="operacion=='L'"
+                                                ref="myVueDropzone2"
+                                                id="dropzone2"
+                                                :options="dropzoneOptions2"
+                                                v-on:vdropzone-success="localizar"
                                         ></vue-dropzone>
                                     </v-flex>
                                 </v-layout>
@@ -105,7 +113,7 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
                 load: true,
 
                 dropzoneOptions: {
-                    url: '/rfid/upload',
+                    url: '/rfid/recuento',
                     paramName: 'file',
                     acceptedFiles: '.txt,.csv,.rf',
                     thumbnailWidth: 150,
@@ -114,7 +122,20 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
                     headers: {
 		    		    'X-CSRF-TOKEN':  window.axios.defaults.headers.common['X-CSRF-TOKEN']
                     },
-                    dictDefaultMessage: 'Arrastra el fichero a subir aquí'
+                    dictDefaultMessage: 'Arrastra el fichero recuento a subir aquí'
+                },
+
+                dropzoneOptions2: {
+                    url: '/rfid/localizar',
+                    paramName: 'file',
+                    acceptedFiles: '.txt,.csv,.rf',
+                    thumbnailWidth: 150,
+                    maxFiles: 1,
+                    maxFilesize: 2,
+                    headers: {
+		    		    'X-CSRF-TOKEN':  window.axios.defaults.headers.common['X-CSRF-TOKEN']
+                    },
+                    dictDefaultMessage: 'Arrastra el fichero de localizadas a subir aquí'
                 },
 
                 operaciones:[
@@ -144,6 +165,12 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
         },
     	methods:{
             upload(file, response){
+
+                this.load = false;
+                this.items = response;
+
+            },
+            localizar(file, response){
 
                 this.load = false;
                 this.items = response;
