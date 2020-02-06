@@ -227,7 +227,7 @@ export default {
             if (this.albaran.factura > 0 || this.albaran.fase_id > 10 ) return false;
 
 
-            if (this.albaran.username == this.userName && this.albaran.create_at.substr(0, 10) == this.hoy)
+            if (this.albaran.username == this.userName && this.albaran.created_at.substr(0, 10) == this.hoy)
                 return true;
             else
                 return (this.isSupervisor);
