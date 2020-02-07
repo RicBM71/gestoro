@@ -37,9 +37,10 @@ class LiquidarController extends Controller
             'fecha_liq' => ['required','date'],
             'tipo_id'   => ['required','integer'],
             'clase_id'  => ['required','integer'],
+            'saltar_bloqueo'   => ['required','boolean'],
         ]);
 
-        $lineas = $this->obtenerLineasPreLiquidado($data['fecha_h'],$data['tipo_id'],$data['clase_id']);
+        $lineas = $this->obtenerLineasPreLiquidado($data['fecha_h'],$data['tipo_id'],$data['clase_id'],$data['saltar_bloqueo']);
         $total_gr = $lineas->sum('peso_gr');
 
         if (request()->wantsJson())
@@ -59,8 +60,12 @@ class LiquidarController extends Controller
      * @param $clase_id
      *
      */
-    private function obtenerLineasPreLiquidado($h,$tipo_id,$clase_id){
+    private function obtenerLineasPreLiquidado($h,$tipo_id,$clase_id,$saltar_bloqueo){
 
+        if ($saltar_bloqueo == true)
+            $fecha_limite = "2999-12-31"    ;
+        else
+            $fecha_limite = Carbon::today()->format('Y-m-d');
 
         return DB::table('compras')
             ->join('comlines', 'compras.id', '=', 'comlines.compra_id')
@@ -71,7 +76,7 @@ class LiquidarController extends Controller
                              'CONCAT('.DB::getTablePrefix().'clases.nombre," ",'.DB::getTablePrefix().'comlines.quilates) AS nombre,peso_gr,'.DB::getTablePrefix().'comlines.importe'))
                 ->where('compras.empresa_id',session('empresa')->id)
                 ->whereDate('fecha_compra','<=', $h)
-            //    ->whereDate('fecha_bloqueo','<', Carbon::today()->format('Y-m-d'))
+                ->whereDate('fecha_bloqueo','<', $fecha_limite)
                 ->whereIn('fase_id', [4,6])
                 ->where('tipo_id',$tipo_id)
                 ->where('clase_id',$clase_id)
@@ -298,9 +303,10 @@ class LiquidarController extends Controller
             'fecha_liq' => ['required','date'],
             'tipo_id'   => ['required','integer'],
             'clase_id'  => ['required','integer'],
+            'saltar_bloqueo'   => ['required','boolean'],
         ]);
 
-        $compras = $this->obtenerLineasPreLiquidado($data['fecha_h'],$data['tipo_id'],$data['clase_id']);
+        $compras = $this->obtenerLineasPreLiquidado($data['fecha_h'],$data['tipo_id'],$data['clase_id'], $data['saltar_bloqueo']);
 
         $lineas_id = $compras->pluck('id');
 

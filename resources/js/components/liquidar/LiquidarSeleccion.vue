@@ -12,7 +12,7 @@
             <v-form>
                 <v-container>
                     <v-layout row wrap>
-                        <v-flex sm2 d-flex>
+                        <v-flex sm1 d-flex>
                                 <v-select
                                     v-model="parametros.tipo_id"
                                     :items="tipos"
@@ -92,13 +92,21 @@
                                     ></v-date-picker>
                             </v-menu>
                         </v-flex>
-                        <v-flex sm3 d-flex>
+                        <v-flex sm2 d-flex>
                             <v-select
                                 v-model="parametros.accion"
                                 :items="acciones"
                                 label="Acción"
                                 @change="selectAccion"
                             ></v-select>
+                        </v-flex>
+                        <v-flex sm2>
+                            <v-switch
+                                label="Saltar Bloqueo"
+                                v-model="parametros.saltar_bloqueo"
+                                color="primary"
+                                >
+                            ></v-switch>
                         </v-flex>
                         <v-flex sm1>
                             <v-btn @click="submit" :loading="loading" round small block flat color="info">
@@ -166,6 +174,7 @@ export default {
                 fecha_d: new Date().toISOString().substr(0, 7)+"-01",
                 fecha_h: new Date().toISOString().substr(0, 10),
                 fecha_liq: new Date().toISOString().substr(0, 10),
+                saltar_bloqueo: false
             },
             menu_h: false,
             menu_d: false,
