@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Mto;
 
+use App\Rfid;
 use App\Recuento;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -21,6 +22,38 @@ class RecuentosController extends Controller
             return $data;
     }
 
+    public function filtrar(Request $request)
+    {
+
+        $data = $request->validate([
+            'rfid_id' => ['nullable','integer'],
+        ]);
+
+        session(['filtro_rec' => $data]);
+
+        if (request()->wantsJson()){
+            return $this->seleccionar();
+        }
+
+    }
+
+    /**
+     *  @param array $data // condiciones where genéricas
+     *  @param array $doc  // condiciones para documentos
+     */
+    private function seleccionar(){
+
+        $data = session('filtro_rec');
+
+
+        return Recuento::with(['producto','rfid','estado'])
+                        ->rfid($data['rfid_id'])
+                        ->get();
+
+
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -28,7 +61,7 @@ class RecuentosController extends Controller
      */
     public function create()
     {
-        //
+        return  Rfid::selRfid();
     }
 
     /**

@@ -115,6 +115,7 @@ Route::group([
         Route::post('contadores/filtrar', 'ContadoresController@filtrar');
 
         Route::resource('recuentos', 'RecuentosController', ['as' => 'mto']);
+        Route::post('recuentos/filtrar', 'RecuentosController@filtrar');
 
         // Route::middleware('role:Root|Admin')->group(function () {
         //     Route::resource('transferencias', 'TransferenciasController', ['as' => 'mto']);
@@ -343,6 +344,9 @@ Route::group([
 
         Route::post('/recuento', 'ImportRfidController@recuento');
         Route::post('/localizar', 'ImportRfidController@localizar');
+
+        Route::get('/exportar', 'ExportRfidController@index');
+        Route::post('/exportar/download', 'ExportRfidController@download');
 
 
 

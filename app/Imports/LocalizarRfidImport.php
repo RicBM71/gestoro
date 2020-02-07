@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Recuento;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
 
@@ -18,6 +19,7 @@ class LocalizarRfidImport implements ToCollection, WithCustomCsvSettings
         $i=0;
 
         $data=array();
+        $nuevas = array();
         foreach ($collection as $row)
         {
 
@@ -35,23 +37,37 @@ class LocalizarRfidImport implements ToCollection, WithCustomCsvSettings
 
             $id = (int) str_replace('#!','',$row[1]);
 
-            $recuento = Recuento::where('producto_id',$id)->first();
+            try {
+                $recuento = Recuento::where('producto_id',$id)->firstOrFail();
 
-            \Log::info($recuento);
+                $data=[
+                    'rfid_id'           => $recuento->rfid_id + 10,
+                    'username'          => session('username'),
+                ];
 
-            if ($recuento == null)
-                continue;
+                $recuento->update($data);
 
-            $data[]=array(
-                'rfid_id'           => $recuento->rfid_id + 10,
-                'username'          => session('username'),
-            );
 
-            $recuento->update($data);
+            } catch (\Exception $e) {
+
+                $nuevas[]=array(
+                    'empresa_id'        => session('empresa_id'),
+                    'fecha'             => date('Y-m-d'),
+                    'producto_id'       => $id,
+                    'estado_id'         => null,
+                    'rfid_id'           => 2,
+                    'username'          => session('username'),
+                    'updated_at'        => Carbon::now(),
+                    'created_at'        => Carbon::now(),
+                );
+
+            }
 
             $i++;
 
         }
+
+        DB::table('recuentos')->insert($nuevas);
 
     }
 

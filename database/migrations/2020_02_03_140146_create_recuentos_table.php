@@ -19,7 +19,7 @@ class CreateRecuentosTable extends Migration
             $table->date('fecha')->required();
             $table->unsignedInteger('producto_id')->nullable();
             $table->unsignedInteger('estado_id')->nullable();
-            $table->unsignedInteger('producto_id_rfid')->nullable();
+            $table->unsignedInteger('rfid_producto_id')->nullable();
             $table->unsignedInteger('destino_empresa_id')->nullable();
             $table->unsignedInteger('rfid_id')->nullable();
             $table->string('username',30)->nullable();

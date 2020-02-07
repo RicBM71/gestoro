@@ -7,8 +7,25 @@
                     <v-card-title>
                         <h2>{{titulo}}</h2>
                         <v-spacer></v-spacer>
+                        <v-spacer></v-spacer>
+                        <v-tooltip bottom>
+                            <template v-slot:activator="{ on }">
+                                <v-btn
+                                    v-on="on"
+                                    color="white"
+                                    icon
+                                    @click="filtro = !filtro"
+                                >
+                                    <v-icon color="primary">filter_list</v-icon>
+                                </v-btn>
+                            </template>
+                            <span>Filtros</span>
+                        </v-tooltip>
                         <menu-ope></menu-ope>
                     </v-card-title>
+                </v-card>
+                <v-card v-show="filtro">
+                    <filtro-rec :filtro.sync="filtro" :items.sync="items"></filtro-rec>
                 </v-card>
                 <v-card>
                     <v-container>
@@ -89,11 +106,13 @@ import moment from 'moment'
 import MyDialog from '@/components/shared/MyDialog'
 import Loading from '@/components/shared/Loading'
 import MenuOpe from './MenuOpe'
+import FiltroRec from './FiltroRec'
   export default {
     components: {
         'my-dialog': MyDialog,
         'menu-ope': MenuOpe,
         'loading': Loading,
+        'filtro-rec': FiltroRec
     },
     data () {
       return {
@@ -135,6 +154,7 @@ import MenuOpe from './MenuOpe'
             value: ''
             }
         ],
+        filtro: false,
         item_destroy: {},
         items:[],
         status: false,

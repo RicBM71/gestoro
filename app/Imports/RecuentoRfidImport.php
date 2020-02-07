@@ -25,7 +25,7 @@ class RecuentoRfidImport implements ToCollection, WithCustomCsvSettings
                 break;
 
             if ($row[0] != '02')
-                return abort(403, "El formato del fichero no es correcto");
+                return abort(403, "El formato del fichero no es correcto ".$row[0]);
 
             if ($i==0){
                 DB::table('recuentos')->where('empresa_id', session('empresa_id'))->delete();
@@ -37,7 +37,7 @@ class RecuentoRfidImport implements ToCollection, WithCustomCsvSettings
                 'empresa_id'        => session('empresa_id'),
                 'fecha'             => date('Y-m-d'),
                 'rfid_id'           => 1,
-                'producto_id_rfid'  => str_replace('#!','',$row[1]),
+                'rfid_producto_id'  => str_replace('#!','',$row[1]),
                 'username'          => session('username'),
                 'updated_at'        => Carbon::now(),
                 'created_at'        => Carbon::now(),

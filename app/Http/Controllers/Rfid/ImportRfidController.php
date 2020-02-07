@@ -34,13 +34,13 @@ class ImportRfidController extends Controller
 
 
             // ACTUALIZO id producto
-        DB::update(DB::RAW('UPDATE klt_recuentos SET producto_id = (SELECT id FROM klt_productos WHERE klt_productos.id = producto_id_rfid) WHERE empresa_id='.session('empresa_id')));
+        DB::update(DB::RAW('UPDATE klt_recuentos SET producto_id = (SELECT id FROM klt_productos WHERE klt_productos.id = rfid_producto_id) WHERE empresa_id='.session('empresa_id')));
 
             // ACTUALIZO Ubicación
-        DB::update(DB::RAW('UPDATE klt_recuentos SET destino_empresa_id = (SELECT destino_empresa_id FROM klt_productos WHERE klt_productos.id = producto_id_rfid) WHERE empresa_id='.session('empresa_id')));
+        DB::update(DB::RAW('UPDATE klt_recuentos SET destino_empresa_id = (SELECT destino_empresa_id FROM klt_productos WHERE klt_productos.id = rfid_producto_id) WHERE empresa_id='.session('empresa_id')));
 
             // ACTUALIZO estado
-        DB::update(DB::RAW('UPDATE klt_recuentos SET estado_id = (SELECT estado_id FROM klt_productos WHERE klt_productos.id = producto_id_rfid) WHERE empresa_id='.session('empresa_id')));
+        DB::update(DB::RAW('UPDATE klt_recuentos SET estado_id = (SELECT estado_id FROM klt_productos WHERE klt_productos.id = rfid_producto_id) WHERE empresa_id='.session('empresa_id')));
 
             // Mal ubicadas
         DB::update(DB::RAW('UPDATE klt_recuentos SET rfid_id = 2 WHERE empresa_id='.session('empresa_id')).' AND empresa_id <> destino_empresa_id');
@@ -102,7 +102,7 @@ class ImportRfidController extends Controller
     }
 
     public function localizar(Request $request){
-        
+
 
         $data = $this->validate(request(),[
     		'file' => 'required|mimetypes:text/plain|max:256'

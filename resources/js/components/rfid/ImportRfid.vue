@@ -35,6 +35,7 @@
                                                 ref="myVueDropzone"
                                                 id="dropzone"
                                                 :options="dropzoneOptions"
+                                                v-on:vdropzone-error="vderror"
                                                 v-on:vdropzone-success="upload"
                                         ></vue-dropzone>
                                         <vue-dropzone
@@ -42,6 +43,7 @@
                                                 ref="myVueDropzone2"
                                                 id="dropzone2"
                                                 :options="dropzoneOptions2"
+                                                v-on:vdropzone-error="vderror2"
                                                 v-on:vdropzone-success="localizar"
                                         ></vue-dropzone>
                                     </v-flex>
@@ -79,8 +81,16 @@
                             </v-flex>
                         </v-layout>
                         <v-layout row wrap>
-                            <v-flex sm9></v-flex>
-                            <v-flex sm2>
+                            <v-flex sm4></v-flex>
+                            <v-flex sm3>
+                                <!-- <div class="text-xs-center">
+                                    <v-btn @click="load = !load"  round flat  block  color="primary">
+                                        Upload
+                                    </v-btn>
+                                </div> -->
+                            </v-flex>
+                            <v-flex sm1></v-flex>
+                            <v-flex sm3>
                                 <div class="text-xs-center">
                                     <v-btn @click="detalle"  round flat  :loading="loading" block  color="primary">
                                         Detalle Recuento
@@ -108,7 +118,7 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 		},
     	data () {
       		return {
-                titulo:"Importar ficheros de etiquetas",
+                titulo:"Importar ficheros de etiquetas RFID",
 
                 load: true,
 
@@ -164,11 +174,21 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
             ]),
         },
     	methods:{
-            upload(file, response){
+            vderror(file, message, xhr){
 
+                this.$toast.error(message.message);
+                this.$refs.myVueDropzone.removeAllFiles()
+
+            },
+            vderror2(file, message, xhr){
+
+                this.$toast.error(message.message);
+                this.$refs.myVueDropzone2.removeAllFiles()
+
+            },
+            upload(file, response){
                 this.load = false;
                 this.items = response;
-
             },
             localizar(file, response){
 
