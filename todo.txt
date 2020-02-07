@@ -100,3 +100,8 @@ YAJAP:
 
 DELETE FROM `klt_albaranes` where id not in (select albaran_id from klt_albalins)
 DELETE FROM `klt_cobros` where albaran_id not in (select id from klt_albaranes)
+
+ver compras sin línea depósito
+SELECT * FROM `klt_compras` where id not in(select DISTINCT compra_id from klt_depositos)
+
+cambiar serie a C en comple

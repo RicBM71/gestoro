@@ -29,11 +29,17 @@ class YjAlbaranesSeeder extends Seeder
             if (strlen($row->serie) > 3)
                 $row->serie = substr($row->serie,0,3);
 
+            if ($empresa_id == 2)
+                $tipo = $row->tipo == 3 ? 'C' : 'D';
+            else
+                $tipo = $row->tipo == 3 ? 'R' : 'V';
+
+
             $data[]=array(
                 'empresa_id' => $empresa_id,
                 'id'=> $row->id,
                 'tipo_id' => $row->tipo,
-                'serie_albaran' => $row->tipo == 3 ? 'R' : 'V',
+                'serie_albaran' => $tipo,
                 'albaran' => $row->albaran,
                 'fase_id' => $row->estado==20 ? 11 : $row->estado,
                 'cliente_id' => $row->cliente,

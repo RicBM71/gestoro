@@ -65,7 +65,7 @@ class YjDepositosSeeder extends Seeder
             $data[]=array(
                 'id'    => $row->id,
                 'compra_id' => $row->albaran,
-                'empresa_id'=> $row->empresa, // de depo
+                'empresa_id'=> $empresa_id, // de depo
                 'fecha' => $row->fecha,
                 'cliente_id' => $row->cliente,
                 'dias' => $row->dias,
