@@ -16,7 +16,7 @@
             </v-layout>
             <br/>
             <v-layout row wrap>
-                <v-flex xs12>
+                <v-flex xs12 v-if="registros">
                     <v-data-table
                     :headers="headers"
                     :items="arr_reg"
@@ -26,14 +26,16 @@
                     rows-per-page-text="Registros por página"
                     >
                         <template slot="items" slot-scope="props">
-                            <td>{{ props.item.albaran.alb_ser }}</td>
-                            <td>{{ formatDate(props.item.albaran.fecha_albaran) }}</td>
-                            <td>{{ props.item.albaran.fac_ser }}</td>
-                            <td>{{ formatDate(props.item.albaran.fecha_factura) }}</td>
-                            <td :class="props.item.albaran.fase.color">{{ props.item.albaran.fase.nombre }}</td>
-                            <td>{{ props.item.albaran.notas }}</td>
+                            <td>{{ props.item.empresa}}</td>
+                            <td>{{ props.item.serie_albaran+props.item.albaran }}</td>
+                            <td>{{ formatDate(props.item.fecha_albaran) }}</td>
+                            <td>{{ props.item.serie_factura+props.item.factura }}</td>
+                            <td>{{ formatDate(props.item.fecha_factura) }}</td>
+                            <td :class="props.item.color">{{ props.item.fase }}</td>
+                            <td>{{ props.item.notas }}</td>
                             <td class="justify-center layout px-0">
                                 <v-icon
+                                    v-if="props.item.empresa_id == empresaActiva"
                                     small
                                     class="mr-2"
                                     @click="editItem(props.item)"
@@ -67,49 +69,55 @@ import {mapActions} from 'vuex'
             descending: true,
             page: 1,
             rowsPerPage: 10,
-            sortBy: "alb_ser",
+            sortBy: "albaran",
         },
         search:"",
         headers: [
+             {
+                text: 'Número',
+                align: 'left',
+                value: 'empresa',
+                width: '12%'
+            },
             {
                 text: 'Número',
                 align: 'left',
-                value: 'albaran.alb_ser',
+                value: 'albaran',
                 width: '12%'
             },
             {
                 text: 'F. Albarán',
                 align: 'left',
-                value: 'albaran.fecha_albaran',
+                value: 'fecha_albaran',
                 width: '12%'
             },
             {
                 text: 'F. Factura',
                 align: 'left',
-                value: 'albaran.fecha_factura',
+                value: 'fecha_factura',
                 width: '8%'
             },
             {
                 text: 'Factura',
                 align: 'left',
-                value: 'albaran.fac_ser',
+                value: 'serie_factura',
                 width: '1%'
             },
             {
                 text: 'Fase',
                 align: 'left',
-                value: 'albaran.fase.nombre',
+                value: 'fase.nombre',
                 width: '8%'
             },
             {
                 text: 'Observaciones',
                 align: 'left',
-                value: 'albaran.notas'
+                value: 'notas'
             },
             {
                 text: 'Acciones',
                 align: 'Center',
-                value: 'albaran.id',
+                value: 'albaran',
                 width: '2%'
             }
         ],
@@ -125,14 +133,15 @@ import {mapActions} from 'vuex'
     mounted()
     {
 
-        if (this.getPagination.model == this.pagination.model)
-            this.updatePosPagina(this.getPagination);
-        else
-            this.unsetPagination();
+        // if (this.getPagination.model == this.pagination.model)
+        //     this.updatePosPagina(this.getPagination);
+        // else
+        //     this.unsetPagination();
 
         axios.post(this.url,{producto_id: this.producto_id})
             .then(res => {
-                this.arr_reg = res.data;
+                console.log(res);
+                this.arr_reg = res.data.albalins;
                 this.registros = true;
                 this.show_loading = false;
             })
@@ -143,7 +152,8 @@ import {mapActions} from 'vuex'
     },
     computed: {
         ...mapGetters([
-            'getPagination'
+            'getPagination',
+            'empresaActiva'
         ])
     },
     methods:{
@@ -172,7 +182,7 @@ import {mapActions} from 'vuex'
         editItem (item) {
             this.setPagination(this.paginaActual);
 
-            this.$router.push({ name: 'albaran.edit', params: { id: item.albaran.id } })
+            this.$router.push({ name: 'albaran.edit', params: { id: item.albaran_id } })
 
         },
     }

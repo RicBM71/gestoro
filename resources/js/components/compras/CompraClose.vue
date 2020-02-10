@@ -304,7 +304,10 @@ import {mapGetters} from 'vuex';
 
                 if (this.compra.fase_id !=5){ // no está recuperado
                     const hoy = new Date().toISOString().substr(0, 10);
-                    return (hoy > this.compra.fecha_bloqueo);
+                    if (this.compra.grupo_id == 1)
+                        return (hoy > this.compra.fecha_bloqueo);
+                    else
+                        return (hoy >= this.compra.fecha_bloqueo);
                 }else{
                     return false;
                 }

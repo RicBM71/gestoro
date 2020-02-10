@@ -10,7 +10,9 @@ use App\Cliente;
 use App\Empresa;
 use App\Quilate;
 use App\Producto;
+use App\Scopes\EmpresaScope;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class HelpProductoController extends Controller
@@ -71,8 +73,20 @@ class HelpProductoController extends Controller
             'producto_id' => ['required', 'integer'],
         ]);
 
+        //return Albalin::withOutGlobalScope(EmpresaScope::class)->with(['producto','albaran.fase'])->where('producto_id',$data['producto_id'])->get();
+
+        $alb = DB::table('albalins')->select('albaran','serie_albaran','factura','serie_factura','notas', 'fecha_factura','fecha_albaran','fases.nombre AS fase', 'fases.color AS color', 'albaran_id','empresas.nombre AS empresa','albaranes.empresa_id')
+                ->join('albaranes','albaran_id','=','albaranes.id')
+                ->join('fases', 'fase_id','=','fases.id')
+                ->join('empresas', 'albaranes.empresa_id','=','empresas.id')
+                ->whereIn('albaranes.empresa_id', session('empresas_usuario'))
+                ->where('producto_id',$data['producto_id'])
+                ->get();
+                //Albalin::withOutGlobalScope(EmpresaScope::class)->with(['albaran.fase'])->where('producto_id',$data['producto_id'])->get(),
         if (request()->wantsJson())
-            return Albalin::with(['productos','albaran.fase'])->where('producto_id',$data['producto_id'])->get();
+            return [
+                'albalins'     =>  $alb,
+            ];
 
     }
 }

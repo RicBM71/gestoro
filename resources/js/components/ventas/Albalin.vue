@@ -11,48 +11,54 @@
                     rows-per-page-text="Registros por página"
                     >
                         <template slot="items" slot-scope="props">
-                            <td>{{ props.item.producto.referencia }}</td>
-                            <td>{{ props.item.producto.nombre }}</td>
-                            <td class="text-xs-right">{{ props.item.unidades | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
-                            <td v-if="isSupervisor" class="text-xs-right">{{ props.item.precio_coste | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
-                            <td v-else>-</td>
-                            <td class="text-xs-right">{{ props.item.iva | currency('%', 0, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
-                            <td v-if="albaran.tipo_id==3" class="text-xs-right">{{ props.item.importe_unidad | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
-                            <td v-else class="text-xs-right">{{ props.item.importe_unidad | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
-                            <td v-if="isSupervisor"  class="text-xs-right">{{ props.item.margen | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
-                            <td v-else>-</td>
-                            <td class="text-xs-right">{{ props.item.importe_venta | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
-                            <td class="justify-center layout px-0">
-                                <v-icon
-                                    small
-                                    class="mr-2"
-                                    @click="goProducto(props.item.producto_id)"
-                                >
-                                    local_offer
-                                </v-icon>
-                                <v-icon
-                                    small
-                                    class="mr-2"
-                                    @click="props.expanded = !props.expanded"
-                                >
-                                    visibility
-                                </v-icon>
-                                <v-icon
-                                    v-if="computedEdit"
-                                    small
-                                    class="mr-2"
-                                    @click="editItem(props.item)"
-                                >
-                                    edit
-                                </v-icon>
-                                <v-icon
-                                    v-if="computedEdit"
-                                    small
-                                    @click="openDialog(props.item.id)"
+                            <tr v-if="props.item.producto == null">
+                                <td>{{ props.item.producto_id}}</td>
+                                <td class="red--text">error al ubicar, contactar admin</td>
+                            </tr>
+                            <tr v-else>
+                                <td>{{ props.item.producto.referencia }}</td>
+                                <td>{{ props.item.producto.nombre }}</td>
+                                <td class="text-xs-right">{{ props.item.unidades | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
+                                <td v-if="isSupervisor" class="text-xs-right">{{ props.item.precio_coste | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
+                                <td v-else>-</td>
+                                <td class="text-xs-right">{{ props.item.iva | currency('%', 0, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
+                                <td v-if="albaran.tipo_id==3" class="text-xs-right">{{ props.item.importe_unidad | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
+                                <td v-else class="text-xs-right">{{ props.item.importe_unidad | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
+                                <td v-if="isSupervisor"  class="text-xs-right">{{ props.item.margen | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
+                                <td v-else>-</td>
+                                <td class="text-xs-right">{{ props.item.importe_venta | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
+                                <td class="justify-center layout px-0">
+                                    <v-icon
+                                        small
+                                        class="mr-2"
+                                        @click="goProducto(props.item.producto_id)"
                                     >
-                                    delete
-                                </v-icon>
-                            </td>
+                                        local_offer
+                                    </v-icon>
+                                    <v-icon
+                                        small
+                                        class="mr-2"
+                                        @click="props.expanded = !props.expanded"
+                                    >
+                                        visibility
+                                    </v-icon>
+                                    <v-icon
+                                        v-if="computedEdit"
+                                        small
+                                        class="mr-2"
+                                        @click="editItem(props.item)"
+                                    >
+                                        edit
+                                    </v-icon>
+                                    <v-icon
+                                        v-if="computedEdit"
+                                        small
+                                        @click="openDialog(props.item.id)"
+                                        >
+                                        delete
+                                    </v-icon>
+                                </td>
+                            </tr>
                         </template>
                         <template slot="footer">
                             <td class=""></td>

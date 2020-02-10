@@ -325,9 +325,9 @@ Route::group([
 
         Route::middleware('role:Admin|Gestor')->group(function () {
 
-            Route::get('/service', 'ServiciosTallerController@index');
-            Route::post('/service', 'ServiciosTallerController@submit');
-            Route::post('/service/excel', 'ServiciosTallerController@excel');
+            // Route::get('/service', 'ServiciosTallerController@index');
+            // Route::post('/service', 'ServiciosTallerController@submit');
+            // Route::post('/service/excel', 'ServiciosTallerController@excel');
         });
 
     }

@@ -484,7 +484,7 @@ import {mapGetters} from 'vuex';
                     fecha_dni         :"",
                     notas             :"",
                     bloqueado         :false,
-                    iva_no_residente        :false,
+                    iva_no_residente  :false,
                     facturar          :true,
                     vip               :false,
                     asociado          :false,
