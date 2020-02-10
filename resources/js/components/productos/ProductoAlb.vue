@@ -35,7 +35,6 @@
                             <td>{{ props.item.notas }}</td>
                             <td class="justify-center layout px-0">
                                 <v-icon
-                                    v-if="props.item.empresa_id == empresaActiva"
                                     small
                                     class="mr-2"
                                     @click="editItem(props.item)"
@@ -140,7 +139,7 @@ import {mapActions} from 'vuex'
 
         axios.post(this.url,{producto_id: this.producto_id})
             .then(res => {
-                console.log(res);
+
                 this.arr_reg = res.data.albalins;
                 this.registros = true;
                 this.show_loading = false;

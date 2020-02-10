@@ -12,6 +12,8 @@ use App\Albaran;
 use App\Empresa;
 use App\Contador;
 use Carbon\Carbon;
+use App\Scopes\EmpresaScope;
+use App\Traits\SessionTrait;
 use Illuminate\Http\Request;
 use App\Exports\AlbaranesExport;
 use App\Http\Controllers\Controller;
@@ -22,6 +24,8 @@ use App\Http\Requests\Ventas\UpdateAlbaranRequest;
 
 class AlbaranesController extends Controller
 {
+
+    use SessionTrait;
 
     public function index(){
 
@@ -142,16 +146,28 @@ class AlbaranesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Albaran $albarane)
+    public function edit($id)
     {
+
+        $albarane = Albaran::withOutGlobalScope(EmpresaScope::class)->findOrFail($id);
+
+        // con esto cambiamos de empresa si la empresa no coincide
+        $collection = session('empresas_usuario');
+        if ($collection->search($albarane->empresa_id, true)===false){
+            return abort(404, "No se ha encontrado el registro");
+        }
+
+        if ($albarane->empresa_id != session('empresa_id')){
+            $param = $this->loadSession($albarane->empresa_id);
+        }else{
+            $param = false;
+        }
 
         $this->authorize('update', $albarane);
 
-       //$albarane = Albaran::with(\['cliente','tipo','fase','motivo','fpago','cuenta','procedencia'\])->findOrFail($id);
-
-
         if (request()->wantsJson())
             return [
+                'param'   => $param,
                 'albaran' => $albarane->load(['cliente','tipo','fase','motivo','fpago','cuenta','procedencia']),
                 'cuentas' => Cuenta::selCuentas(),
                 'fpagos'  => Fpago::selFpagos(),

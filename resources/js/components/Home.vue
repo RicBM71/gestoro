@@ -118,7 +118,7 @@
                 >
                 <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
                     <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-                    <span class="hidden-sm-and-down">{{ empresaTxt }}</span>
+                    <span class="hidden-sm-and-down">{{ this.user.empresa_nombre }}</span>
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-tooltip bottom>
@@ -330,10 +330,13 @@ export default {
                     if(this.isAdmin || this.isGestor)
                         this.mn_items.push(this.mn_admin);
 
+                       // console.log(this.user);
+
                     this.empresas = res.data.user.empresas;
                     var idx = this.empresas.map(x => x.value).indexOf(this.empresa_id);
 
-                    this.empresaTxt = this.empresas[idx].text;
+                    // this.empresaTxt = this.empresas[idx].text;
+                    //this.empresaTxt = this.user.empresa_nombre;
 
                     this.traspasos = res.data.traspasos;
                     this.jobs = res.data.jobs;

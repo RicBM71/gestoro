@@ -484,6 +484,8 @@ import CobroCreate from './CobroCreate'
 import Facturar from './Facturar'
 import Abono from './Abono'
 import {mapGetters} from 'vuex';
+import {mapActions} from "vuex";
+import {mapState} from 'vuex'
 	export default {
 		$_veeValidate: {
       		validator: 'new'
@@ -549,7 +551,8 @@ import {mapGetters} from 'vuex';
 
                         this.albaran = res.data.albaran;
 
-                        //console.log(this.albaran);
+                        if (res.data.param != false)
+                            this.setAuthUser(res.data.param.user);
 
                         this.notas_cliente = this.albaran.cliente.notas;
 
@@ -703,6 +706,10 @@ import {mapGetters} from 'vuex';
             }
         },
     	methods:{
+            ...mapActions([
+                'setAuthUser',
+                'unsetParametros'
+			]),
             getMoneyFormat(value){
                 return new Intl.NumberFormat("de-DE",{style: "currency", currency: "EUR"}).format(parseFloat(value))
             },
