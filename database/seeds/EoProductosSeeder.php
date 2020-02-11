@@ -96,7 +96,7 @@ class EoProductosSeeder extends Seeder
                 'precio_coste' => $row->pcoste,
                 'precio_venta' => $row->pventa,
                 'univen' => $univen,
-                'compra_id' => $row->albaran,
+                'compra_id' => $row->albaran == 0 ? null : $row->albaran,
                 'ref_pol' => $row->albarantx,
                 'estado_id' => $estado,
                 'etiqueta_id' => $row->etiqueta,

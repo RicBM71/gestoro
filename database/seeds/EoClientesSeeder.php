@@ -2,6 +2,7 @@
 
 use App\Clidoc;
 use App\Cliente;
+use App\Parametro;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -16,24 +17,27 @@ class EoClientesSeeder extends Seeder
      */
     public function run()
     {
-            // Cliente::truncate();
+            Cliente::truncate();
 
-            // $count = DB::connection($this->bbdd)->table('clientes')->count();
+            $count = DB::connection($this->bbdd)->table('clientes')->count();
 
 
-            // $reg = DB::connection($this->bbdd)->select('select * from clientes');
-            // $this->insertaClientes($reg);
+            $reg = DB::connection($this->bbdd)->select('select * from clientes');
+            $this->insertaClientes($reg);
 
-            // return;
+           // return;
 
                 // importar documentos
             Clidoc::truncate();
+
+            $p = Parametro::findOrFail(1);
+            $disco = 'disk_ev';
+            $p->update(['carpeta_docs'=>$disco]);
 
             $data=array();
             $reg = DB::connection($this->bbdd)->select('select * from clidoc where cola="A" and id > 1 order by id');
             $i=0;
 
-            $disco = 'disk_v';
 
             foreach ($reg as $row){
                 $i++;

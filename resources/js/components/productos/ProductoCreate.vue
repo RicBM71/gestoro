@@ -111,7 +111,7 @@ import Loading from '@/components/shared/Loading'
             peso:"",
             precio_venta:0,
             precio_coste:0,
-            compra_id:0,
+            compra_id: null,
             nombre:"",
             almacen_id:"",
             clase_id: 5,

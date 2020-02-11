@@ -14,6 +14,7 @@ use App\Scopes\EmpresaScope;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Scopes\EmpresaProductoScope;
 
 class HelpProductoController extends Controller
 {
@@ -89,4 +90,19 @@ class HelpProductoController extends Controller
             ];
 
     }
+
+    public function find(Request $request){
+
+        $data = $request->validate([
+            'producto_id' => ['required', 'integer'],
+        ]);
+
+        if (request()->wantsJson())
+            return [
+                'producto'     =>  Producto::withOutGlobalScope(EmpresaProductoScope::class)->findOrFail($data['producto_id'])
+            ];
+
+    }
+
+
 }

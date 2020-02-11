@@ -141,6 +141,8 @@ import ImportRfid from './components/rfid/ImportRfid.vue';
 import ExportRfid from './components/rfid/ExportRfid.vue';
 import EstadosRfid from './components/rfid/EstadosRfid.vue';
 
+import FindProducto from './components/tools/FindProducto.vue';
+
 export default [
 	{
 		path: '/',
@@ -678,6 +680,11 @@ export default [
                 path: '/rfid/estados',
                 name: 'rfid.estados',
                 component: EstadosRfid,
+            },
+            {
+                path: '/tools/find/producto',
+                name: 'tools.find.producto',
+                component: FindProducto,
             },
             // {
             //     path: '*',

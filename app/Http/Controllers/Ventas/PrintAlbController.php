@@ -237,12 +237,13 @@ class PrintAlbController extends Controller
             $y = round(PDF::getY());
 
             // $txt .= " **PW: ".$y." H: ".$h;
-            if ($y+$h >= 210){
+            if ($y+$h >= 240){
                 PDF::AddPage();
                 $this->setCabeceraAlbaran();
                 $y = round(PDF::getY());
                 $this->cabeLin();
             }
+
 
             PDF::MultiCell($w=20, $h, $row->producto->referencia, $border='R', $align='L', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
             PDF::MultiCell($w=96, $h, $txt, $border='R', $align='L', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);

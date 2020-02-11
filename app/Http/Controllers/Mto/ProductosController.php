@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProducto;
 use App\Rules\MaxDiasRangoFechaRule;
+use App\Scopes\EmpresaProductoScope;
 use App\Http\Requests\UpdateProducto;
 
 class ProductosController extends Controller
@@ -72,6 +73,7 @@ class ProductosController extends Controller
             'fecha_d'       =>['nullable','date',new RangoFechaRule($request->fecha_d, $request->fecha_h)],
             'fecha_h'       =>['nullable','date',new MaxDiasRangoFechaRule($request->fecha_d, $request->fecha_h)],
             'destino_empresa_id'=>['nullable','integer'],
+            'sinscope'       =>['boolean'],
         ]);
 
         session(['filtro_pro' => $data]);
@@ -100,10 +102,27 @@ class ProductosController extends Controller
 
         //                 \Log::info($data['alta']);
 
-        if ($data['alta'] == false)
-            $data = Producto::onlyTrashed()->with(['clase','estado'])
+        if (esRoot() && $data['sinscope']){
+            if ($data['alta'] == false)
+                $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->onlyTrashed()->with(['clase','estado'])
+                            ->referencia($data['referencia'])
+                            ->fecha($data['fecha_d'],$data['fecha_h'],$data['tipo_fecha'])
+                            ->clase($data['clase_id'])
+                            ->estado($data['estado_id'])
+                            ->destino($data['destino_empresa_id'])
+                            ->notasNombre($data['notas'])
+                            ->refPol($data['ref_pol'])
+                            ->precioPeso($data['precio'])
+                            ->quilates($data['quilates'])
+                            ->online($data['online'])
+                            ->orderBy('id','desc')
+                            ->get()
+                            ->take(500);
+            else{
+
+                $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','estado'])
                         ->referencia($data['referencia'])
-                        ->fecha($data['fecha_d'],$data['fecha_h'],$data['tipo_fecha'])
+                        ->fecha($data['fecha_d'], $data['fecha_h'],$data['tipo_fecha'])
                         ->clase($data['clase_id'])
                         ->estado($data['estado_id'])
                         ->destino($data['destino_empresa_id'])
@@ -112,28 +131,48 @@ class ProductosController extends Controller
                         ->precioPeso($data['precio'])
                         ->quilates($data['quilates'])
                         ->online($data['online'])
+                        ->asociado($data['cliente_id'])
                         ->orderBy('id','desc')
                         ->get()
                         ->take(500);
-        else{
+            }
 
-            $data = Producto::with(['clase','estado'])
-                    ->referencia($data['referencia'])
-                    ->fecha($data['fecha_d'], $data['fecha_h'],$data['tipo_fecha'])
-                    ->clase($data['clase_id'])
-                    ->estado($data['estado_id'])
-                    ->destino($data['destino_empresa_id'])
-                    ->notasNombre($data['notas'])
-                    ->refPol($data['ref_pol'])
-                    ->precioPeso($data['precio'])
-                    ->quilates($data['quilates'])
-                    ->online($data['online'])
-                    ->asociado($data['cliente_id'])
-                    ->orderBy('id','desc')
-                    ->get()
-                    ->take(500);
         }
+        else{
+            if ($data['alta'] == false)
+                $data = Producto::onlyTrashed()->with(['clase','estado'])
+                            ->referencia($data['referencia'])
+                            ->fecha($data['fecha_d'],$data['fecha_h'],$data['tipo_fecha'])
+                            ->clase($data['clase_id'])
+                            ->estado($data['estado_id'])
+                            ->destino($data['destino_empresa_id'])
+                            ->notasNombre($data['notas'])
+                            ->refPol($data['ref_pol'])
+                            ->precioPeso($data['precio'])
+                            ->quilates($data['quilates'])
+                            ->online($data['online'])
+                            ->orderBy('id','desc')
+                            ->get()
+                            ->take(500);
+            else{
 
+                $data = Producto::with(['clase','estado'])
+                        ->referencia($data['referencia'])
+                        ->fecha($data['fecha_d'], $data['fecha_h'],$data['tipo_fecha'])
+                        ->clase($data['clase_id'])
+                        ->estado($data['estado_id'])
+                        ->destino($data['destino_empresa_id'])
+                        ->notasNombre($data['notas'])
+                        ->refPol($data['ref_pol'])
+                        ->precioPeso($data['precio'])
+                        ->quilates($data['quilates'])
+                        ->online($data['online'])
+                        ->asociado($data['cliente_id'])
+                        ->orderBy('id','desc')
+                        ->get()
+                        ->take(500);
+            }
+        }
         return $data;
 
     }

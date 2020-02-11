@@ -237,6 +237,8 @@ Route::group([
         Route::post('helppro/vendibles', 'HelpProductoController@vendibles');
         Route::post('helppro/producto', 'HelpProductoController@producto');
         Route::post('helppro/albaranes', 'HelpProductoController@albaranes');
+        Route::post('helppro/find', 'HelpProductoController@find');
+
         Route::get('helppro/filtro', 'HelpProductoController@filtro');
         Route::get('helpfases/compra', 'HelpFasesController@compra');
         Route::get('helpfases/venta', 'HelpFasesController@venta');

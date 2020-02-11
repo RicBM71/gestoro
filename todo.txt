@@ -96,12 +96,23 @@ SELECT albaran,fecha_factura,klt_comlines.importe,importe_venta FROM `klt_compra
 where cliente_id = 78097 and klt_compras.id = compra_id
 ORDER BY `klt_compras`.`fecha_factura`  DESC
 
-YAJAP:
+
+
+
+EVA ORO:
 
 DELETE FROM `klt_albaranes` where id not in (select albaran_id from klt_albalins)
 DELETE FROM `klt_cobros` where albaran_id not in (select id from klt_albaranes)
 
+update `klt_productos` set deleted_at=now(),updated_at = now(), username="sys20" where empresa_id = 3 and referencia like 'EO%' and estado_id = 2 and deleted_at is null
+CREATE TEMPORARY TABLE kk select id from klt_productos aa where username="sys20" and empresa_id = 3
+update klt_productos set destino_empresa_id = 3 where id in (select id from kk)
+
+CREATE TEMPORARY TABLE t1 (select id from klt_productos aa where username="sys20" and empresa_id = 3)
+
 ver compras sin línea depósito
 SELECT * FROM `klt_compras` where id not in(select DISTINCT compra_id from klt_depositos)
 
-cambiar serie a C en comple
+UPDATE `klt_productos` set compra_id = null where compra_id = 0;
+
+

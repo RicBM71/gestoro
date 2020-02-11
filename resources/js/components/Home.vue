@@ -204,6 +204,7 @@ export default {
             text: 'Root',
             model: false,
             children: [
+                { text: 'Find Producto', name: 'tools.find.producto' },
                 { text: 'Usuarios', name: 'users.index' },
                 { text: 'Roles', name: 'roles' },
                 { text: 'Grupos', name: 'grupo.index' },

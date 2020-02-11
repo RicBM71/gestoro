@@ -50,11 +50,13 @@ class KltClientesSeeder extends Seeder
             $reg = DB::connection($this->bbdd)->select('select * from clidoc where cola="A" and id < 1000 order by id');
             $i=0;
 
+            $disco = 'disk_ev';
+
             foreach ($reg as $row){
                 $i++;
-                $file1 = str_replace('storage/','',$row->file1);
+                $file1 = str_replace('storage/',$disco.'/',$row->file1);
                 //$file1 = str_replace('.dat','.jpg',$file1);
-                $file2 = str_replace('storage/','',$row->file2);
+                $file2 = str_replace('storage/',$disco.'/',$row->file2);
                 //$file2 = str_replace('.dat','.jpg',$file2);
 
                 $this->encriptarALaravel($file1,$file2);

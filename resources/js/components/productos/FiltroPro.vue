@@ -203,7 +203,15 @@
                         color="primary">
                     ></v-switch>
                 </v-flex>
-                <v-flex sm5></v-flex>
+                <v-flex sm2>
+                    <v-switch
+                        v-if="isRoot"
+                        label="Sin Global Scope - root"
+                        v-model="reg.sinscope"
+                        color="primary">
+                    ></v-switch>
+                </v-flex>
+                <v-flex sm3></v-flex>
                 <v-flex sm1>
                     <v-btn @click="submit"  :loading="loading" round small block  color="info">
                         Filtrar
@@ -215,6 +223,7 @@
 </template>
 <script>
 import moment from 'moment'
+import {mapGetters} from 'vuex';
 export default {
     $_veeValidate: {
         validator: 'new'
@@ -246,7 +255,8 @@ export default {
                 fecha_d: "", //new Date().toISOString().substr(0, 10),
                 fecha_h: "",
                 tipo_fecha: 'C',
-                destino_empresa_id:""
+                destino_empresa_id:"",
+                sinscope: false
             },
             fechas:[
                 {value: 'C', text: 'Creación'},
@@ -286,6 +296,9 @@ export default {
             })
     },
     computed: {
+         ...mapGetters([
+            'isRoot',
+        ]),
         computedFechaD() {
             moment.locale('es');
             return this.reg.fecha_d ? moment(this.reg.fecha_d).format('L') : '';

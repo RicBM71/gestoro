@@ -118,7 +118,9 @@ Class Producto extends Model
 
     public static function scopeReferencia($query, $referencia){
 
-        if (!Empty($referencia)){
+        $referencia = \strtoupper($referencia);
+        
+        if ($referencia > ''){
             if (strpos($referencia,'.') === false){
                 return $query->where('referencia','like', '%'.$referencia.'%');
             }

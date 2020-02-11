@@ -187,9 +187,11 @@ class ComprasController extends Controller
                         ->firstOrFail();
             $grabaciones = $libro->grabaciones;
             $dias_cortesia = $libro->dias_cortesia;
+            $cambio_recompra = $libro->recompras;
         } catch (\Exception $e) {
             $grabaciones = false;
             $dias_cortesia = 7;
+            $cambio_recompra = false;
         }
 
 
@@ -202,7 +204,7 @@ class ComprasController extends Controller
                 'lineas_deposito'   => Deposito::CompraId($compra->id)->get(),
                 'grabaciones'       => $grabaciones,
                 'dias_cortesia'     => $dias_cortesia,
-                'cambio_recompra'   => $libro->recompras
+                'cambio_recompra'   => $cambio_recompra
             ];
 
     }
@@ -221,20 +223,25 @@ class ComprasController extends Controller
 
        $this->authorize('update', $compra);
 
-       $libro = Libro::where('grupo_id', $compra->grupo_id)
-                    ->where('ejercicio', getEjercicio($compra->fecha_compra))
-                    ->firstOrFail();
+        // $libro = Libro::where('grupo_id', $compra->grupo_id)
+        //                 ->where('ejercicio', getEjercicio($compra->fecha_compra))
+        //                 ->firstOrFail();
 
-    //    $ejercicio    = $compra->fecha_compra->format('Y');
-    //    $contador = Libro::incrementaContador($ejercicio, 1, 1);
+        // es mejor no dejar reabrir si no hay libro, esto es por lotes antiguos eva.
 
-    //    print_r($contador);
+        try {
+            $libro = Libro::where('grupo_id', $compra->grupo_id)
+                        ->where('ejercicio', getEjercicio($compra->fecha_compra))
+                        ->firstOrFail();
+            $grabaciones = $libro->grabaciones;
+            $dias_cortesia = $libro->dias_cortesia;
+            $cambio_recompra = $libro->recompras;
+        } catch (\Exception $e) {
+            $compra->update(['fase_id'=>4]);
+            return abort(404, 'No hay libro, no se puede reabrir el lote');
+        }
 
-    //    $fecha_compra = Carbon::parse($compra->fecha_compra);
-    //    return $fecha_compra->addDays(30);
 
-        // $this->Bloqueo($compra->fecha_compra);
-      //  echo $this->Bloqueo("2019-09-07", "3/1");
 
         if (request()->wantsJson())
             return [
@@ -243,9 +250,9 @@ class ComprasController extends Controller
                 'compra'            => $compra,
                 'documentos'        => Clidoc::getDocumentos($compra->cliente->id,$compra->cliente->fecha_dni,$compra->fecha_compra),
                 'lineas_deposito'   => Deposito::CompraId($compra->id)->get(),
-                'grabaciones'       => $libro->grabaciones,
-                'dias_cortesia'     => $libro->dias_cortesia,
-                'cambio_recompra'   => $libro->recompras
+                'grabaciones'       => $grabaciones,
+                'dias_cortesia'     => $dias_cortesia,
+                'cambio_recompra'   => $cambio_recompra
             ];
 
     }

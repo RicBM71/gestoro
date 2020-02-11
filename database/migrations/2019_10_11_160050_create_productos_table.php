@@ -26,7 +26,7 @@ class CreateProductosTable extends Migration
             $table->decimal('peso_gr', 10, 2)->default(0);
             $table->decimal('precio_venta', 10, 2)->default(0);
             $table->integer('stock')->default(1);
-            $table->unsignedInteger('compra_id')->index();
+            $table->unsignedInteger('compra_id')->nullable()->index();
             $table->string('ref_pol',20)->nullable();
             $table->unsignedInteger('estado_id')->default(1);
             $table->unsignedInteger('etiqueta_id')->default(1);

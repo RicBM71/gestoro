@@ -36,7 +36,7 @@ class StoreProducto extends FormRequest
             'nombre'           => ['required', 'string', 'max:190'],
             'clase_id'         => ['required','integer'],
             'estado_id'        => ['required','integer'],
-            'compra_id'        => ['required','integer'],
+            'compra_id'        => ['nullable','integer'],
             'iva_id'           => ['required','integer'],
             'quilates'         => ['nullable','integer',new LeyesRule($this->clase_id)],
             'caracteristicas'  => ['nullable','string','max:190'],
