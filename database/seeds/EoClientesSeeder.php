@@ -16,15 +16,15 @@ class EoClientesSeeder extends Seeder
      */
     public function run()
     {
-            Cliente::truncate();
+            // Cliente::truncate();
 
-            $count = DB::connection($this->bbdd)->table('clientes')->count();
+            // $count = DB::connection($this->bbdd)->table('clientes')->count();
 
 
-            $reg = DB::connection($this->bbdd)->select('select * from clientes');
-            $this->insertaClientes($reg);
+            // $reg = DB::connection($this->bbdd)->select('select * from clientes');
+            // $this->insertaClientes($reg);
 
-            return;
+            // return;
 
                 // importar documentos
             Clidoc::truncate();
@@ -33,11 +33,13 @@ class EoClientesSeeder extends Seeder
             $reg = DB::connection($this->bbdd)->select('select * from clidoc where cola="A" and id > 1 order by id');
             $i=0;
 
+            $disco = 'disk_v';
+
             foreach ($reg as $row){
                 $i++;
-                $file1 = str_replace('storage/','',$row->file1);
+                $file1 = str_replace('storage/',$disco.'/',$row->file1);
                 //$file1 = str_replace('.dat','.jpg',$file1);
-                $file2 = str_replace('storage/','',$row->file2);
+                $file2 = str_replace('storage/',$disco.'/',$row->file2);
                 //$file2 = str_replace('.dat','.jpg',$file2);
 
                 $this->encriptarALaravel($file1,$file2);

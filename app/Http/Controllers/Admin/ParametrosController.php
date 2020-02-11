@@ -40,6 +40,7 @@ class ParametrosController extends Controller
             'pie_rebu1'      => ['nullable','string'],
             'retencion'      => ['required','numeric'],
             'aislar_empresas'=> ['required','boolean'],
+            'carpeta_docs'   => ['required','string'],
 
         ]);
 

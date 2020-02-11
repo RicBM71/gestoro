@@ -58,11 +58,24 @@
                                         </v-text-field>
                                     </v-flex>
                                     <v-flex sm2>
-                                    <v-switch
-                                        label="Aislar Empresas"
-                                        v-model="parametro.aislar_empresas"
-                                        color="primary">
-                                    ></v-switch>
+                                        <v-text-field
+                                            v-model="parametro.carpeta_docs"
+                                            v-validate="'required'"
+                                            :error-messages="errors.collect('carpeta_docs')"
+                                            label="Carpeta Documentos"
+                                            data-vv-name="carpeta_docs"
+                                            data-vv-as="carpeta"
+                                            required
+                                            v-on:keyup.enter="submit"
+                                        >
+                                        </v-text-field>
+                                    </v-flex>
+                                    <v-flex sm2>
+                                        <v-switch
+                                            label="Aislar Empresas"
+                                            v-model="parametro.aislar_empresas"
+                                            color="primary">
+                                        ></v-switch>
                                 </v-flex>
                                 </v-layout>
                                 <v-layout row wrap>

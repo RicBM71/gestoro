@@ -33,7 +33,9 @@ class ClidocsController extends Controller
 
         $data['username'] = $request->user()->username;
 
-        $subcarpeta = "data".intdiv($data['cliente_id']+1000,1000) * 1000;
+        $disco = session('parametros')->carpeta_docs."/";
+
+        $subcarpeta = $disco."data".intdiv($data['cliente_id']+1000,1000) * 1000;
 
         // $data['file1']=$subcarpeta.'/'.$data['cliente_id'].'A.jpg';
 

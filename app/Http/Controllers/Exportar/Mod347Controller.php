@@ -73,7 +73,7 @@ class Mod347Controller extends Controller
 			 			      "SUM(IF( QUARTER( a.fecha_factura ) =2, l.importe_venta, 0 ) ) AS imptri2, ".
 			 			      "SUM(IF( QUARTER( a.fecha_factura ) =3, l.importe_venta, 0 ) ) AS imptri3,".
 			 			      "SUM(IF( QUARTER( a.fecha_factura ) =4, l.importe_venta, 0 ) ) AS imptri4 ".
-							  "FROM klt_compras a, klt_comlines l, klt_clientes c ".
+							  "FROM ".DB::getTablePrefix()."compras a, ".DB::getTablePrefix()."comlines l, ".DB::getTablePrefix()."clientes c ".
 							  "WHERE a.empresa_id = ".session('empresa')->id." AND YEAR( a.fecha_factura ) = ".$ejercicio." ".
 							  "AND a.id = l.compra_id ".
 							  "AND a.cliente_id = c.id AND c.listar_347 = '1' ".$conddni." GROUP BY dni,razon UNION ";
@@ -84,7 +84,7 @@ class Mod347Controller extends Controller
 				"SUM(IF( QUARTER( fecha_factura ) =2, l.importe_venta, 0 ) ) AS imptri2, ".
 				"SUM(IF( QUARTER( fecha_factura ) =3, l.importe_venta, 0 ) ) AS imptri3,".
 				"SUM(IF( QUARTER( fecha_factura ) =4, l.importe_venta, 0 ) ) AS imptri4 ".
-				"FROM klt_albaranes a, klt_albalins l, klt_clientes c ".
+				"FROM ".DB::getTablePrefix()."albaranes a, ".DB::getTablePrefix()."albalins l, ".DB::getTablePrefix()."clientes c ".
 				"WHERE a.empresa_id = ".session('empresa')->id." AND YEAR( a.fecha_factura ) = ".$ejercicio." ".
 				"AND a.tipo_id = 3 AND a.id = l.albaran_id ".
 				"AND a.cliente_id = c.id  AND c.listar_347 = '1' ".$conddni." GROUP BY dni,razon UNION ";
@@ -95,7 +95,7 @@ class Mod347Controller extends Controller
 				"SUM(IF( QUARTER( fecha_factura ) =2, ROUND(l.importe_venta+(l.importe_venta * l.iva / 100),2), 0 ) ) AS imptri2, ".
 				"SUM(IF( QUARTER( fecha_factura ) =3, ROUND(l.importe_venta+(l.importe_venta * l.iva / 100),2), 0 ) ) AS imptri3,".
 				"SUM(IF( QUARTER( fecha_factura ) =4, ROUND(l.importe_venta+(l.importe_venta * l.iva / 100),2), 0 ) ) AS imptri4 ".
-				"FROM klt_albaranes a, klt_albalins l, klt_clientes c ".
+				"FROM ".DB::getTablePrefix()."albaranes a, ".DB::getTablePrefix()."albalins l, ".DB::getTablePrefix()."clientes c ".
 				"WHERE a.empresa_id = ".session('empresa')->id." AND YEAR( a.fecha_factura ) = ".$ejercicio." ".
 				"AND a.tipo_id = 4 AND a.id = l.albaran_id ".
 				"AND a.cliente_id = c.id  AND c.listar_347 = '1' ".$conddni." GROUP BY dni,razon ";

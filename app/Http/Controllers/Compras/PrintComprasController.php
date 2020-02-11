@@ -445,12 +445,12 @@ class PrintComprasController extends Controller
             if (!Empty($this->documentacion['img1'])){
                 $img = base64_decode($this->documentacion['img1']);
                 imagecreatefromstring($img);
-                PDF::Image('@'.$img,  $x=40, $y, 45, 0, '', '', '', true, 150,'',false,false,1);
+                PDF::Image('@'.$img,  $x=40, $y, 45, 0, '', '', '', true, 150,'',false,false,0);
             }
             if (!Empty($this->documentacion['img2'])){
                 $img2 = base64_decode($this->documentacion['img2']);
                 imagecreatefromstring($img2);
-                PDF::Image('@'.$img2,  $x=110, $y, 45, 0, '', '', '', true, 150,'',false,false,1);
+                PDF::Image('@'.$img2,  $x=110, $y, 45, 0, '', '', '', true, 150,'',false,false,0);
             }
 
 
