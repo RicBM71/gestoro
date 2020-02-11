@@ -139,6 +139,7 @@ import EditPassword from './components/profile/edit-password/EditPassword.vue';
 
 import ImportRfid from './components/rfid/ImportRfid.vue';
 import ExportRfid from './components/rfid/ExportRfid.vue';
+import EstadosRfid from './components/rfid/EstadosRfid.vue';
 
 export default [
 	{
@@ -672,6 +673,11 @@ export default [
                 path: '/rfid/export',
                 name: 'rfid.export',
                 component: ExportRfid,
+            },
+            {
+                path: '/rfid/estados',
+                name: 'rfid.estados',
+                component: EstadosRfid,
             },
             // {
             //     path: '*',

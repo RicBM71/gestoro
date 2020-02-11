@@ -216,7 +216,7 @@ import {mapActions} from "vuex";
     },
     mounted()
     {
-
+        this.pagination.model="compra"+this.empresaActiva;
         if (this.getPagination.model == this.pagination.model)
             this.updatePosPagina(this.getPagination);
         else

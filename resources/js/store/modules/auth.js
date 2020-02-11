@@ -43,7 +43,6 @@ const mutations = {
         state.permisos = payload.user.permisos;
         state.parametros = payload.user.parametros;
         state.img_fondo = payload.user.img_fondo;
-        state.stockComple = payload.user.stockComple;
         state.aislar = payload.user.aislar_empresas
 	},
 	[UNSET_USER](state, payload) {
@@ -57,7 +56,6 @@ const mutations = {
         state.permisos = [];
         state.parametros = {};
         state.img_fondo=null;
-        state.stockComple=null;
         state.aislar=null
 	}
 };
@@ -93,9 +91,6 @@ const getters = {
     },
     imgFondo: (state) =>{
         return state.img_fondo
-    },
-    stockComple: (state) =>{
-        return state.stockComple
     },
     parametros: (state) =>{
         return state.parametros

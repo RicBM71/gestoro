@@ -1,5 +1,6 @@
 <?php
 
+use App\Almacen;
 use App\Empresa;
 use App\Producto;
 use App\Scopes\EmpresaScope;
@@ -47,6 +48,7 @@ class KltProductosSeeder extends Seeder
         // return;
 
         Producto::truncate();
+        Almacen::truncate();
 
         $contadores = DB::connection('quilates')->select('select * from crulara ORDER BY empresa');
 
@@ -62,6 +64,12 @@ class KltProductosSeeder extends Seeder
 
         DB::statement("UPDATE klt_productos set empresa_id = (select empresa_id from klt_compras where klt_compras.id = compra_id) WHERE compra_id > 0");
         DB::statement("UPDATE klt_productos set cliente_id = null WHERE compra_id > 0");
+
+        $alm = new Almacen;
+        $alm->empresa_id = 1;
+        $alm->nombre = "Banco";
+        $alm->save();
+
     }
 
 
@@ -78,11 +86,11 @@ class KltProductosSeeder extends Seeder
         $cruce_alm_emp[9]=16;  // prestige
 
         $etiqueta['N']=1; //no
-        $etiqueta['S']=2; // sí
-        $etiqueta['C']=3; // si con pvp
+        $etiqueta['S']=2; // imprimir s/pvp -> 2: imprimir s/pvp
+        $etiqueta['C']=3; // imprimir c/ppv -> 3: imprimir c/pvv
         $etiqueta['I']=5; // ya impresa
-        $etiqueta['Y']=5; // ya impresa con pvp
-        $etiqueta['D']=4; // ya impresa con pvp
+        $etiqueta['Y']=5; // ya impresa
+        $etiqueta['D']=4; // devolución
 
         /// depósitos
         $reg = DB::connection($this->bbdd)
@@ -173,7 +181,7 @@ class KltProductosSeeder extends Seeder
                 'id' => $row->id,
                 'empresa_id' => $contador->emp_alb,
                 //'empresa_id' => $cruce_alm_emp[$row->almacen],
-                'almacen_id' => null,
+                'almacen_id' => ($row->almacen== 6) ? 1 : null,
                 'destino_empresa_id' => ($row->almacen == 0 || $row->almacen== 6) ? $contador->emp_alb : $cruce_alm_emp[$row->almacen],
                 // 'destino_empresa_id' => $contador->emp_alb,
                 'nombre' => $row->nombre,
@@ -208,6 +216,10 @@ class KltProductosSeeder extends Seeder
         }
 
         DB::table('productos')->insert($data);
+
+
+
+
 
 
     }

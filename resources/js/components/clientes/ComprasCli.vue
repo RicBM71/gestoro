@@ -140,10 +140,12 @@ import {mapActions} from 'vuex'
     {
         this.show_loading = true;
 
-        if (this.getPagination.model == this.pagination.model)
-            this.updatePosPagina(this.getPagination);
-        else
-            this.unsetPagination();
+        // if (this.getPagination.model == this.pagination.model)
+        //     this.updatePosPagina(this.getPagination);
+        // else
+        //     this.unsetPagination();
+
+
         axios.post(this.url,{cliente_id: this.cliente_id})
             .then(res => {
                 this.arr_reg = res.data;
@@ -191,7 +193,7 @@ import {mapActions} from 'vuex'
             return moment(f).format('DD/MM/YYYY');
         },
         editItem (item) {
-            this.setPagination(this.paginaActual);
+           // this.setPagination(this.paginaActual);
 
             var ruta = item.tipo_id == 1 ? 'compra' : 'recompra';
 

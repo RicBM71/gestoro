@@ -285,7 +285,7 @@ export default {
             if (this.albaran.tipo_id == 3)
                 return item.producto.clase.nombre+" "+quilates+" "+caracteristicas+" "+peso + " " + garantia + notas + nombre_interno;
             else
-                return item.producto.clase.nombre+": "+ item.notas + " # " + nombre_interno;
+                return item.producto.clase.nombre+": "+ notas + " # " + nombre_interno;
 
         },
         goProducto(producto_id){

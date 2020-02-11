@@ -61,7 +61,7 @@
                 </v-flex>
                 <v-flex xs12 v-show="show_loading" class="text-sm-center">
                      <v-progress-linear :indeterminate="true"></v-progress-linear>
-                    
+
                     <span>Cargando...</span>
                 </v-flex>
             </v-layout>
@@ -150,10 +150,10 @@ import {mapActions} from 'vuex'
     mounted()
     {
 
-        if (this.getPagination.model == this.pagination.model)
-            this.updatePosPagina(this.getPagination);
-        else
-            this.unsetPagination();
+        // if (this.getPagination.model == this.pagination.model)
+        //     this.updatePosPagina(this.getPagination);
+        // else
+        //     this.unsetPagination();
 
         this.reload();
 

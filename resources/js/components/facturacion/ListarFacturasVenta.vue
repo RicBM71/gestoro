@@ -201,7 +201,7 @@ import {mapActions} from "vuex";
 
                 menu_h: false,
                 menu_d: false,
-                fecha_d: new Date().toISOString().substr(0, 7)+"-01",
+                fecha_d: new Date().toISOString().substr(0, 4)+"-01-01",
                 fecha_h: new Date().toISOString().substr(0, 10),
 
                 tipo_id:3,
@@ -306,6 +306,7 @@ import {mapActions} from "vuex";
       		}
         },
         beforeMount(){
+            this.pagination.model="lisfacven"+this.empresaActiva;
             if (this.getPagination.model == this.pagination.model)
                 if (this.getLineasIndex.length > 0){
                     this.lineas = this.getLineasIndex;
@@ -339,7 +340,7 @@ import {mapActions} from "vuex";
                     'isAdmin',
                     'getPagination',
                     'getLineasIndex',
-
+                    'empresaActiva'
                 ]),
             computedFechaD() {
                 moment.locale('es');

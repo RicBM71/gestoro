@@ -184,9 +184,11 @@ import {mapActions} from "vuex";
     },
     mounted()
     {
-
-        if (this.getPagination.model == this.pagination.model)
+        this.pagination.model="producto"+this.empresaActiva;
+        if (this.getPagination.model == this.pagination.model){
+            this.filtro = false;
             this.updatePosPagina(this.getPagination);
+        }
         else
             this.unsetPagination();
 

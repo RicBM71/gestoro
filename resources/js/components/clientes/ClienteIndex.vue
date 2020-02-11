@@ -47,9 +47,9 @@
                                 <v-data-table
                                 :headers="headers"
                                 :items="arr_reg"
+                                :search="search"
                                 @update:pagination="updateEventPagina"
                                 :pagination.sync="pagination"
-                                :search="search"
                                 rows-per-page-text="Registros por página"
                                 >
                                     <template slot="items" slot-scope="props">
@@ -123,7 +123,7 @@ import {mapActions} from "vuex";
         search:"",
         paginaActual:{},
         pagination:{
-            model: "clientes",
+            model: "cliente",
             descending: false,
             page: 1,
             rowsPerPage: 10,
@@ -179,9 +179,10 @@ import {mapActions} from "vuex";
     },
     mounted()
     {
-
-        if (this.getPagination.model == this.pagination.model)
+        this.pagination.model="cliente"+this.empresaActiva;
+        if (this.getPagination.model == this.pagination.model){
             this.updatePosPagina(this.getPagination);
+        }
         else
             this.unsetPagination();
 

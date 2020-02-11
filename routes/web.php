@@ -348,6 +348,8 @@ Route::group([
         Route::get('/exportar', 'ExportRfidController@index');
         Route::post('/exportar/download', 'ExportRfidController@download');
 
+        Route::get('/estadosr', 'EstadosRfidController@index');
+
 
 
     }

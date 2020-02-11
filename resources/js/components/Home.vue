@@ -299,6 +299,7 @@ export default {
                 { icon: 'forward', text: 'Recuentos', name:'recuento.index' },
                 { icon: 'forward', text: 'Importar fichero RFID', name:'rfid.import' },
                 { icon: 'forward', text: 'Exportar fichero RFID', name:'rfid.export' },
+                { icon: 'forward', text: 'Estados RFID', name:'rfid.estados' },
                 { icon: 'forward', text: 'Generar Etiquetas Apli', name:'etiquetas.aplipdf' },
             ],
         },

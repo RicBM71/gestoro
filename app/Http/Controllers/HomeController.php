@@ -99,7 +99,6 @@ class HomeController extends Controller
             'roles'     => $role_user,
             'permisos'  => $permisos_user,
             'empresas'  => $empresas,
-            'stockComple'=> $empresa->getFlag(5),
             'parametros'=>$parametros,
             'img_fondo' => $empresa->img_fondo,
             'aislar_empresas'  => $parametros->aislar_empresas

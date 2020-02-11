@@ -158,7 +158,7 @@ import {mapActions} from 'vuex'
     methods:{
         ...mapActions([
             'setPagination',
-            'unsetPagination'
+          //  'unsetPagination'
 		]),
         updateEventPagina(obj){
 

@@ -38,7 +38,7 @@ class KltEmpresaSeeder extends Seeder
             // }
             $emp = DB::connection('quilates')->table('empresas')->select('*')->where('id', $row->empresa)->first();
 
-            \Log::info($emp->nombre);
+          //  \Log::info($emp->nombre);
 
             $tie = DB::connection('quilates')->table('tiendas')->select('*')->where('id', $row->tienda)->first();
 

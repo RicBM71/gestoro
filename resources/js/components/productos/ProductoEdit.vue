@@ -479,7 +479,6 @@ import {mapGetters} from 'vuex';
             ...mapGetters([
                     'isAdmin',
                     'hasEditPro',
-                    'stockComple',
                     'userName'
                 ]),
             computedEditPro(){

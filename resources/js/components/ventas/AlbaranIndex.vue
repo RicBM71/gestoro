@@ -148,7 +148,7 @@ import {mapActions} from "vuex";
         expand: false,
         paginaActual:{},
         pagination:{
-            model: "libro",
+            model: "venta",
             descending: true,
             page: 1,
             rowsPerPage: 10,
@@ -224,7 +224,7 @@ import {mapActions} from "vuex";
     },
     beforeMount()
     {
-
+        this.pagination.model="venta"+this.empresaActiva;
         if (this.getPagination.model == this.pagination.model)
             this.updatePosPagina(this.getPagination);
         else
