@@ -33,7 +33,7 @@ class UpdateProducto extends FormRequest
             'nombre_interno'    => ['nullable', 'string', 'max:190'],
             'clase_id'          => ['required','integer'],
             'estado_id'         => ['required','integer'],
-            'compra_id'         => ['required','integer'],
+            'compra_id'         => ['nullable','integer'],
             'iva_id'            => ['required','integer'],
             'referencia'        => ['required','max:20'],
             'univen'            => ['required', 'max:1'],
