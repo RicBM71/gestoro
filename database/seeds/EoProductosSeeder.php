@@ -20,8 +20,8 @@ class EoProductosSeeder extends Seeder
     public function run()
     {
 
-        $this->update_producto();
-        //return;
+       // $this->update_producto();
+       // return;
 
         $i = DB::delete(DB::RAW('DELETE FROM `klt_albaranes` where id not in (select albaran_id from klt_albalins)'));
         \Log::info('albaranes borrados: '.$i);

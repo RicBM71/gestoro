@@ -53,7 +53,7 @@ class EoLibrosSeeder extends Seeder
                 'ejercicio'=>$row->ejercicio,
                 'ult_compra'=>$row->compras - 1,
                 'ult_factura'=>$row->factcompra -1,
-                'serie_fac'=>$row->serie,
+                'serie_fac'=> 'R'.$row->serie,
                 'serie_com'=>$crulib,
                 'semdia_bloqueo'=>$semdia_bloqueo,
                 'dias_custodia'=>30,

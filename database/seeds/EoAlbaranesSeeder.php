@@ -47,7 +47,7 @@ class EoAlbaranesSeeder extends Seeder
                 'fecha_notificacion'=>$row->fnotifica=='0000-00-00' ? null : $row->fnotifica,
                 'online' => $row->online == 'N' ? false: true,
                 'iva_no_residente' => $row->exentoiva == 'N' ? false: true,
-                'notas_int' => $row->notas,
+                'notas_int' => $row->notas=="" ? null : $row->notas,
                 'motivo_id' => null,
                 'factura_txt' => $row->factura > 0 ? $empresa_id.getEjercicio($row->fechafac).$row->serie.$row->factura : null,
                 'albaran_abonado_id'=>null,

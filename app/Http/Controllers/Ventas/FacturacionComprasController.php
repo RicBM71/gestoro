@@ -135,10 +135,13 @@ class FacturacionComprasController extends Controller
                 $comline->update($data);
             }
 
+            \Log::info($libro->ult_factura);
+            $libro->ult_factura = $libro->ult_factura + 1;
+
             $data_com = [
                 'username'     => session('username'),
                 'serie_fac'    => $libro->serie_fac,
-                'factura'      => $libro->ult_factura++,
+                'factura'      => $libro->ult_factura,
                 'fecha_factura'=> $row->fecha
             ];
 

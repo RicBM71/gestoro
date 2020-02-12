@@ -25,7 +25,7 @@ class EoClientesSeeder extends Seeder
             $reg = DB::connection($this->bbdd)->select('select * from clientes');
             $this->insertaClientes($reg);
 
-           // return;
+            return;
 
                 // importar documentos
             Clidoc::truncate();

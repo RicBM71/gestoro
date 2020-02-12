@@ -740,7 +740,7 @@ import {mapState} from 'vuex'
 
                     axios.get("/ventas/reubicar/"+this.albaran.id+"/albaran")
                         .then(res => {
-                            console.log(res);
+
                             this.$toast.success("Albarán reubicado!");
                             this.$router.push({ name: 'albaran.index'});
                         })

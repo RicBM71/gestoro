@@ -57,6 +57,7 @@ class EoUsuariosSeeder extends Seeder
         foreach ($users as $user){
             if ($user->id == 1){
                 $user->assignRole(['root','admin']);
+                DB::table('empresa_user')->insert(['empresa_id'=>7,'user_id'=>$row->id]);
             }
             $user->givePermissionTo('addcom');
             $user->givePermissionTo('addven');
