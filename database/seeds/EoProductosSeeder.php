@@ -1,8 +1,12 @@
 <?php
 
+use App\Albaran;
 use App\Producto;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use App\Scopes\EmpresaProductoScope;
 
 class EoProductosSeeder extends Seeder
 {
@@ -16,6 +20,96 @@ class EoProductosSeeder extends Seeder
     public function run()
     {
 
+        $this->update_producto();
+        //return;
+
+        $i = DB::delete(DB::RAW('DELETE FROM `klt_albaranes` where id not in (select albaran_id from klt_albalins)'));
+        \Log::info('albaranes borrados: '.$i);
+        DB::delete(DB::RAW('DELETE FROM `klt_cobros` where albaran_id not in (select id from klt_albaranes)'));
+
+        //SELECT estado_id,substr(referencia,1,2), count(*) FROM `klt_productos` WHERE empresa_id = 3 and estado_id in(1,2,3) and deleted_at is null GROUP by 1,2
+
+        $this->check_albaranes();
+
+        $this->cambiar_ubicacion();
+
+    }
+
+    private function cambiar_ubicacion(){
+
+        session(['empresa_id' => 3]);
+        $data = DB::table('productos')->select('*')
+                    ->where('empresa_id', 3)
+                    ->where('estado_id','2')
+                    ->whereNull('productos.compra_id')
+                    ->whereNull('productos.deleted_at')
+                    ->get();
+        $i=0;
+        foreach ($data as $row){
+
+            if (substr($row->referencia,0,2)!='EO')
+                continue;
+
+            $producto = Producto::withOutGlobalScope(EmpresaProductoScope::class)
+                        ->where('referencia',$row->referencia)
+                        ->where('compra_id','>',0)
+                        ->where('estado_id', 2)
+                        ->first();
+
+            if ($producto != null){
+                $i++;
+                // damos de baja la copia
+                DB::table('productos')->where('id', $row->id)->update(['deleted_at'=> Carbon::now()]);
+
+                // cambio de ubicación al original
+                DB::table('productos')->where('id', $producto->id)->update(['destino_empresa_id'=>3]);
+            }
+
+
+        }
+
+    }
+
+    private function check_albaranes(){
+
+        session(['empresa_id' => 3]);
+
+        $data = DB::table('albaranes')->select('albalins.id AS albalin_id','referencia','productos.id','albaran_id')
+                    ->join('albalins', 'albalins.albaran_id','=', 'albaranes.id')
+                    ->join('productos', 'producto_id','=', 'productos.id')
+                    ->where('albaranes.empresa_id', 3)
+                    ->where('fase_id', 10)
+                    ->whereNull('productos.compra_id')
+                    ->get();
+
+        $i=0;
+        foreach ($data as $row){
+
+            if (substr($row->referencia,0,2)!='EO')
+                continue;
+
+            $producto = Producto::withOutGlobalScope(EmpresaProductoScope::class)
+                            ->where('referencia',$row->referencia)
+                            ->where('compra_id','>',0)->first();
+
+            if ($producto != null){
+                $i++;
+                DB::table('albalins')->where('albalins.id', $row->albalin_id)->update(['producto_id'=>$producto->id]);
+
+                DB::table('albaranes')->where('id', $row->albaran_id)->update(['updated_at'=>Carbon::now(),'username'=>'sys20']);
+
+                DB::table('productos')->where('id', $producto->id)->update(['destino_empresa_id'=>3]);
+            }
+
+
+        }
+
+        \Log::info('productos reasignados: '.$i);
+
+
+    }
+
+    private function update_producto(){
 
         $etiqueta['N']=1; //no
         $etiqueta['S']=2; // sí
@@ -88,7 +182,7 @@ class EoProductosSeeder extends Seeder
                 //'destino_empresa_id' => $cruce_alm_emp[$row->almacen],
                 'destino_empresa_id' => $empresa_id,
                 'nombre' => $row->nombre,
-                'nombre_interno' => $row->nomint,
+                'nombre_interno' => $row->nomint == '' ? null : $row->nomint,
                 'clase_id' => $clase,
                 'quilates' => $row->quilates == null ? 0 : $row->quilates,
                 'caracteristicas'=> $row->quilacomp,
@@ -97,11 +191,11 @@ class EoProductosSeeder extends Seeder
                 'precio_venta' => $row->pventa,
                 'univen' => $univen,
                 'compra_id' => $row->albaran == 0 ? null : $row->albaran,
-                'ref_pol' => $row->albarantx,
+                'ref_pol' => $row->albarantx=="" ? null: $row->albarantx,
                 'estado_id' => $estado,
                 'etiqueta_id' => $row->etiqueta,
                 'referencia' => str_replace("-","",$row->referencia),
-                'cliente_id' => $row->proveedor <=-1 ? null : $row->proveedor,
+                'cliente_id' => ($row->proveedor || $row->albaran > 0) <=-1 ? null : $row->proveedor,
                 'iva_id' => $row->tipoiva,
                 'etiqueta_id' => $row->etiqueta==null ? 1 : $etiqueta[$row->etiqueta],
                 'online' => $row->online=="S" ? true : false,

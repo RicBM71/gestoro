@@ -194,6 +194,8 @@ import MenuOpe from './MenuOpe'
 import Comlines from './Comlines'
 import DepoLines from './DepoLines'
 import {mapGetters} from 'vuex';
+import {mapActions} from "vuex";
+import {mapState} from 'vuex'
 	export default {
 		$_veeValidate: {
       		validator: 'new'
@@ -249,6 +251,11 @@ import {mapGetters} from 'vuex';
                         this.docu_ok = res.data.documentos.status > 0 ? true : false;
 
                         this.compra = res.data.compra;
+
+                        if (res.data.param != false)
+                            this.setAuthUser(res.data.param.user);
+
+
                         this.lineas_deposito = res.data.lineas_deposito;
 
                         if (this.compra.tipo_id == 1){
@@ -378,6 +385,10 @@ import {mapGetters} from 'vuex';
             }
         },
     	methods:{
+            ...mapActions([
+                'setAuthUser',
+                'unsetParametros'
+			]),
             getMoneyFormat(value){
                 return new Intl.NumberFormat("de-DE",{style: "currency", currency: "EUR"}).format(parseFloat(value))
             },

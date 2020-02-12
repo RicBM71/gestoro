@@ -119,7 +119,7 @@ Class Producto extends Model
     public static function scopeReferencia($query, $referencia){
 
         $referencia = \strtoupper($referencia);
-        
+
         if ($referencia > ''){
             if (strpos($referencia,'.') === false){
                 return $query->where('referencia','like', '%'.$referencia.'%');
@@ -249,6 +249,18 @@ Class Producto extends Model
         return $query;
 
     }
+
+    public static function scopeInternos($query, $value){
+
+        if ($value == "I")
+            return $query->where('ref_pol','>', 0);
+        elseif ($value == "E")
+            return $query->whereNull('ref_pol');
+
+        return $query;
+
+    }
+
 
     public static function scopeNombre($query, $nombre){
 

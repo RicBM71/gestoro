@@ -46,11 +46,11 @@ class DatabaseSeeder extends Seeder
         $this->call(EoComprasSeeder::class);
         $this->call(EoComlinesSeeder::class);
         $this->call(EoDepositosSeeder::class);
-        $this->call(EoProductosSeeder::class);
         $this->call(EoAlbaranesSeeder::class);
         $this->call(EoAlbalinSeeder::class);
         $this->call(EoCobrosSeeder::class);
         $this->call(EoCajaSeeder::class);
+        $this->call(EoProductosSeeder::class);
 
         // $this->call(GdEmpresasSeeder::class);
         // $this->call(GdUsuariosSeeder::class);

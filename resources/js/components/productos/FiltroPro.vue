@@ -189,9 +189,9 @@
                         label="Asociado"
                         ></v-select>
                 </v-flex>
-                <v-flex sm1>
+                <v-flex sm2>
                     <v-switch
-                        label="Alta"
+                        label="Solo Activos"
                         v-model="reg.alta"
                         color="primary">
                     ></v-switch>
@@ -204,6 +204,18 @@
                     ></v-switch>
                 </v-flex>
                 <v-flex sm2>
+                    <v-select
+                        v-model="reg.interno"
+                        v-validate="'required'"
+                        data-vv-name="interno"
+                        data-vv-as="procedencia"
+                        :error-messages="errors.collect('interno')"
+                        :items="internos"
+                        label="Procedencia"
+                        required
+                        ></v-select>
+                </v-flex>
+                <v-flex sm2>
                     <v-switch
                         v-if="isRoot"
                         label="Sin Global Scope - root"
@@ -211,7 +223,6 @@
                         color="primary">
                     ></v-switch>
                 </v-flex>
-                <v-flex sm3></v-flex>
                 <v-flex sm1>
                     <v-btn @click="submit"  :loading="loading" round small block  color="info">
                         Filtrar
@@ -251,13 +262,19 @@ export default {
                 estado_id: null,
                 quilates:"",
                 online:false,
-                alta: true,
+                alta: false,
                 fecha_d: "", //new Date().toISOString().substr(0, 10),
                 fecha_h: "",
                 tipo_fecha: 'C',
                 destino_empresa_id:"",
-                sinscope: false
+                sinscope: false,
+                interno: 'T',
             },
+            internos:[
+                {value: 'I', text: 'Internos'},
+                {value: 'E', text: 'Externos'},
+                {value: 'T', text: 'Todos'},
+            ],
             fechas:[
                 {value: 'C', text: 'Creación'},
                 {value: 'M', text: 'Modificación'}

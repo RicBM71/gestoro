@@ -13,6 +13,9 @@
             <th>REF. POL</th>
             <th>Estado</th>
             <th>PROVEEDOR</th>
+            <th>Notas</th>
+            <th>Interno</th>
+            <th>Borrado</th>
         </tr>
     </thead>
     <tbody>
@@ -35,6 +38,9 @@
             @else
             <td>-</td>
             @endif
+            <td>{{ $item['notas']}}</td>
+            <td>{{ $item['compra_id'] > 0 ? 'Si' : 'No'}}
+            <td>{{ $item['deleted_at'] != null ? 'Anulado '.$item['username'] : ''}}
         </tr>
     @endforeach
     </tbody>

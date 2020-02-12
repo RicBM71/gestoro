@@ -177,7 +177,8 @@ export default {
             'isAdmin',
             'hasFactura',
             'isGestor',
-            'isSupervisor'
+            'isSupervisor',
+            'empresaActiva'
 		]),
     },
     data: () => ({
@@ -379,6 +380,7 @@ export default {
                 })
 
     },
+
     methods:{
         ...mapActions([
                 'setAuthUser',
@@ -442,6 +444,7 @@ export default {
             this.$router.push({name: 'edit.password'});
         },
         empresa(){
+            this.empresa_id = this.empresaActiva;
             this.myEmpresa=true;
         },
         getReloadEmpresa(){
@@ -460,7 +463,7 @@ export default {
                 })
         },
         setEmpresa(){
-
+            //console.log('set');
             this.empresas.map((e) =>{
                    if (e.id == this.empresa_id)
                         this.empresaTxt = e.name;

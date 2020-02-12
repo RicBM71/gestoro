@@ -12,6 +12,7 @@ use App\Concepto;
 use App\Deposito;
 use Carbon\Carbon;
 use App\Scopes\EmpresaScope;
+use App\Traits\SessionTrait;
 use Illuminate\Http\Request;
 use App\Exports\ComprasExport;
 use App\Http\Controllers\Controller;
@@ -24,6 +25,8 @@ use App\Http\Requests\Compras\FiltrarRequest;
 
 class ComprasController extends Controller
 {
+
+    use SessionTrait;
 
     /**
      * Display a listing of the resource.
@@ -178,7 +181,21 @@ class ComprasController extends Controller
     public function show($id)
     {
 
-        $compra = Compra::with(['cliente','grupo','grupo','tipo','fase'])->findOrFail($id);
+        $compra = Compra::withOutGlobalScope(EmpresaScope::class)->findOrFail($id);
+
+        // con esto cambiamos de empresa si la empresa no coincide
+        $collection = session('empresas_usuario');
+        if ($collection->search($compra->empresa_id, true)===false){
+            return abort(404, "No se ha encontrado el registro");
+        }
+
+        if ($compra->empresa_id != session('empresa_id')){
+            $param = $this->loadSession($compra->empresa_id);
+        }else{
+            $param = false;
+        }
+
+        $compra->load(['cliente','grupo','grupo','tipo','fase']);
         //$compra = Compra::withoutGlobalScope(EmpresaScope::class)->with(['cliente','grupo','grupo','tipo','fase'])->findOrFail($id);
 
         try {
@@ -197,6 +214,7 @@ class ComprasController extends Controller
 
         if (request()->wantsJson())
             return [
+                'param'             => $param,
                 'valor_compras'     => Deposito::valorCompras($compra->fecha_compra,$compra->cliente_id,$compra->id),
                 'conceptos'         => Concepto::selConceptosC()->depositos()->get(),
                 'compra'            => $compra,

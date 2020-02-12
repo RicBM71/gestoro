@@ -21,6 +21,22 @@
                             </template>
                             <span>Filtros</span>
                         </v-tooltip>
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                            <v-btn
+                                v-show="arr_reg.length > 0 && isGestor"
+                                v-on="on"
+                                color="white"
+                                icon
+                                @click="goExcel()"
+                            >
+                                <v-avatar size="32px">
+                                    <img class="img-fluid" src="/assets/excel.png">
+                                </v-avatar>
+                            </v-btn>
+                        </template>
+                    <span>Exportar a Excel</span>
+                </v-tooltip>
                     <menu-ope></menu-ope>
                 </v-card-title>
             </v-card>
@@ -207,6 +223,7 @@ import {mapActions} from "vuex";
     computed: {
         ...mapGetters([
             'isAdmin',
+            'isGestor',
             'hasEditPro',
             'getPagination'
         ])
@@ -266,6 +283,37 @@ import {mapActions} from "vuex";
 
             });
 
+        },
+        goExcel(){
+
+            this.show_loading = true;
+            axios({
+                url: this.url+"/excel",
+                method: 'POST',
+                responseType: 'blob', // important
+                data:{ data: this.arr_reg }
+                })
+            .then(response => {
+
+                let blob = new Blob([response.data])
+                let link = document.createElement('a')
+                link.href = window.URL.createObjectURL(blob)
+
+                link.download = "Productos."+new Date().getFullYear()+(new Date().getMonth()+1)+(new Date().getDate())+'.xlsx';
+
+                document.body.appendChild(link);
+                link.click()
+                document.body.removeChild(link);
+
+                this.$toast.success('Download Ok! '+link.download);
+
+                this.show_loading = false;
+
+            })
+            .catch(err => {
+                this.$toast.error(err.response.data.message);
+                this.show_loading = false;
+            });
         },
     }
   }

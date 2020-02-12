@@ -15,11 +15,13 @@ use App\Producto;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Rules\RangoFechaRule;
+use App\Exports\InventarioExport;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProducto;
 use App\Rules\MaxDiasRangoFechaRule;
 use App\Scopes\EmpresaProductoScope;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\UpdateProducto;
 
 class ProductosController extends Controller
@@ -74,6 +76,7 @@ class ProductosController extends Controller
             'fecha_h'       =>['nullable','date',new MaxDiasRangoFechaRule($request->fecha_d, $request->fecha_h)],
             'destino_empresa_id'=>['nullable','integer'],
             'sinscope'       =>['boolean'],
+            'interno'    =>['string','required'],
         ]);
 
         session(['filtro_pro' => $data]);
@@ -104,7 +107,7 @@ class ProductosController extends Controller
 
         if (esRoot() && $data['sinscope']){
             if ($data['alta'] == false)
-                $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->onlyTrashed()->with(['clase','estado'])
+                $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->withTrashed()->with(['clase','estado'])
                             ->referencia($data['referencia'])
                             ->fecha($data['fecha_d'],$data['fecha_h'],$data['tipo_fecha'])
                             ->clase($data['clase_id'])
@@ -115,6 +118,7 @@ class ProductosController extends Controller
                             ->precioPeso($data['precio'])
                             ->quilates($data['quilates'])
                             ->online($data['online'])
+                            ->internos($data['interno'])
                             ->orderBy('id','desc')
                             ->get()
                             ->take(500);
@@ -131,6 +135,7 @@ class ProductosController extends Controller
                         ->precioPeso($data['precio'])
                         ->quilates($data['quilates'])
                         ->online($data['online'])
+                        ->internos($data['interno'])
                         ->asociado($data['cliente_id'])
                         ->orderBy('id','desc')
                         ->get()
@@ -140,7 +145,7 @@ class ProductosController extends Controller
         }
         else{
             if ($data['alta'] == false)
-                $data = Producto::onlyTrashed()->with(['clase','estado'])
+                $data = Producto::withTrashed()->with(['clase','estado'])
                             ->referencia($data['referencia'])
                             ->fecha($data['fecha_d'],$data['fecha_h'],$data['tipo_fecha'])
                             ->clase($data['clase_id'])
@@ -151,6 +156,7 @@ class ProductosController extends Controller
                             ->precioPeso($data['precio'])
                             ->quilates($data['quilates'])
                             ->online($data['online'])
+                            ->internos($data['interno'])
                             ->orderBy('id','desc')
                             ->get()
                             ->take(500);
@@ -167,6 +173,7 @@ class ProductosController extends Controller
                         ->precioPeso($data['precio'])
                         ->quilates($data['quilates'])
                         ->online($data['online'])
+                        ->internos($data['interno'])
                         ->asociado($data['cliente_id'])
                         ->orderBy('id','desc')
                         ->get()
@@ -351,4 +358,18 @@ class ProductosController extends Controller
             ];
         }
     }
+
+     /**
+     * Recibe las facturas por request, previamente de $this->lisfac()
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function excel(Request $request){
+
+        return Excel::download(new InventarioExport($request->data, 'Productos '.session('empresa')->razon), 'inventario.xlsx');
+
+
+    }
+
 }

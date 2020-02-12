@@ -16,6 +16,7 @@ class ReubicarAlbaranesController extends Controller
 {
 
     protected $contador=0;
+    protected $nueva_fecha_albaran = false;
 
     public function reubicar(Request $request){
 
@@ -41,6 +42,7 @@ class ReubicarAlbaranesController extends Controller
                     ->where('productos.empresa_id','<>',session('empresa')->id)
                     ->get();
 
+        $this->nueva_fecha_albaran = $data['fecha_h'];
 
         foreach ($albaranes as $albaran){
             $this->update($albaran->id);
@@ -110,7 +112,7 @@ class ReubicarAlbaranesController extends Controller
         }
 
         $total_albaran = 0;
-        $nuevo_albaran = false;
+        $nuevo_albaran_proveedores = false;
         $empresa_id_proveedores_depo = session('empresa')->deposito_empresa_id;
         $cliente_ant = -1;
         // reubicamos los que son de proveedores
@@ -121,14 +123,14 @@ class ReubicarAlbaranesController extends Controller
 
             if ($cliente_ant != $albalin->producto->cliente_id){
                 if ($total_albaran != 0){
-                    $this->crearCobro($nuevo_albaran, $albaran->id, $total_albaran);
+                    $this->crearCobro($nuevo_albaran_proveedores, $albaran->id, $total_albaran);
                 }
-                $nuevo_albaran = $this->crearAlbaran($albaran, $empresa_id_proveedores_depo);
+                $nuevo_albaran_proveedores = $this->crearAlbaran($albaran, $empresa_id_proveedores_depo);
                 $cliente_ant = $albalin->producto->cliente_id;
                 $total_albaran = 0;
             }
 
-            $this->crearAlbalin($albalin, $nuevo_albaran->id, $nuevo_albaran->empresa_id);
+            $this->crearAlbalin($albalin, $nuevo_albaran_proveedores->id, $nuevo_albaran_proveedores->empresa_id);
             DB::table('productos')->where('id', $albalin->producto_id)
                                     ->update([
                                         'empresa_id' => $empresa_id_proveedores_depo,
@@ -140,21 +142,28 @@ class ReubicarAlbaranesController extends Controller
         }
 
         if ($total_albaran != 0){
-            $this->crearCobro($nuevo_albaran, $albaran->id, $total_albaran);
+            $this->crearCobro($nuevo_albaran_proveedores, $albaran->id, $total_albaran);
         }
 
         // DB::table('cobros')->where('albaran_id', $albaran->id)->delete();
         // DB::table('albalins')->where('albaran_id', $albaran->id)->delete();
         // DB::table('albaranes')->where('id', $albaran->id)->delete();
 
-        DB::table('cobros')->where('albaran_id', $albaran->id)
-            ->update(['deleted_at'  => Carbon::now()]);
-        DB::table('albalins')->where('albaran_id', $albaran->id)
-            ->update(['deleted_at'  => Carbon::now()]);
-        DB::table('albaranes')->where('id', $albaran->id)
-            ->update(['deleted_at'  => Carbon::now()]);
+        if ($nuevo_albaran !== false  || $nuevo_albaran_proveedores =! false){
+            DB::table('cobros')->where('albaran_id', $albaran->id)
+                ->update(['deleted_at'  => Carbon::now()]);
+            DB::table('albalins')->where('albaran_id', $albaran->id)
+                ->update(['deleted_at'  => Carbon::now()]);
+            DB::table('albaranes')->where('id', $albaran->id)
+                ->update(['deleted_at'  => Carbon::now()]);
 
-        return $nuevo_albaran;
+            return $nuevo_albaran;
+        }
+
+        \Log::info($nuevo_albaran);
+
+        return "no hay";
+
 
     }
 
@@ -166,7 +175,10 @@ class ReubicarAlbaranesController extends Controller
             $data_new['procedencia_empresa_id'] =  $albaran->empresa_id;
 
         $data_new['tipo_id']        = $albaran->tipo_id;
-        $data_new['fecha_albaran']  = $albaran->fecha_albaran;
+        if ($this->nueva_fecha_albaran === false)
+            $this->nueva_fecha_albaran = date('Y-m-d');
+
+        $data_new['fecha_albaran']  = $this->nueva_fecha_albaran;
         $data_new['cliente_id']     = $albaran->cliente_id;
 
         $data_new['fase_id']          = $albaran->fase_id;

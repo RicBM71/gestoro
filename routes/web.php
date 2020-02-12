@@ -107,6 +107,7 @@ Route::group([
         Route::resource('productos', 'ProductosController', ['as' => 'mto']);
         Route::post('productos/filtrar', 'ProductosController@filtrar');
         Route::get('productos/print/{id}', 'PrintGarantiaDepositoController@print');
+        Route::post('/productos/excel', 'ProductosController@excel');
 
         Route::resource('traspasos', 'TraspasosController', ['as' => 'mto']);
         Route::post('traspasos/filtrar', 'TraspasosController@filtrar');
