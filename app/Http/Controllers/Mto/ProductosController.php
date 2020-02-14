@@ -219,6 +219,8 @@ class ProductosController extends Controller
 
         $reg->update($data);
 
+        $reg->load('clase');
+
         if (request()->wantsJson())
             return ['producto'=>$reg, 'message' => 'EL registro ha sido creado'];
     }

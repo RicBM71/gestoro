@@ -44,9 +44,10 @@
             </v-layout>
             <producto-create
                 :compra="compra"
-                :itemCreate="itemCreate"
+                :itemCreate.sync="itemCreate"
                 :dialog_pro.sync="dialog_pro"
-                :ir_a_edit="ir_a_edit">
+                :ir_a_edit="ir_a_edit"
+            >
             </producto-create>
     </div>
 </template>
@@ -60,6 +61,7 @@ export default {
         grabaciones: Number,
         lineas: Array,
         lin_selected: Array,
+        productoCreado: Object
     },
      components: {
         'producto-create': ProductoCreate
@@ -69,7 +71,7 @@ export default {
             show_grab: false,
             dialog: false,
             dialog_pro: false,
-            ir_a_edit: true,
+            ir_a_edit: false,
 
             editedIndex: -1,
             editedItem: {},
@@ -171,6 +173,9 @@ export default {
         this.headers =  (this.grabaciones) ?  this.headers_grab : this.headers_singrab;
     },
     watch:{
+        itemCreate: function () {
+            this.$emit('update:productoCreado', this.itemCreate);
+        },
         selected: function () {
             this.$emit('update:lin_selected', this.selected);
         },

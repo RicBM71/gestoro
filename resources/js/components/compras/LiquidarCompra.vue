@@ -119,6 +119,14 @@
                                         readonly
                                     ></v-text-field>
                                 </v-flex>
+                                <v-flex xs2>
+                                    <v-text-field
+                                        :value="getDecimalFormat(computedValorRestoCompra)"
+                                        class="inputPrice"
+                                        label="Valor Resto Compra"
+                                        readonly
+                                    ></v-text-field>
+                                </v-flex>
                             </v-layout>
                         <div v-if="compra.id>0">
                             <lineas-liquidar
@@ -126,7 +134,9 @@
                                 :lineas="lineas"
                                 :compra="compra"
                                 :grabaciones="grabaciones"
-                                :auth_liquidar="auth_liquidar">
+                                :auth_liquidar="auth_liquidar"
+                                :productoCreado.sync="productoCreado"
+                            >
                             </lineas-liquidar>
                             <productos-liquidados
                                 :productos="productos">
@@ -169,6 +179,7 @@ import {mapGetters} from 'vuex';
                 grabaciones: false,
                 peso_compra:"",
                 peso_inventario:"",
+                valor_resto_compra:0,
 
         		status: false,
                 loading: false,
@@ -187,6 +198,7 @@ import {mapGetters} from 'vuex';
                 docu_ok: false,
                 auth_liquidar: true,
                 grabaciones: false,
+                productoCreado:{}
       		}
         },
         mounted(){
@@ -195,7 +207,7 @@ import {mapGetters} from 'vuex';
             if (compra_id > 0)
                 axios.get(this.url+'/'+compra_id+'/edit')
                     .then(res => {
-                        
+
                         this.peso_compra = res.data.peso_compra;
                         this.peso_inventario = res.data.peso_inventario;
                         this.compra = res.data.compra;
@@ -214,6 +226,13 @@ import {mapGetters} from 'vuex';
             ...mapGetters([
                 'isAdmin'
             ]),
+            computedValorRestoCompra(){
+                var total_inventariado = parseFloat(this.compra.importe);
+
+                this.productos.forEach(function(item){total_inventariado = total_inventariado - item.precio_coste;});
+
+                return total_inventariado;
+            },
             computedFechaLiquidado() {
                 moment.locale('es');
                 return this.fecha_liquidado ? moment(this.fecha_liquidado).format('L') : '';
@@ -221,6 +240,11 @@ import {mapGetters} from 'vuex';
             computedFModFormat() {
                 moment.locale('es');
                 return this.compra.updated_at ? moment(this.compra.updated_at).format('DD/MM/YYYY H:mm:ss') : '';
+            }
+        },
+        watch:{
+            productoCreado: function () {
+                this.productos.push(this.productoCreado);
             }
         },
     	methods:{

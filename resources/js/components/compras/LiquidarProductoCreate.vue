@@ -135,7 +135,7 @@
         compra: Object,
         itemCreate: Object,
         dialog_pro: Boolean,
-        ir_a_edit: Boolean
+        ir_a_edit: Boolean,
     },
     data: () => ({
         loading: false,
@@ -257,8 +257,11 @@
                                 this.loading = false;
                                 if (this.ir_a_edit)
                                     this.$router.push({ name: 'producto.edit', params: { id: res.data.producto.id } })
-                                else
+                                else{
+                                    //this.$forceUpdate()
+                                    this.$emit('update:itemCreate', res.data.producto)
                                     this.$emit('update:ir_a_edit', true)
+                                }
                             })
                             .catch(err => {
 

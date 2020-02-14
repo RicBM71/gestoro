@@ -5,6 +5,7 @@
                 <v-data-table
                     :headers="headers"
                     :items="productos"
+                    :pagination.sync="pagination"
                     rows-per-page-text="Registros por página"
                 >
                 <template slot="items" slot-scope="props">
@@ -43,6 +44,12 @@ export default {
    data () {
       return {
         search:"",
+        pagination:{
+            descending: true,
+            page: 1,
+            rowsPerPage: 10,
+            sortBy: "id",
+        },
         headers: [
             {
                 text: 'Referencia',
