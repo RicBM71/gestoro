@@ -217,8 +217,8 @@
                 </v-flex>
                 <v-flex sm2>
                     <v-switch
-                        v-if="isRoot"
-                        label="Sin Global Scope - root"
+                        v-if="isAdmin"
+                        label="Deslocalizar"
                         v-model="reg.sinscope"
                         color="primary">
                     ></v-switch>
@@ -262,7 +262,7 @@ export default {
                 estado_id: null,
                 quilates:"",
                 online:false,
-                alta: false,
+                alta: true,
                 fecha_d: "", //new Date().toISOString().substr(0, 10),
                 fecha_h: "",
                 tipo_fecha: 'C',
@@ -314,7 +314,7 @@ export default {
     },
     computed: {
          ...mapGetters([
-            'isRoot',
+            'isAdmin',
         ]),
         computedFechaD() {
             moment.locale('es');

@@ -52,6 +52,7 @@
                         <td class="gray--text darken-4">{{ props.item.nombre}}</td>
                         <td class="gray--text darken-4 text-xs-right">{{ props.item.peso_gr | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                         <td class="gray--text darken-4 text-xs-right">{{ props.item.importe | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
+                        <td class="gray--text darken-4 text-xs-right">{{ precioGr(props.item) | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                     </template>
                     <template slot="pageText" slot-scope="props">
                         Registros {{ props.pageStart }} - {{ props.pageStop }} de {{ props.itemsLength }}
@@ -120,7 +121,13 @@ export default {
                     align: 'center',
                     value: 'importe',
                     width:'5%'
-                }
+                },
+                 {
+                    text: 'Precio Gr.',
+                    align: 'center',
+                    value: 'importe',
+                    width:'5%'
+                },
              ],
             }
         },
@@ -143,6 +150,11 @@ export default {
         }
     },
     methods:{
+        precioGr(item){
+
+            return (item.peso_gr != 0) ? (parseFloat(item.importe) / parseFloat(item.peso_gr)).toFixed(2) : "";
+
+        },
         getFecha(f){
             moment.locale('es');
             return f ? moment(f).format('DD/MM/YYYY') : '';

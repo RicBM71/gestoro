@@ -19,7 +19,7 @@
                     <v-flex sm2>
                         <v-text-field
                             v-model="cliente.dni"
-                            v-validate="'required|min:4'"
+                            v-validate="'required|min:5'"
                             :error-messages="errors.collect('dni')"
                             label="Nº Documento"
                             readonly

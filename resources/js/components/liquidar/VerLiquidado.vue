@@ -31,6 +31,7 @@
                             <td class="indigo--text darken-4">{{ props.item.clase.nombre}}<span v-show="props.item.quilates != null"> {{props.item.quilates}} K</span></td>
                             <td class="indigo--text darken-4 text-xs-right">{{ props.item.peso_gr | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                             <td class="indigo--text darken-4 text-xs-right">{{ props.item.importe | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
+                            <td class="indigo--text darken-4 text-xs-right">{{ precioGr(props.item) | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                             <td class="justify-center layout px-0">
                                 <v-icon
                                     small
@@ -163,7 +164,13 @@ export default {
                     value: 'importe',
                     width:'5%'
                 },
-                 {
+                {
+                    text: 'Precio Gr.',
+                    align: 'center',
+                    value: 'importe',
+                    width:'5%'
+                },
+                {
                     text: 'A',
                     align: 'Center',
                     value: '',
@@ -203,6 +210,11 @@ export default {
             'setPagination',
             'unsetPagination',
         ]),
+        precioGr(item){
+
+            return (item.peso_gr != 0) ? (parseFloat(item.importe) / parseFloat(item.peso_gr)).toFixed(2) : "";
+
+        },
         editPro(producto_id){
              this.setPagination(this.paginaActual);
              this.$router.push({ name: 'producto.edit', params: { id: producto_id } })

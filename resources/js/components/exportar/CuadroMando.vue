@@ -272,7 +272,6 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'isAdmin',
         ]),
 
         computedFechaD() {

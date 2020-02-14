@@ -13,11 +13,11 @@
                 <v-container>
                     <v-layout row wrap>
                         <v-flex sm1 d-flex>
-                                <v-select
-                                    v-model="parametros.tipo_id"
-                                    :items="tipos"
-                                    label="Operación"
-                                ></v-select>
+                            <v-select
+                                v-model="parametros.tipo_id"
+                                :items="tipos"
+                                label="Operación"
+                            ></v-select>
                         </v-flex>
                         <v-flex sm2>
                             <v-select
@@ -61,7 +61,7 @@
                                     ></v-date-picker>
                             </v-menu>
                         </v-flex>
-                        <v-flex sm2>
+                        <v-flex sm2 v-show="computedShowFechaLiq">
                             <v-menu
                                 v-model="menu_liq"
                                 :close-on-content-click="false"
@@ -74,7 +74,7 @@
                             >
                                 <v-text-field
                                     slot="activator"
-                                    :value="computedFechaFun"
+                                    :value="computedFechaLiq"
                                     label="F. Liquidado"
                                     append-icon="event"
                                     v-validate="'date_format:dd/MM/yyyy'"
@@ -92,6 +92,7 @@
                                     ></v-date-picker>
                             </v-menu>
                         </v-flex>
+                        <v-flex sm2 v-show="!computedShowFechaLiq"></v-flex>
                         <v-flex sm2 d-flex>
                             <v-select
                                 v-model="parametros.accion"
@@ -100,7 +101,7 @@
                                 @change="selectAccion"
                             ></v-select>
                         </v-flex>
-                        <v-flex sm2>
+                        <v-flex sm2 v-show="computedShowBlq">
                             <v-switch
                                 label="Saltar Bloqueo"
                                 v-model="parametros.saltar_bloqueo"
@@ -223,7 +224,13 @@ export default {
         ...mapGetters([
             'getParamSeleccion',
         ]),
-        computedFechaFun() {
+        computedShowFechaLiq(){
+            return this.parametros.accion != 'P';
+        },
+        computedShowBlq(){
+            return this.parametros.accion == 'P' || this.parametros.accion == "F";
+        },
+        computedFechaLiq() {
             moment.locale('es');
             return this.parametros.fecha_liq ? moment(this.parametros.fecha_liq).format('L') : '';
         },

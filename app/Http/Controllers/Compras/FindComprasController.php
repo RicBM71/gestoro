@@ -13,6 +13,10 @@ class FindComprasController extends Controller
 
     public function index(){
 
+        if (session('empresa')->getFlag(1) == false){
+            return abort(411, 'Esta empresa no admite compras');
+        }
+
         if (request()->wantsJson())
             return [
                 'serie' => Libro::distinct()->orderBy('ejercicio','desc')->first() //DB::table('libros')->distinct()->first()

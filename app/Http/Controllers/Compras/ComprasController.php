@@ -35,6 +35,11 @@ class ComprasController extends Controller
      */
     public function index()
     {
+        
+        if (session('empresa')->getFlag(1) == false){
+            return abort(411, 'Esta empresa no admite compras');
+        }
+
                 //->where('fecha_compra','>=',Carbon::today()->subDays(30))
         if (request()->session()->has('filtro_com')){
             $data = $this->miFiltro();

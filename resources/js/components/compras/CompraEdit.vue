@@ -94,7 +94,7 @@
                         <v-flex sm2>
                             <v-text-field
                                 v-model="computedFModFormat"
-                                label="Modificado"
+                                :label="computedTxtMod"
                                 readonly                            >
                             </v-text-field>
                         </v-flex>
@@ -294,6 +294,9 @@ import {mapGetters} from 'vuex';
                 if (this.isAdmin) return false;
 
                 return this.totales_concepto[0] != 0;
+            },
+            computedTxtMod(){
+                return "Mod. "+this.compra.username;
             },
             computedValorCompras(){
                 return this.getMoneyFormat(parseFloat(this.compra.importe)+parseFloat(this.valor_compras));

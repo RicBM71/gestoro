@@ -51,7 +51,7 @@
                                         </v-icon>
 
 
-                                        <v-icon v-if="isAdmin"
+                                        <v-icon v-if="isRoot"
                                         small
                                         @click="openDialog(props.item.id)"
                                         >
@@ -143,7 +143,7 @@ import {mapActions} from "vuex";
     },
     computed: {
         ...mapGetters([
-            'isAdmin',
+            'isRoot',
             'getPagination'
         ])
     },

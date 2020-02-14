@@ -50,7 +50,7 @@
                             <v-text-field
                                 v-model="dni"
                                 ref="dni"
-                                v-validate="'required|min:4'"
+                                v-validate="'required|min:5'"
                                 :error-messages="errors.collect('dni')"
                                 label="Nº Documento"
                                 required
@@ -103,7 +103,6 @@
                                 label="Nº Registro"
                                 v-on:keyup.enter="submit"
                                 :readonly="!hasBorraCompras"
-
                             >
                             </v-text-field>
                         </v-flex>

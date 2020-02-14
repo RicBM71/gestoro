@@ -42,10 +42,13 @@ verificarSiHayProductosEnDeposito
 03.02.2020
 Afinando consultas.
 
+intercambiar número operaciones.
 
 ==
 PTE:
-intercambiar número operaciones.
+Revisar facturación depósitos (tiene que ser diferente la empresa de depo)
+Revisar facturación recompras
+búsqueda sin parámetros en productos (kilates)
 
 
 

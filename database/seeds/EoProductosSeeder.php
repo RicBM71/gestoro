@@ -27,6 +27,9 @@ class EoProductosSeeder extends Seeder
         \Log::info('albaranes borrados: '.$i);
         DB::delete(DB::RAW('DELETE FROM `klt_cobros` where albaran_id not in (select id from klt_albaranes)'));
 
+        DB::update(DB::RAW('UPDATE klt_productos set empresa_id = 3, destino_empresa_id = 5 where empresa_id = 6 and estado_id = 2 and deleted_at is null'));
+        DB::update(DB::RAW('UPDATE klt_productos set empresa_id = 7, destino_empresa_id = 7 where estado_id = 5 and deleted_at is null'));
+
         //SELECT estado_id,substr(referencia,1,2), count(*) FROM `klt_productos` WHERE empresa_id = 3 and estado_id in(1,2,3) and deleted_at is null GROUP by 1,2
 
       //  $this->check_albaranes();

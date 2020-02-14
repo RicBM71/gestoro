@@ -79,7 +79,7 @@ class ProductosController extends Controller
             'fecha_h'       =>['nullable','date',new MaxDiasRangoFechaRule($request->fecha_d, $request->fecha_h)],
             'destino_empresa_id'=>['nullable','integer'],
             'sinscope'       =>['boolean'],
-            'interno'    =>['string','required'],
+            'interno'        =>['string','required'],
         ]);
 
         session(['filtro_pro' => $data]);
@@ -92,7 +92,7 @@ class ProductosController extends Controller
 
         $data = request()->session()->get('filtro_pro');
 
-        if (esAdmin() && session('parametros')->aislar_empresas == false){
+        if (esAdmin() && session('parametros')->aislar_empresas == false && $data['sinscope']==true){
             if ($data['alta'] == false)
                 $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->withTrashed()->with(['clase','estado'])
                             ->referencia($data['referencia'])
@@ -254,27 +254,26 @@ class ProductosController extends Controller
     public function edit($id)
     {
 
-        // if (esAdmin()){
-        //     $producto = Producto::withTrashed()->findOrFail($id);
-        // }else{
-        //     $producto = Producto::findOrFail($id);
+        if (esAdmin()){
+            $producto = Producto::withTrashed()->findOrFail($id);
+        }else{
+            $producto = Producto::findOrFail($id);
+        }
 
-        // }
-        \Log::info($id);
-
-        $producto = Producto::withOutGlobalScope(EmpresaProductoScope::class)->withTrashed()->findOrFail($id);
+        $parametros = false;
 
         // con esto cambiamos de empresa si la empresa no coincide
-        $collection = session('empresas_usuario');
-        if ($collection->search($producto->empresa_id, true)===false && $collection->search($producto->destino_empresa_id, true)===false){
-            return abort(404, "No se ha encontrado el registro");
-        }
+        // $producto = Producto::withOutGlobalScope(EmpresaProductoScope::class)->withTrashed()->findOrFail($id);
+        // $collection = session('empresas_usuario');
+        // if ($collection->search($producto->empresa_id, true)===false && $collection->search($producto->destino_empresa_id, true)===false){
+        //     return abort(404, "No se ha encontrado el registro");
+        // }
 
-        if ($producto->empresa_id != session('empresa_id')){
-            $parametros = $this->loadSession($producto->empresa_id);
-        }else{
-            $parametros = false;
-        }
+        // if ($producto->empresa_id != session('empresa_id')){
+        //     $parametros = $this->loadSession($producto->empresa_id);
+        // }else{
+        //     $parametros = false;
+        // }
 
         $this->authorize('update', $producto);
 
