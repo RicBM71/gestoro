@@ -38,7 +38,7 @@ trait SessionTrait {
             if ($empresa->flags[0] == false)
                 continue;
 
-            $empresa_id = $empresa->id;
+            //$empresa_id = $empresa->id;
 
             $empresas_usuario->push($empresa->id);
             $empresas[] = [

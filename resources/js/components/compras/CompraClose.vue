@@ -252,8 +252,8 @@ import {mapState} from 'vuex'
 
                         this.compra = res.data.compra;
 
-                        if (res.data.param != false)
-                            this.setAuthUser(res.data.param.user);
+                        if (res.data.parametros != false)
+                            this.setAuthUser(res.data.parametros.user);
 
 
                         this.lineas_deposito = res.data.lineas_deposito;

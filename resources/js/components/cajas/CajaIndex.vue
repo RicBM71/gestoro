@@ -323,9 +323,10 @@ import {mapActions} from "vuex";
         },
         formatDateUpdated(f){
 
+
             if (f == null) return null;
             moment.locale('es');
-            return moment(f).format('DD/MM/YYYY HH:MM');
+            return moment(f).format('DD/MM/YYYY hh:mm:ss');
         },
         puedeEditar(item){
 

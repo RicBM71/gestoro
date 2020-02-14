@@ -253,9 +253,9 @@ Class Producto extends Model
     public static function scopeInternos($query, $value){
 
         if ($value == "I")
-            return $query->where('ref_pol','>', 0);
+            return $query->where('compra_id','>', 0);
         elseif ($value == "E")
-            return $query->whereNull('ref_pol');
+            return $query->whereNull('compra_id');
 
         return $query;
 

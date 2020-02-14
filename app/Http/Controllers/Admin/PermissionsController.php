@@ -28,10 +28,10 @@ class PermissionsController extends Controller
     public function create()
     {
 
-       	$this->authorize('view',new Permission);
-    	$permission = new Permission;
+       	// $this->authorize('view',new Permission);
+    	// $permission = new Permission;
 
-        return view('admin.permissions.create', compact('permisos','permission'));
+        // return view('admin.permissions.create', compact('permisos','permission'));
     }
 
     /**
@@ -42,7 +42,7 @@ class PermissionsController extends Controller
      */
     public function store(Request $request)
     {
-		$this->authorize('view',new Permission);
+		//$this->authorize('view',new Permission);
 
 		 $data = $request->validate([
 	    	'name'  => 'required|unique:permissions',
@@ -50,12 +50,17 @@ class PermissionsController extends Controller
 
         $permission = Permission::create($data);
 
-        return redirect()->route('admin.permissions.edit', $permission)->withFlash('Permiso creado');
+       //return redirect()->route('admin.permissions.edit', $permission)->withFlash('Permiso creado');
     }
 
     public function edit(Permission $permission){
-		$this->authorize('view',new Permission);
-		return view('admin.permissions.edit', compact('permission'));
+
+        //$this->authorize('view',new Permission);
+
+        if (request()->wantsJson())
+            return compact('permission');
+
+
     }
 
     public function update(Request $request, Permission $permission)

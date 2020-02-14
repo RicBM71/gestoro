@@ -158,16 +158,16 @@ class AlbaranesController extends Controller
         }
 
         if ($albarane->empresa_id != session('empresa_id')){
-            $param = $this->loadSession($albarane->empresa_id);
+            $parametros = $this->loadSession($albarane->empresa_id);
         }else{
-            $param = false;
+            $parametros = false;
         }
 
         $this->authorize('update', $albarane);
 
         if (request()->wantsJson())
             return [
-                'param'   => $param,
+                'parametros'   => $parametros,
                 'albaran' => $albarane->load(['cliente','tipo','fase','motivo','fpago','cuenta','procedencia']),
                 'cuentas' => Cuenta::selCuentas(),
                 'fpagos'  => Fpago::selFpagos(),

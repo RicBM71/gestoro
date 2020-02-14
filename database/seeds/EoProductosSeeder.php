@@ -20,7 +20,7 @@ class EoProductosSeeder extends Seeder
     public function run()
     {
 
-       // $this->update_producto();
+        $this->update_producto();
        // return;
 
         $i = DB::delete(DB::RAW('DELETE FROM `klt_albaranes` where id not in (select albaran_id from klt_albalins)'));
@@ -29,7 +29,7 @@ class EoProductosSeeder extends Seeder
 
         //SELECT estado_id,substr(referencia,1,2), count(*) FROM `klt_productos` WHERE empresa_id = 3 and estado_id in(1,2,3) and deleted_at is null GROUP by 1,2
 
-        $this->check_albaranes();
+      //  $this->check_albaranes();
 
         $this->cambiar_ubicacion();
 
@@ -59,10 +59,10 @@ class EoProductosSeeder extends Seeder
             if ($producto != null){
                 $i++;
                 // damos de baja la copia
-                DB::table('productos')->where('id', $row->id)->update(['deleted_at'=> Carbon::now()]);
+                DB::table('productos')->where('id', $row->id)->update(['deleted_at'=> Carbon::now(),'username'=>'sys20']);
 
                 // cambio de ubicación al original
-                DB::table('productos')->where('id', $producto->id)->update(['destino_empresa_id'=>3]);
+                DB::table('productos')->where('id', $producto->id)->update(['destino_empresa_id'=>3,'username'=>'sys20']);
             }
 
 
@@ -94,11 +94,11 @@ class EoProductosSeeder extends Seeder
 
             if ($producto != null){
                 $i++;
-                DB::table('albalins')->where('albalins.id', $row->albalin_id)->update(['producto_id'=>$producto->id]);
+                DB::table('albalins')->where('albalins.id', $row->albalin_id)->update(['producto_id'=>$producto->id,'username'=>'sys20']);
 
                 DB::table('albaranes')->where('id', $row->albaran_id)->update(['updated_at'=>Carbon::now(),'username'=>'sys20']);
 
-                DB::table('productos')->where('id', $producto->id)->update(['destino_empresa_id'=>3]);
+                DB::table('productos')->where('id', $producto->id)->update(['destino_empresa_id'=>3,'estado_id'=>2,'username'=>'sys20']);
             }
 
 

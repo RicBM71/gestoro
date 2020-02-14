@@ -21,6 +21,7 @@
                     <v-data-table
                     :headers="headers"
                     :items="albaranes"
+                    :pagination.sync="pagination"
                     rows-per-page-text="Registros por página"
                     >
                         <template slot="items" slot-scope="props">
@@ -74,12 +75,17 @@ import MyDialog from '@/components/shared/MyDialog'
         },
         titulo:"Albaranes",
         search:"",
-
+        pagination:{
+            descending: false,
+            page: 1,
+            rowsPerPage: 10,
+            sortBy: "fecha_albaran",
+        },
         headers: [
           {
             text: 'Albarán',
             align: 'center',
-            value: 'albaran1'
+            value: 'albaran'
           },
           {
             text: 'Fecha',

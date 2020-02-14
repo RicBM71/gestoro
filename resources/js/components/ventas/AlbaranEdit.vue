@@ -551,8 +551,8 @@ import {mapState} from 'vuex'
 
                         this.albaran = res.data.albaran;
 
-                        if (res.data.param != false)
-                            this.setAuthUser(res.data.param.user);
+                        if (res.data.parametros != false)
+                            this.setAuthUser(res.data.parametros.user);
 
                         this.notas_cliente = this.albaran.cliente.notas;
 

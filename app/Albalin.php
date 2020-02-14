@@ -21,13 +21,13 @@ class Albalin extends Model
         'margen'
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
+    // protected static function boot()
+    // {
+    //     parent::boot();
 
-        static::addGlobalScope(new EmpresaScope);
+    //     static::addGlobalScope(new EmpresaScope);
 
-    }
+    // }
 
     public function producto()
     {
@@ -141,7 +141,6 @@ class Albalin extends Model
                              DB::getTablePrefix().'albalins.precio_coste) AS precio_coste'))
             ->join('productos', 'albalins.producto_id', 'productos.id')
             ->join('ivas', 'productos.iva_id', 'ivas.id')
-            ->where('albalins.empresa_id', session('empresa')->id)
             ->where('albalins.albaran_id', $id)
             ->whereNull('albalins.deleted_at')
             ->groupBy('albalins.iva_id','albalins.iva','ivas.rebu')

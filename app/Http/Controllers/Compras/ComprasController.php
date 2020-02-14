@@ -190,9 +190,9 @@ class ComprasController extends Controller
         }
 
         if ($compra->empresa_id != session('empresa_id')){
-            $param = $this->loadSession($compra->empresa_id);
+            $parametros = $this->loadSession($compra->empresa_id);
         }else{
-            $param = false;
+            $parametros = false;
         }
 
         $compra->load(['cliente','grupo','grupo','tipo','fase']);
@@ -214,7 +214,7 @@ class ComprasController extends Controller
 
         if (request()->wantsJson())
             return [
-                'param'             => $param,
+                'parametros'        => $parametros,
                 'valor_compras'     => Deposito::valorCompras($compra->fecha_compra,$compra->cliente_id,$compra->id),
                 'conceptos'         => Concepto::selConceptosC()->depositos()->get(),
                 'compra'            => $compra,

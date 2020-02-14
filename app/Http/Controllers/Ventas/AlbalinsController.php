@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Ventas;
 
 use App\Albalin;
 use App\Albaran;
+use App\Scopes\EmpresaScope;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use App\Http\Requests\Ventas\StoreAlbalinRequest;
@@ -21,7 +22,7 @@ class AlbalinsController extends Controller
             return [
                 'lineas' => Albalin::with(['producto.clase','producto.garantia'])->AlbaranId($data['albaran_id'])->get(),
                 'totales' => Albalin::totalAlbaranByAlb($data['albaran_id']),
-                'albaran' => Albaran::with(['cliente','tipo','fase','motivo','fpago','cuenta','fpago','procedencia'])->findOrFail($data['albaran_id']),
+                'albaran' => Albaran::withOutGlobalScope(EmpresaScope::class)->with(['cliente','tipo','fase','motivo','fpago','cuenta','fpago','procedencia'])->findOrFail($data['albaran_id']),
             ];
     }
 

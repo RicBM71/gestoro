@@ -36,6 +36,7 @@ class PrintAlbController extends Controller
         //     return response('Configurar email empresa', 403);
 
         $from = config('mail.from.address');
+        $from = str_replace('info','noreply', $from);
 
         //\Log::info($from);
 
@@ -381,9 +382,9 @@ class PrintAlbController extends Controller
 
         if ($this->albaran->tipo_id == 3 && $this->albaran->fase_id == 10){
             PDF::SetFont('helvetica', 'B', 9, '', false);
-            $total_cobrado = $this->totales['importe_venta'] - $total_cobrado;
+            $resto = $this->totales['importe_venta'] - $total_cobrado;
             PDF::Ln();
-            PDF::MultiCell(140, 5, 'PENDIENTE COBRO '.getDecimal($total_cobrado)." €", '', 'L', 0, 0, '', '', true);
+            PDF::MultiCell(140, 5, 'PENDIENTE COBRO '.getDecimal($resto)." €", '', 'L', 0, 0, '', '', true);
             PDF::Ln();
         }
 

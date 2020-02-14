@@ -434,6 +434,9 @@ import Acuenta from './Acuenta'
 import Capital from './Capital'
 import Recuperar from './Recuperar'
 import {mapGetters} from 'vuex';
+import {mapActions} from "vuex";
+import {mapState} from 'vuex'
+
 	export default {
 		$_veeValidate: {
       		validator: 'new'
@@ -511,6 +514,9 @@ import {mapGetters} from 'vuex';
                     .then(res => {
 
                         this.compra = res.data.compra;
+                         if (res.data.parametros != false)
+                            this.setAuthUser(res.data.parametros.user);
+
                         this.grabaciones = res.data.grabaciones;
                         this.dias_cortesia = res.data.dias_cortesia;
                         this.cambio_recompra = res.data.cambio_recompra;
@@ -726,6 +732,10 @@ import {mapGetters} from 'vuex';
             // }
         },
     	methods:{
+            ...mapActions([
+                'setAuthUser',
+                'unsetParametros'
+			]),
             getDecimalFormat(value){
                 return new Intl.NumberFormat("de-DE",{style: "decimal",minimumFractionDigits:2}).format(parseFloat(value))
             },

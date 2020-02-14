@@ -397,6 +397,8 @@ import Loading from '@/components/shared/Loading'
 import MenuOpe from './MenuOpe'
 import ProductoAlb from './ProductoAlb'
 import {mapGetters} from 'vuex';
+import {mapActions} from "vuex";
+import {mapState} from 'vuex'
 	export default {
 		$_veeValidate: {
       		validator: 'new'
@@ -444,6 +446,9 @@ import {mapGetters} from 'vuex';
                     .then(res => {
 
                         this.producto = res.data.producto;
+
+                        if (res.data.parametros != false)
+                            this.setAuthUser(res.data.parametros.user);
 
                         // if (this.producto.estado_id == 3 || this.producto.estado_id == 4)
                         //     if (!this.isAdmin){
@@ -517,6 +522,10 @@ import {mapGetters} from 'vuex';
 
         },
     	methods:{
+            ...mapActions([
+                'setAuthUser',
+                'unsetParametros'
+			]),
             clase(){
                 var idx = this.clases.map(x => x.value).indexOf(this.producto.clase_id);
                 this.show_quilates = this.clases[idx].quilates;

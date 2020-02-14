@@ -24,12 +24,12 @@ class Cobro extends Model
         'username',
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
+    // protected static function boot()
+    // {
+    //     parent::boot();
 
-        static::addGlobalScope(new EmpresaScope);
-    }
+    //     static::addGlobalScope(new EmpresaScope);
+    // }
 
     public function albaran(){
         return $this->hasOne(Albaran::class);

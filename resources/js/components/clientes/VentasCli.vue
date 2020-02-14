@@ -84,7 +84,7 @@ import {mapActions} from 'vuex'
             descending: true,
             page: 1,
             rowsPerPage: 10,
-            sortBy: "alb_ser",
+            sortBy: "fecha_albaran",
         },
         search:"",
         headers: [
@@ -185,6 +185,7 @@ import {mapActions} from 'vuex'
                 });
         },
         deEmpresaActiva(empresa_id){
+            return true;
            return empresa_id == this.empresaActiva;
         },
         updateEventPagina(obj){

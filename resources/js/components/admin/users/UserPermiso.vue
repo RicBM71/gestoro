@@ -7,6 +7,7 @@
                 :key="'p'+item.id"
             >
                 <v-switch
+                    v-show="showSwitch(item)"
                     v-on:change="setPermisosUsr"
                     v-model="permiso_usr"
                     :label="item.nombre"
@@ -18,7 +19,7 @@
     </div>
 </template>
 <script>
-
+import {mapGetters} from 'vuex';
 export default {
     props:{
         user_id: Number,
@@ -36,7 +37,18 @@ export default {
 
         this.show = (this.permisos.length > 0);
     },
+    computed: {
+        ...mapGetters([
+            'isRoot'
+        ]),
+    },
     methods:{
+        showSwitch(item){
+            if (item.name == "harddel" && !this.isRoot){
+                return false;
+            }
+            return true;
+        },
         setPermisosUsr(){
                 axios({
                     method: 'put',

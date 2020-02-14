@@ -13,6 +13,7 @@ use App\Etiqueta;
 use App\Garantia;
 use App\Producto;
 use Carbon\Carbon;
+use App\Traits\SessionTrait;
 use Illuminate\Http\Request;
 use App\Rules\RangoFechaRule;
 use App\Exports\InventarioExport;
@@ -26,6 +27,8 @@ use App\Http\Requests\UpdateProducto;
 
 class ProductosController extends Controller
 {
+
+    use SessionTrait;
 
         /**
      * Display a listing of the resource.
@@ -89,23 +92,7 @@ class ProductosController extends Controller
 
         $data = request()->session()->get('filtro_pro');
 
-        // \Log::info(Producto::onlyTrashed()->with(['clase','estado'])
-        // ->referencia($data['referencia'])
-        // ->fechaMod($data['fecha_d'])
-        // ->clase($data['clase_id'])
-        // ->estado($data['estado_id'])
-        // ->destino($data['destino_empresa_id'])
-        // ->notasNombre($data['notas'])
-        // ->refPol($data['ref_pol'])
-        // ->precioPeso($data['precio'])
-        // ->quilates($data['quilates'])
-        // ->online($data['online'])
-        // ->orderBy('id','desc')
-        //                 ->toSql());
-
-        //                 \Log::info($data['alta']);
-
-        if (esRoot() && $data['sinscope']){
+        if (esAdmin() && session('parametros')->aislar_empresas == false){
             if ($data['alta'] == false)
                 $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->withTrashed()->with(['clase','estado'])
                             ->referencia($data['referencia'])
@@ -267,16 +254,33 @@ class ProductosController extends Controller
     public function edit($id)
     {
 
-        if (esAdmin()){
-            $producto = Producto::withTrashed()->findOrFail($id);
+        // if (esAdmin()){
+        //     $producto = Producto::withTrashed()->findOrFail($id);
+        // }else{
+        //     $producto = Producto::findOrFail($id);
+
+        // }
+        \Log::info($id);
+
+        $producto = Producto::withOutGlobalScope(EmpresaProductoScope::class)->withTrashed()->findOrFail($id);
+
+        // con esto cambiamos de empresa si la empresa no coincide
+        $collection = session('empresas_usuario');
+        if ($collection->search($producto->empresa_id, true)===false && $collection->search($producto->destino_empresa_id, true)===false){
+            return abort(404, "No se ha encontrado el registro");
+        }
+
+        if ($producto->empresa_id != session('empresa_id')){
+            $parametros = $this->loadSession($producto->empresa_id);
         }else{
-            $producto = Producto::findOrFail($id);
+            $parametros = false;
         }
 
         $this->authorize('update', $producto);
 
         if (request()->wantsJson())
             return [
+                'parametros'=> $parametros,
                 'producto' =>$producto->load('clase'),
                 'empresas' => Empresa::selEmpresas()->Venta()->get(),
                 'clases'   => Clase::selGrupoClase(),

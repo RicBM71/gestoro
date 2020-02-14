@@ -47,7 +47,7 @@ class KltAlbaranesSeeder extends Seeder
                 'factura'=> $row->factura==0 ? null : $row->factura,
                 'serie_factura'=>$row->serie == '' ? null : $row->serie,
                 'tipo_factura' => $row->tipofac == 'M' ? 1 : 2,
-                'clitxt' => $row->clitxt,
+                'clitxt' => $row->clitxt=="" ? null : $row->clitxt,
                 'fecha_notificacion'=>$row->fnotifica=='0000-00-00' ? null : $row->fnotifica,
                 'online' => $row->online == 'N' ? false: true,
                 'iva_no_residente' => $row->exentoiva == 'N' ? false: true,

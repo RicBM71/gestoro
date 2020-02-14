@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Ventas;
 use App\Cobro;
 use App\Fpago;
 use App\Albaran;
+use App\Scopes\EmpresaScope;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Ventas\StoreCobroRequest;
 
@@ -24,7 +25,7 @@ class CobrosController extends Controller
             return [
                 'lineas'  => Cobro::AlbaranId($albaran_id)->get(),
                 'acuenta' => Cobro::getAcuentaByAlbaran($albaran_id),
-                'albaran' => Albaran::with(['cliente','tipo','fase','motivo','fpago','cuenta','procedencia'])->findOrFail($albaran_id),
+                'albaran' => Albaran::withOutGlobalScope(EmpresaScope::class)->with(['cliente','tipo','fase','motivo','fpago','cuenta','procedencia'])->findOrFail($albaran_id),
             ];
     }
 
