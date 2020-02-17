@@ -338,7 +338,8 @@ class PrintAlbController extends Controller
 
     private function cabeLin(){
 
-		PDF::SetFont('helvetica', 'RB', 8, '', false);
+        PDF::SetFont('helvetica', 'RB', 8, '', false);
+
         PDF::Ln();
         PDF::Ln();
         PDF::Cell(20, 6, 'REFERENCIA', 'TRB', 0, 'C');
@@ -600,7 +601,7 @@ class PrintAlbController extends Controller
 
         // set margins
         //PDF::SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-        PDF::SetMargins(13, 50, PDF_MARGIN_RIGHT);
+        PDF::SetMargins(13, 56, PDF_MARGIN_RIGHT);
         PDF::SetHeaderMargin(PDF_MARGIN_HEADER);
         //PDF::SetFooterMargin(PDF_MARGIN_FOOTER);
         PDF::SetFooterMargin(34);

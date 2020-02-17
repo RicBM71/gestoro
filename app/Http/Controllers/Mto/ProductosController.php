@@ -42,12 +42,12 @@ class ProductosController extends Controller
             $data = $this->miFiltro();
         }else{
             // if (auth()->user()->hasRole('Admin'))
-            //     $data = Producto::withTrashed()->with(['clase','estado'])->orderBy('id','desc')
+            //     $data = Producto::withTrashed()->with(['clase','estado','destino'])->orderBy('id','desc')
             //                             ->where('updated_at','>=',Carbon::now()->subDays(30))
             //                             ->get()
             //                             ->take(50);
             // else
-                $data = Producto::with(['clase','estado'])->orderBy('id','desc')
+                $data = Producto::with(['clase','estado','destino'])->orderBy('id','desc')
                         ->where('updated_at','>=',Carbon::now()->subDays(30))
                         ->get()
                         ->take(50);
@@ -94,7 +94,7 @@ class ProductosController extends Controller
 
         if (esAdmin() && session('parametros')->aislar_empresas == false && $data['sinscope']==true){
             if ($data['alta'] == false)
-                $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->withTrashed()->with(['clase','estado'])
+                $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->withTrashed()->with(['clase','estado','destino'])
                             ->referencia($data['referencia'])
                             ->fecha($data['fecha_d'],$data['fecha_h'],$data['tipo_fecha'])
                             ->clase($data['clase_id'])
@@ -111,7 +111,7 @@ class ProductosController extends Controller
                             ->take(500);
             else{
 
-                $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','estado'])
+                $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','estado','destino'])
                         ->referencia($data['referencia'])
                         ->fecha($data['fecha_d'], $data['fecha_h'],$data['tipo_fecha'])
                         ->clase($data['clase_id'])
@@ -132,7 +132,7 @@ class ProductosController extends Controller
         }
         else{
             if ($data['alta'] == false)
-                $data = Producto::withTrashed()->with(['clase','estado'])
+                $data = Producto::withTrashed()->with(['clase','estado','destino'])
                             ->referencia($data['referencia'])
                             ->fecha($data['fecha_d'],$data['fecha_h'],$data['tipo_fecha'])
                             ->clase($data['clase_id'])
@@ -149,7 +149,7 @@ class ProductosController extends Controller
                             ->take(500);
             else{
 
-                $data = Producto::with(['clase','estado'])
+                $data = Producto::with(['clase','estado','destino'])
                         ->referencia($data['referencia'])
                         ->fecha($data['fecha_d'], $data['fecha_h'],$data['tipo_fecha'])
                         ->clase($data['clase_id'])
@@ -352,9 +352,9 @@ class ProductosController extends Controller
         }
 
         // if (esRoot())
-        //     $data = Producto::with(['clase','estado'])->withTrashed()->get();
+        //     $data = Producto::with(['clase','estado','destino'])->withTrashed()->get();
         // else
-        //     $data = Producto::with(['clase','estado'])->all();
+        //     $data = Producto::with(['clase','estado','destino'])->all();
 
         if (request()->wantsJson()){
             return [

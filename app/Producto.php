@@ -116,6 +116,10 @@ Class Producto extends Model
         return ($this->hasMany(Albalins::class));
     }
 
+    public function destino(){
+        return ($this->belongsTo(Empresa::class,'destino_empresa_id'));
+    }
+
     public static function scopeReferencia($query, $referencia){
 
         $referencia = \strtoupper($referencia);

@@ -67,6 +67,7 @@
                                 :search="search"
                                 @update:pagination="updateEventPagina"
                                 :pagination.sync="pagination"
+                                :expand="expand"
                                 rows-per-page-text="Registros por página"
                             >
                                 <template slot="items" slot-scope="props">
@@ -101,7 +102,21 @@
                                         >
                                         restore
                                         </v-icon>
+                                        <v-icon
+                                            v-if="showExpand(props.item)"
+                                            small
+                                            @click="props.expanded = !props.expanded"
+                                        >
+                                        visibility
+                                        </v-icon>
                                     </td>
+                                </template>
+                                <template v-slot:expand="props">
+                                    <v-card flat>
+                                        <v-card-text class="font-italic">
+                                            {{ destino(props.item) }}
+                                        </v-card-text>
+                                    </v-card>
                                 </template>
                                 <template slot="pageText" slot-scope="props">
                                     Registros {{ props.pageStart }} - {{ props.pageStop }} de {{ props.itemsLength }}
@@ -194,7 +209,8 @@ import {mapActions} from "vuex";
         url: "/mto/productos",
         ruta: "producto",
 
-        filtro: true
+        filtro: true,
+        expand: false,
 
       }
     },
@@ -225,14 +241,33 @@ import {mapActions} from "vuex";
             'isAdmin',
             'isGestor',
             'hasEditPro',
-            'getPagination'
+            'getPagination',
+            'empresaActiva'
         ])
     },
     methods:{
         ...mapActions([
             'setPagination',
             'unsetPagination'
-		]),
+        ]),
+        showExpand(item){
+            if (item.empresa_id != item.destino_empresa_id || item.notas != null)
+                return true;
+
+            return false;
+        },
+        destino(item){
+
+            var dest = '';
+            var nota = '';
+            if (item.empresa_id != item.destino_empresa_id){
+                dest = ' Destino Venta: '+item.destino.nombre;
+            }
+            if (item.notas != null)
+                nota = item.notas;
+
+            return nota + dest;
+        },
         updateEventPagina(obj){
 
             this.paginaActual = obj;
