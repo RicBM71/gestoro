@@ -118,7 +118,7 @@ class PrintAlbController extends Controller
         PDF::AddPage();
 
         // cabecera cliente
-        $this->setCabeceraAlbaran();
+        //$this->setCabeceraAlbaran();
 
         if ($this->albaran->tipo_id == 5)
             $this->impPiezaTaller();
@@ -240,7 +240,7 @@ class PrintAlbController extends Controller
             // $txt .= " **PW: ".$y." H: ".$h;
             if ($y+$h >= 240){
                 PDF::AddPage();
-                $this->setCabeceraAlbaran();
+                //$this->setCabeceraAlbaran();
                 $y = round(PDF::getY());
                 $this->cabeLin();
             }
@@ -285,6 +285,7 @@ class PrintAlbController extends Controller
 
         PDF::SetFont('helvetica', 'R', 10, '', false);
 
+        PDF::SetFillColor(215, 235, 255);
         PDF::MultiCell(118, 8, '', '', '', 0, 0, '', '', true);
         PDF::MultiCell(40, 8, 'TOTAL', 0, 'C', 1, 0, '', '', true, 0, false, true, 8, 'M');
         PDF::MultiCell(3, 8, '', 0, 'R', 0, 0, '', '', true, 0, false, true, 8, 'M');
@@ -385,6 +386,11 @@ class PrintAlbController extends Controller
             $resto = $this->totales['importe_venta'] - $total_cobrado;
             PDF::Ln();
             PDF::MultiCell(140, 5, 'PENDIENTE COBRO '.getDecimal($resto)." €", '', 'L', 0, 0, '', '', true);
+            PDF::Ln();
+        }elseif ($this->albaran->tipo_id == 3 && $this->albaran->fase_id == 11){
+            PDF::SetFont('helvetica', 'B', 9, '', false);
+            PDF::Ln();
+            PDF::MultiCell(140, 5, 'PAGADO', '', 'L', 0, 0, '', '', true);
             PDF::Ln();
         }
 
@@ -529,6 +535,8 @@ class PrintAlbController extends Controller
             $pdf->SetXY(16, $y+=5);
             $pdf->Write($h=0,  'CIF.: '.session('empresa')->cif, '', 0, 'L', true, 0, false, true, 0);
 
+            $this->setCabeceraAlbaran();
+
             //$pdf->MultiCell(34, 157, session('empresa')->razon, 0, 'L', 0, 0, '', '', true);
             //$pdf->MultiCell(70, 15, session('empresa')->direccion, 0, 'L', 0, 0, '', '', true);
             //$pdf->MultiCell(70, 25, session('empresa')->provincia, 0, 'R', 0, 0, '', '', true);
@@ -592,13 +600,13 @@ class PrintAlbController extends Controller
 
         // set margins
         //PDF::SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-        PDF::SetMargins(13, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+        PDF::SetMargins(13, 50, PDF_MARGIN_RIGHT);
         PDF::SetHeaderMargin(PDF_MARGIN_HEADER);
         //PDF::SetFooterMargin(PDF_MARGIN_FOOTER);
         PDF::SetFooterMargin(34);
 
         // set auto page breaks
-        PDF::SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+        PDF::SetAutoPageBreak(TRUE, 34);
 
         // set image scale factor
         PDF::setImageScale(PDF_IMAGE_SCALE_RATIO);

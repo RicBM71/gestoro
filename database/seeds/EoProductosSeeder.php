@@ -24,7 +24,7 @@ class EoProductosSeeder extends Seeder
        // return;
 
         $i = DB::delete(DB::RAW('DELETE FROM `klt_albaranes` where id not in (select albaran_id from klt_albalins)'));
-        \Log::info('albaranes borrados: '.$i);
+        //\Log::info('albaranes borrados: '.$i);
         DB::delete(DB::RAW('DELETE FROM `klt_cobros` where albaran_id not in (select id from klt_albaranes)'));
 
         DB::update(DB::RAW('UPDATE klt_productos set empresa_id = 3, destino_empresa_id = 5 where empresa_id = 6 and estado_id = 2 and deleted_at is null'));
@@ -177,6 +177,12 @@ class EoProductosSeeder extends Seeder
             else
                 $fecha_alta = $row->fechaalta;
 
+            $cliente_id = $row->proveedor;
+            if ($row->proveedor <= 0)
+                $cliente_id  = null;
+            if ($row->albaran <= 0 || $row->albaran == '')
+                $cliente_id  = null;
+
             $data[]=array(
                 'id' => $row->id,
                 'empresa_id' => $empresa_id,
@@ -198,7 +204,7 @@ class EoProductosSeeder extends Seeder
                 'estado_id' => $estado,
                 'etiqueta_id' => $row->etiqueta,
                 'referencia' => str_replace("-","",$row->referencia),
-                'cliente_id' => ($row->proveedor || $row->albaran > 0) <=-1 ? null : $row->proveedor,
+                'cliente_id' => $cliente_id,
                 'iva_id' => $row->tipoiva,
                 'etiqueta_id' => $row->etiqueta==null ? 1 : $etiqueta[$row->etiqueta],
                 'online' => $row->online=="S" ? true : false,

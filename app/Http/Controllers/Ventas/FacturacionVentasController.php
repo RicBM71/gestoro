@@ -18,8 +18,8 @@ class FacturacionVentasController extends Controller
 {
     public function index()
     {
-        if (!session('empresa')->getFlag(2)){
-            return abort(403,"No se permiten ventas. Contactar administrador");
+        if (session('empresa')->getFlag(6)){
+            return abort(403,"Esta empresa no admite facturas!");
         }
         // if (!session('empresa')->getFlag(4)){
         //     return abort(403,"No se permiten nuevas ventas. Contactar administrador");

@@ -51,7 +51,7 @@ class DetalleComprasController extends Controller
         if ($data['operacion'] == 'L')
             $where = 'fecha_liquidado > ""';
         elseif ($data['operacion'] == 'N')
-            $where = DB::getTablePrefix().'compras.id not in (SELECT compra_id from '.DB::getTablePrefix().'productos WHERE empresa_id = '. session('empresa')->id.' AND compra_id > 0)';
+            $where = DB::getTablePrefix().'compras.id not in (SELECT DISTINCT compra_id from '.DB::getTablePrefix().'productos WHERE empresa_id = '. session('empresa')->id.' AND compra_id > 0)';
         else
             $where = DB::getTablePrefix().'compras.id > 0';
 

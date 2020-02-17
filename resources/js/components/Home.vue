@@ -1,5 +1,6 @@
 <template>
     <v-app>
+          <loading :show_loading="show_loading"></loading>
           <div class="text-xs-center">
             <v-dialog
             v-model="myEmpresa"
@@ -166,7 +167,11 @@
 import {mapActions} from "vuex";
 import {mapState} from 'vuex'
 import {mapGetters} from 'vuex';
+import Loading from '@/components/shared/Loading'
 export default {
+    components: {
+        'loading': Loading,
+    },
     computed:{
         ...mapState({
             user: state => state.auth
@@ -193,6 +198,7 @@ export default {
         empresa_id:0,
         traspasos: 0,
         jobs: 0,
+        show_loading:  false,
         //productos_online: 0,
 
         // user: {
@@ -448,7 +454,7 @@ export default {
             this.myEmpresa=true;
         },
         getReloadEmpresa(){
-
+            this.show_loading = true;
             axios.get('/dash')
                 .then(res => {
 
@@ -461,6 +467,9 @@ export default {
                 .catch(err => {
                     this.$toast.error("Fallo en reload empresa...");
                 })
+                 .finally(()=> {
+                        this.show_loading = false;
+                });
         },
         setEmpresa(){
             //console.log('set');

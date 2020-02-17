@@ -235,10 +235,13 @@ class AlbaranesController extends Controller
     public function facturar(Request $request, Albaran $albarane)
     {
 
-       // $this->authorize('update', $cliente);
-       if (session('empresa')->id != session('empresa')->deposito_empresa_id)
+        if (session('empresa')->getFlag(6)){
+            return abort(403, 'Esta empresa no permite facturar albaranes!');
+        }
+
+        if (session('empresa')->id != session('empresa')->deposito_empresa_id)
             if ($this->verificarSiHayProductosEnDeposito($albarane)){
-                    return abort(411, 'Hay productos en depósito, no se puede facturar, reubicar albarán');
+                return abort(411, 'Hay productos en depósito, no se puede facturar, reubicar albarán');
             }
 
        $ejercicio = getEjercicio(Carbon::today());
@@ -335,8 +338,15 @@ class AlbaranesController extends Controller
     public function facauto(Request $request, Albaran $albarane)
     {
 
+        if (session('empresa')->getFlag(6)){
+            return abort(403, 'Esta empresa no permite facturar albaranes!');
+        }
 
        // $this->authorize('update', $cliente);
+       if (session('empresa')->id != session('empresa')->deposito_empresa_id)
+            if ($this->verificarSiHayProductosEnDeposito($albarane)){
+                    return abort(411, 'Hay productos en depósito, no se puede facturar, reubicar albarán');
+            }
 
        $data = $request->validate([
             'fecha_factura' => ['required', 'date'],

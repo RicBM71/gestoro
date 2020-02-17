@@ -80,7 +80,21 @@
                         </v-flex>
                     </v-layout>
                     <v-layout wrap>
-                        <v-flex sm7></v-flex>
+                        <v-flex sm5></v-flex>
+                        <v-flex sm2>
+                            <v-text-field
+                                v-model="precio_gr"
+                                v-validate="'decimal:2'"
+                                :error-messages="errors.collect('precio_gr')"
+                                label="Precio Gr. (PVP)"
+                                data-vv-name="precio_gr"
+                                data-vv-as="precio gramo"
+                                type="number"
+                                class="inputPrice"
+                                v-on:keyup.enter="submit"
+                            >
+                            </v-text-field>
+                        </v-flex>
                         <v-flex sm2>
                             <v-text-field
                                 v-model="precio_coste"
@@ -149,7 +163,7 @@
         peso_gr: 0,
         precio_coste: 0,
         precio_venta:0,
-
+        precio_gr: 0,
         clases:[],
     }),
     beforeMount(){
@@ -178,6 +192,9 @@
         peso_gr: function () {
             if (this.peso_gr > 0)
                 this.precio_coste = Math.round(this.peso_gr * this.imp_gr);
+        },
+        precio_gr: function () {
+            this.precio_venta = Math.round(this.peso_gr * this.precio_gr);
         },
         precio_coste: function () {
             this.precio_venta = Math.round(this.precio_coste * (1 +(this.margen / 100)));

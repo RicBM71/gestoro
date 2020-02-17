@@ -16,6 +16,7 @@ class Empresa extends Model
     // 3: Nuevas Compras
     // 4: Nuevas Ventas
     // 5: Proveedora efectivo
+    // 6: Factura (deshabilitar para empresas de depósito por ejemplo)
 
     use SoftDeletes;
 

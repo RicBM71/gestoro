@@ -149,7 +149,7 @@ class ReubicarAlbaranesController extends Controller
         // DB::table('albalins')->where('albaran_id', $albaran->id)->delete();
         // DB::table('albaranes')->where('id', $albaran->id)->delete();
 
-        if ($nuevo_albaran !== false  || $nuevo_albaran_proveedores =! false){
+        if ($nuevo_albaran !== false  || $nuevo_albaran_proveedores !== false){
             DB::table('cobros')->where('albaran_id', $albaran->id)
                 ->update(['deleted_at'  => Carbon::now()]);
             DB::table('albalins')->where('albaran_id', $albaran->id)
@@ -157,12 +157,13 @@ class ReubicarAlbaranesController extends Controller
             DB::table('albaranes')->where('id', $albaran->id)
                 ->update(['deleted_at'  => Carbon::now()]);
 
-            return $nuevo_albaran;
+            return $nuevo_albaran_proveedores;
         }
 
-        \Log::info($nuevo_albaran);
+        //\Log::info($nuevo_albaran);
+        return abort(404,'No se ha reubicado ningún albarán');
 
-        return "no hay";
+        return false;
 
 
     }

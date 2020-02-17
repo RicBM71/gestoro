@@ -144,7 +144,7 @@ export default {
                     width:'10%'
                 },
                 {
-                    text: 'Peso',
+                    text: 'Peso Gr.',
                     align: 'center',
                     value: 'peso_gr',
                     sortable: false,
