@@ -290,6 +290,7 @@ export default {
             model: false,
             children: [
                 { text: 'Metal en Depósito', name: 'exportar.metdep', icon: 'print'},
+                { text: 'Apuntes por banco', name: 'exportar.apuban', icon: 'account_balance'},
                 { text: 'Relación facturas recuperacion', name: 'facturacion.lisfacom', icon: 'print'},
                 { text: 'Relación facturas de venta', name: 'facturacion.lisfaven', icon: 'print'},
                 { icon: 'archive', text: 'Mod. 347', name:'exportar.mod347' },
@@ -473,6 +474,7 @@ export default {
         },
         setEmpresa(){
             //console.log('set');
+            this.show_loading = true;
             this.empresas.map((e) =>{
                    if (e.id == this.empresa_id)
                         this.empresaTxt = e.name;

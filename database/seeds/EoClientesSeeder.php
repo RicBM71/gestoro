@@ -17,15 +17,15 @@ class EoClientesSeeder extends Seeder
      */
     public function run()
     {
-            Cliente::truncate();
+            // Cliente::truncate();
 
-            $count = DB::connection($this->bbdd)->table('clientes')->count();
+            // $count = DB::connection($this->bbdd)->table('clientes')->count();
 
 
-            $reg = DB::connection($this->bbdd)->select('select * from clientes');
-            $this->insertaClientes($reg);
+            // $reg = DB::connection($this->bbdd)->select('select * from clientes');
+            // $this->insertaClientes($reg);
 
-            return;
+            // return;
 
                 // importar documentos
             Clidoc::truncate();

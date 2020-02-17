@@ -126,6 +126,7 @@ import CuadroMando from './components/exportar/CuadroMando.vue';
 import ServiciosTaller from './components/exportar/ServiciosTaller.vue';
 import Recogidas from './components/exportar/Recogidas.vue';
 import MetalDeposito from './components/exportar/MetalDeposito.vue';
+import ApuntesBanco from './components/exportar/ApuntesBanco.vue';
 
 import ParametroEdit from './components/admin/parametros/ParametroEdit.vue';
 
@@ -620,6 +621,11 @@ export default [
                 path: '/export/metdep',
                 name: 'exportar.metdep',
                 component: MetalDeposito,
+            },
+            {
+                path: '/export/apuban',
+                name: 'exportar.apuban',
+                component: ApuntesBanco,
             },
             {
                 path: '/reubicar',

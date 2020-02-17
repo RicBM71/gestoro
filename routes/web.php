@@ -309,6 +309,10 @@ Route::group([
             Route::post('/metdep', 'MetalDepositoController@submit');
             Route::post('/metdep/excel', 'MetalDepositoController@excel');
 
+            Route::post('/apuban', 'ApuntesBancoController@submit');
+            Route::post('/apuban/excel', 'ApuntesBancoController@excel');
+
+
             Route::post('/recogidas', 'RecogidasController@submit');
         });
 
