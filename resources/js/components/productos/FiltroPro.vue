@@ -31,7 +31,6 @@
                 <v-flex sm3>
                     <v-select
                         v-model="reg.clase_id"
-                        v-validate="'numeric'"
                         data-vv-name="clase_id"
                         data-vv-as="clase"
                         :error-messages="errors.collect('clase_id')"

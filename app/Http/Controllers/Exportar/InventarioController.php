@@ -6,6 +6,7 @@ use App\Producto;
 use Illuminate\Http\Request;
 use App\Exports\InventarioExport;
 use App\Http\Controllers\Controller;
+use App\Scopes\EmpresaProductoScope;
 use Maatwebsite\Excel\Facades\Excel;
 
 class InventarioController extends Controller
@@ -31,9 +32,12 @@ class InventarioController extends Controller
     private function detalle($data)
     {
 
-        $data = Producto::with(['clase','iva','estado','garantia','cliente'])
+        // solo lístamos los productos de empresa destino para evitar que salgan duplicados.
+        //  por esto quito globalScope
+        $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','iva','estado','garantia','cliente'])
                     ->select('productos.*')
                     ->join('clases','clase_id','=','clases.id')
+                    ->where('destino_empresa_id', session('empresa_id'))
                     ->asociado($data['cliente_id'])
                     ->estado($data['estado_id'])
                     ->clase($data['clase_id'])
