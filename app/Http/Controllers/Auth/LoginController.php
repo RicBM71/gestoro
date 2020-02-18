@@ -80,8 +80,6 @@ class LoginController extends Controller
 
     private function checkIp($request){
 
-        return true;
-
         $ips = Ipuser::getIpuser($request->user()->id);
         if ($ips != null){
             if (!in_array($request->ip(), $ips)) {

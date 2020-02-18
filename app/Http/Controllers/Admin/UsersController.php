@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\User;
+use App\Ipuser;
 use App\Empresa;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -151,6 +152,7 @@ class UsersController extends Controller
                 'permisos_user' => $permisos_user,
                 'emp_user'      => $emp_user,
                 'empresas'      => $empresas_mostrar,
+                'ips'           => Ipuser::selIps($user->id)
             ];
 
         return redirect()->route('home');

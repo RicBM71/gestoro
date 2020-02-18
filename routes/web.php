@@ -68,6 +68,8 @@ Route::group([
         Route::post('empresas/{empresa}/fondo', 'EmpresasController@fondo');
         Route::put('empresas/{empresa}/fondo/delete', 'EmpresasController@deletefondo');
 
+        Route::resource('ipusers', 'IpUsersController', ['only'=>['store','destroy'], 'as' => 'admin']);
+
     }
 );
 

@@ -20,6 +20,9 @@
                 <v-tab>
                         Roles y Permisos
                 </v-tab>
+                 <v-tab>
+                        IP's autorizadas
+                </v-tab>
                 <v-tab-item>
 
                     <v-form>
@@ -261,6 +264,11 @@
                         </v-layout>
                     </v-container>
                 </v-tab-item>
+                <v-tab-item>
+                    <v-container v-if="user.id > 0">
+                        <user-ip :user_id="user.id" :ips="ips"></user-ip>
+                    </v-container>
+                </v-tab-item>
             </v-tabs>
             </v-card>
 	</div>
@@ -272,6 +280,7 @@
     import {mapGetters} from 'vuex';
     import UserRole from './UserRole'
     import UserPermiso from './UserPermiso'
+    import UserIp from './UserIp'
     import vue2Dropzone from 'vue2-dropzone'
     import MyDialog from '@/components/shared/MyDialog'
     import Loading from '@/components/shared/Loading'
@@ -285,6 +294,7 @@
             'user-emp': UserEmp,
             'user-role': UserRole,
             'user-permiso': UserPermiso,
+            'user-ip': UserIp,
             'my-dialog': MyDialog,
             'vueDropzone': vue2Dropzone,
             'menu-ope': MenuOpe,
@@ -318,6 +328,7 @@
                 permisos:[],
                 permisos_selected:[],
                 empresas: [],
+                ips: [],
 
         		status: false,
         		msg : "",
@@ -368,6 +379,8 @@
                         this.role_user = res.data.role_user;
                         this.permisos = res.data.permisos;
 
+                        this.ips = res.data.ips;
+                        console.log(res.data);
 
                         this.permisos_selected = res.data.permisos_user;
 
