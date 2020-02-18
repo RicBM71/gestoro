@@ -43,7 +43,7 @@ class UpdateProducto extends FormRequest
             'ref_pol'           => ['nullable', 'max:20', Rule::requiredIf($this->iva_id==2)],
             'caracteristicas'   => ['nullable','string', 'max:190'],
             'notas'             => ['string','nullable'],
-            'cliente_id'        => ['nullable', 'integer', Rule::requiredIf($this->iva_id==2)],
+            'cliente_id'        => ['nullable', 'integer', Rule::requiredIf($this->iva_id==2 && $this->compra_id == null)],
             'almacen_id'        => ['nullable', 'integer'],
             'etiqueta_id'       => ['required', 'integer'],
             'stock'             => ['required', 'integer'],

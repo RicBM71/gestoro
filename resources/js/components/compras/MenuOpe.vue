@@ -204,7 +204,8 @@ export default {
         },
         computedImprimeCompra(){
 
-            if ((this.compra.fase_id == 3 || this.compra.fase_id == 4) && (this.docu_ok || this.hasScan==false))
+            //if ((this.compra.fase_id == 3 || this.compra.fase_id == 4) && (this.docu_ok || this.hasScan==false))
+            if (this.compra.fase_id >= 3 && (this.docu_ok || this.hasScan==false))
                 return true;
 
             return false;

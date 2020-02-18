@@ -282,7 +282,7 @@ class ProductosController extends Controller
         if (request()->wantsJson())
             return [
                 'parametros'=> $parametros,
-                'producto' =>$producto->load('clase'),
+                'producto' => $producto->load('clase'),
                 'empresas' => Empresa::selEmpresas()->Venta()->get(),
                 'clases'   => Clase::selGrupoClase(),
                 'estados'  => Estado::selEstados(),

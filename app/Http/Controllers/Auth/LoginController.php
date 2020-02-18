@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Ipuser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -41,6 +44,53 @@ class LoginController extends Controller
     public function username()
     {
         return 'username';
+    }
+
+
+
+    /**
+     * Attempt to log the user into the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    protected function attemptLogin(Request $request)
+    {
+
+        $ret = $this->guard()->attempt(
+            $this->credentials($request), $request->filled('remember')
+        );
+
+        if ($ret == false)
+            return $ret;
+
+        if ($this->checkIp($request) == false){
+            $this->guard()->logout();
+
+            $request->session()->invalidate();
+            throw ValidationException::withMessages([
+                $this->username() => ['Acceso por IP bloqueado'],
+            ]);
+
+        }
+
+        return $ret;
+    }
+
+
+    private function checkIp($request){
+
+        return true;
+
+        $ips = Ipuser::getIpuser($request->user()->id);
+        if ($ips != null){
+            if (!in_array($request->ip(), $ips)) {
+                return false;
+            }
+        }
+
+        return true;
+
     }
 
 

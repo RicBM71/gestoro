@@ -180,10 +180,10 @@ class PrintAlbController extends Controller
 
 
         PDF::SetFont('helvetica', '', 9, '', false);
-        PDF::setXY(115,30);
+        PDF::setXY(115,28);
         PDF::MultiCell(90, 5,  'NIF.: '.$this->albaran->cliente->dni,'', 'L', 0, 1, '', '', true,0,false,true,5,'M',false);
 
-        PDF::setXY(115,38);
+        PDF::setXY(115,35);
         PDF::MultiCell(90, 5,  $this->albaran->cliente->razon, '', 'L', 0, 1, '', '', true,0,false,true,5,'M',false);
         PDF::setX(115);
         PDF::MultiCell(90, 5,  $this->albaran->cliente->direccion,'', 'L', 0, 1, '', '', true,0,false,true,5,'M',false);
@@ -550,6 +550,13 @@ class PrintAlbController extends Controller
 
         PDF::setFooterCallback(function($pdf) {
 
+
+            // $f = str_replace('storage', 'public', '/storage/logos/sello.png');
+
+            // $file = '@'.(Storage::get($f));
+            // $pdf->setJPEGQuality(75);
+            // $pdf->Image($file, $x='140', $y='220', $w=0, $h=0, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false);
+
             PDF::SetFont('helvetica', 'R', 6);
 
             $html='En cumplimiento al Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo, de 27 de abril de '.
@@ -601,7 +608,7 @@ class PrintAlbController extends Controller
 
         // set margins
         //PDF::SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-        PDF::SetMargins(13, 56, PDF_MARGIN_RIGHT);
+        PDF::SetMargins(13, 58, PDF_MARGIN_RIGHT);
         PDF::SetHeaderMargin(PDF_MARGIN_HEADER);
         //PDF::SetFooterMargin(PDF_MARGIN_FOOTER);
         PDF::SetFooterMargin(34);

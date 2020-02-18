@@ -225,6 +225,7 @@ export default {
             'getParamSeleccion',
         ]),
         computedShowFechaLiq(){
+            return true;
             return this.parametros.accion != 'P';
         },
         computedShowBlq(){
