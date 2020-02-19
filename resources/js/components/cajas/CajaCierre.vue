@@ -575,6 +575,9 @@ import {mapGetters} from 'vuex';
             goBack(){
                 this.$router.go(-1)
             },
+            getDecimalFormat(value){
+                return new Intl.NumberFormat("de-DE",{style: "decimal",minimumFractionDigits:2}).format(parseFloat(value))
+            },
             submit() {
 
                 if (this.loading === false){
@@ -585,7 +588,7 @@ import {mapGetters} from 'vuex';
 
                     this.caja.dh = this.regulariza >= 0 ? "H" : "D";
                     this.caja.importe = Math.abs(this.regulariza).toFixed(2);
-                    this.caja.nombre = "CIERRE DE CAJA:"+this.saldo.toFixed(2)+" RECUENTO: "+this.recuento;
+                    this.caja.nombre = "CIERRE DE CAJA:"+this.getDecimalFormat(this.saldo.toFixed(2))+" RECUENTO: "+this.getDecimalFormat(this.recuento);
 
 
                     this.$validator.validateAll().then((result) => {

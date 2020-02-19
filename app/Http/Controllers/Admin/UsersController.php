@@ -170,6 +170,7 @@ class UsersController extends Controller
     {
 
         //return $request;
+        $this->authorize('update', $user);
 
         $data = $request->validated();
 
@@ -221,6 +222,8 @@ class UsersController extends Controller
 
     public function updatePassword(Request $request)
 	{
+
+
 		$rules = [
 			'new_password'         => 'min:6|required|password',
 			'password_confirmation' => 'required|same:new_password'
@@ -230,6 +233,7 @@ class UsersController extends Controller
 
         $user = $request->user();
 
+        $user->username_umod = session('username');
         $user->password = Hash::make($request->input('new_password'));
         $user->fecha_expira = date('Y-m-d');
 		$user->saveOrFail();
@@ -269,7 +273,8 @@ class UsersController extends Controller
     public function reset(Request $request, User $user)
     {
 
-
+        $this->authorize('update', $user);
+        
         $data['password'] = Hash::make(date('dmY'));
 
         $user->update($data);

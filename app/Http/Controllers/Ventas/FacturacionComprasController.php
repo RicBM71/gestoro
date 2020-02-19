@@ -32,7 +32,7 @@ class FacturacionComprasController extends Controller
 
         if (request()->wantsJson())
             return [
-                'grupos'=> Grupo::selGruposRebu()
+                'grupos'=> Grupo::selGruposEmpresa()
             ];
     }
 

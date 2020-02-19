@@ -27,6 +27,18 @@ class Grupo extends Model
 
     }
 
+    public static function selGruposEmpresa(){
+
+        return Grupo::select('grupos.id AS value', 'grupos.nombre AS text')
+            ->join('libros','libros.grupo_id','=','grupos.id')
+            ->rebu()
+            ->where('empresa_id',session('empresa_id'))
+            ->orderBy('grupos.nombre', 'asc')
+            ->distinct()
+            ->get();
+
+    }
+
     public function scopeRebu($query){
 
         return $query->where('rebu', true);

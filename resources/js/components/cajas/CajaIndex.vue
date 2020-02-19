@@ -326,7 +326,7 @@ import {mapActions} from "vuex";
 
             if (f == null) return null;
             moment.locale('es');
-            return moment(f).format('DD/MM/YYYY hh:mm:ss');
+            return moment(f).format('DD/MM/YYYY HH:mm:ss');
         },
         puedeEditar(item){
 

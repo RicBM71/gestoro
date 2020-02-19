@@ -24,7 +24,10 @@ class ReubicarAlbaranesController extends Controller
             'fecha_h' => ['required','date']
         ]);
 
-        if (!auth()->user()->hasRole('Admin'))
+        if (!esRoot())
+            return abort(403,'Solo ROOT hasta verificar!');
+
+        if (!esAdmin())
             return abort(403,'Solo administradores pueden reubicar albaranes!');
 
 
