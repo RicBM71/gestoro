@@ -8,11 +8,11 @@ use App\Albaran;
 use App\Contador;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Rules\RangoFechaRule;
 use App\Exports\FacturasExport;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Rules\Albaranes\RangoFechaFacturacionRule;
 
 class FacturacionVentasController extends Controller
 {
@@ -48,8 +48,8 @@ class FacturacionVentasController extends Controller
 
         $data=$request->validate([
             'tipo_id'     => ['required','integer'],
-            'fecha_d'  => ['required','date', new RangoFechaRule($request->fecha_d, $request->fecha_h)],
-            'fecha_h'  => ['required','date'],
+            'fecha_d'     => ['required','date', new RangoFechaFacturacionRule($request->fecha_d, $request->fecha_h)],
+            'fecha_h'     => ['required','date'],
             'accion'      => ['required','string'],
             'cobro'       => ['required','string'],
         ]);

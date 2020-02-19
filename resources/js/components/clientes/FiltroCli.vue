@@ -8,7 +8,7 @@
                         label="Nombre"
                         v-validate="'min:3'"
                         v-model="query.razon"
-                        hint="nom,ape - razón"
+                        hint="nom,ape ó razón"
                         data-vv-name="razon"
                         data-vv-as="razon"
                         :error-messages="errors.collect('razon')"

@@ -87,7 +87,7 @@ class PrintComprasController extends Controller
         // cabecera cliente
         $this->setCabeceraClifrmCompra1();
         $this->setBodyComprafrmCompra1();
-        $this->setLineasRecomprafrmCompra1($this->lineasCompra);
+        $this->setLineasRecomprafrmCompra1($this->lineasCompra, true);
         //$this->setLineasComfrmCompra1($this->lineasCompra);
         $this->setFirmafrmCompra1();
 
@@ -109,7 +109,7 @@ class PrintComprasController extends Controller
 
         $this->setBodyRecomprafrmCompra1();
         $this->setAutorizacionfrmCompra1($copia);
-        $this->setLineasRecomprafrmCompra1($this->lineasCompra);
+        $this->setLineasRecomprafrmCompra1($this->lineasCompra, false);
 
     }
 
@@ -527,7 +527,7 @@ class PrintComprasController extends Controller
      * @param Model Albalins
      *
      */
-    private function setLineasReComprafrmCompra1($lineas){
+    private function setLineasReComprafrmCompra1($lineas, $es_compra){
 
 
         $this->cabeLin();
@@ -546,6 +546,11 @@ class PrintComprasController extends Controller
 
 			if ($row->grabaciones != null)
                 $txt.= " (".$row->grabaciones.") ";
+
+            $peso = ($row->peso_gr > 0 && $es_compra) ? " ".getDecimal($row->peso_gr).' gr.' : null;
+
+            $txt.=$peso;
+
 
             $importe = ($this->compra->factura == '') ? $row->importe : $row->importe_venta;
 

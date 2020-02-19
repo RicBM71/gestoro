@@ -25,8 +25,7 @@ class ClientesController extends Controller
             return $this->seleccionar();
 
         if (request()->wantsJson())
-            return Cliente::orderBy('id','desc')
-                    ->where('updated_at','>=',Carbon::now()->subDays(30))
+            return Cliente::where('updated_at','>=',Carbon::now()->subDays(30))
                     ->get()
                     ->take(50);
 

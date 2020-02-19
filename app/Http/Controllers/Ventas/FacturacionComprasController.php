@@ -9,11 +9,11 @@ use App\Compra;
 use App\Comline;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Rules\RangoFechaRule;
 use App\Exports\FacturasExport;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Rules\Albaranes\RangoFechaFacturacionRule;
 
 /**
  * Llamado desde ComprasFac.vue
@@ -49,7 +49,7 @@ class FacturacionComprasController extends Controller
 
         $data=$request->validate([
             'grupo_id'  => ['required','integer'],
-            'fecha_d'  => ['required','date', new RangoFechaRule($request->fecha_d, $request->fecha_h)],
+            'fecha_d'  => ['required','date', new RangoFechaFacturacionRule($request->fecha_d, $request->fecha_h)],
             'fecha_h'  => ['required','date'],
             'accion'    => ['required','string'],
         ]);
