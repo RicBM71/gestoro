@@ -111,14 +111,6 @@
                                         label="Estado"
                                     ></v-select>
                                 </v-flex>
-                                <v-flex sm1>
-                                    <v-switch
-                                        label="Online"
-                                        v-model="producto.online"
-                                        :disabled="!computedEditPro"
-                                        color="primary">
-                                    ></v-switch>
-                                </v-flex>
                             </v-layout>
                             <v-layout row wrap>
                                 <v-flex sm6>
@@ -136,6 +128,7 @@
                                 </v-flex>
                                 <v-flex sm6>
                                     <v-text-field
+                                        v-show="producto.estado_id != 5"
                                         v-model="producto.nombre_interno"
                                         v-validate="'max:190'"
                                         :error-messages="errors.collect('nombre_interno')"
@@ -147,6 +140,7 @@
                                     >
                                     </v-text-field>
                                     <v-text-field
+                                        v-show="producto.estado_id != 5"
                                         v-model="producto.caracteristicas"
                                         v-validate="'max:190'"
                                         :error-messages="errors.collect('caracteristicas')"
@@ -158,7 +152,7 @@
                                     </v-text-field>
                                 </v-flex>
                             </v-layout>
-                            <v-layout row wrap>
+                            <v-layout row wrap v-show="producto.estado_id != 5">
                                 <v-flex sm2 d-flex>
                                     <v-select
                                         :disabled="!computedEditPro"
@@ -277,10 +271,21 @@
                                     >
                                     </v-text-field>
                                 </v-flex>
+                                <v-flex sm1></v-flex>
+                                <v-flex sm1>
+                                    <v-switch
+                                        v-show="producto.estado_id != 5"
+                                        label="Online"
+                                        v-model="producto.online"
+                                        :disabled="!computedEditPro"
+                                        color="primary">
+                                    ></v-switch>
+                                </v-flex>
                             </v-layout>
                             <v-layout row wrap>
                                 <v-flex sm2 d-flex>
                                     <v-select
+                                        v-show="producto.estado_id != 5"
                                         v-model="producto.garantia_id"
                                         v-validate="'numeric'"
                                         data-vv-name="garantia_id"
@@ -292,6 +297,7 @@
                                 </v-flex>
                                 <v-flex sm1 d-flex>
                                     <v-text-field
+                                        v-show="producto.estado_id != 5"
                                         v-model="producto.meses_garantia"
                                         v-validate="'numeric|max_value:24'"
                                         :error-messages="errors.collect('meses_garantia')"
@@ -304,6 +310,7 @@
                                 </v-flex>
                                 <v-flex sm2 d-flex>
                                     <v-menu
+                                        v-show="producto.estado_id != 5"
                                         v-model="menu1"
                                         :close-on-content-click="false"
                                         :nudge-right="40"

@@ -73,7 +73,7 @@ class ProductosController extends Controller
             'quilates'      =>['integer','nullable'],
             'online'        =>['boolean'],
             'alta'          =>['boolean'],
-            'cliente_id'    => ['required','integer'],
+            'cliente_id'    => ['nullable','integer'],
             'tipo_fecha'    =>['string','required'],
             'fecha_d'       =>['nullable','date',new RangoFechaRule($request->fecha_d, $request->fecha_h)],
             'fecha_h'       =>['nullable','date',new MaxDiasRangoFechaRule($request->fecha_d, $request->fecha_h)],
@@ -106,6 +106,7 @@ class ProductosController extends Controller
                             ->quilates($data['quilates'])
                             ->online($data['online'])
                             ->internos($data['interno'])
+                            ->asociado($data['cliente_id'])
                             ->orderBy('id','desc')
                             ->get()
                             ->take(500);
@@ -144,6 +145,7 @@ class ProductosController extends Controller
                             ->quilates($data['quilates'])
                             ->online($data['online'])
                             ->internos($data['interno'])
+                            ->asociado($data['cliente_id'])
                             ->orderBy('id','desc')
                             ->get()
                             ->take(500);

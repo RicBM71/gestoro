@@ -30,6 +30,7 @@ class TraspasoPolicy
 
     public function update(User $authUser, Traspaso $traspaso)
     {
+        if ($traspaso->situacion_id == 2) return true;
 
         return $authUser->hasPermissionTo('authtras') ?: $this->deny("Acceso denegado. Permiso traspasos requerido");
 

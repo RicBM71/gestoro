@@ -317,7 +317,9 @@ Class Producto extends Model
 
     public static function scopeAsociado($query, $cliente_id){
 
-        if (!Empty($cliente_id) && $cliente_id > 0)
+        if ($cliente_id == -1)
+            return $query->whereNull('cliente_id');
+        elseif ($cliente_id > 0)
             return $query->where('cliente_id','=', $cliente_id);
 
         return $query;

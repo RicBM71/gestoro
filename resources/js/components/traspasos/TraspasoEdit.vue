@@ -282,7 +282,7 @@ import {mapGetters} from 'vuex';
                 return true;
 
             // está autorizado y falta confirmarlo
-            if (this.hasAuthTras && this.traspaso.situacion_id == 2 && this.traspaso.username != this.userName)
+            if (this.traspaso.situacion_id == 2 && this.traspaso.username != this.userName)
                 return true;
 
             return false;

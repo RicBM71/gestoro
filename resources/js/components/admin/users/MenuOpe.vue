@@ -60,20 +60,6 @@
         <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
-                    v-show="id > 0"
-                    v-on="on"
-                    color="white"
-                    icon
-                    @click="reset"
-                >
-                    <v-icon color="primary">cached</v-icon>
-                </v-btn>
-            </template>
-                <span>Reset Password</span>
-        </v-tooltip>
-        <v-tooltip bottom>
-            <template v-slot:activator="{ on }">
-                <v-btn
                     v-on="on"
                     color="white"
                     icon
@@ -156,20 +142,7 @@ export default {
             });
 
         },
-        reset(){
-            if (confirm('¿Resetar password del usuario?')){
-                axios({
-                    method: 'put',
-                    url: '/admin/users/'+this.id+'/reset',
-                    })
-                    .then(response => {
-                        this.$toast.success(response.data.msg);
-                    })
-                    .catch(err => {
-                        this.$toast.error(err.response.data);
-                    });
-            }
-        },
+
         goHelp(){
             this.dialog_help = true;
         }

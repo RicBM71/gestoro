@@ -274,8 +274,9 @@ class UsersController extends Controller
     {
 
         $this->authorize('update', $user);
-        
+
         $data['password'] = Hash::make(date('dmY'));
+        $data['fecha_expira'] = null;
 
         $user->update($data);
 

@@ -6,6 +6,20 @@
             <v-card-title color="indigo">
                 <h2 color="indigo">{{titulo}}</h2>
                 <v-spacer></v-spacer>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                        <v-btn
+                            v-show="user.id > 0"
+                            v-on="on"
+                            color="white"
+                            icon
+                            @click="reset"
+                        >
+                            <v-icon color="orange">verified_user</v-icon>
+                        </v-btn>
+                    </template>
+                        <span>Reset Password</span>
+                </v-tooltip>
                 <menu-ope :id="user.id"></menu-ope>
             </v-card-title>
         </v-card>
@@ -380,7 +394,6 @@
                         this.permisos = res.data.permisos;
 
                         this.ips = res.data.ips;
-                        console.log(res.data);
 
                         this.permisos_selected = res.data.permisos_user;
 
@@ -515,7 +528,22 @@
             },
             upload(file, response){
                 this.user.avatar = response.url;
-            }
+            },
+            reset(){
+                if (confirm('¿Resetar password del usuario?')){
+                    axios({
+                        method: 'put',
+                        url: '/admin/users/'+this.user.id+'/reset',
+                        })
+                        .then(res => {
+                            this.user = res.data.user;
+                            this.$toast.success(res.data.msg);
+                        })
+                        .catch(err => {
+                            this.$toast.error(err.response.data);
+                        });
+                }
+            },
 
     }
   }

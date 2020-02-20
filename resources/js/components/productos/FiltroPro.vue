@@ -180,7 +180,7 @@
                 <v-flex sm3>
                     <v-select
                         v-model="reg.cliente_id"
-                        v-validate="'numeric'"
+                        v-validate="'alpha_dash'"
                         data-vv-name="cliente_id"
                         data-vv-as="asociado"
                         :error-messages="errors.collect('cliente_id')"
@@ -252,7 +252,7 @@ export default {
             estados: [],
             asociados: [],
             reg: {
-                cliente_id: 0,
+                cliente_id: null,
                 referencia:"",
                 notas:null,
                 ref_pol:"",
@@ -292,13 +292,16 @@ export default {
 
                 this.clases = res.data.clases;
                 this.asociados = res.data.asociados;
-                this.clases.push({value:-1,text:"---"});
+                this.asociados.push({value:null,text:"---"});
+                this.asociados.push({value:-1,text:"Sin Proveedor Asignado"});
+
+
+                this.clases.push({value:null,text:"---"});
 
                 this.estados = res.data.estados;
 
                 this.estados.push({value:null,text:"---"});
 
-                this.asociados.push({value:null,text:"---"});
 
                 this.quilates = res.data.quilates;
                 this.quilates.push({value:null,text:"---"});
