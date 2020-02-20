@@ -205,6 +205,16 @@ Class Producto extends Model
 
     }
 
+    public static function scopeEmpresa($query, $empresa_id){
+
+        if ($empresa_id !=null)
+            return $query->where('empresa_id','=', $empresa_id);
+
+        return $query;
+
+    }
+
+
     /**
      * hay que hacer join con clases para que funcione
      *

@@ -3,7 +3,7 @@
         <v-card>
             <loading :show_loading="show_loading"></loading>
             <v-card-title color="indigo">
-                <h2 color="indigo">Inventario</h2>
+                <h2 color="indigo">Inventario (por Origen Piezas)</h2>
                 <v-spacer></v-spacer>
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">

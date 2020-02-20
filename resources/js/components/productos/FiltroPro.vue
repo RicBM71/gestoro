@@ -91,13 +91,13 @@
                 </v-flex>
                  <v-flex sm3 d-flex>
                     <v-select
-                        v-model="reg.destino_empresa_id"
+                        v-model="reg.empresa_id"
                         v-validate="'numeric'"
-                        data-vv-name="destino_empresa_id"
+                        data-vv-name="empresa_id"
                         data-vv-as="empresa"
-                        :error-messages="errors.collect('destino_empresa_id')"
+                        :error-messages="errors.collect('empresa_id')"
                         :items="empresas"
-                        label="Destino Venta"
+                        label="Origen Pieza"
                     ></v-select>
                 </v-flex>
                <v-flex sm2>
@@ -265,7 +265,7 @@ export default {
                 fecha_d: "", //new Date().toISOString().substr(0, 10),
                 fecha_h: "",
                 tipo_fecha: 'C',
-                destino_empresa_id:"",
+                empresa_id:"",
                 sinscope: false,
                 interno: 'T',
             },

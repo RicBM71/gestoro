@@ -73,13 +73,13 @@ class ProductosController extends Controller
             'quilates'      =>['integer','nullable'],
             'online'        =>['boolean'],
             'alta'          =>['boolean'],
-            'cliente_id'    => ['nullable','integer'],
+            'cliente_id'    =>['nullable','integer'],
             'tipo_fecha'    =>['string','required'],
             'fecha_d'       =>['nullable','date',new RangoFechaRule($request->fecha_d, $request->fecha_h)],
             'fecha_h'       =>['nullable','date',new MaxDiasRangoFechaRule($request->fecha_d, $request->fecha_h)],
-            'destino_empresa_id'=>['nullable','integer'],
-            'sinscope'       =>['boolean'],
-            'interno'        =>['string','required'],
+            'empresa_id'    =>['nullable','integer'],
+            'sinscope'      =>['boolean'],
+            'interno'       =>['string','required'],
         ]);
 
         session(['filtro_pro' => $data]);
@@ -95,11 +95,12 @@ class ProductosController extends Controller
         if (esAdmin() && session('parametros')->aislar_empresas == false && $data['sinscope']==true){
             if ($data['alta'] == false)
                 $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->withTrashed()->with(['clase','estado','destino','empresa'])
+                            ->where('destino_empresa_id', session('empresa_id'))
                             ->referencia($data['referencia'])
                             ->fecha($data['fecha_d'],$data['fecha_h'],$data['tipo_fecha'])
                             ->clase($data['clase_id'])
                             ->estado($data['estado_id'])
-                            ->destino($data['destino_empresa_id'])
+                            ->empresa($data['empresa_id'])
                             ->notasNombre($data['notas'])
                             ->refPol($data['ref_pol'])
                             ->precioPeso($data['precio'])
@@ -113,11 +114,12 @@ class ProductosController extends Controller
             else{
 
                 $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','estado','destino','empresa'])
+                        ->where('destino_empresa_id', session('empresa_id'))
                         ->referencia($data['referencia'])
                         ->fecha($data['fecha_d'], $data['fecha_h'],$data['tipo_fecha'])
                         ->clase($data['clase_id'])
                         ->estado($data['estado_id'])
-                        ->destino($data['destino_empresa_id'])
+                        ->empresa($data['empresa_id'])
                         ->notasNombre($data['notas'])
                         ->refPol($data['ref_pol'])
                         ->precioPeso($data['precio'])
@@ -134,11 +136,12 @@ class ProductosController extends Controller
         else{
             if ($data['alta'] == false)
                 $data = Producto::withTrashed()->with(['clase','estado','destino','empresa'])
+                            ->where('destino_empresa_id', session('empresa_id'))
                             ->referencia($data['referencia'])
                             ->fecha($data['fecha_d'],$data['fecha_h'],$data['tipo_fecha'])
                             ->clase($data['clase_id'])
                             ->estado($data['estado_id'])
-                            ->destino($data['destino_empresa_id'])
+                            ->empresa($data['empresa_id'])
                             ->notasNombre($data['notas'])
                             ->refPol($data['ref_pol'])
                             ->precioPeso($data['precio'])
@@ -152,11 +155,12 @@ class ProductosController extends Controller
             else{
 
                 $data = Producto::with(['clase','estado','destino','empresa'])
+                        ->where('destino_empresa_id', session('empresa_id'))
                         ->referencia($data['referencia'])
                         ->fecha($data['fecha_d'], $data['fecha_h'],$data['tipo_fecha'])
                         ->clase($data['clase_id'])
                         ->estado($data['estado_id'])
-                        ->destino($data['destino_empresa_id'])
+                        ->empresa($data['empresa_id'])
                         ->notasNombre($data['notas'])
                         ->refPol($data['ref_pol'])
                         ->precioPeso($data['precio'])

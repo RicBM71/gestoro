@@ -32,12 +32,12 @@ class InventarioController extends Controller
     private function detalle($data)
     {
 
-        // solo lístamos los productos de empresa destino para evitar que salgan duplicados.
+        // solo lístamos los productos de empresa origen porque este es el inventario real
         //  por esto quito globalScope
         $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','iva','estado','garantia','cliente'])
                     ->select('productos.*')
                     ->join('clases','clase_id','=','clases.id')
-                    ->where('destino_empresa_id', session('empresa_id'))
+                    ->where('empresa_id', session('empresa_id'))
                     ->asociado($data['cliente_id'])
                     ->estado($data['estado_id'])
                     ->clase($data['clase_id'])

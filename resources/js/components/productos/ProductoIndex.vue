@@ -261,7 +261,7 @@ import {mapActions} from "vuex";
             var dest = '';
             var nota = '';
             if (item.empresa_id != item.destino_empresa_id){
-                dest = ' Destino Venta: '+item.destino.nombre + ' Procede de '+item.empresa.nombre.toUpperCase();;
+                dest = ' Destino Venta: '+item.destino.nombre + ' Procede de '+item.empresa.nombre.toUpperCase();
             }
             if (item.notas != null)
                 nota = item.notas;
