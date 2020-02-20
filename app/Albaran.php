@@ -109,6 +109,8 @@ class Albaran extends Model
 
     public function getAlbSerAttribute(){
 
+        return $this->serie_albaran." ".$this->albaran;
+
         $l = strlen($this->albaran);
 
         if ($l <= 4)
@@ -120,6 +122,8 @@ class Albaran extends Model
     }
 
     public function getAlbSereAttribute(){
+
+        return $this->serie_albaran." ".$this->albaran.substr(getEjercicio($this->fecha_albaran),-2);
 
         $l = strlen($this->albaran);
 

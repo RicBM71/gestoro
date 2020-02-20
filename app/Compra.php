@@ -88,14 +88,16 @@ class Compra extends Model
 
     public function getAlbSerAttribute(){
 
-        $l = strlen($this->albaran);
+        return $this->serie_com." ".$this->albaran.'-'.substr($this->ejercicio,-2);
 
-        if ($l <= 4)
-            return $this->serie_com."0".str_repeat('0', 4-$l).$this->albaran.'-'.substr($this->ejercicio,-2);
-        else
-            return $this->serie_com.$this->albaran.'-'.substr($this->ejercicio,-2);
+        // $l = strlen($this->albaran);
 
-        //str_pad($this->albaran, 4, "0", STR_PAD_LEFT);
+        // if ($l <= 4)
+        //     return $this->serie_com."0".str_repeat('0', 4-$l).$this->albaran.'-'.substr($this->ejercicio,-2);
+        // else
+        //     return $this->serie_com.$this->albaran.'-'.substr($this->ejercicio,-2);
+
+
 
     }
 
