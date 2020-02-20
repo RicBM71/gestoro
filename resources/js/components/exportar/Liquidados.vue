@@ -240,8 +240,6 @@ export default {
                             })
                         .then(res => {
 
-                            //console.log(res);
-
                             this.items = res.data;
 
                             if (this.items.length > 0)

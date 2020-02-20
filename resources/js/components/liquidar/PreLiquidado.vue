@@ -140,7 +140,7 @@ export default {
     },
     computed: {
         computedTotalGr(){
-            //console.log(this.total_gr);
+
             return parseFloat(this.total_gr).toLocaleString('de-DE',{ style: 'decimal'});
         },
     },

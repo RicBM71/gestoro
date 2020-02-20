@@ -542,7 +542,7 @@ import {mapState} from 'vuex'
       		}
         },
         beforeMount(){
-           // console.log(this.albaran);
+
             var id = this.$route.params.id;
 
             if (id > 0)

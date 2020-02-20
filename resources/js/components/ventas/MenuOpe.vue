@@ -266,7 +266,7 @@ export default {
             this.show_loading = true;
             axios.put('/ventas/print/'+this.albaran.id+'/mail')
                 .then(res => {
-                    console.log(res);
+                    
                     this.$emit('update:albaran', res.data.albaran);
                     this.$toast.success('Mail en cola de envío...');
                 })

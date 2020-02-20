@@ -272,7 +272,6 @@ export default {
                         .then(res => {
 
                             this.items = res.data;
-                            console.log(res.data);
 
                             if (this.items.length > 0)
                                 this.show_filtro = false;

@@ -173,7 +173,7 @@ export default {
 
         axios.get('/utilidades/helpgrupos')
             .then(res => {
-                
+
                 this.grupos = res.data.grupos;
 
                 //this.grupo_id = this.grupos[0].value;
@@ -233,7 +233,7 @@ export default {
                             // if (res.data.length == 0){
                             //     this.$toast.warning("No se han encontrado registros");
                             // }
-                            //console.log(res.data);
+
 
                             this.$emit('update:reg', res.data);
 

@@ -340,7 +340,6 @@ export default {
                     if(this.isAdmin || this.isGestor)
                         this.mn_items.push(this.mn_admin);
 
-                       // console.log(this.user);
 
                     this.empresas = res.data.user.empresas;
                     var idx = this.empresas.map(x => x.value).indexOf(this.empresa_id);
@@ -473,7 +472,7 @@ export default {
                 });
         },
         setEmpresa(){
-            //console.log('set');
+
             this.show_loading = true;
             this.empresas.map((e) =>{
                    if (e.id == this.empresa_id)

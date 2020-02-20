@@ -88,7 +88,7 @@ import MenuOpe from './MenuOpe'
                 this.registros = true;
             })
             .catch(err =>{
-                //console.log(err.response);
+
                 this.$toast.error(err.response.data.message);
                 this.$router.push({ name: 'dash' })
             })

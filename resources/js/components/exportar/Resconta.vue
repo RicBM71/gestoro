@@ -259,8 +259,6 @@ export default {
                             })
                         .then(res => {
 
-                           // console.log(res);
-
                             this.items = res.data;
 
                             //this.totalizar();

@@ -272,9 +272,6 @@ export default {
      beforeMount(){
         this.pagination.model = this.pagination.model + this.empresaActiva;
 
-        // console.log(this.pagination.model);
-        // console.log(this.getPagination.model);
-
         if (this.getLineasIndex.length > 0 && this.getPagination.model == this.pagination.model)
             this.items = this.getLineasIndex;
         else

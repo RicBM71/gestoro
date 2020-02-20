@@ -337,8 +337,6 @@ export default {
                             this.items_depositos = res.data.depositos;
                             this.items_inventario = res.data.inventario;
 
-                            //console.log(this.items_depositos);
-
                             if (this.items_comprados.length > 0)
                                 this.show_filtro = false;
                             else
