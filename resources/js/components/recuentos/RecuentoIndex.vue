@@ -165,13 +165,10 @@ import FiltroRec from './FiltroRec'
       }
     },
     beforeMount(){
-        console.log(this.getPagination);
+
     },
     mounted()
     {
-
-        console.log(this.getPagination.model);
-
 
         if (this.getPagination.model == this.pagination.model){
             this.updatePosPagina(this.getPagination);
@@ -211,7 +208,7 @@ import FiltroRec from './FiltroRec'
 
         },
         updatePosPagina(pag){
-            console.log(pag);
+
             this.pagination.page = pag.page;
             this.pagination.descending = pag.descending;
             this.pagination.rowsPerPage= pag.rowsPerPage;
@@ -219,19 +216,18 @@ import FiltroRec from './FiltroRec'
 
         },
         goProducto(item) {
-            console.log(this.paginaActual);
+
             this.setPagination(this.paginaActual);
-            console.log(this.getPagination.model);
+
             this.$router.push({ name: 'producto.edit', params: { id: item.producto_id } })
         },
         update(item) {
-            console.log(item);
+
             this.editedIndex = this.items.indexOf(item)
             //this.editedItem = Object.assign({}, item)
 
                     axios.put("/mto/recuentos/"+item.id, {rfid_id : item.rfid_id})
                         .then(res => {
-                            console.log(res.data.recuento);
 
                             Object.assign(this.items[this.editedIndex], res.data.recuento)
 

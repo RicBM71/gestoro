@@ -227,6 +227,7 @@ import {mapActions} from "vuex";
         axios.get(this.url)
             .then(res => {
                 this.arr_reg = res.data;
+                console.log(res.data);
                 this.registros = true;
                 this.show_loading = false;
             })
@@ -257,11 +258,11 @@ import {mapActions} from "vuex";
             return false;
         },
         destino(item){
-
+            console.log(item);
             var dest = '';
             var nota = '';
             if (item.empresa_id != item.destino_empresa_id){
-                dest = ' Destino Venta: '+item.destino.nombre;
+                dest = ' Destino Venta: '+item.destino.nombre + ' Procede de '+item.empresa.nombre.toUpperCase();;
             }
             if (item.notas != null)
                 nota = item.notas;

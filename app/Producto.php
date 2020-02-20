@@ -87,6 +87,11 @@ Class Producto extends Model
     	return ($this->belongsTo(Compra::class));
     }
 
+    public function empresa()
+    {
+    	return ($this->belongsTo(Empresa::class));
+    }
+
     public function clase()
     {
     	return ($this->belongsTo(Clase::class));

@@ -42,12 +42,12 @@ class ProductosController extends Controller
             $data = $this->miFiltro();
         }else{
             // if (auth()->user()->hasRole('Admin'))
-            //     $data = Producto::withTrashed()->with(['clase','estado','destino'])->orderBy('id','desc')
+            //     $data = Producto::withTrashed()->with(['clase','estado','destino','empresa'])->orderBy('id','desc')
             //                             ->where('updated_at','>=',Carbon::now()->subDays(30))
             //                             ->get()
             //                             ->take(50);
             // else
-                $data = Producto::with(['clase','estado','destino'])->orderBy('id','desc')
+                $data = Producto::with(['clase','estado','destino','empresa'])->orderBy('id','desc')
                         ->where('updated_at','>=',Carbon::now()->subDays(30))
                         ->get()
                         ->take(50);
@@ -94,7 +94,7 @@ class ProductosController extends Controller
 
         if (esAdmin() && session('parametros')->aislar_empresas == false && $data['sinscope']==true){
             if ($data['alta'] == false)
-                $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->withTrashed()->with(['clase','estado','destino'])
+                $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->withTrashed()->with(['clase','estado','destino','empresa'])
                             ->referencia($data['referencia'])
                             ->fecha($data['fecha_d'],$data['fecha_h'],$data['tipo_fecha'])
                             ->clase($data['clase_id'])
@@ -112,7 +112,7 @@ class ProductosController extends Controller
                             ->take(500);
             else{
 
-                $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','estado','destino'])
+                $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','estado','destino','empresa'])
                         ->referencia($data['referencia'])
                         ->fecha($data['fecha_d'], $data['fecha_h'],$data['tipo_fecha'])
                         ->clase($data['clase_id'])
@@ -133,7 +133,7 @@ class ProductosController extends Controller
         }
         else{
             if ($data['alta'] == false)
-                $data = Producto::withTrashed()->with(['clase','estado','destino'])
+                $data = Producto::withTrashed()->with(['clase','estado','destino','empresa'])
                             ->referencia($data['referencia'])
                             ->fecha($data['fecha_d'],$data['fecha_h'],$data['tipo_fecha'])
                             ->clase($data['clase_id'])
@@ -151,7 +151,7 @@ class ProductosController extends Controller
                             ->take(500);
             else{
 
-                $data = Producto::with(['clase','estado','destino'])
+                $data = Producto::with(['clase','estado','destino','empresa'])
                         ->referencia($data['referencia'])
                         ->fecha($data['fecha_d'], $data['fecha_h'],$data['tipo_fecha'])
                         ->clase($data['clase_id'])
@@ -221,7 +221,7 @@ class ProductosController extends Controller
 
         $reg->update($data);
 
-        $reg->load('clase');
+        $reg->load('clase','empresa');
 
         if (request()->wantsJson())
             return ['producto'=>$reg, 'message' => 'EL registro ha sido creado'];
@@ -284,7 +284,7 @@ class ProductosController extends Controller
         if (request()->wantsJson())
             return [
                 'parametros'=> $parametros,
-                'producto' => $producto->load('clase'),
+                'producto' => $producto->load('clase','empresa'),
                 'empresas' => Empresa::selEmpresas()->Venta()->get(),
                 'clases'   => Clase::selGrupoClase(),
                 'estados'  => Estado::selEstados(),
@@ -320,7 +320,7 @@ class ProductosController extends Controller
 
         if (request()->wantsJson())
             return [
-                'producto'=> $producto->load('clase'),
+                'producto'=> $producto->load('clase','empresa'),
                 'message' => 'EL producto ha sido modificado'
                 ];
     }
@@ -360,7 +360,7 @@ class ProductosController extends Controller
 
         if (request()->wantsJson()){
             return [
-                'producto'=> $producto->load('clase'),
+                'producto'=> $producto->load('clase','empresa'),
                 'msg'=> $msg
             ];
         }

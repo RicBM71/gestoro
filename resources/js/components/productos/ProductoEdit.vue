@@ -1,5 +1,5 @@
 <template>
-	<div v-show="!show_loading">
+	<div>
         <loading :show_loading="show_loading"></loading>
         <v-card>
             <v-card-title color="indigo">
@@ -22,7 +22,7 @@
 
             </v-card-title>
         </v-card>
-        <v-card>
+        <v-card v-if="!show_loading">
             <v-tabs fixed-tabs>
                 <v-tab>
                         Datos generales
@@ -107,7 +107,7 @@
                                         data-vv-as="estado"
                                         :error-messages="errors.collect('estado_id')"
                                         :items="estados"
-                                        :disabled="!computedEditPro"
+                                        :disabled="computedEditEstado"
                                         label="Estado"
                                     ></v-select>
                                 </v-flex>
@@ -167,7 +167,7 @@
                                 </v-flex>
                                 <v-flex sm4 d-flex>
                                     <v-select
-                                        :disabled="!computedEditPro || producto.compra_id > 0"
+                                        :disabled="computedEditEstado || producto.compra_id > 0"
                                         v-model="producto.cliente_id"
                                         v-validate="'numeric'"
                                         data-vv-name="cliente_id"
@@ -178,16 +178,16 @@
                                         ></v-select>
                                 </v-flex>
 
-                                <v-flex sm3 d-flex>
+                                <v-flex sm4 d-flex>
                                     <v-select
-                                        :disabled="!computedEditPro"
+                                        :disabled="computedEditEstado"
                                         v-model="producto.destino_empresa_id"
                                         v-validate="'required'"
                                         data-vv-name="destino_empresa_id"
                                         data-vv-as="empresa"
                                         :error-messages="errors.collect('destino_empresa_id')"
                                         :items="empresas"
-                                        label="Destino Venta"
+                                        :label="computedLabelDestino"
                                         ></v-select>
                                 </v-flex>
                                 <v-flex sm2 d-flex>
@@ -213,7 +213,7 @@
                                         data-vv-as="iva"
                                         :error-messages="errors.collect('iva_id')"
                                         :items="ivas"
-                                        :disabled="!computedEditPro || producto.compra_id > 0"
+                                        :disabled="computedEditEstado || producto.compra_id > 0"
                                         label="IVA"
                                         ></v-select>
                                 </v-flex>
@@ -418,7 +418,9 @@ import {mapState} from 'vuex'
     	data () {
       		return {
                 titulo:"Productos",
-                producto: {},
+                producto: {
+                    id:0,
+                },
                 url: "/mto/productos",
                 ruta: "producto",
                 clases: [],
@@ -479,13 +481,15 @@ import {mapState} from 'vuex'
 
                         this.show_quilates = this.producto.clase.quilates;
 
-                        this.show = true;
-                        this.show_loading = false;
                     })
                     .catch(err => {
                         this.$toast.error(err.response.data.message);
                         this.$router.push({ name: this.ruta+'.index'})
                     })
+                    .finally(()=> {
+                        this.show = true;
+                        this.show_loading = false;
+                    });
         },
         computed: {
             ...mapGetters([
@@ -493,6 +497,10 @@ import {mapState} from 'vuex'
                     'hasEditPro',
                     'userName'
                 ]),
+            computedEditEstado(){
+
+                return (this.producto.estado_id == 3 || this.producto.estado_id == 4);
+            },
             computedEditPro(){
 
                 if (this.producto.estado_id == 5)
@@ -506,6 +514,14 @@ import {mapState} from 'vuex'
                     return true;
                 else
                     return this.hasEditPro;
+            },
+            computedLabelDestino(){
+
+                if (this.producto.id > 0)
+                    return "Destino venta - Procede de "+ this.producto.empresa.nombre.toUpperCase();
+
+                return "";
+
             },
             computedMargen(){
                 return this.getMoneyFormat(this.producto.margen);
