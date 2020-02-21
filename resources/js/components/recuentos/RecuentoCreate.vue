@@ -191,7 +191,19 @@ import {mapGetters} from 'vuex';
       		}
         },
         mounted(){
-            this.show_loading = false;
+
+            axios.get('/mto/recuentos')
+                .then(res => {
+                    this.items = res.data;
+                })
+                .catch(err =>{
+                    this.$toast.error(err.response.data.message);
+                    this.$router.push({ name: 'dash' })
+                })
+                .finally(()=> {
+                    this.show_loading = false;
+                    this.registros = true;
+                });
         },
         computed: {
         ...mapGetters([
@@ -218,7 +230,7 @@ import {mapGetters} from 'vuex';
                                 referencia: this.referencia
                             })
                                 .then(res => {
-
+                                    console.log(res);
                                     this.items.push(res.data.recuento);
                                     this.referencia = null;
 

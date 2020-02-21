@@ -209,7 +209,7 @@ class EmpresasController extends Controller
 
     public function deletefondo(Empresa $empresa){
 
-        $fotoPath = str_replace('storage', 'public', $empresa->img_logo);
+        $fotoPath = str_replace('storage', 'public', $empresa->img_fondo);
 
         Storage::delete($fotoPath);
 

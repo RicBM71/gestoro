@@ -83,21 +83,24 @@ class RecuentosController extends Controller
         if ($data['prefijo'] != null){
             $ref = $data['prefijo'].$data['referencia'];
             $producto = Producto::withOutGlobalScope(EmpresaProductoScope::class)
+                            ->withTrashed()
                             ->where('referencia',$ref)
                             ->firstOrFail();
         }else{
             $producto = Producto::withOutGlobalScope(EmpresaProductoScope::class)
+                            ->withTrashed()
                             ->findOrFail($data['referencia']);
         }
 
         if ($producto->empresa_id == session('empresa_id') || $producto->destino_empresa_id == session('empresa_id'))
-            $estado_id = 1;
+            $rfid_id = 1;
         else
-            $estado_id = 2;
+            $rfid_id = 2;
 
         $data['producto_id']=$producto->id;
         $data['fecha']=$data['fecha'];
-        $data['estado_id']=$estado_id;
+        $data['estado_id']=$producto->estado_id;
+        $data['rfid_id']=$rfid_id;
 
 
         $reg = Recuento::create($data);
@@ -105,7 +108,7 @@ class RecuentosController extends Controller
         $reg->load(['producto','rfid','estado']);
 
         if (request()->wantsJson())
-            return ['producto'=>$reg, 'message' => 'EL registro ha sido creado'];
+            return ['recuento'=>$reg, 'message' => 'EL registro ha sido creado'];
     }
 
     /**
