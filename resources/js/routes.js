@@ -101,7 +101,7 @@ import TallerCreate from './components/taller/TallerCreate.vue';
 
 import RecuentoIndex from './components/recuentos/RecuentoIndex.vue';
 import RecuentoEdit from './components/recuentos/RecuentoEdit.vue';
-
+import RecuentoCreate from './components/recuentos/RecuentoCreate.vue';
 
 import ApunteIndex from './components/apunte/ApunteIndex.vue';
 import ApunteEdit from './components/apunte/ApunteEdit.vue';
@@ -651,6 +651,11 @@ export default [
                 path: '/recuentos',
                 name: 'recuento.index',
                 component: RecuentoIndex,
+            },
+            {
+                path: '/recuentos/create',
+                name: 'recuento.create',
+                component: RecuentoCreate,
             },
             {
                 path: '/recuentos/:id/edit',

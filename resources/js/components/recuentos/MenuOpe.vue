@@ -7,6 +7,19 @@
                     v-on="on"
                     color="white"
                     icon
+                    @click="goCreate"
+                >
+                    <v-icon color="primary">add</v-icon>
+                </v-btn>
+            </template>
+                <span>Nuevo</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+                <v-btn
+                    v-on="on"
+                    color="white"
+                    icon
                     @click="goIndex"
                 >
                     <v-icon color="primary">list</v-icon>
@@ -54,6 +67,9 @@ export default {
     methods:{
         goBack(){
             this.$router.go(-1);
+        },
+        goCreate(){
+            this.$router.push({ name: 'recuento.create' })
         },
         goIndex(){
             this.$router.push({ name: 'recuento.index' })

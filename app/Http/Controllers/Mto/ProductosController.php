@@ -291,12 +291,11 @@ class ProductosController extends Controller
      */
     public function show($id)
     {
-        if (esAdmin()){
-            $producto = Producto::withTrashed()->with(['estado','clase','iva'])->findOrFail($id);
-        }else{
-            $producto = Producto::with(['estado','clase','iva'])->findOrFail($id);
-        }
-
+        $producto = Producto::withOutGlobalScope(EmpresaProductoScope::class)->withTrashed()
+                        ->with(['estado','clase','iva'])
+                        ->where('id',$id)
+                        ->whereIn('empresa_id',session('empresas_usuario'))
+                        ->firstOrFail();
 
         if (request()->wantsJson())
             return [

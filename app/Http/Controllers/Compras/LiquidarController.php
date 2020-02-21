@@ -135,14 +135,24 @@ class LiquidarController extends Controller
 
         $compra = Compra::with(['cliente','grupo','tipo','fase'])->findOrFail($id);
 
+
         // TODO: Esto lo dejo por lotes traspasados de empresa EvaOro a Sol, lo debería quitar.
-        $libro = Libro::where('grupo_id', $compra->grupo_id)
-                        ->where('ejercicio', date('Y'))
-                        ->firstOrFail();
-        // $libro = Libro::withoutGlobalScope(EmpresaScope::class)
-        //             ->where('grupo_id', $compra->grupo_id)
-        //             ->where('ejercicio', getEjercicio($compra->fecha_compra))
-        //             ->firstOrFail();
+
+        try {
+
+            $libro = Libro::where('grupo_id', $compra->grupo_id)
+                            ->where('ejercicio', getEjercicio($compra->fecha_compra))
+                            ->firstOrFail();
+        } catch (\Exception $e) {
+
+            try {
+                $libro = Libro::where('grupo_id', $compra->grupo_id)
+                            ->where('ejercicio', date('Y'))
+                            ->firstOrFail();
+            } catch (\Exception $e) {
+                return abort(404,"No se puede asignar libro o no existe para el Ejercicio ".date('Y'));
+            }
+        }
 
         $lineas = Comline::with('clase')->CompraId($compra->id)->get();
         $productos = Producto::withoutGlobalScope(EmpresaScope::class)->with('clase')->compraId($compra->id)->get();

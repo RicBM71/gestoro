@@ -38,7 +38,8 @@ class EoDepositosSeeder extends Seeder
         /// depósitos
         $reg = DB::connection($this->bbdd)
         ->select('select depositos.*, albaranes.cliente from albaranes,depositos '.
-        ' where albaranes.empresa > 0'.
+        ' where albaranes.id in (31,62,95,99)'.
+        // ' where albaranes.empresa > 0'.
     //' and comven="C" and year(fechacomp) >= '.$eje.
         ' and comven="C" '.
         ' and year(fechacomp) '.$eje.

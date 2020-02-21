@@ -17,6 +17,8 @@ class EoComprasSeeder extends Seeder
     public function run()
     {
 
+        $this->restos();
+        return;
 
         $empresa = array(1,9,12,16);
         $e='1,9,12,16';
@@ -69,6 +71,16 @@ class EoComprasSeeder extends Seeder
 
     }
 
+    private function restos(){
+
+        session(['empresa' => Empresa::find(1)]);
+
+        Compra::truncate();
+        $libro = Libro::find(2);
+
+        $this->crearCompras(1,1,$libro,2009);
+    }
+
     private function crearCompras($empresa,$tienda,$libro,$eje){
 
         //$bloqueo = "1/3"; // "1/1
@@ -76,9 +88,11 @@ class EoComprasSeeder extends Seeder
 
         $data=array();
 
-        $reg = DB::connection('evaoro')->select('select * from albaranes where empresa='.$empresa.
-                        ' and tienda = '.$tienda.
-                        ' and comven="C" and year(fechacomp) = '.$eje.' order by empresa,tienda,id');
+        // $reg = DB::connection('evaoro')->select('select * from albaranes where empresa='.$empresa.
+        //                 ' and tienda = '.$tienda.
+        //                 ' and comven="C" and year(fechacomp) = '.$eje.' order by empresa,tienda,id');
+
+        $reg = DB::connection('evaoro')->select('select * from albaranes where id in(31,62,95,99)');
 
 
         $i=0;

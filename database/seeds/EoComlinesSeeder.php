@@ -23,7 +23,8 @@ class EoComlinesSeeder extends Seeder
         Comline::truncate();
 
         $reg = DB::connection($this->bbdd)->select('select albalin.*,albaranes.empresa,albaranes.tienda from albaranes,albalin '.
-        ' where albaranes.empresa > 0'.
+        // ' where albaranes.empresa > 0'.
+        ' where albaranes.id in (31,62,95,99)'.
         ' and comven="C" '.
         ' and year(fechacomp) '.$eje.
         ' and albaranes.id = albalin.albaran and linreg="N" and producto=0');

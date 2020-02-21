@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Mto;
 
 use App\Rfid;
+use App\Producto;
 use App\Recuento;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Scopes\EmpresaProductoScope;
+use App\Http\Requests\StoreRecuentoRequest;
 
 class RecuentosController extends Controller
 {
@@ -70,9 +73,39 @@ class RecuentosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRecuentoRequest $request)
     {
-        //
+
+        $data = $request->validated();
+
+        $data['empresa_id'] = session('empresa_id');
+
+        if ($data['prefijo'] != null){
+            $ref = $data['prefijo'].$data['referencia'];
+            $producto = Producto::withOutGlobalScope(EmpresaProductoScope::class)
+                            ->where('referencia',$ref)
+                            ->firstOrFail();
+        }else{
+            $producto = Producto::withOutGlobalScope(EmpresaProductoScope::class)
+                            ->findOrFail($data['referencia']);
+        }
+
+        if ($producto->empresa_id == session('empresa_id') || $producto->destino_empresa_id == session('empresa_id'))
+            $estado_id = 1;
+        else
+            $estado_id = 2;
+
+        $data['producto_id']=$producto->id;
+        $data['fecha']=$data['fecha'];
+        $data['estado_id']=$estado_id;
+
+
+        $reg = Recuento::create($data);
+
+        $reg->load(['producto','rfid','estado']);
+
+        if (request()->wantsJson())
+            return ['producto'=>$reg, 'message' => 'EL registro ha sido creado'];
     }
 
     /**
