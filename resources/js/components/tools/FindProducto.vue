@@ -27,13 +27,26 @@
                                         >
                                         </v-text-field>
                                     </v-flex>
+                                    <v-flex sm2 v-if="producto.id > 0">
+                                        <v-text-field
+                                            v-model="empresa_id"
+                                            v-validate="'required|numeric'"
+                                            :error-messages="errors.collect('empresa_id')"
+                                            label="Empresa"
+                                            data-vv-name="empresa_id"
+                                            data-vv-as="empresa_id"
+                                            v-on:keyup.enter="submit"
+                                        >
+                                        </v-text-field>
+                                    </v-flex>
                                 </v-layout>
+
                                 <v-layout row wrap>
                                     <v-flex sm2>Empresa {{producto.empresa_id}}</v-flex>
                                     <v-flex sm2>Empresa Destino {{producto.destino_empresa_id}}</v-flex>
                                 </v-layout>
                                 <v-layout row wrap>
-                                    <v-flex sm9></v-flex>
+                                    <v-flex sm2></v-flex>
                                     <v-flex sm2>
                                         <div class="text-xs-center">
                                             <v-btn @click="submit"  round  :loading="loading" block  color="primary">
@@ -41,6 +54,14 @@
                                             </v-btn>
                                         </div>
                                     </v-flex>
+                                    <v-flex sm3 v-if="empresa_id > 0">
+                                        <div class="text-xs-center">
+                                            <v-btn @click="update"  round  :loading="loading" block  color="primary">
+                                                Update empresa
+                                            </v-btn>
+                                        </div>
+                                    </v-flex>
+
                                 </v-layout>
                             </v-container>
                         </v-form>
@@ -63,6 +84,7 @@ import {mapGetters} from 'vuex';
                 titulo:"Tools - find producto",
                 ejercicio:new Date().toISOString().substr(0, 4),
                 producto_id: "",
+                empresa_id:"",
                 status: false,
                 loading: false,
                 show_loading: true,
@@ -125,10 +147,35 @@ import {mapGetters} from 'vuex';
                         }
                     });
                 }
+            },
+            update(){
+                axios.put("/utilidades/reasignar/empresa/producto/"+this.producto.id, {empresa_id: this.empresa_id})
+                    .then(res => {
+                        
+                        this.$toast.success(res.data.message);
+                        this.producto = res.data.producto;
+
+                        this.loading = false;
 
 
+                    })
+                    .catch(err => {
 
+                        if (err.request.status == 422){ // fallo de validated.
+                            const msg_valid = err.response.data.errors;
+                            for (const prop in msg_valid) {
+                                // this.$toast.error(`${msg_valid[prop]}`);
 
+                                this.errors.add({
+                                    field: prop,
+                                    msg: `${msg_valid[prop]}`
+                                })
+                            }
+                        }else{
+                            this.$toast.error(err.response.data.message);
+                        }
+                        this.loading = false;
+                    });
             }
         }
   }

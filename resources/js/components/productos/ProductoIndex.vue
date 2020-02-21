@@ -79,6 +79,7 @@
                                     <td class="text-xs-right">{{ props.item.precio_coste | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                     <td class="text-xs-right">{{ props.item.precio_venta | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                     <td :class="props.item.estado.color">{{ props.item.estado.nombre }}</td>
+                                    <td>{{ props.item.empresa.sigla }}/{{ props.item.destino.sigla}}</td>
                                     <td class="justify-center layout px-0">
                                         <v-icon
                                             v-if="props.item.deleted_at==null || isAdmin"
@@ -193,6 +194,11 @@ import {mapActions} from "vuex";
                 text: 'Estado',
                 align: 'left',
                 value: 'estado.nombre'
+            },
+            {
+                text: 'O/D',
+                align: 'left',
+                sortable: false,
             },
             {
                 text: 'Acciones',

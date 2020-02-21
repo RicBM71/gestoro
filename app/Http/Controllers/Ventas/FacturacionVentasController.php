@@ -83,6 +83,16 @@ class FacturacionVentasController extends Controller
 
         $ejercicio = getEjercicio($d);
 
+
+        foreach ($albaranes as $row){
+            $i++;
+
+            if (session('empresa')->id != session('empresa')->deposito_empresa_id)
+                if ($this->verificarSiHayProductosEnDeposito($row->id)){
+                    return abort(411, 'Se han encontrado albaranes sin reubicar, reubicar antes de continuar!!');
+                }
+        }
+
         if ($albaranes->count() > 0){
             $contador =  Contador::where('ejercicio',$ejercicio)
                                   ->where('tipo_id', $tipo_id)
@@ -127,7 +137,8 @@ class FacturacionVentasController extends Controller
 
         foreach ($lineas as $row){
 
-            if ($row->producto->destino_empresa_id != $row->producto->empresa_id || $row->producto->cliente_id > 0){
+            //if ($row->producto->destino_empresa_id != $row->producto->empresa_id || $row->producto->cliente_id > 0){
+            if ($row->producto->empresa_id != $row->empresa_id){
                 return true;
                 break;
             }

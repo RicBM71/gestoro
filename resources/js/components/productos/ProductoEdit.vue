@@ -39,7 +39,7 @@
                                         v-model="producto.referencia"
                                         v-validate="'required|alpha_num'"
                                         :error-messages="errors.collect('referencia')"
-                                        label="Referencia"
+                                        :label="computedLabelRef"
                                         data-vv-name="referencia"
                                         data-vv-as="referencia"
                                         :disabled="!computedEditPro"
@@ -500,6 +500,9 @@ import {mapState} from 'vuex'
             computedEditEstado(){
 
                 return (this.producto.estado_id == 3 || this.producto.estado_id == 4);
+            },
+            computedLabelRef(){
+                return "Referencia/Id "+this.producto.id;
             },
             computedEditPro(){
 

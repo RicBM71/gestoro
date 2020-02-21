@@ -29,7 +29,8 @@
                             <td>{{ props.item.empresa}}</td>
                             <td>{{ props.item.serie_albaran+props.item.albaran }}</td>
                             <td>{{ formatDate(props.item.fecha_albaran) }}</td>
-                            <td>{{ props.item.serie_factura+props.item.factura }}</td>
+                            <td v-if="props.item.factura > 0">{{ props.item.serie_factura+props.item.factura }}</td>
+                            <td v-else>-</td>
                             <td>{{ formatDate(props.item.fecha_factura) }}</td>
                             <td :class="props.item.color">{{ props.item.fase }}</td>
                             <td>{{ props.item.notas }}</td>
@@ -91,16 +92,16 @@ import {mapActions} from 'vuex'
                 width: '12%'
             },
             {
-                text: 'F. Factura',
-                align: 'left',
-                value: 'fecha_factura',
-                width: '8%'
-            },
-            {
                 text: 'Factura',
                 align: 'left',
                 value: 'serie_factura',
                 width: '1%'
+            },
+            {
+                text: 'F. Factura',
+                align: 'left',
+                value: 'fecha_factura',
+                width: '8%'
             },
             {
                 text: 'Fase',
@@ -174,7 +175,8 @@ import {mapActions} from 'vuex'
 
         },
         formatDate(f){
-            if (f == null) return null;
+
+            if (f == null) return '';
             moment.locale('es');
             return moment(f).format('DD/MM/YYYY');
         },

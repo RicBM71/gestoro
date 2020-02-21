@@ -252,6 +252,9 @@ Route::group([
 
         Route::get('check/{ejercicio?}', 'ContadorCheckController@index');
         Route::post('intercambio', 'IntercambioController@submit');
+
+        Route::put('reasignar/empresa/producto/{producto}', 'ReasignarEmpresaProductoController@update');
+
      //   Route::get('helpbanco', 'HelpBancosController@index');
     }
 );

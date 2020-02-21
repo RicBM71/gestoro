@@ -202,6 +202,7 @@ import {mapActions} from 'vuex'
 
         },
         formatDate(f){
+
             if (f == null) return null;
             moment.locale('es');
             return moment(f).format('DD/MM/YYYY');

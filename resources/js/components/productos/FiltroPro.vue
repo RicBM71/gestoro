@@ -272,7 +272,7 @@ export default {
                 ref_pol:"",
                 precio:"",
                 clase_id: null,
-                estado_id: 2,
+                estado_id: null,
                 quilates:"",
                 online:false,
                 alta: true,
