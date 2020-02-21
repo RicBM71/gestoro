@@ -149,6 +149,35 @@
                             </v-text-field>
                         </v-flex>
                     </v-layout>
+                    <v-layout row wrap>
+                        <v-flex sm2>
+                            <v-text-field
+                                v-model="producto.username"
+                                :error-messages="errors.collect('username')"
+                                label="Usuario"
+                                data-vv-name="username"
+                                disabled
+                                v-on:keyup.enter="submit"
+                            >
+                            </v-text-field>
+                        </v-flex>
+                        <v-flex sm2>
+                            <v-text-field
+                                v-model="computedFModFormat"
+                                label="Modificado"
+                                disabled
+                            >
+                            </v-text-field>
+                        </v-flex>
+                        <v-flex sm2>
+                            <v-text-field
+                                v-model="computedFCreFormat"
+                                label="Creado"
+                                disabled
+                            >
+                            </v-text-field>
+                        </v-flex>
+                    </v-layout>
                     <!-- <v-layout row wrap v-if="producto.id>0">
                         <v-flex sm3 d-flex>
                             <v-text-field

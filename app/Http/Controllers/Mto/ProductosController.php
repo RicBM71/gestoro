@@ -404,6 +404,8 @@ class ProductosController extends Controller
             }
             else{
                 $msg="Registro eliminado!";
+                $producto->username=session('username');
+                $producto->save();
                 $producto->delete();
             }
         }
