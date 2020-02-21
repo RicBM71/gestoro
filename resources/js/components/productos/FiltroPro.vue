@@ -181,7 +181,7 @@
             <v-layout row wrap>
                  <v-flex sm2 d-flex>
                     <v-select
-                        v-show="empresas.length > 1"
+                        v-show="showEmp"
                         v-model="reg.empresa_id"
                         v-validate="'numeric'"
                         data-vv-name="empresa_id"
@@ -193,7 +193,7 @@
                 </v-flex>
                  <v-flex sm2 d-flex>
                     <v-select
-                        v-show="empresas.length > 1"
+                        v-show="showEmp"
                         v-model="reg.destino_empresa_id"
                         v-validate="'numeric'"
                         data-vv-name="destino_empresa_id"
@@ -297,6 +297,7 @@ export default {
             menu_h: false,
             quilates:[],
             empresas:[],
+            showEmp: true
 
       }
     },
@@ -320,6 +321,8 @@ export default {
 
                 this.quilates = res.data.quilates;
                 this.quilates.push({value:null,text:"---"});
+
+                this.showEmp = res.data.empresas.length > 1;
 
                 this.empresas = res.data.empresas;
                 this.empresas.push({value:null,text:"---"});
