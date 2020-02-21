@@ -78,6 +78,7 @@ class ProductosController extends Controller
             'fecha_d'       =>['nullable','date',new RangoFechaRule($request->fecha_d, $request->fecha_h)],
             'fecha_h'       =>['nullable','date',new MaxDiasRangoFechaRule($request->fecha_d, $request->fecha_h)],
             'empresa_id'    =>['nullable','integer'],
+            'destino_empresa_id'=>['nullable','integer'],
             'sinscope'      =>['boolean'],
             'interno'       =>['string','required'],
         ]);
@@ -89,6 +90,57 @@ class ProductosController extends Controller
     }
 
     private function miFiltro(){
+
+        $data = request()->session()->get('filtro_pro');
+
+        if (session('parametros')->aislar_empresas == false){
+
+            $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','estado','destino','empresa'])
+                        ->localizacion($data['sinscope'])
+                        ->empresa($data['empresa_id'])
+                        ->destino($data['destino_empresa_id'])
+                        ->borrados($data['alta'])
+                        ->referencia($data['referencia'])
+                        ->fecha($data['fecha_d'],$data['fecha_h'],$data['tipo_fecha'])
+                        ->clase($data['clase_id'])
+                        ->estado($data['estado_id'])
+                        ->notasNombre($data['notas'])
+                        ->refPol($data['ref_pol'])
+                        ->precioPeso($data['precio'])
+                        ->quilates($data['quilates'])
+                        ->online($data['online'])
+                        ->internos($data['interno'])
+                        ->asociado($data['cliente_id'])
+                        ->orderBy('id','desc')
+                        ->get()
+                        ->take(500);
+
+        }else{
+
+            $data = Producto::with(['clase','estado','destino','empresa'])
+                        ->borrados($data['alta'])
+                        ->referencia($data['referencia'])
+                        ->fecha($data['fecha_d'],$data['fecha_h'],$data['tipo_fecha'])
+                        ->clase($data['clase_id'])
+                        ->estado($data['estado_id'])
+                        ->notasNombre($data['notas'])
+                        ->refPol($data['ref_pol'])
+                        ->precioPeso($data['precio'])
+                        ->quilates($data['quilates'])
+                        ->online($data['online'])
+                        ->internos($data['interno'])
+                        ->asociado($data['cliente_id'])
+                        ->orderBy('id','desc')
+                        ->get()
+                        ->take(500);
+
+        }
+
+        return $data;
+
+    }
+
+    private function miFiltro2(){
 
         $data = request()->session()->get('filtro_pro');
 

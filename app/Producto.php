@@ -214,6 +214,22 @@ Class Producto extends Model
 
     }
 
+    public static function scopeLocalizacion($query, $sin_scope){
+
+        if ($sin_scope == true)
+            return $query->whereIn('empresa_id', session('empresas_usuario'))->orWhereIn('destino_empresa_id',session('empresas_usuario'));
+
+        return $query->where('empresa_id', session('empresa_id'))->orWhere('destino_empresa_id',session('empresa_id'));
+
+    }
+
+    public static function scopeBorrados($query, $alta){
+        if (!$alta)
+            return $query->withTrashed();
+
+        return $query;
+    }
+
 
     /**
      * hay que hacer join con clases para que funcione

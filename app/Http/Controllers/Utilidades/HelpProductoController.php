@@ -63,7 +63,7 @@ class HelpProductoController extends Controller
                 'estados'   => Estado::selEstados(),
                 'asociados' => Cliente::selAsociados(),
                 'quilates'  => Quilate::selQuilates(),
-                'empresas'  => Empresa::selEmpresas()->Venta()->get(),
+                'empresas'  => Empresa::selEmpresas()->Venta()->whereIn('id',session('empresas_usuario'))->get(),
             ];
 
     }

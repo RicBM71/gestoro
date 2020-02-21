@@ -76,7 +76,7 @@
 
             </v-layout>
             <v-layout row wrap>
-                <v-flex sm4>
+                <v-flex sm3>
                     <v-text-field
                         v-model="reg.notas"
                         v-validate="'max:20'"
@@ -88,17 +88,6 @@
                         v-on:keyup.enter="submit"
                     >
                     </v-text-field>
-                </v-flex>
-                 <v-flex sm3 d-flex>
-                    <v-select
-                        v-model="reg.empresa_id"
-                        v-validate="'numeric'"
-                        data-vv-name="empresa_id"
-                        data-vv-as="empresa"
-                        :error-messages="errors.collect('empresa_id')"
-                        :items="empresas"
-                        label="Origen Pieza"
-                    ></v-select>
                 </v-flex>
                <v-flex sm2>
                     <v-menu
@@ -174,20 +163,6 @@
                         required
                         ></v-select>
                 </v-flex>
-                <v-flex sm2></v-flex>
-            </v-layout>
-            <v-layout row wrap>
-                <v-flex sm3>
-                    <v-select
-                        v-model="reg.cliente_id"
-                        v-validate="'alpha_dash'"
-                        data-vv-name="cliente_id"
-                        data-vv-as="asociado"
-                        :error-messages="errors.collect('cliente_id')"
-                        :items="asociados"
-                        label="Asociado"
-                        ></v-select>
-                </v-flex>
                 <v-flex sm2>
                     <v-switch
                         label="Solo Activos"
@@ -202,6 +177,32 @@
                         color="primary">
                     ></v-switch>
                 </v-flex>
+            </v-layout>
+            <v-layout row wrap>
+                 <v-flex sm2 d-flex>
+                    <v-select
+                        v-show="empresas.length > 1"
+                        v-model="reg.empresa_id"
+                        v-validate="'numeric'"
+                        data-vv-name="empresa_id"
+                        data-vv-as="empresa"
+                        :error-messages="errors.collect('empresa_id')"
+                        :items="empresas"
+                        label="Origen Pieza"
+                    ></v-select>
+                </v-flex>
+                 <v-flex sm2 d-flex>
+                    <v-select
+                        v-show="empresas.length > 1"
+                        v-model="reg.destino_empresa_id"
+                        v-validate="'numeric'"
+                        data-vv-name="destino_empresa_id"
+                        data-vv-as="empresa"
+                        :error-messages="errors.collect('destino_empresa_id')"
+                        :items="empresas"
+                        label="Destino Venta"
+                    ></v-select>
+                </v-flex>
                 <v-flex sm2>
                     <v-select
                         v-model="reg.interno"
@@ -214,9 +215,22 @@
                         required
                         ></v-select>
                 </v-flex>
+                <v-flex sm3>
+                    <v-select
+                        v-model="reg.cliente_id"
+                        v-validate="'alpha_dash'"
+                        data-vv-name="cliente_id"
+                        data-vv-as="asociado"
+                        :error-messages="errors.collect('cliente_id')"
+                        :items="asociados"
+                        label="Asociado"
+                        ></v-select>
+                </v-flex>
+
+
                 <v-flex sm2>
                     <v-switch
-                        v-if="isAdmin"
+                        v-if="empresas.length > 1"
                         label="Deslocalizar"
                         v-model="reg.sinscope"
                         color="primary">
@@ -258,7 +272,7 @@ export default {
                 ref_pol:"",
                 precio:"",
                 clase_id: null,
-                estado_id: null,
+                estado_id: 2,
                 quilates:"",
                 online:false,
                 alta: true,
@@ -266,6 +280,7 @@ export default {
                 fecha_h: "",
                 tipo_fecha: 'C',
                 empresa_id:"",
+                destino_empresa_id:"",
                 sinscope: false,
                 interno: 'T',
             },
@@ -308,6 +323,7 @@ export default {
 
                 this.empresas = res.data.empresas;
                 this.empresas.push({value:null,text:"---"});
+
             })
             .catch(err => {
                 console.log(err);
