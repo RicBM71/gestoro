@@ -230,7 +230,7 @@
 
                 <v-flex sm2>
                     <v-switch
-                        v-if="empresas.length > 1"
+                        v-if="showEmp"
                         label="Deslocalizar"
                         v-model="reg.sinscope"
                         color="primary">
