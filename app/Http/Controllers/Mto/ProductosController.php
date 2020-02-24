@@ -431,6 +431,9 @@ class ProductosController extends Controller
      */
     public function excel(Request $request){
 
+        if (!esGestor())
+            return abort(403, 'No autorizado a exportar');
+
         return Excel::download(new InventarioExport($request->data, 'Productos '.session('empresa')->razon), 'inventario.xlsx');
 
 

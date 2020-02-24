@@ -74,6 +74,11 @@ function esSupervisor(){
     return (auth()->user()->hasRole('Supervisor') || auth()->user()->hasRole('Admin'));
 }
 
+function esGestor(){
+    return auth()->user()->hasRole('Gestor');
+}
+
+
 function hasHardDel(){
     return auth()->user()->hasPermissionTo('harddel');
 }

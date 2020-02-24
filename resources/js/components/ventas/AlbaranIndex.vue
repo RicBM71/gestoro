@@ -258,7 +258,10 @@ import {mapActions} from "vuex";
             'unsetPagination'
         ]),
         misNotas(item){
-            return item.clitxt != null ? item.clitxt : "" + " " +  item.notas_int != null ? item.notas_int : "";
+            var n1 = item.clitxt != null ? item.clitxt : "";
+            var n2 = item.notas_int != null ? item.notas_int : "";
+
+            return n1 + " "+ n2;
         },
         totalImpLinea(lineas){
 

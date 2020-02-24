@@ -248,7 +248,7 @@ class CajasController extends Controller
 
     public function excel(Request $request){
 
-        if (!auth()->user()->hasRole('Admin'))
+        if (!esGestor())
             return abort(403,auth()->user()->name.' no puede exportar');
 
         return Excel::download(new CajaExport($request->data), 'caja.xlsx');
