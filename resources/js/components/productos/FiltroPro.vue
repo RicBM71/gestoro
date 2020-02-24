@@ -360,6 +360,7 @@ export default {
                         axios.post('/mto/productos/filtrar',this.reg)
                         .then(res => {
 
+                            //console.log(res.data);
                             this.$emit('update:arr_reg', res.data);
 
                             if (res.data.length == 0)
