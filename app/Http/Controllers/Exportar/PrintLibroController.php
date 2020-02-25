@@ -277,10 +277,10 @@ class PrintLibroController extends Controller
         $f = Carbon::parse($h);
 
         // si no es 31.12 borra la página
-		if (!($f->format('m') == 12 && $f->format('d') == 31)){
-			$pagina = PDF::PageNo();
-			PDF::deletePage($pagina);
-		}
+		// if (!($f->format('m') == 12 && $f->format('d') == 31)){
+		// 	$pagina = PDF::PageNo();
+		// 	PDF::deletePage($pagina);
+		// }
 
     }
 
