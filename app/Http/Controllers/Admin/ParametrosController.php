@@ -64,7 +64,7 @@ class ParametrosController extends Controller
         $img = request()->file('imagen')->store('assets','public');
 
         $fotoUrl = Storage::url($img);
-        // \Log::info($fotoUrl);
+
 
 
 
@@ -89,7 +89,6 @@ class ParametrosController extends Controller
         $img = request()->file('imagen')->store('assets','public');
 
         $fotoUrl = Storage::url($img);
-        // \Log::info($fotoUrl);
 
 
 

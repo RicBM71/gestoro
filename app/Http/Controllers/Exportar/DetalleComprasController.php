@@ -55,18 +55,6 @@ class DetalleComprasController extends Controller
         else
             $where = DB::getTablePrefix().'compras.id > 0';
 
-
-            // \Log::info(DB::table('compras')
-            // ->select('compras.id','tipo_id','serie_com','albaran','fecha_compra','concepto','grabaciones','clases.nombre AS clase','comlines.quilates AS quilates','peso_gr','comlines.importe')
-            // ->join('comlines','compras.id','=','comlines.compra_id')
-            // ->join('clases','clase_id','=','clases.id')
-            // ->where('compras.empresa_id', session('empresa')->id)
-            // ->whereDate('fecha_compra','>=', $data['fecha_d'])
-            // ->whereDate('fecha_compra','<=', $data['fecha_h'])
-            // ->where('tipo_id', $data['tipo_id'])
-            // ->where('clase_id', $data['clase_id'])
-            // ->whereRaw($where)->toSql());
-
         $union0 = DB::table('compras')
             ->select('compras.id','tipo_id','serie_com','albaran','fecha_compra','concepto','grabaciones','clases.nombre AS clase','comlines.quilates AS quilates','peso_gr','comlines.importe')
             ->join('comlines','compras.id','=','comlines.compra_id')

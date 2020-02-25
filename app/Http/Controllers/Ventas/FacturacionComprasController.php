@@ -135,7 +135,7 @@ class FacturacionComprasController extends Controller
                 $comline->update($data);
             }
 
-            \Log::info($libro->ult_factura);
+
             $libro->ult_factura = $libro->ult_factura + 1;
 
             $data_com = [

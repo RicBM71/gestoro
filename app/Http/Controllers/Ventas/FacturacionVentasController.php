@@ -136,8 +136,6 @@ class FacturacionVentasController extends Controller
 
 
         foreach ($lineas as $row){
-            \Log::info($row->producto->empresa_id);
-            \Log::info($row->empresa_id);
 
             //if ($row->producto->destino_empresa_id != $row->producto->empresa_id || $row->producto->cliente_id > 0){
             if ($row->producto->empresa_id != $row->empresa_id){

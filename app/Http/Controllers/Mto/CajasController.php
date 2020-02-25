@@ -74,14 +74,6 @@ class CajasController extends Controller
 
         $data = session('filtro_caj');
 
-        // \Log::info(Caja::with('apunte')
-        // ->rangoFechas($data['fecha_d'],$data['fecha_h'])
-        // ->dh($data['dh'])
-        // ->manual($data['manual'])
-        // ->apunte($data['apunte_id'])
-        // ->orderby('fecha')
-        // ->toSql());
-
         $apuntes = Caja::with('apunte')
                         ->rangoFechas($data['fecha_d'],$data['fecha_h'])
                         ->dh($data['dh'])
