@@ -128,6 +128,13 @@
                                 v-on:keyup.enter="submit"
                             ></v-text-field>
                         </v-flex>
+                        <v-flex sm3>
+                            <v-switch
+                                label="Eliminar Última Página"
+                                v-model="ultima"
+                                color="primary"
+                            ></v-switch>
+                        </v-flex>
                     </v-layout>
                     <v-layout row wrap>
                         <v-flex sm3 d-flex></v-flex>
@@ -188,6 +195,7 @@ export default {
             label:"",
             fecha_d: new Date().toISOString().substr(0, 7)+"-01",
             fecha_h: new Date().toISOString().substr(0, 10),
+            ultima: true
       }
     },
     beforeMount(){
@@ -269,7 +277,8 @@ export default {
                     libro_id: this.libro_id,
                     primera_pagina: this.primera_pagina,
                     paginas: this.paginas,
-                    primer_registro: this.primer_registro
+                    primer_registro: this.primer_registro,
+                    ultima: this.ultima
 
                 }
                 })

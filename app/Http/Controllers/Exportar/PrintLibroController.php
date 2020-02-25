@@ -102,6 +102,7 @@ class PrintLibroController extends Controller
             'fecha_h'         => ['required','date'],
             'primera_pagina'  => ['required','integer'],
             'primer_registro' => ['required','integer'],
+            'ultima'          => ['required', 'boolean']
         ]);
 
         $this->encabezado = true;
@@ -110,7 +111,7 @@ class PrintLibroController extends Controller
 
         $this->setPrepararLibro(true);
 
-        $this->generarLibro($data['libro_id'],$data['fecha_d'],$data['fecha_h'],$data['primer_registro'],$data['primera_pagina']);
+        $this->generarLibro($data['libro_id'],$data['fecha_d'],$data['fecha_h'],$data['primer_registro'],$data['primera_pagina'], $data['ultima']);
 
         PDF::Output('libro.pdf','I');
 
@@ -131,6 +132,7 @@ class PrintLibroController extends Controller
             'fecha_d'         => ['required','date', new RangoFechaRule($request->fecha_d, $request->fecha_h)],
             'fecha_h'         => ['required','date'],
             'primer_registro' => ['required','integer'],
+            'ultima'          => ['required','boolean'],
         ]);
 
         $this->encabezado = false;
@@ -139,7 +141,7 @@ class PrintLibroController extends Controller
 
         $this->setPrepararLibro(false);
 
-        $this->generarLibro($data['libro_id'],$data['fecha_d'],$data['fecha_h'],$data['primer_registro'],0);
+        $this->generarLibro($data['libro_id'],$data['fecha_d'],$data['fecha_h'],$data['primer_registro'],0, $data['ultima']);
 
         PDF::Output('libro.pdf','I');
 
@@ -147,7 +149,7 @@ class PrintLibroController extends Controller
 
     }
 
-    private function generarLibro($libro_id, $d, $h, $primer_registro, $pagina){
+    private function generarLibro($libro_id, $d, $h, $primer_registro, $pagina, $ultima){
 
         define("ALTOPAGINA", 205);
 
@@ -277,10 +279,11 @@ class PrintLibroController extends Controller
         $f = Carbon::parse($h);
 
         // si no es 31.12 borra la página
-		// if (!($f->format('m') == 12 && $f->format('d') == 31)){
-		// 	$pagina = PDF::PageNo();
-		// 	PDF::deletePage($pagina);
-		// }
+		//if (!($f->format('m') == 12 && $f->format('d') == 31)){
+        if ($ultima == true){
+			$pagina = PDF::PageNo();
+			PDF::deletePage($pagina);
+		}
 
     }
 
