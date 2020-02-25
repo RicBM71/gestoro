@@ -113,7 +113,7 @@ class ProductosController extends Controller
                         ->asociado($data['cliente_id'])
                         ->orderBy('id','desc')
                         ->get()
-                        ->take(500);
+                        ->take(999);
 
         }else{
 
@@ -132,7 +132,7 @@ class ProductosController extends Controller
                         ->asociado($data['cliente_id'])
                         ->orderBy('id','desc')
                         ->get()
-                        ->take(500);
+                        ->take(999);
 
         }
 
@@ -162,7 +162,7 @@ class ProductosController extends Controller
                             ->asociado($data['cliente_id'])
                             ->orderBy('id','desc')
                             ->get()
-                            ->take(500);
+                            ->take(999);
             else{
 
                 $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','estado','destino','empresa'])
@@ -181,7 +181,7 @@ class ProductosController extends Controller
                         ->asociado($data['cliente_id'])
                         ->orderBy('id','desc')
                         ->get()
-                        ->take(500);
+                        ->take(999);
             }
 
         }
@@ -203,7 +203,7 @@ class ProductosController extends Controller
                             ->asociado($data['cliente_id'])
                             ->orderBy('id','desc')
                             ->get()
-                            ->take(500);
+                            ->take(999);
             else{
 
                 $data = Producto::with(['clase','estado','destino','empresa'])
@@ -222,7 +222,7 @@ class ProductosController extends Controller
                         ->asociado($data['cliente_id'])
                         ->orderBy('id','desc')
                         ->get()
-                        ->take(500);
+                        ->take(999);
             }
         }
         return $data;

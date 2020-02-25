@@ -116,7 +116,7 @@
                                 required
                                 ></v-select>
                         </v-flex>
-                        <v-flex sm2>
+                        <v-flex sm3>
                             <v-select
                                 v-model="tipo"
                                 v-validate="'required'"
@@ -228,7 +228,7 @@ export default {
             tipos:[
                     {value: 'D', text:"Depósito"},
                     {value: 'P', text:"Proveedor"},
-                    {value: 'T', text:"Todas"},
+                    {value: 'T', text:"En cualquier ubicación"},
                 ],
             facturado: 'F',
             show_loading: false,

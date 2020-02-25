@@ -120,3 +120,7 @@ UPDATE `klt_productos` set compra_id = null where compra_id = 0;
 
 update klt_productos set destino_empresa_id = 4, cliente_id = 10926 where referencia like "KP%" and empresa_id = 3 and estado_id = 2 and compra_id is null;
 update klt_productos set destino_empresa_id = 4, cliente_id = 2419 where referencia like "EP%" and empresa_id = 3 and estado_id = 2 and compra_id is null;
+
+
+
+SELECT * FROM `productos` where empresa = 16 and estado in("B","R","I") and baja = "N"

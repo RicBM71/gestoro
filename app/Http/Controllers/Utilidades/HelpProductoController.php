@@ -82,6 +82,7 @@ class HelpProductoController extends Controller
                 ->join('empresas', 'albaranes.empresa_id','=','empresas.id')
                 ->whereIn('albaranes.empresa_id', session('empresas_usuario'))
                 ->where('producto_id',$data['producto_id'])
+                ->whereNull('albaranes.deleted_at')
                 ->get();
                 //Albalin::withOutGlobalScope(EmpresaScope::class)->with(['albaran.fase'])->where('producto_id',$data['producto_id'])->get(),
         if (request()->wantsJson())

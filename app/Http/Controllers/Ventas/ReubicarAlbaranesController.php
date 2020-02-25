@@ -66,23 +66,20 @@ class ReubicarAlbaranesController extends Controller
        // dd($albaran);
 
         if ($albaran->tipo_id != 3 || $albaran->factura > 0 || $albaran->fase_id != 11)
-            abort(404,'El albarán no se puede reubicar');
+            return abort(404,'El albarán no se puede reubicar');
 
 
         $collection = $albaran->albalins->sortBy('producto.empresa_id');
 
         $hay_productos_para_reubicar = false;
         foreach ($collection as $albalin){
-            if ($albalin->producto->empresa_id != $albaran->empresa_id || $albalin->producto->cliente_id > 0){
+            if ($albalin->producto->empresa_id != $albalin->producto->destino_empresa_id || $albalin->producto->cliente_id > 0){
                 $hay_productos_para_reubicar = true;
             }
         }
 
         if (!$hay_productos_para_reubicar){
-            if (request()->wantsJson())
-                return abort(404,'No hay productos para reubicar en el albarán!');
-            else
-                return;
+            return abort(404,'No hay productos para reubicar en el albarán!');
         }
 
         $empresa_ant = -1;
@@ -93,7 +90,8 @@ class ReubicarAlbaranesController extends Controller
         // primero reubicamos los propios
         foreach ($collection as $albalin){
 
-            if ($albalin->producto->cliente_id > 0)
+            //if ($albalin->producto->compra_id == 0 || $albalin->producto->compra_id == null || $albalin->producto->compra_id == "")
+            if (!($albalin->producto->compra_id > 0))
                 continue;
 
             if ($empresa_ant != $albalin->producto->empresa_id){
@@ -116,29 +114,42 @@ class ReubicarAlbaranesController extends Controller
 
         $total_albaran = 0;
         $nuevo_albaran_proveedores = false;
-        $empresa_id_proveedores_depo = session('empresa')->deposito_empresa_id;
+       // $empresa_id_proveedores_depo = session('empresa')->deposito_empresa_id;
         $cliente_ant = -1;
+
+
         // reubicamos los que son de proveedores
         foreach ($collection as $albalin){
 
-            if ($albalin->producto->cliente_id == '')
+            if ($albalin->producto->compra_id > 0)
                 continue;
 
             if ($cliente_ant != $albalin->producto->cliente_id){
                 if ($total_albaran != 0){
                     $this->crearCobro($nuevo_albaran_proveedores, $albaran->id, $total_albaran);
                 }
+
+                // siempre acaba albarán en empresa origen
+                $empresa_id_proveedores_depo = $albalin->producto->empresa_id;
+
                 $nuevo_albaran_proveedores = $this->crearAlbaran($albaran, $empresa_id_proveedores_depo);
-                $cliente_ant = $albalin->producto->cliente_id;
+
+                if ($albalin->producto->cliente_id == null)
+                    $cliente_ant = -1;
+                else
+                    $cliente_ant = $albalin->producto->cliente_id;
+
                 $total_albaran = 0;
             }
 
             $this->crearAlbalin($albalin, $nuevo_albaran_proveedores->id, $nuevo_albaran_proveedores->empresa_id);
-            DB::table('productos')->where('id', $albalin->producto_id)
-                                    ->update([
-                                        'empresa_id' => $empresa_id_proveedores_depo,
-                                        'destino_empresa_id' => $empresa_id_proveedores_depo
-                                    ]);
+
+            // if ($albalin->producto->cliente_id > 0)
+            //     DB::table('productos')->where('id', $albalin->producto_id)
+            //                             ->update([
+            //                                 'empresa_id' => $empresa_id_proveedores_depo,
+            //                                'destino_empresa_id' => $empresa_id_proveedores_depo
+            //                             ]);
 
             $total_albaran+= $albalin->importe_venta;
 
@@ -154,19 +165,20 @@ class ReubicarAlbaranesController extends Controller
 
         if ($nuevo_albaran !== false  || $nuevo_albaran_proveedores !== false){
             DB::table('cobros')->where('albaran_id', $albaran->id)
-                ->update(['deleted_at'  => Carbon::now()]);
+                ->update(['deleted_at'  => Carbon::now(), 'username'=>'reu.'.session('username')]);
             DB::table('albalins')->where('albaran_id', $albaran->id)
-                ->update(['deleted_at'  => Carbon::now()]);
+                ->update(['deleted_at'  => Carbon::now(), 'username'=>'reu.'.session('username')]);
             DB::table('albaranes')->where('id', $albaran->id)
-                ->update(['deleted_at'  => Carbon::now()]);
+                ->update(['deleted_at'  => Carbon::now(), 'username'=>'reu.'.session('username')]);
 
-            return $nuevo_albaran_proveedores;
+            //return $nuevo_albaran_proveedores;
         }
 
-        //\Log::info($nuevo_albaran);
-        return abort(404,'No se ha reubicado ningún albarán');
 
-        return false;
+        //\Log::info($nuevo_albaran);
+        //return abort(404,'No se ha reubicado ningún albarán');
+
+        //return false;
 
 
     }

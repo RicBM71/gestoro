@@ -239,7 +239,7 @@ class AlbaranesController extends Controller
             return abort(403, 'Esta empresa no permite facturar albaranes!');
         }
 
-        if (session('empresa')->id != session('empresa')->deposito_empresa_id)
+      //  if (session('empresa')->id != session('empresa')->deposito_empresa_id)
             if ($this->verificarSiHayProductosEnDeposito($albarane)){
                 return abort(411, 'Hay productos en depósito, no se puede facturar, reubicar albarán');
             }
@@ -317,7 +317,8 @@ class AlbaranesController extends Controller
 
         foreach ($albaran->albalins as $row){
 
-            if ($row->producto->destino_empresa_id != $row->producto->empresa_id || $row->producto->cliente_id > 0){
+            //if ($row->producto->destino_empresa_id != $row->producto->empresa_id || $row->producto->cliente_id > 0){
+            if ($row->producto->empresa_id != $row->empresa_id){
                 return true;
                 break;
             }
@@ -343,7 +344,7 @@ class AlbaranesController extends Controller
         }
 
        // $this->authorize('update', $cliente);
-       if (session('empresa')->id != session('empresa')->deposito_empresa_id)
+       //if (session('empresa')->id != session('empresa')->deposito_empresa_id)
             if ($this->verificarSiHayProductosEnDeposito($albarane)){
                     return abort(411, 'Hay productos en depósito, no se puede facturar, reubicar albarán');
             }
