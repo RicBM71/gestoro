@@ -1,7 +1,15 @@
 <template>
     <v-container>
         <v-layout row wrap>
-            <v-flex xs6></v-flex>
+            <v-flex xs2>
+                <v-text-field
+                    :value="computedTotalGr"
+                    class="inputPrice"
+                    label="Total Gr."
+                    readonly
+                ></v-text-field>
+            </v-flex>
+            <v-flex xs4></v-flex>
             <v-flex xs6>
                 <v-text-field
                     v-model="search"
@@ -91,7 +99,8 @@ import ProductoCreate from '@/components/compras/LiquidarProductoCreate'
 export default {
     props:{
         lineas: Array,
-        reload_lineas: Boolean
+        reload_lineas: Boolean,
+        total_gr: Number
     },
     components: {
         'producto-create': ProductoCreate,
@@ -193,7 +202,7 @@ export default {
 
 
     },
-     watch:{
+    watch:{
         ir_a_edit: function () {
             this.$emit('update:reload_lineas', this.ir_a_edit)
             this.ir_a_edit = false;
@@ -203,7 +212,10 @@ export default {
         ...mapGetters([
             'getPagination',
             'getLineasIndex'
-        ])
+        ]),
+        computedTotalGr(){
+            return parseFloat(this.total_gr).toLocaleString('de-DE',{ style: 'decimal'});
+        },
     },
     methods:{
         ...mapActions([

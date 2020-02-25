@@ -24,7 +24,7 @@ class StoreRecuentoRequest extends FormRequest
     public function rules()
     {
         return [
-            'prefijo'   => ['nullable', 'integer'],
+            'prefijo'   => ['nullable', 'max:3'],
             'referencia'=> ['required', 'required'],
             'fecha'     => ['required', 'date'],
         ];

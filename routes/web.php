@@ -117,6 +117,8 @@ Route::group([
         Route::resource('contadores', 'ContadoresController', ['as' => 'mto']);
         Route::post('contadores/filtrar', 'ContadoresController@filtrar');
 
+        Route::post('recuentos/close', 'RecuentosController@close');
+        Route::post('recuentos/reset', 'RecuentosController@reset');
         Route::resource('recuentos', 'RecuentosController', ['as' => 'mto']);
         Route::post('recuentos/filtrar', 'RecuentosController@filtrar');
 

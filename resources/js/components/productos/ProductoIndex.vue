@@ -8,19 +8,31 @@
                 <v-card-title>
                     <h2>{{titulo}}</h2>
                     <v-spacer></v-spacer>
+                    <!-- <v-tooltip bottom v-if="isAdmin">
+                        <template v-slot:activator="{ on }">
+                            <v-btn
+                                v-on="on"
+                                color="white"
+                                icon
+                            >
+                                <v-icon color="red darken-4">priority_high</v-icon>
+                            </v-btn>
+                        </template>
+                        <span>Hay opciones de administrador deshabilitadas</span>
+                    </v-tooltip> -->
                     <v-tooltip bottom>
-                            <template v-slot:activator="{ on }">
-                                <v-btn
-                                    v-on="on"
-                                    color="white"
-                                    icon
-                                    @click="filtro = !filtro"
-                                >
-                                    <v-icon color="primary">filter_list</v-icon>
-                                </v-btn>
-                            </template>
-                            <span>Filtros</span>
-                        </v-tooltip>
+                        <template v-slot:activator="{ on }">
+                            <v-btn
+                                v-on="on"
+                                color="white"
+                                icon
+                                @click="filtro = !filtro"
+                            >
+                                <v-icon color="primary">filter_list</v-icon>
+                            </v-btn>
+                        </template>
+                        <span>Filtros</span>
+                    </v-tooltip>
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on }">
                             <v-btn
@@ -35,8 +47,8 @@
                                 </v-avatar>
                             </v-btn>
                         </template>
-                    <span>Exportar a Excel</span>
-                </v-tooltip>
+                        <span>Exportar a Excel</span>
+                    </v-tooltip>
                     <menu-ope></menu-ope>
                 </v-card-title>
             </v-card>
@@ -249,7 +261,7 @@ import {mapActions} from "vuex";
             'hasEditPro',
             'getPagination',
             'empresaActiva'
-        ])
+        ]),
     },
     methods:{
         ...mapActions([

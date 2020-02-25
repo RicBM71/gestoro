@@ -130,6 +130,7 @@
                 :lineas.sync="lineas"
                 :loading.sync="loading"
                 :reload_lineas.sync="reload_lineas"
+                :total_gr="total_gr"
             >
             </ver-liquidado>
         </v-card>
@@ -293,6 +294,7 @@ export default {
                     .then(res => {
 
                         this.lineas = res.data.lineas;
+                        this.total_gr = res.data.total_gr;
 
                         if (this.lineas.length == 0)
                             this.$toast.warning('No hay registros!');

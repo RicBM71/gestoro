@@ -234,13 +234,16 @@ class LiquidarController extends Controller
             }
         }
 
+        $total_gr = $lineas->sum('peso_gr');
+
         // me lo guardo para otra, esta es más compleja al tener que buscar dentro de objeto compra.
         // $lineas_con_filtro_tipo = $lineas->where('tipo_id',  $data['tipo_id']);
         // $lineas_con_filtro_tipo->all()
 
         if (request()->wantsJson())
             return [
-                'lineas' => $lineas_con_filtro_tipo
+                'lineas' => $lineas_con_filtro_tipo,
+                'total_gr'  => $total_gr
             ];
 
     }

@@ -6,6 +6,8 @@ use App\Rfid;
 use App\Producto;
 use App\Recuento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Scopes\EmpresaProductoScope;
 use App\Http\Requests\StoreRecuentoRequest;
@@ -81,19 +83,31 @@ class RecuentosController extends Controller
         $data['empresa_id'] = session('empresa_id');
 
         if ($data['prefijo'] != null){
-            $ref = $data['prefijo'].$data['referencia'];
-            $producto = Producto::withOutGlobalScope(EmpresaProductoScope::class)
-                            ->withTrashed()
-                            ->where('referencia',$ref)
-                            ->firstOrFail();
+            $ref = strtoupper($data['prefijo']).$data['referencia'];
+            try {
+
+                $producto = Producto::withOutGlobalScope(EmpresaProductoScope::class)
+                                ->withTrashed()
+                                ->where('referencia',$ref)
+                                ->firstOrFail();
+            } catch (\Exception $e) {
+                return abort(404, 'Producto/referencia no existe');
+            }
         }else{
-            $producto = Producto::withOutGlobalScope(EmpresaProductoScope::class)
-                            ->withTrashed()
-                            ->findOrFail($data['referencia']);
+            try {
+                $producto = Producto::withOutGlobalScope(EmpresaProductoScope::class)
+                                ->withTrashed()
+                                ->findOrFail($data['referencia']);
+            } catch (\Exception $th) {
+                return abort(404, 'Producto/id no existe');
+            }
         }
 
         if ($producto->empresa_id == session('empresa_id') || $producto->destino_empresa_id == session('empresa_id'))
-            $rfid_id = 1;
+            if ($producto->estado_id == 4)
+                $rfid_id = 5;
+            else
+                $rfid_id = 1;
         else
             $rfid_id = 2;
 
@@ -103,7 +117,11 @@ class RecuentosController extends Controller
         $data['rfid_id']=$rfid_id;
 
 
-        $reg = Recuento::create($data);
+        try {
+            $reg = Recuento::create($data);
+        } catch (\Exception $th) {
+            return abort(411, 'El producto ya está en recuento');
+        }
 
         $reg->load(['producto','rfid','estado']);
 
@@ -166,8 +184,65 @@ class RecuentosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Recuento $recuento)
     {
-        //
+        $recuento->delete();
+
+        return ['msg' => 'Producto de recuento borrado'];
     }
+
+    /**
+     *
+     * Rellena el recuento con piezas que deberían existir en recuento
+     *
+     * @return void
+     */
+    public function close(Request $request){
+
+        $data = $request->validate([
+            'fecha' => ['required', 'date'],
+        ]);
+
+
+        $productos = DB::table('productos')->select('*')
+                    ->whereRaw('('.DB::getTablePrefix().'productos.empresa_id = '.session('empresa_id').' OR destino_empresa_id = '.session('empresa_id').')')
+                    ->whereIn('estado_id', [1,2,3])
+                    ->whereRaw(DB::getTablePrefix().'productos.id NOT IN (SELECT producto_id FROM '.DB::getTablePrefix().'recuentos WHERE empresa_id = '.session('empresa_id').')')
+                    ->whereNull('deleted_at')
+                    ->get();
+
+        $insert=array();
+        foreach ($productos as $row){
+
+            $insert[]=array(
+                'empresa_id'         => session('empresa_id'),
+                'fecha'              => $data['fecha'],
+                'producto_id'        => $row->id,
+                'estado_id'          => $row->estado_id,
+                'rfid_producto_id'   => $row->id,
+                'destino_empresa_id' => session('empresa_id'),
+                'rfid_id'            => 3,
+                'username'           => session('username'),
+            );
+
+        }
+
+        DB::table('recuentos')->insert($insert);
+
+        return Recuento::with(['producto','rfid','estado'])->get();
+
+
+    }
+
+    public function reset(){
+
+        if (!esAdmin())
+            return abort(411,'No autorizado');
+
+        DB::table('recuentos')->where('empresa_id', session('empresa_id'))->delete();
+
+        return response('Recuento borrado', 200);
+
+    }
+
 }

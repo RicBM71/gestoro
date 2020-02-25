@@ -1,10 +1,53 @@
 <template>
 	<div>
         <loading :show_loading="show_loading"></loading>
+        <my-dialog :dialog.sync="dialog" registro="registro" @destroyReg="destroyReg"></my-dialog>
         <v-card>
             <v-card-title color="indigo">
                 <h2 color="indigo">{{titulo}}</h2>
                 <v-spacer></v-spacer>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                        <v-btn
+                            v-on="on"
+                            color="white"
+                            icon
+                            @click="goClose()"
+                        >
+                            <v-icon color="orange">explore</v-icon>
+                        </v-btn>
+                    </template>
+                        <span>Cerrar Recuento</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                        <v-btn
+                            v-on="on"
+                            color="white"
+                            icon
+                            @click="goReset()"
+                        >
+                            <v-icon color="red darken-4">delete_forever</v-icon>
+                        </v-btn>
+                    </template>
+                        <span>Eliminar recuento</span>
+                </v-tooltip>
+                <!-- <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                        <v-btn
+                            v-show="isGestor"
+                            v-on="on"
+                            color="white"
+                            icon
+                            @click="goExcel()"
+                        >
+                            <v-avatar size="32px">
+                                <img class="img-fluid" src="/assets/excel.png">
+                            </v-avatar>
+                        </v-btn>
+                    </template>
+                    <span>Exportar a Excel</span>
+                </v-tooltip> -->
                 <menu-ope></menu-ope>
             </v-card-title>
         </v-card>
@@ -26,7 +69,7 @@
                                 <v-text-field
                                     slot="activator"
                                     :value="computedFechaD"
-                                    label="Desde"
+                                    label="Recuento"
                                     append-icon="event"
                                     v-validate="'date_format:dd/MM/yyyy'"
                                     data-vv-name="fecha_d"
@@ -88,7 +131,7 @@
                                         <td v-if="props.item.producto != null">{{props.item.producto.referencia }}</td>
                                         <td v-else>ID:{{ props.item.producto_id}}</td>
                                         <td v-if="props.item.producto != null">{{ props.item.producto.nombre }}</td>
-                                        <td v-else>empresa: {{props.item.destino_empresa_id}}</td>
+                                        <td v-else>No existe en esta empresa</td>
                                         <td v-if="props.item.estado != null">{{ props.item.estado.nombre }}</td>
                                         <td v-else>{{props.item.estado_id}}</td>
                                         <td v-if="props.item.rfid != null">{{ props.item.rfid.nombre }}</td>
@@ -109,6 +152,12 @@
                                             >
                                                 warning
                                             </v-icon>
+                                            <v-icon
+                                                small
+                                                @click="openDialog(props.item)"
+                                            >
+                                                delete
+                                            </v-icon>
                                         </td>
                                     </template>
                                     <template slot="pageText" slot-scope="props">
@@ -127,12 +176,13 @@ import MenuOpe from './MenuOpe'
 import Loading from '@/components/shared/Loading'
 import moment from 'moment'
 import {mapGetters} from 'vuex';
-
+import MyDialog from '@/components/shared/MyDialog'
 	export default {
 		$_veeValidate: {
       		validator: 'new'
         },
         components: {
+            'my-dialog': MyDialog,
             'menu-ope': MenuOpe,
             'loading': Loading
 		},
@@ -181,6 +231,8 @@ import {mapGetters} from 'vuex';
                 referencia: null,
         		status: false,
                 loading: false,
+                url: "/mto/recuentos",
+                dialog: false,
 
                 items: [],
                 fecha_d: new Date().toISOString().substr(0, 7)+"-01",
@@ -207,6 +259,7 @@ import {mapGetters} from 'vuex';
         },
         computed: {
         ...mapGetters([
+            'isGestor',
         ]),
         computedFechaD() {
                 moment.locale('es');
@@ -220,11 +273,9 @@ import {mapGetters} from 'vuex';
                 if (this.loading === false){
                     this.loading = true;
 
-                    var url = "/mto/recuentos";
-
                     this.$validator.validateAll().then((result) => {
                         if (result){
-                            axios.post(url,{
+                            axios.post(this.url,{
                                 fecha: this.fecha_d,
                                 prefijo: this.prefijo,
                                 referencia: this.referencia
@@ -233,6 +284,7 @@ import {mapGetters} from 'vuex';
                                     console.log(res);
                                     this.items.push(res.data.recuento);
                                     this.referencia = null;
+                                    this.$validator.reset();
 
                                 })
                                 .catch(err => {
@@ -248,7 +300,7 @@ import {mapGetters} from 'vuex';
                                     }else{
                                         this.$toast.error(err.response.data.message);
                                     }
-                                    this.loading = false;
+
                                 })
                                 .finally(()=> {
                                     this.loading = false;
@@ -263,12 +315,127 @@ import {mapGetters} from 'vuex';
             },
         goProducto(item) {
 
-            this.setPagination(this.paginaActual);
+
 
             this.$router.push({ name: 'producto.edit', params: { id: item.producto_id } })
         },
+        openDialog (item){
+            this.dialog = true;
+            this.item_destroy = item;
+        },
+        destroyReg () {
+            this.dialog = false;
+
+            axios.post(this.url+'/'+this.item_destroy.id,{_method: 'delete'})
+                .then(response => {
+
+                    const index = this.items.indexOf(this.item_destroy)
+                    this.items.splice(index, 1)
+
+                    this.$toast.success(response.data.msg);
+                })
+            .catch(err => {
+                this.status = true;
+                //console.log(err);
+                var msg = err.response.data.message;
+                this.$toast.error(msg);
+
+            });
+
+        },
+        goClose () {
+
+            this.show_loading = true;
+            axios.post(this.url+'/close',{fecha: this.fecha_d})
+                .then(response => {
+
+                    this.items = response.data;
+
+                    this.$toast.success('Recuento cerrado!');
+                })
+            .catch(err => {
+                this.status = true;
+                //console.log(err);
+                var msg = err.response.data.message;
+                this.$toast.error(msg);
+
+            })
+            .finally(()=> {
+                this.show_loading = false;
+            });
+
+        },
+        goExcel(){
+
+            this.show_loading = true;
+            axios({
+                url: "mto/recuentos/excel",
+                method: 'POST',
+                responseType: 'blob', // important
+                data:{ data: this.arr_reg }
+                })
+            .then(response => {
+
+                let blob = new Blob([response.data])
+                let link = document.createElement('a')
+                link.href = window.URL.createObjectURL(blob)
+
+                link.download = "Recuento."+new Date().getFullYear()+(new Date().getMonth()+1)+(new Date().getDate())+'.xlsx';
+
+                document.body.appendChild(link);
+                link.click()
+                document.body.removeChild(link);
+
+                this.$toast.success('Download Ok! '+link.download);
+
+                this.show_loading = false;
+
+            })
+            .catch(err => {
+                this.$toast.error(err.response.data.message);
+                this.show_loading = false;
+            });
+        },
+        goReset() {
+            if (confirm('Eliminar TODO el recuento')){
+                this.show_loading = true;
+                axios.post("/mto/recuentos/reset")
+                    .then(res => {
+
+                        this.$toast.success(res.data);
+                        this.items = [];
+
+                    })
+                    .catch(err => {
+                        this.$toast.error(err.response.data.message);
+                    })
+                    .finally(()=> {
+                        this.show_loading = false;
+                    });
+            }
+        },
         update(item) {
-        }
+
+            this.editedIndex = this.items.indexOf(item)
+            //this.editedItem = Object.assign({}, item)
+
+                    axios.put("/mto/recuentos/"+item.id, {rfid_id : item.rfid_id})
+                        .then(res => {
+
+                            Object.assign(this.items[this.editedIndex], res.data.recuento)
+
+                            this.$toast.success(res.data.message);
+                            this.loading = false;
+
+                        })
+                        .catch(err => {
+                            this.$toast.error(err.response.data.message);
+                        })
+                        .finally(()=> {
+                            this.show_loading = false;
+                        });
+
+            },
 
     }
   }
