@@ -120,7 +120,7 @@
                 </v-flex>
                 <v-flex sm2>
                     <v-switch
-                        label="Origen Depósitos"
+                        label="Venta en Depósito"
                         v-model="depositos"
                         color="primary">
                     ></v-switch>

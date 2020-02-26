@@ -37,7 +37,7 @@ class ReubicarAlbaranesController extends Controller
                     ->join('productos', 'albalins.producto_id', '=', 'productos.id')
                     ->where('albaranes.empresa_id', session('empresa')->id)
                     ->where('albaranes.tipo_id', 3)
-                    ->whereYear('fecha_albaran', getEjercicio($data['fecha_h']))
+                    // ->whereYear('fecha_albaran', getEjercicio($data['fecha_h']))
                     ->whereDate('fecha_albaran','<=', $data['fecha_h'])
                     ->where('fase_id', 11)
                     ->whereNull('factura')
@@ -202,7 +202,7 @@ class ReubicarAlbaranesController extends Controller
         $data_new['iva_no_residente'] = $albaran->iva_no_residente;
         $data_new['username']         = session('username');
 
-        $ejercicio   = getEjercicio($albaran->fecha_albaran);
+        $ejercicio   = getEjercicio($this->nueva_fecha_albaran);
         $contador_alb = Contador::incrementaContadorReubicar($ejercicio, $albaran->tipo_id, $nueva_empresa_id);
         $data_new['serie_albaran']    = $contador_alb['serie_albaran'];
         $data_new['albaran']      = $contador_alb['ult_albaran'];

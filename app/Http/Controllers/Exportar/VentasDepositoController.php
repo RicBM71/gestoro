@@ -75,15 +75,17 @@ class VentasDepositoController extends Controller
                 DB::getTablePrefix().'productos.referencia AS referencia,'.
                 DB::getTablePrefix().'productos.nombre AS producto,'.
                 DB::getTablePrefix().'albalins.importe_venta AS importe_venta,'.
-                DB::getTablePrefix().'albalins.precio_coste AS precio_coste,,'.
+                DB::getTablePrefix().'albalins.precio_coste AS precio_coste,'.
                 DB::getTablePrefix().'empresas.sigla';
 
         $albaranes = DB::table('albaranes')
                         ->select(DB::raw($select))
-                        ->join('empresas','albaranes.procedencia_empresa_id','=','empresas.id')
+                        // ->join('empresas','albaranes.procedencia_empresa_id','=','empresas.id')
+                        ->join('empresas','albaranes.empresa_id','=','empresas.id')
                         ->join('albalins','albalins.albaran_id','=','albaranes.id')
                         ->join('productos','albalins.producto_id','=','productos.id')
-                        ->where('albaranes.empresa_id', session('empresa')->id)
+                        // ->where('albaranes.empresa_id', session('empresa')->id)
+                        ->whereIn('albaranes.empresa_id', session('empresas_usuario'))
                         ->where('albaranes.tipo_id', 3)
                         ->where('albaranes.procedencia_empresa_id', '>', 0)
                         ->where('albaranes.fase_id', '<>', 10)
@@ -116,9 +118,11 @@ class VentasDepositoController extends Controller
         $albaranes = DB::table('albaranes')
                         ->select(DB::raw($select))
                         ->join('albalins','albalins.albaran_id','=','albaranes.id')
+                        ->join('empresas','albaranes.empresa_id','=','empresas.id')
                         ->join('productos','albalins.producto_id','=','productos.id')
                         ->join('clientes','productos.cliente_id','=','clientes.id')
-                        ->where('albaranes.empresa_id', session('empresa')->id)
+                        ->whereIn('albaranes.empresa_id', session('empresas_usuario'))
+                        // ->where('albaranes.empresa_id', session('empresa')->id)
                         ->where('albaranes.tipo_id', 3)
                         ->where('albaranes.fase_id', '<>', 10)
                         ->whereDate($campo_fecha,'>=', $d)
@@ -229,8 +233,10 @@ class VentasDepositoController extends Controller
                         ->where('albaranes.tipo_id', 3)
                         ->where('albaranes.fase_id', '<>', 10)
                         ->whereRaw(DB::getTablePrefix().'productos.empresa_id <> '.DB::getTablePrefix().'productos.destino_empresa_id')
-                        ->whereDate($campo_fecha,'>=', $d)
-                        ->whereDate($campo_fecha,'<=', $h)
+                        // ->whereDate($campo_fecha,'>=', $d)
+                        // ->whereDate($campo_fecha,'<=', $h)
+                        ->whereDate('albaranes.updated_at','>=', $d)
+                        ->whereDate('albaranes.updated_at','<=', $h)
                         ->whereNull('albaranes.procedencia_empresa_id')
                         ->whereNull('albalins.deleted_at')
                         ->orderBy('empresa')
