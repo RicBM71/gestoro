@@ -210,24 +210,26 @@ class HomeController extends Controller
 
         $select=DB::getTablePrefix().'productos.referencia, nombre, albaran, serie_albaran';
 
-        $albaranes = DB::table('albaranes')
-                ->select(DB::raw($select))
-                ->join('albalins','albalins.albaran_id','=','albaranes.id')
-                ->join('productos','albalins.producto_id','=','productos.id')
-                ->where('albaranes.tipo_id', 3)
-                ->whereDate('albaranes.updated_at', $hoy)
-                ->where('albaranes.online', 0)
-                ->where('productos.online', 1)
-                ->whereNull('albaranes.deleted_at')
-                ->orderBy('referencia')
-                ->get();
+        $albaranes = DB::table('albaranes')->select(DB::raw($select))
+                        ->join('albalins','albalins.albaran_id','=','albaranes.id')
+                        ->join('productos','albalins.producto_id','=','productos.id')
+                        ->where('albaranes.tipo_id', 3)
+                        ->whereDate('albaranes.updated_at', $hoy)
+                        ->where('albaranes.online', 0)
+                        ->where('productos.online', 1)
+                        ->whereNull('albaranes.deleted_at')
+                        ->orderBy('referencia')
+                        ->get();
 
                 if ($albaranes->count() > 0){
+
+                    $from = config('mail.from.address');
+                    $from = str_replace('info','noreply', $from);
 
                     $data = [
                         'razon'=> session('empresa')->razon,
                         'to'=> 'info@sanaval.com',
-                        'from'=> session('empresa')->email,
+                        'from'=> $from,
                         'albaranes' => $albaranes
                     ];
 
@@ -237,11 +239,13 @@ class HomeController extends Controller
                     dispatch(new SendUpdateProductosOnline($data));
 
                     $data_alb['online'] =  1;
+
                     Albaran::where('albaranes.tipo_id', 3)
-                    ->whereDate('albaranes.updated_at', $hoy)
-                    ->where('albaranes.online', 0)
-                    ->whereNull('albaranes.deleted_at')
-                    ->update($data_alb);
+                                ->whereDate('albaranes.updated_at', $hoy)
+                                ->where('albaranes.online', 0)
+                                ->whereNull('albaranes.deleted_at')
+                                ->update($data_alb);
+
                     return $albaranes;
                 }
             else{

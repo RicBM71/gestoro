@@ -83,7 +83,7 @@ class AbonosController extends Controller
         $data_new['cuenta_id'] = $albarane->cuenta_id;
         $data_new['taller_id'] = $albarane->taller_id;
 
-        if ($albarane->factura > 0 || $cancelacion === true){
+        if ($albarane->factura > 0 || $cancelacion === true || session('empresa')->getFlag(6) == true){
             // actualiza el albaran de origen, ya estaba facturado.
             if ($cancelacion === true)
                 $data['fase_id']  = 14;
@@ -108,7 +108,7 @@ class AbonosController extends Controller
             $albarane->update($data);
         }
 
-        if ($cancelacion === false){
+        if ($cancelacion === false && session('empresa')->getFlag(6) == false){
             $contador_fac = Contador::incrementaFactura(getEjercicio(Carbon::today()), $albarane->tipo_id,3);
             $data_new['factura']       = $contador_fac['ult_factura'];
             $data_new['fecha_factura'] = Carbon::today();
