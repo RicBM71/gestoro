@@ -91,6 +91,19 @@
                                     </v-flex>
                                 </v-layout>
                                 <v-layout row wrap>
+                                    <v-flex sm3>
+                                        <v-text-field
+                                            v-model="parametro.email_productos_online"
+                                            v-validate="'email'"
+                                            :error-messages="errors.collect('email_productos_online')"
+                                            label="mail productos online"
+                                            data-vv-name="email_productos_online"
+                                            v-on:keyup.enter="submit"
+                                        >
+                                        </v-text-field>
+                                    </v-flex>
+                                </v-layout>
+                                <v-layout row wrap>
                                     <v-flex sm2>
                                         <v-text-field
                                             v-model="parametro.username"

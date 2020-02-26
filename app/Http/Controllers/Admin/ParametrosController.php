@@ -41,6 +41,7 @@ class ParametrosController extends Controller
             'retencion'      => ['required','numeric'],
             'aislar_empresas'=> ['required','boolean'],
             'carpeta_docs'   => ['required','string'],
+            'email_productos_online' => ['nullable','email']
 
         ]);
 

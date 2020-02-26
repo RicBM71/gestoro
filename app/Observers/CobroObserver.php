@@ -73,7 +73,7 @@ class CobroObserver
 
             $fase_id = ($cobros_acuenta >= $totales['total'] && $totales['total'] != 0) ? 11 : 10;
 
-            $albaran->update(['fase_id'=>$fase_id,'username'=>session('username')]);
+            $albaran->update(['fase_id'=>$fase_id,'username'=>session('username'),'online'  => false]);
 
 
         } catch (\Exception $e) {

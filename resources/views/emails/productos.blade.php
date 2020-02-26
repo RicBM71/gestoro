@@ -8,7 +8,7 @@ View Order
 
 @foreach($data['albaranes'] as $item)
 <br>
-    {{$item->referencia.' - '.$item->nombre}}
+    {{$item->referencia.' - '.$item->nombre.' Estado: '.$item->estado}}
 @endforeach
 
 Saludos.<br>

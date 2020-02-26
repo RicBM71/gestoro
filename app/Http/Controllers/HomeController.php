@@ -105,7 +105,7 @@ class HomeController extends Controller
         ];
 
         // envio mail de modificación de productos
-        //$this->productosOnline();
+        $this->productosOnline();
 
 
        // de momento no quito filtros, ya veremos.
@@ -206,51 +206,56 @@ class HomeController extends Controller
 
     private function productosOnline()
     {
+
+        if (session('parametros')->email_productos_online == null)
+            return 0;
+
         $hoy = Carbon::today();
 
-        $select=DB::getTablePrefix().'productos.referencia, nombre, albaran, serie_albaran';
+        $select=DB::getTablePrefix().'productos.referencia,'.DB::getTablePrefix().'productos.nombre, albaran, serie_albaran,'.DB::getTablePrefix().'estados.nombre AS estado';
 
         $albaranes = DB::table('albaranes')->select(DB::raw($select))
                         ->join('albalins','albalins.albaran_id','=','albaranes.id')
                         ->join('productos','albalins.producto_id','=','productos.id')
+                        ->join('estados','productos.estado_id','=','estados.id')
                         ->where('albaranes.tipo_id', 3)
                         ->whereDate('albaranes.updated_at', $hoy)
-                        ->where('albaranes.online', 0)
                         ->where('productos.online', 1)
+                        ->where('albaranes.online', 0)
                         ->whereNull('albaranes.deleted_at')
                         ->orderBy('referencia')
                         ->get();
 
-                if ($albaranes->count() > 0){
+        if ($albaranes->count() > 0){
 
-                    $from = config('mail.from.address');
-                    $from = str_replace('info','noreply', $from);
+            $from = config('mail.from.address');
+            $from = str_replace('info','noreply', $from);
 
-                    $data = [
-                        'razon'=> session('empresa')->razon,
-                        'to'=> 'info@sanaval.com',
-                        'from'=> $from,
-                        'albaranes' => $albaranes
-                    ];
+            $data = [
+                'razon'=> session('empresa')->razon,
+                'to'   => session('parametros')->email_productos_online,
+                'from' => $from,
+                'albaranes' => $albaranes
+            ];
 
-                    // con esto previsualizamos el mail
-                    //return new Factura($data);
+            // con esto previsualizamos el mail
+            //return new Factura($data);
 
-                    dispatch(new SendUpdateProductosOnline($data));
+            dispatch(new SendUpdateProductosOnline($data));
 
-                    $data_alb['online'] =  1;
+            $data_alb=['online' => 1];
 
-                    Albaran::where('albaranes.tipo_id', 3)
-                                ->whereDate('albaranes.updated_at', $hoy)
-                                ->where('albaranes.online', 0)
-                                ->whereNull('albaranes.deleted_at')
-                                ->update($data_alb);
+            Albaran::where('albaranes.tipo_id', 3)
+                        ->whereDate('albaranes.updated_at', $hoy)
+                        ->where('albaranes.online', 0)
+                        ->whereNull('albaranes.deleted_at')
+                        ->update($data_alb);
 
-                    return $albaranes;
-                }
-            else{
-                return 0;
-            }
+            return $albaranes;
+        }
+        else{
+            return 0;
+        }
 
 
     }
