@@ -241,6 +241,7 @@ class AlbaranesController extends Controller
         }
 
       //  if (session('empresa')->id != session('empresa')->deposito_empresa_id)
+        if ($albarane->tipo_id == 3)
             if ($this->verificarSiHayProductosEnDeposito($albarane)){
                 return abort(411, 'Hay productos en depósito, no se puede facturar, reubicar albarán');
             }
@@ -346,6 +347,7 @@ class AlbaranesController extends Controller
 
        // $this->authorize('update', $cliente);
        //if (session('empresa')->id != session('empresa')->deposito_empresa_id)
+        if ($albarane->tipo_id == 3)
             if ($this->verificarSiHayProductosEnDeposito($albarane)){
                     return abort(411, 'Hay productos en depósito, no se puede facturar, reubicar albarán');
             }
