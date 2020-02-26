@@ -70,6 +70,7 @@ class VentasDepositoController extends Controller
 
         $campo_fecha = $facturado=='V' ? 'fecha_albaran' : 'fecha_factura';
         $campo_alb   = $facturado=='V' ? ',serie_albaran AS serie, albaran AS numero' : ',serie_factura AS serie, factura AS numero';
+        $campo_fecha_where = $facturado=='V' ? 'albaranes.updated_at' : 'fecha_factura';
 
         $select=DB::getTablePrefix().'empresas.nombre AS empresa'.$campo_alb.','.$campo_fecha.' AS fecha,'.
                 DB::getTablePrefix().'productos.referencia AS referencia,'.
@@ -87,11 +88,12 @@ class VentasDepositoController extends Controller
                         // ->where('albaranes.empresa_id', session('empresa')->id)
                         ->whereIn('albaranes.empresa_id', session('empresas_usuario'))
                         ->where('albaranes.tipo_id', 3)
-                        ->where('albaranes.procedencia_empresa_id', '>', 0)
+                        // ->where('albaranes.procedencia_empresa_id', '>', 0)
                         ->where('albaranes.fase_id', '<>', 10)
-                        ->whereDate($campo_fecha,'>=', $d)
-                        ->whereDate($campo_fecha,'<=', $h)
+                        ->whereDate($campo_fecha_where,'>=', $d)
+                        ->whereDate($campo_fecha_where,'<=', $h)
                         ->whereNull('albalins.deleted_at')
+                        ->whereRaw(DB::getTablePrefix().'productos.empresa_id <> '.DB::getTablePrefix().'productos.destino_empresa_id')
                         ->whereNull('productos.cliente_id')
                         ->orderBy('empresa')
                         ->orderBy('fecha')
@@ -107,6 +109,7 @@ class VentasDepositoController extends Controller
 
         $campo_fecha = $facturado=='V' ? 'fecha_albaran' : 'fecha_factura';
         $campo_alb   = $facturado=='V' ? ',serie_albaran AS serie, albaran AS numero' : ',serie_factura AS serie, factura AS numero';
+        $campo_fecha_where = $facturado=='V' ? 'albaranes.updated_at' : 'fecha_factura';
 
         $select=DB::getTablePrefix().'clientes.razon AS empresa'.$campo_alb.','.$campo_fecha.' AS fecha,'.
                 DB::getTablePrefix().'productos.referencia AS referencia,'.
@@ -125,8 +128,8 @@ class VentasDepositoController extends Controller
                         // ->where('albaranes.empresa_id', session('empresa')->id)
                         ->where('albaranes.tipo_id', 3)
                         ->where('albaranes.fase_id', '<>', 10)
-                        ->whereDate($campo_fecha,'>=', $d)
-                        ->whereDate($campo_fecha,'<=', $h)
+                        ->whereDate($campo_fecha_where,'>=', $d)
+                        ->whereDate($campo_fecha_where,'<=', $h)
                         ->whereNull('albalins.deleted_at')
                         ->where('productos.cliente_id', '>', 0)
                         ->orderBy('empresa')
@@ -161,8 +164,10 @@ class VentasDepositoController extends Controller
                         ->where('albaranes.tipo_id', 3)
                         ->where('albaranes.fase_id', '<>', 10)
                         ->whereRaw(DB::getTablePrefix().'productos.empresa_id <> '.DB::getTablePrefix().'productos.destino_empresa_id')
-                        ->whereDate($campo_fecha,'>=', $d)
-                        ->whereDate($campo_fecha,'<=', $h)
+                        ->whereDate('albaranes.updated_at','>=', $d)
+                        ->whereDate('albaranes.updated_at','<=', $h)
+                        // ->whereDate($campo_fecha,'>=', $d)
+                        // ->whereDate($campo_fecha,'<=', $h)
                         // ->whereNull('albaranes.procedencia_empresa_id')
                         ->whereNull('albalins.deleted_at')
                         ->orderBy('empresa')
