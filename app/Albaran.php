@@ -249,6 +249,18 @@ class Albaran extends Model
 
     }
 
+
+    public static function scopeDepositos($query, $depositos){
+
+        if ($depositos == true)
+            return $query->where('procedencia_empresa_id','>', 0);
+
+        return $query;
+
+    }
+
+
+
     // public static function pendientesDeFacturar($d, $h, $tipo_id, $cobro){
 
     //     if ($cobro == 'T')

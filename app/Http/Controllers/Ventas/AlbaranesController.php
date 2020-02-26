@@ -69,6 +69,7 @@ class AlbaranesController extends Controller
                             ->fpago($data['fpago_id'])
                             ->fase($data['fase_id'])
                             ->facturados($data['facturado'])
+                            ->depositos($data['depositos'])
                             ->get();
 
     }

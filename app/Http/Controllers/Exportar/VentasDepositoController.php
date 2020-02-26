@@ -33,6 +33,14 @@ class VentasDepositoController extends Controller
             $txt_tipo = 'a Comisión';
             $registros = $this->comision($data['fecha_d'], $data['fecha_h'], $data['facturado']);
         }
+        elseif($data['tipo'] == 'R'){
+            $txt_tipo = 'Reubicados';
+            $registros = $this->reubicados($data['fecha_d'], $data['fecha_h'], $data['facturado']);
+        }
+        elseif($data['tipo'] == 'S'){
+            $txt_tipo = 'Sin Reubicar';
+            $registros = $this->sinreubicar($data['fecha_d'], $data['fecha_h'], $data['facturado']);
+        }
         else{
             $txt_tipo = 'Todas';
             $registros = $this->todas($data['fecha_d'], $data['fecha_h'], $data['facturado']);
@@ -67,7 +75,8 @@ class VentasDepositoController extends Controller
                 DB::getTablePrefix().'productos.referencia AS referencia,'.
                 DB::getTablePrefix().'productos.nombre AS producto,'.
                 DB::getTablePrefix().'albalins.importe_venta AS importe_venta,'.
-                DB::getTablePrefix().'albalins.precio_coste AS precio_coste';
+                DB::getTablePrefix().'albalins.precio_coste AS precio_coste,,'.
+                DB::getTablePrefix().'empresas.sigla';
 
         $albaranes = DB::table('albaranes')
                         ->select(DB::raw($select))
@@ -101,7 +110,8 @@ class VentasDepositoController extends Controller
                 DB::getTablePrefix().'productos.referencia AS referencia,'.
                 DB::getTablePrefix().'productos.nombre AS producto,'.
                 DB::getTablePrefix().'albalins.importe_venta AS importe_venta,'.
-                DB::getTablePrefix().'albalins.precio_coste AS precio_coste';
+                DB::getTablePrefix().'albalins.precio_coste AS precio_coste,'.
+                DB::getTablePrefix().'empresas.sigla';
 
         $albaranes = DB::table('albaranes')
                         ->select(DB::raw($select))
@@ -134,7 +144,8 @@ class VentasDepositoController extends Controller
                 DB::getTablePrefix().'productos.referencia AS referencia,'.
                 DB::getTablePrefix().'productos.nombre AS producto,'.
                 DB::getTablePrefix().'albalins.importe_venta AS importe_venta,'.
-                DB::getTablePrefix().'albalins.precio_coste AS precio_coste';
+                DB::getTablePrefix().'albalins.precio_coste AS precio_coste,'.
+                DB::getTablePrefix().'empresas.sigla';
 
         $albaranes = DB::table('albaranes')
                         ->select(DB::raw($select))
@@ -148,6 +159,79 @@ class VentasDepositoController extends Controller
                         ->whereRaw(DB::getTablePrefix().'productos.empresa_id <> '.DB::getTablePrefix().'productos.destino_empresa_id')
                         ->whereDate($campo_fecha,'>=', $d)
                         ->whereDate($campo_fecha,'<=', $h)
+                        // ->whereNull('albaranes.procedencia_empresa_id')
+                        ->whereNull('albalins.deleted_at')
+                        ->orderBy('empresa')
+                        ->orderBy('fecha')
+                        ->orderBy('numero')
+                        ->get();
+
+        return $albaranes;
+
+    }
+
+    public function reubicados($d, $h, $facturado){
+
+
+        $campo_fecha = $facturado=='V' ? 'fecha_albaran' : 'fecha_factura';
+        $campo_alb   = $facturado=='V' ? ',serie_albaran AS serie, albaran AS numero' : ',serie_factura AS serie, factura AS numero';
+
+        $select=DB::getTablePrefix().'empresas.nombre AS empresa'.$campo_alb.','.$campo_fecha.' AS fecha,'.
+                DB::getTablePrefix().'productos.referencia AS referencia,'.
+                DB::getTablePrefix().'productos.nombre AS producto,'.
+                DB::getTablePrefix().'albalins.importe_venta AS importe_venta,'.
+                DB::getTablePrefix().'albalins.precio_coste AS precio_coste,'.
+                DB::getTablePrefix().'empresas.sigla';
+
+        $albaranes = DB::table('albaranes')
+                        ->select(DB::raw($select))
+                        ->join('empresas','albaranes.empresa_id','=','empresas.id')
+                        ->join('albalins','albalins.albaran_id','=','albaranes.id')
+                        ->join('productos','albalins.producto_id','=','productos.id')
+                        // ->where('albaranes.empresa_id', session('empresa')->id)
+                        ->whereIn('albaranes.empresa_id', session('empresas_usuario'))
+                        ->where('albaranes.tipo_id', 3)
+                        ->where('albaranes.fase_id', '<>', 10)
+                        ->whereRaw(DB::getTablePrefix().'productos.empresa_id <> '.DB::getTablePrefix().'productos.destino_empresa_id')
+                        ->whereDate($campo_fecha,'>=', $d)
+                        ->whereDate($campo_fecha,'<=', $h)
+                        ->where('albaranes.procedencia_empresa_id','>',0)
+                        ->whereNull('albalins.deleted_at')
+                        ->orderBy('empresa')
+                        ->orderBy('fecha')
+                        ->orderBy('numero')
+                        ->get();
+
+        return $albaranes;
+
+    }
+
+    public function sinreubicar($d, $h, $facturado){
+
+
+        $campo_fecha = $facturado=='V' ? 'fecha_albaran' : 'fecha_factura';
+        $campo_alb   = $facturado=='V' ? ',serie_albaran AS serie, albaran AS numero' : ',serie_factura AS serie, factura AS numero';
+
+        $select=DB::getTablePrefix().'empresas.nombre AS empresa'.$campo_alb.','.$campo_fecha.' AS fecha,'.
+                DB::getTablePrefix().'productos.referencia AS referencia,'.
+                DB::getTablePrefix().'productos.nombre AS producto,'.
+                DB::getTablePrefix().'albalins.importe_venta AS importe_venta,'.
+                DB::getTablePrefix().'albalins.precio_coste AS precio_coste,'.
+                DB::getTablePrefix().'empresas.sigla';
+
+        $albaranes = DB::table('albaranes')
+                        ->select(DB::raw($select))
+                        ->join('empresas','albaranes.empresa_id','=','empresas.id')
+                        ->join('albalins','albalins.albaran_id','=','albaranes.id')
+                        ->join('productos','albalins.producto_id','=','productos.id')
+                        // ->where('albaranes.empresa_id', session('empresa')->id)
+                        ->whereIn('albaranes.empresa_id', session('empresas_usuario'))
+                        ->where('albaranes.tipo_id', 3)
+                        ->where('albaranes.fase_id', '<>', 10)
+                        ->whereRaw(DB::getTablePrefix().'productos.empresa_id <> '.DB::getTablePrefix().'productos.destino_empresa_id')
+                        ->whereDate($campo_fecha,'>=', $d)
+                        ->whereDate($campo_fecha,'<=', $h)
+                        ->whereNull('albaranes.procedencia_empresa_id')
                         ->whereNull('albalins.deleted_at')
                         ->orderBy('empresa')
                         ->orderBy('fecha')

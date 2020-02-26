@@ -33,7 +33,8 @@ class FiltroAlbRequest extends FormRequest
             'fecha_h'   => ['required','date', new MaxDiasRangoFechaRule($this->fecha_d, $this->fecha_h)],
             'quefecha'  => ['required'],
             'facturado' => ['required'],
-            'reservas'  => ['boolean']
+            'reservas'  => ['boolean'],
+            'depositos' => ['boolean']
         ];
     }
 }

@@ -144,6 +144,7 @@
                             >
                                 <template slot="items" slot-scope="props">
                                     <td>{{ props.item.empresa }}</td>
+                                    <td>{{ props.item.sigla }}</td>
                                     <td>{{ props.item.serie+props.item.numero }}</td>
                                     <td>{{ formatDate(props.item.fecha) }}</td>
                                     <td>{{ props.item.referencia }}</td>
@@ -181,6 +182,12 @@ export default {
                 align: 'left',
                 value: 'empresa',
                 width: '15%'
+            },
+            {
+                text: 'Ori',
+                align: 'left',
+                value: 'sigla',
+                width: '1%'
             },
             {
                 text: 'Alb/Fac',
@@ -228,9 +235,11 @@ export default {
             tipos:[
                     {value: 'D', text:"Depósito"},
                     {value: 'P', text:"Proveedor"},
-                    {value: 'T', text:"En cualquier ubicación"},
+                    {value: 'S', text:"Sin Reubicar"},
+                    {value: 'R', text:"Reubicados"},
+                    {value: 'T', text:"Todas"},
                 ],
-            facturado: 'F',
+            facturado: 'V',
             show_loading: false,
             ejercicio:new Date().toISOString().substr(0, 4),
             show_filtro: true,

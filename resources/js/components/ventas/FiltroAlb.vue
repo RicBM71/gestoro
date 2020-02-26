@@ -118,6 +118,13 @@
                         color="primary">
                     ></v-switch>
                 </v-flex>
+                <v-flex sm2>
+                    <v-switch
+                        label="Origen Depósitos"
+                        v-model="depositos"
+                        color="primary">
+                    ></v-switch>
+                </v-flex>
                 <v-spacer></v-spacer>
                 <v-flex sm2>
                     <v-btn @click="submit"  :loading="loading" round small block  color="info">
@@ -163,6 +170,7 @@ export default {
             fase_id:  0,
 
             reservas: false,
+            depositos: false,
 
             menu_h: false,
             menu_d: false,
@@ -222,7 +230,8 @@ export default {
                                 fpago_id: this.fpago_id,
                                 asociado_id: this.asociado_id,
                                 facturado: this.facturado,
-                                reservas: this.reservas
+                                reservas: this.reservas,
+                                depositos: this.depositos
                             }
                         )
                         .then(res => {
