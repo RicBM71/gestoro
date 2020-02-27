@@ -206,6 +206,7 @@ class HomeController extends Controller
 
     private function productosOnline()
     {
+        return 0;
 
         if (session('parametros')->email_productos_online == null)
             return 0;
