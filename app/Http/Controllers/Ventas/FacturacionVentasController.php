@@ -88,7 +88,7 @@ class FacturacionVentasController extends Controller
             $i++;
 
           //  if (session('empresa')->id != session('empresa')->deposito_empresa_id)
-            if ($row->tipo_id == 3)
+            if ($tipo_id == 3)
                 if ($this->verificarSiHayProductosEnDeposito($row->id)){
                     return abort(411, 'Se han encontrado albaranes sin reubicar, reubicar antes de continuar!!');
                 }
@@ -108,7 +108,7 @@ class FacturacionVentasController extends Controller
             $i++;
 
           //  if (session('empresa')->id != session('empresa')->deposito_empresa_id)
-            if ($row->tipo_id == 3)
+            if ($tipo_id == 3)
                 if ($this->verificarSiHayProductosEnDeposito($row->id)){
                     return abort(411, 'Se han encontrado albaranes sin reubicar, reubicar antes de continuar!!');
                 }
