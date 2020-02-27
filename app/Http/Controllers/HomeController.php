@@ -90,22 +90,22 @@ class HomeController extends Controller
         $empresa = Empresa::findOrFail($empresa_id);
 
         $user = [
-            'id'        => $authUser->id,
-            'name'      => $authUser->name,
-            'username'  => $authUser->username,
-            'avatar'    => $authUser->avatar,
+            'id'            => $authUser->id,
+            'name'          => $authUser->name,
+            'username'      => $authUser->username,
+            'avatar'        => $authUser->avatar,
             'empresa_id'    => $empresa_id,
             'empresa_nombre'=>$empresa->titulo,
-            'roles'     => $role_user,
-            'permisos'  => $permisos_user,
-            'empresas'  => $empresas,
-            'parametros'=>$parametros,
-            'img_fondo' => $empresa->img_fondo,
+            'roles'         => $role_user,
+            'permisos'      => $permisos_user,
+            'empresas'      => $empresas,
+            'parametros'    =>$parametros,
+            'img_fondo'     => $empresa->img_fondo,
             'aislar_empresas'  => $parametros->aislar_empresas
         ];
 
         // envio mail de modificación de productos
-        $this->productosOnline();
+        $this->productosOnline($parametros->email_productos_online, $empresa->razon);
 
 
        // de momento no quito filtros, ya veremos.
@@ -114,9 +114,9 @@ class HomeController extends Controller
         $jobs  = DB::table('jobs')->count();
 
         session([
-            'empresa_id' => $empresa_id,
-            'empresa'    => Empresa::find($empresa_id),
-            'username'   => $authUser->username,
+            'empresa_id'       => $empresa_id,
+            'empresa'          => Empresa::find($empresa_id),
+            'username'         => $authUser->username,
             'empresas_usuario' => $empresas_usuario,
             'parametros'       => $parametros,
             'aislar_empresas'  => $parametros->aislar_empresas
@@ -126,7 +126,7 @@ class HomeController extends Controller
             return [
                 'user'      => $user,
                 'expired'   => $this->verificarExpired($request),
-                'authuser'  =>$authUser,
+                'authuser'  => $authUser,
                 'jobs'      => $jobs,
                 'traspasos' => Traspaso::where('proveedora_empresa_id', session('empresa_id'))
                                         ->where('situacion_id',1)->get()->count()
@@ -204,14 +204,14 @@ class HomeController extends Controller
         return false;
     }
 
-    private function productosOnline()
+    private function productosOnline($email_productos_online, $razon)
     {
-        return 0;
 
-        if (session('parametros')->email_productos_online == null)
+
+        if ($email_productos_online == null)
             return 0;
 
-        $hoy = Carbon::today();
+        $hoy = Carbon::now();
 
         $select=DB::getTablePrefix().'productos.referencia,'.DB::getTablePrefix().'productos.nombre, albaran, serie_albaran,'.DB::getTablePrefix().'estados.nombre AS estado';
 
@@ -233,8 +233,8 @@ class HomeController extends Controller
             $from = str_replace('info','noreply', $from);
 
             $data = [
-                'razon'=> session('empresa')->razon,
-                'to'   => session('parametros')->email_productos_online,
+                'razon'=> $razon,
+                'to'   => $email_productos_online,
                 'from' => $from,
                 'albaranes' => $albaranes
             ];
