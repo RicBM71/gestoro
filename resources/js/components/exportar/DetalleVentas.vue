@@ -56,7 +56,7 @@
                                 <v-text-field
                                     slot="activator"
                                     :value="computedFechaD"
-                                    label="Desde"
+                                    :label="desde"
                                     append-icon="event"
                                     v-validate="'date_format:dd/MM/yyyy'"
                                     data-vv-name="fecha_d"
@@ -87,7 +87,7 @@
                                 <v-text-field
                                     slot="activator"
                                     :value="computedFechaH"
-                                    label="Hasta"
+                                    :label="hasta"
                                     append-icon="event"
                                     v-validate="'date_format:dd/MM/yyyy'"
                                     data-vv-name="fecha_h"
@@ -309,8 +309,8 @@ export default {
       }
     },
      beforeMount(){
-        if (this.getLineasIndex.length > 0)
-            this.items = this.getLineasIndex;
+        // if (this.getLineasIndex.length > 0)
+        //     this.items = this.getLineasIndex;
     },
     mounted(){
 
@@ -340,6 +340,12 @@ export default {
             'getPagination',
             'getLineasIndex',
         ]),
+        desde(){
+            return this.operacion == "F" ? 'Desde F. Factura' : 'Desde F. Albarán';
+        },
+        hasta(){
+            return this.operacion == "F" ? 'Hasta F. Factura' : 'Hasta F. Albarán';
+        },
         computedFechaD() {
             moment.locale('es');
             return this.fecha_d ? moment(this.fecha_d).format('L') : '';

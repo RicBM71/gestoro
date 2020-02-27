@@ -77,15 +77,12 @@ class FacturacionVentasController extends Controller
 
     private function facturarAlbaranes($d,$h, $tipo_id, $cobro){
 
-        $i=0;
-
         $albaranes = $this->pendientesDeFacturar($d,$h, $tipo_id, $cobro);
 
         $ejercicio = getEjercicio($d);
 
 
         foreach ($albaranes as $row){
-            $i++;
 
           //  if (session('empresa')->id != session('empresa')->deposito_empresa_id)
             if ($tipo_id == 3)
@@ -104,6 +101,7 @@ class FacturacionVentasController extends Controller
 
         //$albaranes = $albaranes->get();
 
+        $i=0;
         foreach ($albaranes as $row){
             $i++;
 
@@ -159,7 +157,6 @@ class FacturacionVentasController extends Controller
                 $fpago = array(2,3,4);
             else
                 $fpago = array(1);
-
 
             return DB::table('albaranes')
                     ->select(DB::raw(DB::getTablePrefix().'albaranes.id,'.

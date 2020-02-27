@@ -48,8 +48,11 @@ class DetalleVentasController extends Controller
 
     private function detalle($data){
 
-        if ($data['operacion'] == 'F')
+        $campo_fecha = "fecha_albaran";
+        if ($data['operacion'] == 'F'){
             $where = 'factura > ""';
+            $campo_fecha = "fecha_factura";
+        }
         elseif ($data['operacion'] == 'N')
             $where = DB::getTablePrefix().'albaranes.factura IS NULL';
         else
@@ -68,8 +71,8 @@ class DetalleVentasController extends Controller
             ->where('albaranes.empresa_id', session('empresa')->id)
             ->where('fase_id', '<>', 10)
             ->whereNull('albaranes.deleted_at')
-            ->whereDate('albaranes.fecha_albaran','>=', $data['fecha_d'])
-            ->whereDate('albaranes.fecha_albaran','<=', $data['fecha_h'])
+            ->whereDate($campo_fecha,'>=', $data['fecha_d'])
+            ->whereDate($campo_fecha,'<=', $data['fecha_h'])
 
             // ->whereDate('albaranes.updated_at','>=', $data['fecha_d'])
             // ->whereDate('albaranes.updated_at','<=', $data['fecha_h'])
