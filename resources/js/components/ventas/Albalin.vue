@@ -16,7 +16,13 @@
                                 <td class="red--text">error al ubicar, contactar admin</td>
                             </tr>
                             <tr v-else>
-                                <td>{{ props.item.producto.referencia }}</td>
+                                <td><v-icon
+                                        v-if="props.item.producto.online"
+                                        small
+                                        class="blue--text lighten-5 mr-2"
+                                    >
+                                        star
+                                    </v-icon>{{ props.item.producto.referencia }}</td>
                                 <td>{{ props.item.producto.nombre }}</td>
                                 <td class="text-xs-right">{{ props.item.unidades | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                                 <td v-if="isSupervisor" class="text-xs-right">{{ props.item.precio_coste | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
@@ -153,7 +159,7 @@ export default {
                     text: 'Referencia',
                     align: 'left',
                     value: 'producto.referencia',
-                    width:'8%'
+                    width:'12%'
                 },
                 {
                     text: 'Detalle producto',
