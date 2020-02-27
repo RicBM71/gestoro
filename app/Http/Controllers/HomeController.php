@@ -105,7 +105,7 @@ class HomeController extends Controller
         ];
 
         // envio mail de modificación de productos
-        $this->productosOnline($parametros->email_productos_online, $empresa->razon);
+        //$this->productosOnline($parametros->email_productos_online, $empresa->razon);
 
 
        // de momento no quito filtros, ya veremos.
@@ -206,7 +206,6 @@ class HomeController extends Controller
 
     private function productosOnline($email_productos_online, $razon)
     {
-
 
         if ($email_productos_online == null)
             return 0;

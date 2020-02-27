@@ -34,6 +34,7 @@ class InventarioController extends Controller
 
         // solo lístamos los productos de empresa origen porque este es el inventario real
         //  por esto quito globalScope
+        
         $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','iva','estado','garantia','cliente'])
                     ->select('productos.*')
                     ->join('clases','clase_id','=','clases.id')
