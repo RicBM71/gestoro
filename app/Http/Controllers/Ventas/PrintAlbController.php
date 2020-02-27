@@ -133,6 +133,8 @@ class PrintAlbController extends Controller
             else
                 $this->pieRebu();
         }else{
+            if ($this->albaran->factura != null)
+                $this->PagosCliente();
             if ($this->albaran->motivo_id > 0)
                 $this->impMotivo();
             $this->formaDePago();
@@ -173,7 +175,7 @@ class PrintAlbController extends Controller
         PDF::MultiCell(36, 8,  $num_doc,'', 'C', 1, 1, '', '', true,0,false,true,8,'M',false);
 
         if ($this->albaran->factura > 0 && $this->albaran->tipo_id >= 4){
-            PDF::setXY(12,54);
+            PDF::setXY(12,50);
             PDF::SetFont('helvetica', 'R',8, '', false);
             PDF::MultiCell(50, 6,  "ALBARÁN ".$this->albaran->alb_ser.' - '.getFecha($this->albaran->fecha_albaran),'', 'C', 1, 1, '', '', true,0,false,true,6,'M',false);
         }
@@ -331,6 +333,8 @@ class PrintAlbController extends Controller
                     PDF::MultiCell(140, 6, '* ('.$iva->id.') '.$iva->leyenda, '', 'L', 0, 1, '', '', true);
                 }
             }
+
+            PDF::Ln();
         }
 
 
@@ -342,6 +346,7 @@ class PrintAlbController extends Controller
 
         PDF::Ln();
         PDF::Ln();
+
         PDF::Cell(20, 6, 'REFERENCIA', 'TRB', 0, 'C');
         PDF::Cell(96, 6, 'PRODUCTO', 'TRB', 0, 'C');
         PDF::Cell(12, 6, 'IVA', 'TRB', 0, 'C');
@@ -371,7 +376,10 @@ class PrintAlbController extends Controller
 
         PDF::SetFont('helvetica', 'R', 9, '', false);
         if ($data != null){
-            PDF::MultiCell(80, 6, 'Pagos a Cuenta', 'B', 'L', 0, 1, '', '', true);
+            if ($this->albaran->tipo_id == 3 )
+                PDF::MultiCell(80, 6, 'Pagos a Cuenta', 'B', 'L', 0, 1, '', '', true);
+            elseif ($this->albaran->tipo_id == 4 )
+                PDF::MultiCell(80, 6, 'ANTICIPOS', 'B', 'L', 0, 1, '', '', true);
         }
 
         $total_cobrado = 0;
@@ -382,11 +390,15 @@ class PrintAlbController extends Controller
             $total_cobrado+= $cobro->importe;
         }
 
-        if ($this->albaran->tipo_id == 3 && $this->albaran->fase_id == 10){
+        //if ($this->albaran->tipo_id == 3 && $this->albaran->fase_id == 10){
+        if ($this->albaran->fase_id == 10){
             PDF::SetFont('helvetica', 'B', 9, '', false);
             $resto = $this->totales['importe_venta'] - $total_cobrado;
             PDF::Ln();
-            PDF::MultiCell(140, 5, 'PENDIENTE COBRO '.getDecimal($resto)." €", '', 'L', 0, 0, '', '', true);
+            if ($this->albaran->tipo_id == 3 )
+                PDF::MultiCell(140, 5, 'PENDIENTE COBRO '.getDecimal($resto)." €", '', 'L', 0, 0, '', '', true);
+            else
+                PDF::MultiCell(140, 5, 'RESTO '.getDecimal($resto)." €", '', 'L', 0, 0, '', '', true);
             PDF::Ln();
         }elseif ($this->albaran->tipo_id == 3 && $this->albaran->fase_id == 11){
             PDF::SetFont('helvetica', 'B', 9, '', false);
