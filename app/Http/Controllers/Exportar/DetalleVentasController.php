@@ -68,8 +68,11 @@ class DetalleVentasController extends Controller
             ->where('albaranes.empresa_id', session('empresa')->id)
             ->where('fase_id', '<>', 10)
             ->whereNull('albaranes.deleted_at')
-            ->whereDate('albaranes.updated_at','>=', $data['fecha_d'])
-            ->whereDate('albaranes.updated_at','<=', $data['fecha_h'])
+            ->whereDate('albaranes.fecha_albaran','>=', $data['fecha_d'])
+            ->whereDate('albaranes.fecha_albaran','<=', $data['fecha_h'])
+
+            // ->whereDate('albaranes.updated_at','>=', $data['fecha_d'])
+            // ->whereDate('albaranes.updated_at','<=', $data['fecha_h'])
             ->where('tipo_id', $data['tipo_id'])
             ->whereRaw($where)
             ->groupBy(DB::raw('id, fecha_albaran,albaran,serie_albaran,factura,fecha_factura,referencia,producto,clase'))
