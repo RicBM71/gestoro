@@ -86,7 +86,7 @@ class CompraPolicy
             if ($libro->ult_compra == $compra->albaran){
                 return true;
             }else{
-                return $this->deny("Acceso denegado! Hay compras posteriores. Contactar con administardor");
+                return $this->deny("Acceso denegado! Hay compras posteriores. Permiso Borrar Compra requerido");
             }
         }
 

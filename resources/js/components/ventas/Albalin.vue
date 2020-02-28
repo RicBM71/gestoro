@@ -22,7 +22,7 @@
                                         class="blue--text lighten-5 mr-2"
                                     >
                                         star
-                                    </v-icon>{{ props.item.producto.referencia }}</td>
+                                    </v-icon> {{ props.item.producto.referencia }}</td>
                                 <td>{{ props.item.producto.nombre }}</td>
                                 <td class="text-xs-right">{{ props.item.unidades | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                                 <td v-if="isSupervisor" class="text-xs-right">{{ props.item.precio_coste | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>

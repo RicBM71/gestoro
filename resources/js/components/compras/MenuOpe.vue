@@ -226,7 +226,10 @@ export default {
                 if (this.compra.created_at.substr(0, 10) == new Date().toISOString().substr(0, 10) && this.compra.username==this.userName)
                     return true;
 
-                if (this.compra.id > 0 && this.hasBorraCompras)
+                if (this.compra.created_at.substr(0, 10) == new Date().toISOString().substr(0, 10) && isSupervisor)
+                    return true;
+
+                if  (this.hasBorraCompras)
                     return true;
 
             }

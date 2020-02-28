@@ -144,10 +144,10 @@ class Libro extends Model
      */
     public static function restaContadorCompra($ejercicio, $grupo_id, $num_compra){
 
+        $compras = Compra::where('ejercicio', $ejercicio)
+                        ->where('grupo_id', $grupo_id)->count();
 
         try {
-
-
 
             $contador =  Libro:: where('grupo_id',$grupo_id)
                                 ->where('ejercicio',$ejercicio)
