@@ -133,8 +133,8 @@ class PrintAlbController extends Controller
             else
                 $this->pieRebu();
         }else{
-            if ($this->albaran->factura != null)
-                $this->PagosCliente();
+            // if ($this->albaran->factura != null)
+            //     $this->PagosCliente();
             if ($this->albaran->motivo_id > 0)
                 $this->impMotivo();
             $this->formaDePago();
