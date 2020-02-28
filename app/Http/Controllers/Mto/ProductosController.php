@@ -321,7 +321,7 @@ class ProductosController extends Controller
                 return abort(404, "No se ha encontrado el registro");
             }
 
-            if ($producto->empresa_id != session('empresa_id')){
+            if ($producto->empresa_id != session('empresa_id') && $producto->destino_empresa_id  != session('empresa_id')){
                 $parametros = $this->loadSession($producto->empresa_id);
             }else{
                 $parametros = false;
