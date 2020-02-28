@@ -84,7 +84,7 @@
                                 <v-text-field
                                     v-else
                                     v-model="editedItem.importe_unidad"
-                                    v-validate="'required|decimal:2'"
+                                    v-validate="'required|decimal:4'"
                                     :error-messages="errors.collect('importe_unidad')"
                                     label="Importe Ud. "
                                     data-vv-name="importe_unidad"

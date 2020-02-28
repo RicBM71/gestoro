@@ -50,7 +50,7 @@ class Albalin extends Model
 
     public function getImporteUnidadAttribute()
     {
-        return round($this->attributes['importe_unidad'], 2);
+        return round($this->attributes['importe_unidad'], 4);
     }
 
     // public function setImporteVentaAttribute()
