@@ -303,6 +303,8 @@ export default {
     },
     mounted(){
 
+        this.reg.sinscope = this.hasDesLoc;
+
         axios.get('/utilidades/helppro/filtro')
             .then(res => {
 
@@ -336,6 +338,7 @@ export default {
     computed: {
          ...mapGetters([
             'isAdmin',
+            'hasDesLoc'
         ]),
         computedFechaD() {
             moment.locale('es');

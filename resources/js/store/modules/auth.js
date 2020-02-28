@@ -152,6 +152,9 @@ const getters = {
     hasEdtFac: (state) =>{
         return (state.permisos.indexOf('edtfac') >= 0) ? true : false;
     },
+    hasDesLoc: (state) =>{
+        return (state.permisos.indexOf('desloc') >= 0) ? true : false;
+    },
 };
 
 /*

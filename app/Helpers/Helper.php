@@ -95,6 +95,11 @@ function hasUsers(){
     return auth()->user()->hasPermissionTo('userr');
 }
 
+function hasDesLoc(){
+    return auth()->user()->hasPermissionTo('desloc');
+}
+
+
 
 function esPropietario($obj)
 {

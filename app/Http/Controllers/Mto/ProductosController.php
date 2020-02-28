@@ -313,26 +313,30 @@ class ProductosController extends Controller
     public function edit($id)
     {
 
-        if (esAdmin()){
-            $producto = Producto::withTrashed()->findOrFail($id);
-        }else{
-            $producto = Producto::findOrFail($id);
+        if (hasDesLoc()){
+            // con esto cambiamos de empresa si la empresa no coincide
+            $producto = Producto::withOutGlobalScope(EmpresaProductoScope::class)->withTrashed()->findOrFail($id);
+            $collection = session('empresas_usuario');
+            if ($collection->search($producto->empresa_id, true)===false && $collection->search($producto->destino_empresa_id, true)===false){
+                return abort(404, "No se ha encontrado el registro");
+            }
+
+            if ($producto->empresa_id != session('empresa_id')){
+                $parametros = $this->loadSession($producto->empresa_id);
+            }else{
+                $parametros = false;
+            }
         }
+        else{
 
-        $parametros = false;
+            if (esAdmin()){
+                $producto = Producto::withTrashed()->findOrFail($id);
+            }else{
+                $producto = Producto::findOrFail($id);
+            }
 
-        // con esto cambiamos de empresa si la empresa no coincide
-        // $producto = Producto::withOutGlobalScope(EmpresaProductoScope::class)->withTrashed()->findOrFail($id);
-        // $collection = session('empresas_usuario');
-        // if ($collection->search($producto->empresa_id, true)===false && $collection->search($producto->destino_empresa_id, true)===false){
-        //     return abort(404, "No se ha encontrado el registro");
-        // }
-
-        // if ($producto->empresa_id != session('empresa_id')){
-        //     $parametros = $this->loadSession($producto->empresa_id);
-        // }else{
-        //     $parametros = false;
-        // }
+            $parametros = false;
+        }
 
         $this->authorize('update', $producto);
 

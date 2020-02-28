@@ -36,8 +36,9 @@ class UpdateUserRequest extends FormRequest
 
         $rules = [
             'name'      => 'required',
+            'lastname'  => 'nullable',
             'blocked'   => 'boolean',
-            'expira'=> 'required|min:0|max:180',
+            'expira'    => 'required|min:0|max:180',
             'fecha_expira'=> 'nullable|date',
             'username'  => ['min:6','required', Rule::unique('users')->ignore($this->route('user')->id)],
             'email'     => ['nullable',Rule::requiredIf($this->id <= 2),'email', Rule::unique('users')->ignore($this->route('user')->id)],
