@@ -148,7 +148,7 @@
                             >
                                 <template slot="items" slot-scope="props">
                                     <td>{{ props.item.empresa }}</td>
-                                    <td>{{ props.item.sigla }}</td>
+                                    <td>{{ props.item.sigla }}/{{ props.item.procede}}</td>
                                     <td>{{ props.item.serie+props.item.numero }}</td>
                                     <td>{{ formatDate(props.item.fecha) }}</td>
                                     <td>{{ props.item.referencia }}</td>
@@ -188,7 +188,7 @@ export default {
                 width: '15%'
             },
             {
-                text: 'Ori',
+                text: 'Emp/Vendido',
                 align: 'left',
                 value: 'sigla',
                 width: '1%'

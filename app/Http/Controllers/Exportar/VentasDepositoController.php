@@ -77,7 +77,8 @@ class VentasDepositoController extends Controller
                 DB::getTablePrefix().'productos.nombre AS producto,'.
                 DB::getTablePrefix().'albalins.importe_venta AS importe_venta,'.
                 DB::getTablePrefix().'albalins.precio_coste AS precio_coste,'.
-                DB::getTablePrefix().'empresas.sigla';
+                DB::getTablePrefix().'empresas.sigla,'.
+                DB::getTablePrefix().'ep.sigla AS procede';
 
         $albaranes = DB::table('albaranes')
                         ->select(DB::raw($select))
@@ -85,6 +86,7 @@ class VentasDepositoController extends Controller
                         ->join('empresas','albaranes.empresa_id','=','empresas.id')
                         ->join('albalins','albalins.albaran_id','=','albaranes.id')
                         ->join('productos','albalins.producto_id','=','productos.id')
+                        ->join('empresas AS ep','albaranes.procedencia_empresa_id','=','ep.id')
                         // ->where('albaranes.empresa_id', session('empresa')->id)
                         ->whereIn('albaranes.empresa_id', session('empresas_usuario'))
                         ->where('albaranes.tipo_id', 3)
@@ -116,7 +118,8 @@ class VentasDepositoController extends Controller
                 DB::getTablePrefix().'productos.nombre AS producto,'.
                 DB::getTablePrefix().'albalins.importe_venta AS importe_venta,'.
                 DB::getTablePrefix().'albalins.precio_coste AS precio_coste,'.
-                DB::getTablePrefix().'empresas.sigla';
+                DB::getTablePrefix().'empresas.sigla,'.
+                DB::getTablePrefix().'ep.sigla AS procede';
 
         $albaranes = DB::table('albaranes')
                         ->select(DB::raw($select))
@@ -124,6 +127,7 @@ class VentasDepositoController extends Controller
                         ->join('empresas','albaranes.empresa_id','=','empresas.id')
                         ->join('productos','albalins.producto_id','=','productos.id')
                         ->join('clientes','productos.cliente_id','=','clientes.id')
+                        ->join('empresas AS ep','albaranes.procedencia_empresa_id','=','ep.id')
                         ->whereIn('albaranes.empresa_id', session('empresas_usuario'))
                         // ->where('albaranes.empresa_id', session('empresa')->id)
                         ->where('albaranes.tipo_id', 3)
@@ -152,13 +156,15 @@ class VentasDepositoController extends Controller
                 DB::getTablePrefix().'productos.nombre AS producto,'.
                 DB::getTablePrefix().'albalins.importe_venta AS importe_venta,'.
                 DB::getTablePrefix().'albalins.precio_coste AS precio_coste,'.
-                DB::getTablePrefix().'empresas.sigla';
+                DB::getTablePrefix().'empresas.sigla,'.
+                DB::getTablePrefix().'ep.sigla AS procede';
 
         $albaranes = DB::table('albaranes')
                         ->select(DB::raw($select))
                         ->join('empresas','albaranes.empresa_id','=','empresas.id')
                         ->join('albalins','albalins.albaran_id','=','albaranes.id')
                         ->join('productos','albalins.producto_id','=','productos.id')
+                        ->join('empresas AS ep','albaranes.procedencia_empresa_id','=','ep.id')
                         // ->where('albaranes.empresa_id', session('empresa')->id)
                         ->whereIn('albaranes.empresa_id', session('empresas_usuario'))
                         ->where('albaranes.tipo_id', 3)
@@ -190,13 +196,15 @@ class VentasDepositoController extends Controller
                 DB::getTablePrefix().'productos.nombre AS producto,'.
                 DB::getTablePrefix().'albalins.importe_venta AS importe_venta,'.
                 DB::getTablePrefix().'albalins.precio_coste AS precio_coste,'.
-                DB::getTablePrefix().'empresas.sigla';
+                DB::getTablePrefix().'empresas.sigla,'.
+                DB::getTablePrefix().'ep.sigla AS procede';
 
         $albaranes = DB::table('albaranes')
                         ->select(DB::raw($select))
                         ->join('empresas','albaranes.empresa_id','=','empresas.id')
                         ->join('albalins','albalins.albaran_id','=','albaranes.id')
                         ->join('productos','albalins.producto_id','=','productos.id')
+                        ->join('empresas AS ep','albaranes.procedencia_empresa_id','=','ep.id')
                         // ->where('albaranes.empresa_id', session('empresa')->id)
                         ->whereIn('albaranes.empresa_id', session('empresas_usuario'))
                         ->where('albaranes.tipo_id', 3)
@@ -226,13 +234,15 @@ class VentasDepositoController extends Controller
                 DB::getTablePrefix().'productos.nombre AS producto,'.
                 DB::getTablePrefix().'albalins.importe_venta AS importe_venta,'.
                 DB::getTablePrefix().'albalins.precio_coste AS precio_coste,'.
-                DB::getTablePrefix().'empresas.sigla';
+                DB::getTablePrefix().'empresas.sigla,'.
+                DB::getTablePrefix().'ep.sigla AS procede';
 
         $albaranes = DB::table('albaranes')
                         ->select(DB::raw($select))
                         ->join('empresas','albaranes.empresa_id','=','empresas.id')
                         ->join('albalins','albalins.albaran_id','=','albaranes.id')
                         ->join('productos','albalins.producto_id','=','productos.id')
+                        ->join('empresas AS ep','albaranes.procedencia_empresa_id','=','ep.id')
                         // ->where('albaranes.empresa_id', session('empresa')->id)
                         ->whereIn('albaranes.empresa_id', session('empresas_usuario'))
                         ->where('albaranes.tipo_id', 3)
