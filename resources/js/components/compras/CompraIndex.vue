@@ -152,7 +152,7 @@ import {mapActions} from "vuex";
             descending: true,
             page: 1,
             rowsPerPage: 10,
-            sortBy: "alb_ser",
+            sortBy: "eje_alb",
         },
         search:"",
         headers: [

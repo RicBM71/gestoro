@@ -144,32 +144,35 @@ class Libro extends Model
      */
     public static function restaContadorCompra($ejercicio, $grupo_id, $num_compra){
 
-        $compras = Compra::where('ejercicio', $ejercicio)
-                        ->where('grupo_id', $grupo_id)->count();
+        $numero_compras = DB::table('compras')
+                                ->where('empresa_id', session('empresa_id'))
+                                ->where('ejercicio', $ejercicio)
+                                ->where('grupo_id', $grupo_id)->count();
 
         try {
 
-            $contador =  Libro:: where('grupo_id',$grupo_id)
-                                ->where('ejercicio',$ejercicio)
-                                ->lockForUpdate()->firstOrFail();
+            $contador = Libro::where('grupo_id',$grupo_id)
+                              ->where('ejercicio',$ejercicio)
+                              ->lockForUpdate()->firstOrFail();
 
             $sincronizado = [
                 'estado'    =>  false,
                 'msg'       => 'Revisar contador! Compra: '.$contador->ult_compra];
 
-            if ($contador->ult_compra == $num_compra){
+            if ($contador->ult_compra == $num_compra && $contador->ult_compra == ($numero_compras + 1)){
                 $sincronizado = [
                     'estado'    =>  true,
                     'msg'       => 'Contador Sincronizado'];
                 $contador->ult_compra--;
+
+                $arr = [
+                    'ult_compra' => $contador->ult_compra,
+                    'username' => session()->get('username')
+                ];
+
+                Libro::where('id', $contador->id)->update($arr);
             }
 
-            $arr = [
-                'ult_compra' => $contador->ult_compra,
-                'username' => session()->get('username')
-            ];
-
-            Libro::where('id', $contador->id)->update($arr);
 
             return $sincronizado;
 

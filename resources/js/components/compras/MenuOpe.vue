@@ -2,6 +2,22 @@
     <div>
         <my-dialog :dialog.sync="dialog" registro="registro" @destroyReg="destroyReg"></my-dialog>
         <reacli-dialog :dialog_reacli.sync="dialog_reacli" :cliente_id_nuevo.sync="cliente_id_nuevo" @goReaCli="goReaCli"></reacli-dialog>
+        <trasladar-dialog :dialog_trasladar.sync="dialog_trasladar" :compra="compra"></trasladar-dialog>
+        <!-- <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+                <v-btn
+                    v-show="compra.id > 0  && hasAddCom"
+                    :disabled="!computedReaCli"
+                    v-on="on"
+                    color="white"
+                    icon
+                    @click="dialog_trasladar=!dialog_trasladar"
+                >
+                    <v-icon color="orange darken-4">redo</v-icon>
+                </v-btn>
+            </template>
+            <span>Trasladar Compra</span>
+        </v-tooltip> -->
         <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
@@ -166,6 +182,7 @@
 <script>
 import MyDialog from '@/components/shared/MyDialog'
 import ReaCli from '@/components/shared/ReaCli'
+import Trasladar from './Trasladar'
 import UpdateFase from './UpdateFase'
 import {mapGetters} from 'vuex';
 export default {
@@ -178,10 +195,12 @@ export default {
         'my-dialog': MyDialog,
         'update-fase': UpdateFase,
         'reacli-dialog': ReaCli,
+        'trasladar-dialog': Trasladar,
     },
     data () {
       return {
           dialog_reacli: false,
+          dialog_trasladar: false,
           cliente_id_nuevo: 0,
           dialog: false,
           ruta: "compra",
@@ -203,11 +222,14 @@ export default {
             return (this.compra.id > 0 && this.compra.fase_id <= 4 && this.isSupervisor && this.compra.factura == null);
         },
         computedImprimeCompra(){
-
+            console.log(this.docu_ok);
             //if ((this.compra.fase_id == 3 || this.compra.fase_id == 4) && (this.docu_ok || this.hasScan==false))
-            if (this.compra.fase_id >= 3 && (this.docu_ok || this.hasScan==false))
+            if (this.compra.fase_id == 3 && (this.docu_ok || this.hasScan==false))
                 return true;
 
+            if (this.compra.fase_id >= 4)
+                return true;
+                
             return false;
         },
         computedScanDocu(){
