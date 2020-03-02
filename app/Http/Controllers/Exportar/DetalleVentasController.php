@@ -93,11 +93,6 @@ class DetalleVentasController extends Controller
 
                 $row_id++;
 
-                if ($primera == false){
-                    $cobro_alb = array(0,0);
-                    $primera = false;
-                }
-
                 $arr[]=[
                         'id'             => $row_id, // esto es para que no falle key de vue
                         'albaran_id'     => $albaran->id,
@@ -113,6 +108,11 @@ class DetalleVentasController extends Controller
                         'efectivo'       => $cobro_alb[0],
                         'banco'          => $cobro_alb[1],
                 ];
+
+                if ($primera == true){
+                    $cobro_alb = array(0,0);
+                    $primera = false;
+                }
             }
 
         }

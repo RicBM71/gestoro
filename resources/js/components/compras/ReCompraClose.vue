@@ -520,8 +520,7 @@ import {mapState} from 'vuex'
                         this.grabaciones = res.data.grabaciones;
                         this.dias_cortesia = res.data.dias_cortesia;
                         this.cambio_recompra = res.data.cambio_recompra;
-
-                        console.log(res.data.documentos);
+                        
                         this.docu_ok = res.data.documentos.status > 0 ? true : false;
 
                         this.valor_compras = res.data.valor_compras;

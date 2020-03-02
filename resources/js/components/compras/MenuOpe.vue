@@ -222,14 +222,14 @@ export default {
             return (this.compra.id > 0 && this.compra.fase_id <= 4 && this.isSupervisor && this.compra.factura == null);
         },
         computedImprimeCompra(){
-            console.log(this.docu_ok);
+
             //if ((this.compra.fase_id == 3 || this.compra.fase_id == 4) && (this.docu_ok || this.hasScan==false))
             if (this.compra.fase_id == 3 && (this.docu_ok || this.hasScan==false))
                 return true;
 
             if (this.compra.fase_id >= 4)
                 return true;
-                
+
             return false;
         },
         computedScanDocu(){
