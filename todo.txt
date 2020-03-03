@@ -126,6 +126,11 @@ update klt_productos set destino_empresa_id = 4, cliente_id = 2419 where referen
 SELECT * FROM `productos` where empresa = 16 and estado in("B","R","I") and baja = "N"
 
 
+fase depósito erronea;
+
+SELECT * FROM `klt_compras` where fase_id <> 5 and id in (select compra_id from klt_depositos where concepto_id in(10,11,12)) 
+
+
 
 
 DELETE FROM klt_comlines where empresa_id not in(1,2,4,11,12,14,17);

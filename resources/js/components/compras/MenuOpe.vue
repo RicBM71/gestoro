@@ -6,6 +6,7 @@
         <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
+
                     v-show="compra.id > 0  && hasAddCom"
                     :disabled="!computedTraslado"
                     v-on="on"
@@ -190,6 +191,7 @@ export default {
         compra: Object,
         docu_ok: Boolean,
         refresh: Number,
+
     },
     components: {
         'my-dialog': MyDialog,
@@ -206,6 +208,7 @@ export default {
           ruta: "compra",
           url: "/compras/compras",
           dialog_fas: false,
+
       }
     },
     computed: {
@@ -222,6 +225,7 @@ export default {
             return (this.compra.id > 0 && this.compra.fase_id <= 4 && this.isSupervisor && this.compra.factura == null);
         },
         computedTraslado(){
+
             const hoy = new Date().toISOString().substr(0, 10);
 
             return (this.compra.id > 0 && this.compra.fase_id <= 4 && this.isSupervisor && this.compra.factura == null && this.compra.fecha_compra == hoy);
@@ -253,7 +257,7 @@ export default {
                 if (this.compra.created_at.substr(0, 10) == new Date().toISOString().substr(0, 10) && this.compra.username==this.userName)
                     return true;
 
-                if (this.compra.created_at.substr(0, 10) == new Date().toISOString().substr(0, 10) && isSupervisor)
+                if (this.compra.created_at.substr(0, 10) == new Date().toISOString().substr(0, 10) && this.isSupervisor)
                     return true;
 
                 if  (this.hasBorraCompras)

@@ -35,7 +35,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" flat round @click="closeDialog">Cerrar</v-btn>
-          <v-btn color="blue darken-1" flat round @click="submit" :disabled="loading" :loading="loading">Trasladar</v-btn>
+          <v-btn color="blue darken-1" flat round @click="submit" :disabled="disabled" :loading="loading">Trasladar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -54,13 +54,18 @@
         empresa_id: "",
         grupo_id:"",
         url: "/compras/trasladar",
-        loading: false
+        loading: false,
+        disabled: false,
     }),
     mounted(){
         axios.get(this.url)
             .then(res => {
                 this.empresas = res.data.empresas;
-                this.empresa_id = this.empresas[0].value;
+                if (this.empresas.length > 0){
+                    this.empresa_id = this.empresas[0].value;
+                }
+                else
+                    this.disabled = true;
             })
             .catch(err => {
                 this.loading = false;
