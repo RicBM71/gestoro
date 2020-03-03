@@ -105,7 +105,7 @@ class HomeController extends Controller
         ];
 
         // envio mail de modificación de productos
-        //$this->productosOnline($parametros->email_productos_online, $empresa->razon);
+        $this->productosOnline($parametros->email_productos_online, $empresa->razon);
 
 
        // de momento no quito filtros, ya veremos.
@@ -219,7 +219,7 @@ class HomeController extends Controller
                         ->join('productos','albalins.producto_id','=','productos.id')
                         ->join('estados','productos.estado_id','=','estados.id')
                         ->where('albaranes.tipo_id', 3)
-                        ->whereDate('albaranes.updated_at', $hoy)
+                        ->whereDate('albaranes.updated_at', '<', $hoy)
                         ->where('productos.online', 1)
                         ->where('albaranes.online', 0)
                         ->whereNull('albaranes.deleted_at')
@@ -241,15 +241,16 @@ class HomeController extends Controller
             // con esto previsualizamos el mail
             //return new Factura($data);
 
-            dispatch(new SendUpdateProductosOnline($data));
 
             $data_alb=['online' => 1];
 
-            Albaran::where('albaranes.tipo_id', 3)
-                        ->whereDate('albaranes.updated_at', $hoy)
-                        ->where('albaranes.online', 0)
-                        ->whereNull('albaranes.deleted_at')
-                        ->update($data_alb);
+            DB::table('albaranes')->where('albaranes.tipo_id', 3)
+                                ->whereDate('albaranes.updated_at', '<', $hoy)
+                                ->where('albaranes.online', 0)
+                                ->whereNull('albaranes.deleted_at')
+                                ->update($data_alb);
+
+            dispatch(new SendUpdateProductosOnline($data));
 
             return $albaranes;
         }
