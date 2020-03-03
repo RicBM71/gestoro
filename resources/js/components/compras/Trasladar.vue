@@ -19,6 +19,16 @@
                             ></v-select>
                         </v-flex>
                     </v-layout>
+                    <v-layout wrap>
+                        <v-flex sm10 d-flex>
+                            <v-select
+                                v-model="grupo_id"
+                                :error-messages="errors.collect('grupo_id')"
+                                :items="grupos"
+                                label="Libro Destino"
+                            ></v-select>
+                        </v-flex>
+                    </v-layout>
                 </v-container>
             </v-form>
         </v-card-text>
@@ -40,7 +50,9 @@
     },
     data: () => ({
         empresas:[],
+        grupos:[],
         empresa_id: "",
+        grupo_id:"",
         url: "/compras/trasladar",
         loading: false
     }),
@@ -54,6 +66,18 @@
                 this.loading = false;
             });
     },
+    watch:{
+        empresa_id: function () {
+            axios.get(this.url+"/"+this.empresa_id+"/grupo")
+                .then(res => {
+                    this.grupos = res.data.grupos;
+                    this.grupo_id = this.grupos[0].value;
+                })
+                .catch(err => {
+                    this.loading = false;
+                });
+        }
+    },
     methods:{
         closeDialog (){
             this.$emit('update:dialog_trasladar', false)
@@ -63,11 +87,27 @@
              if (this.loading === false){
                 this.loading = true;
 
-                axios.put(this.url+"/"+this.compra.id,{destino_empresa_id: this.empresa_id} )
+                axios.put(this.url+"/"+this.compra.id,
+                            {destino_empresa_id: this.empresa_id,
+                             destino_grupo_id: this.grupo_id })
                     .then(res => {
-
                        // this.$emit('update:compra', this.compra)
                         this.$emit('update:dialog_trasladar', false)
+
+                        if (res.data.estado == true)
+                            this.$toast.success('Se ha trasladado la compra!');
+                        else
+                            this.$toast.warning('Check contadores!!, taslado con indidencias!');
+
+                        this.$router.push({ name: 'dash' })
+
+                        // if (this.compra.tipo_id == 1)
+                        //     this.$router.push({ name: 'recompra.close', params: { id: this.compra.id } })
+                        // else
+                        //     this.$router.push({ name: 'compra.close', params: { id: this.compra.id } })
+
+
+
 
                     })
                     .catch(err => {

@@ -64,6 +64,16 @@ class Libro extends Model
 
     }
 
+    public static function selLibrosGrupoEmpresa($empresa_id, $ejercicio){
+
+        return DB::table("libros")->select(DB::raw('grupo_id AS value, CONCAT(nombre, " " , ejercicio) AS text'))
+                        ->where('empresa_id', $empresa_id)
+                        ->where('ejercicio', $ejercicio)
+                        ->orderBy('nombre', 'asc')
+                        ->get();
+
+    }
+
     // public static function selSerieCompras(){
 
     //     return Libro::select(DB::raw('DISTINCT serie_com AS value, '.DB::getTablePrefix().'nombre AS text'))
@@ -140,9 +150,10 @@ class Libro extends Model
      * @param integer ejercicio
      * @param integer grupo_id
      * @param integer número para comparar si se puede o no retrasar el contador, solo si es la misma.
+     * @param integer actua dependiendo de si se borra la compra = 1 ó es un traslado de compra = 0.
      * @return App\Libro $contador
      */
-    public static function restaContadorCompra($ejercicio, $grupo_id, $num_compra){
+    public static function restaContadorCompra($ejercicio, $grupo_id, $num_compra, $delete=1){
 
         $numero_compras = DB::table('compras')
                                 ->where('empresa_id', session('empresa_id'))
@@ -159,7 +170,7 @@ class Libro extends Model
                 'estado'    =>  false,
                 'msg'       => 'Revisar contador! Compra: '.$contador->ult_compra];
 
-            if ($contador->ult_compra == $num_compra && $contador->ult_compra == ($numero_compras + 1)){
+            if ($contador->ult_compra == $num_compra && $contador->ult_compra == ($numero_compras + $delete)){
                 $sincronizado = [
                     'estado'    =>  true,
                     'msg'       => 'Contador Sincronizado'];

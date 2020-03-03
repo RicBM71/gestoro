@@ -144,6 +144,7 @@ Route::group([
 
         Route::get('trasladar', 'TrasladarController@index');
         Route::put('trasladar/{compra}', 'TrasladarController@update');
+        Route::get('trasladar/{empresa_id}/grupo', 'TrasladarController@grupo');
 
         Route::get('find', 'FindComprasController@index');
         Route::post('find/compra', 'FindComprasController@find');

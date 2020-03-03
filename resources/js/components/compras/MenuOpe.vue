@@ -3,21 +3,21 @@
         <my-dialog :dialog.sync="dialog" registro="registro" @destroyReg="destroyReg"></my-dialog>
         <reacli-dialog :dialog_reacli.sync="dialog_reacli" :cliente_id_nuevo.sync="cliente_id_nuevo" @goReaCli="goReaCli"></reacli-dialog>
         <trasladar-dialog :dialog_trasladar.sync="dialog_trasladar" :compra="compra"></trasladar-dialog>
-        <!-- <v-tooltip bottom>
+        <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
                     v-show="compra.id > 0  && hasAddCom"
-                    :disabled="!computedReaCli"
+                    :disabled="!computedTraslado"
                     v-on="on"
                     color="white"
                     icon
                     @click="dialog_trasladar=!dialog_trasladar"
                 >
-                    <v-icon color="orange darken-4">redo</v-icon>
+                    <v-icon color="orange darken-4">explore</v-icon>
                 </v-btn>
             </template>
             <span>Trasladar Compra</span>
-        </v-tooltip> -->
+        </v-tooltip>
         <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
@@ -220,6 +220,11 @@ export default {
         ]),
         computedReaCli(){
             return (this.compra.id > 0 && this.compra.fase_id <= 4 && this.isSupervisor && this.compra.factura == null);
+        },
+        computedTraslado(){
+            const hoy = new Date().toISOString().substr(0, 10);
+
+            return (this.compra.id > 0 && this.compra.fase_id <= 4 && this.isSupervisor && this.compra.factura == null && this.compra.fecha_compra == hoy);
         },
         computedImprimeCompra(){
 
