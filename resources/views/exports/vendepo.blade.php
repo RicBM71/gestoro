@@ -5,7 +5,7 @@
         </tr>
         <tr>
             <th>EMPRESA DE VENTA</th>
-            <th>Origen</th>
+            <th>Origen/Dest</th>
             <th>FACT/ALB</th>
             <th>FECHA</th>
             <th>REFERENCIA</th>
@@ -19,7 +19,7 @@
     @foreach($data as $item)
         <tr>
             <td>{{ $item['empresa']}}</td>
-            <td>{{ $item['sigla']}}</td>
+            <td>{{ $item['sigla']}}/{{$item['procede']}}</td>
             <td>{{ $item['serie'].$item['numero']}}</td>
             <td>{{ getFecha($item['fecha'])}}</td>
             <td>{{ $item['referencia']}}</td>

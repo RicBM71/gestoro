@@ -136,7 +136,7 @@
                     </v-layout>
                     <v-layout row wrap v-if="tipo!='R'">
                         <v-flex sm1></v-flex>
-                        <v-flex sm11 class="font-italic orange--text">*Esta consulta se genera en base a la fecha de modificacíon (cuando seleccionas No facturados), por ejemplo para mostrar reservas antiguas. </v-flex>
+                        <v-flex sm11 class="font-italic orange--text">*Esta consulta se genera en base a la fecha de modificación (cuando seleccionas No facturados), por ejemplo para mostrar reservas antiguas. </v-flex>
                     </v-layout>
                     <v-layout row wrap v-if="items.length>0">
                         <v-flex xs12>
