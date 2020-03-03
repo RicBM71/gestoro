@@ -98,7 +98,16 @@ class KltComprasSeeder extends Seeder
                 $semdia_bloqueo="1/1";
             }
 
+
+
             $empresa_id = $contador->emp_com;
+
+            // if ($empresa_id == 14 && $row->ejercicio == 2020 && $grupo_id == 1){
+            //     $serie_com = 'X';
+            // }
+            // if ($empresa_id == 14 && $row->ejercicio == 2020 && $grupo_id == 2){
+            //     $serie_com = 'Y';
+            // }
 
 
             // if(in_array($row->empresa, [12,13,14,15,16])){

@@ -124,3 +124,16 @@ update klt_productos set destino_empresa_id = 4, cliente_id = 2419 where referen
 
 
 SELECT * FROM `productos` where empresa = 16 and estado in("B","R","I") and baja = "N"
+
+
+
+
+DELETE FROM klt_comlines where empresa_id not in(1,2,4,11,12,14,17);
+DELETE FROM klt_depositos where empresa_id not in(1,2,4,11,12,14,17);
+DELETE FROM klt_compras where empresa_id not in(1,2,4,11,12,14,17);
+DELETE FROM klt_albalins where empresa_id not in(1,2,4,11,12,14,17);
+DELETE FROM klt_cobros where empresa_id not in(1,2,4,11,12,14,17);
+DELETE FROM klt_albaranes where empresa_id not in(1,2,4,11,12,14,17);
+DELETE FROM klt_productos where empresa_id not in(1,2,4,11,12,14,17);
+DELETE FROM klt_cajas where empresa_id not in(1,2,4,11,12,14,17);
+DELETE FROM klt_empresas where id not in(1,2,4,11,12,14,17);

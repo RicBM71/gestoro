@@ -43,6 +43,7 @@ class UsersTableSeeder extends Seeder
         Permission::create(['name'=>'scan','nombre'=>'Scanea Docu']);
         Permission::create(['name'=>'users','nombre'=>'Usuarios']);
         Permission::create(['name'=>'edtfac','nombre'=>'*Edita Facturas']);
+        Permission::create(['name'=>'desloc','nombre'=>'*Deslocalizar']);
 
     //     $user = new User;
 

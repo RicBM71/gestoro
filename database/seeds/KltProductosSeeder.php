@@ -202,7 +202,7 @@ class KltProductosSeeder extends Seeder
                 'etiqueta_id' => $row->etiqueta==null ? 1 : $etiqueta[$row->etiqueta],
                 'online' => $row->online=="S" ? true : false,
                 'deleted_at' => $row->baja=="S" ? $row->sysfum : null,
-                'notas'=> $row->notas,
+                'notas'=> $row->notas=='' ? null : $row->notas,
                 'username' => $row->sysusr,
                 'created_at' => $row->fechaalta.' 00:00:00',
                 'updated_at' => $row->sysfum.' '.$row->syshum,
