@@ -102,6 +102,11 @@ class KltComprasSeeder extends Seeder
 
             $empresa_id = $contador->emp_com;
 
+            if ($row->empresa == 14 && getEjercicio($row->fechacomp) == 2020){
+                $serie_com = "B";
+            }
+
+
             // if ($empresa_id == 14 && $row->ejercicio == 2020 && $grupo_id == 1){
             //     $serie_com = 'X';
             // }

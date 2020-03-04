@@ -19,8 +19,8 @@ class KltLibrosTableSeeder extends Seeder
             //->select('select * from contadores WHERE id=148');
             ->select('select * from contadores '.
                     ' WHERE compras > 1 '.
-                    ' AND ejercicio >= 1 '.
-                    'ORDER BY contadores.id');
+                    ' AND ejercicio >= 1 AND empresa <> 14 '.
+                    ' ORDER BY contadores.id');
 
 
         foreach ($reg as $row){

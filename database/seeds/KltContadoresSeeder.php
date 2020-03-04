@@ -18,8 +18,8 @@ class KltContadoresSeeder extends Seeder
         //->select('select * from contadores WHERE id=148');
         ->select('select * from contadores '.
                 ' WHERE albaran > 1001 '.
-                ' AND ejercicio = 2020 '.
-                'ORDER BY contadores.id');
+                ' AND ejercicio = 2020 AND empresa <> 14'.
+                ' ORDER BY contadores.id');
 
 
         foreach ($reg as $row){
