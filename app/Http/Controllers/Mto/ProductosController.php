@@ -91,7 +91,7 @@ class ProductosController extends Controller
 
     private function miFiltro(){
 
-        ini_set('memory_limit', '512M');
+        //ini_set('memory_limit', '512M');
 
         $data = request()->session()->get('filtro_pro');
 
