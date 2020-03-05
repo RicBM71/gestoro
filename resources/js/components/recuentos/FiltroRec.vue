@@ -2,7 +2,7 @@
     <v-form>
         <v-container>
             <v-layout row wrap>
-                 <v-flex sm3>
+                <v-flex sm3>
                     <v-select
                         v-model="find.clase_id"
                         v-validate="'numeric'"
@@ -12,7 +12,7 @@
                         :items="clases"
                         label="Clase"
                         required
-                        ></v-select>
+                    ></v-select>
                 </v-flex>
                 <v-flex sm3>
                     <v-select

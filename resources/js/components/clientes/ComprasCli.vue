@@ -172,6 +172,7 @@ import {mapActions} from 'vuex'
             'unsetPagination'
         ]),
         deEmpresaActiva(empresa_id){
+           return true;
            return empresa_id == this.empresaActiva;
         },
         updateEventPagina(obj){

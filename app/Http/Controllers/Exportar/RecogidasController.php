@@ -15,7 +15,7 @@ class RecogidasController extends Controller
 {
     public function index(){
 
-        if (!auth()->user()->hasRole('Gestor')){
+        if (!esGestor() || !\esSupervisor()){
             return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Gestor');
         }
 
@@ -23,7 +23,7 @@ class RecogidasController extends Controller
 
     public function submit(Request $request){
 
-        if (!auth()->user()->hasRole('Gestor')){
+        if (!esGestor() || !\esSupervisor()){
             return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Gestor');
         }
 

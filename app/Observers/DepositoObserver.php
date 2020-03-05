@@ -21,7 +21,7 @@ class DepositoObserver
     public function created(Deposito $deposito)
     {
 
-        if (!in_array($deposito->concepto_id,[1,4,7,10,13,16]))
+        if (!in_array($deposito->concepto_id,[1,4,7,10,13,16]) || $deposito->importe == 0)
             return;
 
              //DATOS COMPRA
