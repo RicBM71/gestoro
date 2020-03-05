@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Mto;
 
 use App\Rfid;
+use App\Clase;
 use App\Producto;
 use App\Recuento;
 use Illuminate\Http\Request;
+use App\Exports\RecuentoExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Scopes\EmpresaProductoScope;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\StoreRecuentoRequest;
 
 class RecuentosController extends Controller
@@ -32,6 +35,7 @@ class RecuentosController extends Controller
 
         $data = $request->validate([
             'rfid_id' => ['nullable','integer'],
+            'clase_id' => ['nullable','integer'],
         ]);
 
         session(['filtro_rec' => $data]);
@@ -50,11 +54,29 @@ class RecuentosController extends Controller
 
         $data = session('filtro_rec');
 
+        $recuento = Recuento::with(['producto','rfid','estado'])
+                            ->rfid($data['rfid_id'])
+                            ->get();
 
-        return Recuento::with(['producto','rfid','estado'])
-                        ->rfid($data['rfid_id'])
-                        ->get();
+        if ($data['clase_id'] == null)
+            return $recuento;
+        else{
 
+            $response = array();
+            foreach ($recuento as $row){
+
+                if ($row->producto != null){
+                    if ($row->producto->clase_id != $data['clase_id'])
+                        continue;
+
+                    $response[] = $row;
+                }
+
+            }
+
+            return $response;
+
+        }
 
 
     }
@@ -66,7 +88,13 @@ class RecuentosController extends Controller
      */
     public function create()
     {
-        return  Rfid::selRfid();
+
+        if (request()->wantsJson())
+            return [
+                'rfids'    => Rfid::selRfid(),
+                'clases'   => Clase::selGrupoClase(),
+            ];
+
     }
 
     /**
@@ -199,13 +227,15 @@ class RecuentosController extends Controller
      */
     public function close(Request $request){
 
+
         $data = $request->validate([
             'fecha' => ['required', 'date'],
         ]);
 
 
         $productos = DB::table('productos')->select('*')
-                    ->whereRaw('('.DB::getTablePrefix().'productos.empresa_id = '.session('empresa_id').' OR destino_empresa_id = '.session('empresa_id').')')
+                    //->whereRaw('('.DB::getTablePrefix().'productos.empresa_id = '.session('empresa_id').' OR destino_empresa_id = '.session('empresa_id').')')
+                    ->where('destino_empresa_id', session('empresa_id'))
                     ->whereIn('estado_id', [1,2,3])
                     ->whereRaw(DB::getTablePrefix().'productos.id NOT IN (SELECT producto_id FROM '.DB::getTablePrefix().'recuentos WHERE empresa_id = '.session('empresa_id').')')
                     ->whereNull('deleted_at')
@@ -234,15 +264,39 @@ class RecuentosController extends Controller
 
     }
 
-    public function reset(){
+    public function reset(Request $request){
 
         if (!esAdmin())
             return abort(411,'No autorizado');
 
-        DB::table('recuentos')->where('empresa_id', session('empresa_id'))->delete();
+        if ($request->reset == true)
+            DB::table('recuentos')->where('empresa_id', session('empresa_id'))->delete();
+        else
+            DB::table('recuentos')->where('empresa_id',session('empresa_id'))
+                ->where('rfid_id',3)
+            ->delete();
 
         return response('Recuento borrado', 200);
 
     }
+
+
+    /**
+     * Recibe las facturas por request, previamente de $this->lisfac()
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function excel(Request $request){
+
+        // foreach ($request->data as $row){
+        //     \Log::info($row->producto_id);
+        // }
+
+        return Excel::download(new RecuentoExport($request->data, 'Recuento '.session('empresa')->razon), 'recuento.xlsx');
+
+
+    }
+
 
 }

@@ -7,7 +7,6 @@
                     <v-card-title>
                         <h2>{{titulo}}</h2>
                         <v-spacer></v-spacer>
-                        <v-spacer></v-spacer>
                         <v-tooltip bottom>
                             <template v-slot:activator="{ on }">
                                 <v-btn
@@ -21,6 +20,22 @@
                             </template>
                             <span>Filtros</span>
                         </v-tooltip>
+                        <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                            <v-btn
+                                v-show="items.length > 0 && isGestor"
+                                v-on="on"
+                                color="white"
+                                icon
+                                @click="goExcel()"
+                            >
+                                <v-avatar size="32px">
+                                    <img class="img-fluid" src="/assets/excel.png">
+                                </v-avatar>
+                            </v-btn>
+                        </template>
+                        <span>Exportar a Excel</span>
+                    </v-tooltip>
                         <menu-ope></menu-ope>
                     </v-card-title>
                 </v-card>
@@ -178,6 +193,7 @@ import FiltroRec from './FiltroRec'
 
         axios.get('/mto/recuentos')
             .then(res => {
+                console.log(res.data);
                 this.items = res.data;
             })
             .catch(err =>{
@@ -195,6 +211,7 @@ import FiltroRec from './FiltroRec'
             'isRoot',
             'isAdmin',
             'isSupervisor',
+            'isGestor'
         ]),
     },
     methods:{
@@ -243,6 +260,37 @@ import FiltroRec from './FiltroRec'
                         });
 
             },
+        goExcel(){
+
+            this.show_loading = true;
+            axios({
+                url: "/mto/recuentos/excel",
+                method: 'POST',
+                responseType: 'blob', // important
+                data:{ data: this.items }
+                })
+            .then(response => {
+
+                let blob = new Blob([response.data])
+                let link = document.createElement('a')
+                link.href = window.URL.createObjectURL(blob)
+
+                link.download = "Recuento."+new Date().getFullYear()+(new Date().getMonth()+1)+(new Date().getDate())+'.xlsx';
+
+                document.body.appendChild(link);
+                link.click()
+                document.body.removeChild(link);
+
+                this.$toast.success('Download Ok! '+link.download);
+
+                this.show_loading = false;
+
+            })
+            .catch(err => {
+                this.$toast.error(err.response.data.message);
+                this.show_loading = false;
+            });
+        },
     }
   }
 </script>

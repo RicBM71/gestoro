@@ -121,6 +121,7 @@ Route::group([
         Route::post('recuentos/reset', 'RecuentosController@reset');
         Route::resource('recuentos', 'RecuentosController', ['as' => 'mto']);
         Route::post('recuentos/filtrar', 'RecuentosController@filtrar');
+        Route::post('recuentos/excel', 'RecuentosController@excel');
 
         // Route::middleware('role:Root|Admin')->group(function () {
         //     Route::resource('transferencias', 'TransferenciasController', ['as' => 'mto']);

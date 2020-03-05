@@ -32,6 +32,19 @@
                     </template>
                         <span>Eliminar recuento</span>
                 </v-tooltip>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                        <v-btn
+                            v-on="on"
+                            color="white"
+                            icon
+                            @click="goResetPerdidas()"
+                        >
+                            <v-icon color="orange darken-4">bug_report</v-icon>
+                        </v-btn>
+                    </template>
+                        <span>Eliminar SOLO perdidas</span>
+                </v-tooltip>
                 <!-- <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <v-btn
@@ -399,7 +412,25 @@ import MyDialog from '@/components/shared/MyDialog'
         goReset() {
             if (confirm('Eliminar TODO el recuento')){
                 this.show_loading = true;
-                axios.post("/mto/recuentos/reset")
+                axios.post("/mto/recuentos/reset",{reset: true})
+                    .then(res => {
+
+                        this.$toast.success(res.data);
+                        this.items = [];
+
+                    })
+                    .catch(err => {
+                        this.$toast.error(err.response.data.message);
+                    })
+                    .finally(()=> {
+                        this.show_loading = false;
+                    });
+            }
+        },
+        goResetPerdidas() {
+            if (confirm('Eliminar PERDIDAS del recuento')){
+                this.show_loading = true;
+                axios.post("/mto/recuentos/reset",{reset: false})
                     .then(res => {
 
                         this.$toast.success(res.data);

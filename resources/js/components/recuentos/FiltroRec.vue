@@ -2,6 +2,18 @@
     <v-form>
         <v-container>
             <v-layout row wrap>
+                 <v-flex sm3>
+                    <v-select
+                        v-model="find.clase_id"
+                        v-validate="'numeric'"
+                        data-vv-name="clase_id"
+                        data-vv-as="clase"
+                        :error-messages="errors.collect('clase_id')"
+                        :items="clases"
+                        label="Clase"
+                        required
+                        ></v-select>
+                </v-flex>
                 <v-flex sm3>
                     <v-select
                         v-model="find.rfid_id"
@@ -39,9 +51,11 @@ export default {
             loading: false,
             result: false,
 
+            clases: [],
             rfids: [],
             find: {
-                rfid_id: 3
+                rfid_id: 3,
+                clase_id: null
             },
 
       }
@@ -51,7 +65,10 @@ export default {
         axios.get('/mto/recuentos/create')
             .then(res => {
 
-                this.rfids = res.data;
+                this.rfids = res.data.rfids;
+                this.clases = res.data.clases;
+
+                this.clases.push({value:null,text:"---"});
                 this.rfids.push({value:null,text:"---"});
             })
             .catch(err => {
