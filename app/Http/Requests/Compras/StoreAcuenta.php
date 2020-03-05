@@ -38,7 +38,7 @@ class StoreAcuenta extends FormRequest
             'compra_id' => ['required','integer'],
             'fecha' => ['required','date'],
             'importe' => $imp,
-
+            'notas'         => ['nullable', 'max:190']
         ];
     }
 

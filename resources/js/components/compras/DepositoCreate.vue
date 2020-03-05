@@ -64,6 +64,16 @@
                                     </v-text-field>
                                 </v-flex>
                             </v-layout>
+                            <v-layout row wrap>
+                                <v-flex sm11>
+                                    <v-text-field
+                                        v-model="deposito.notas"
+                                        label="Notas"
+                                        v-on:keyup.enter="submit"
+                                    >
+                                    </v-text-field>
+                                </v-flex>
+                            </v-layout>
                         </v-container>
                     </v-form>
                 </v-card-text>
@@ -95,7 +105,8 @@ export default {
             concepto_id:0,
             cliente_id: 0,
             iban:"",
-            bic:""
+            bic:"",
+            deposito:""
         },
 
         disabled: false,

@@ -33,7 +33,7 @@ class StoreCapital extends FormRequest
             'compra_id' => ['required','integer'],
             'fecha' => ['required','date'],
             'importe'    => ['required', 'numeric', new LimiteEfectivoDepositoRule($this->cliente_id, $this->fecha, $this->compra_id, $this->concepto_id)],
-
+            'notas'         => ['nullable', 'max:190']
         ];
     }
 
