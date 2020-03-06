@@ -1,4 +1,4 @@
-@component('mail::message', ['data' => $data])
+@component('mail::message')
 # Productos modificados:
 
 {{--
@@ -6,13 +6,16 @@
 View Order
 @endcomponent --}}
 
-|Referencia|Producto|Estado
-|---|---|---|
+@component('mail::table', ['data' => $data])
+
+|Referencia |Producto |Estado                               |
+|-----------|---------|-------------------------------------|
 @foreach($data['albaranes'] as $item)
 |{{$item->referencia}}|{{$item->nombre}}|{{$item->estado}}
 @endforeach
 
-Saludos.<br>
-{{-- {{ config('app.name') }} --}}
+@endcomponent
+
 
 @endcomponent
+

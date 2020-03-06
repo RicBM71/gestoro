@@ -7,7 +7,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/dash', 'HomeController@dash')->name('dash');
 Route::post('/profile/avatar', 'HomeController@avatar');
 Route::put('/profile/destroy', 'HomeController@destroy');
-//Route::get('/import', 'ImportController@index')->name('import');
+
+// Route::get('/test', 'HomeController@test');
 
 Route::get('/expired', 'HomeController@expired')->name('expired');
 

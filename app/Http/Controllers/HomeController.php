@@ -239,7 +239,7 @@ class HomeController extends Controller
             ];
 
             // con esto previsualizamos el mail
-            //return new Factura($data);
+            //return new ProductosOnline($data);
 
 
             // $data_alb=['online' => 1];
