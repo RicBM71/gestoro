@@ -101,7 +101,8 @@
                                 <v-text-field
                                     v-model="computedFModFormat"
                                     :label="computedTxtMod"
-                                    readonly                            >
+                                    readonly
+                                >
                                 </v-text-field>
                             </v-flex>
                             <v-flex sm2>
@@ -150,7 +151,7 @@
                                     class="inputPrice"
                                     :value="totalOpDia()"
                                     readoly
-                                    label="Total Entregado/Recibido hoy"
+                                    label="Pagos/Cobros hoy"
                                 >
                                 </v-text-field>
                             </v-flex>
@@ -223,8 +224,8 @@ import {mapState} from 'vuex'
                 conceptos: [],
 
                 valor_compras: 0,
-                valor_entregado : 0,
-                valor_recibido: 0,
+                valor_pagado : 0,
+                valor_cobrado: 0,
 
         		status: false,
                 loading: false,
@@ -311,8 +312,8 @@ import {mapState} from 'vuex'
                                                    cliente_id: this.compra.cliente_id})
                     .then(res => {
                       //  this.totales_concepto = res.data.totales_concepto;
-                        this.valor_entregado = res.data.valor_entregado;
-                        this.valor_recibido = res.data.valor_recibido;
+                        this.valor_pagado = res.data.valor_pagado;
+                        this.valor_cobrado = res.data.valor_cobrado;
                     })
             },
 
@@ -412,7 +413,7 @@ import {mapState} from 'vuex'
                 return new Intl.NumberFormat("de-DE",{style: "currency", currency: "EUR"}).format(parseFloat(value))
             },
             totalOpDia(){
-                return this.getMoneyFormat(this.valor_entregado)+" / "+this.getMoneyFormat(this.valor_recibido);
+                return this.getMoneyFormat(this.valor_pagado)+" / "+this.getMoneyFormat(this.valor_cobrado);
             },
             updateNota(){
                 if (this.compra.fase_id >= 0){

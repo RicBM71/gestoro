@@ -137,7 +137,7 @@ class Deposito extends Model
         return is_null($q->importe) ? 0 : $q->importe;
     }
 
-    public static function valorEntregado($fecha,$cliente_id){
+    public static function valorCobrado($fecha,$cliente_id){
 
         $q = DB::table('depositos')
                 ->select(DB::raw('ROUND(SUM(importe), 0) AS importe'))
@@ -150,7 +150,7 @@ class Deposito extends Model
         return is_null($q->importe) ? 0 : $q->importe;
     }
 
-    public static function valorRecibido($fecha,$cliente_id){
+    public static function valorPagado($fecha,$cliente_id){
 
         $q = DB::table('depositos')
                 ->select(DB::raw('ROUND(SUM(importe), 0) AS importe'))

@@ -347,12 +347,12 @@
                                 class="inputPrice"
                                 :value="totalOpDia()"
                                 readoly
-                                label="Total Entregado/Recibido hoy"
+                                label="Pagos/Cobros hoy"
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm1></v-flex>
-                        <v-flex sm1 v-show="compra.fase_id <=4 && hasAddCom">
+
+                        <v-flex sm2 v-show="compra.fase_id <=4 && hasAddCom">
                             <div class="text-xs-center">
                                 <v-btn
                                     small
@@ -473,8 +473,8 @@ import {mapState} from 'vuex'
                 lineas_deposito: [],
 
                 valor_compras: 0,
-                valor_entregado : 0,
-                valor_recibido: 0,
+                valor_pagado : 0,
+                valor_cobrado: 0,
 
         		status: false,
                 loading: false,
@@ -729,8 +729,8 @@ import {mapState} from 'vuex'
                                                    cliente_id: this.compra.cliente_id})
                     .then(res => {
                         this.totales_concepto = res.data.totales_concepto;
-                        this.valor_entregado = res.data.valor_entregado;
-                        this.valor_recibido = res.data.valor_recibido;
+                        this.valor_pagado = res.data.valor_pagado;
+                        this.valor_cobrado = res.data.valor_cobrado;
                     })
 
                 this.deposito.dias =  (this.compra.retraso > 0) ? this.compra.retraso : this.compra.dias_custodia;
@@ -781,7 +781,7 @@ import {mapState} from 'vuex'
                 }
             },
             totalOpDia(){
-                return this.getMoneyFormat(this.valor_entregado)+" / "+this.getMoneyFormat(this.valor_recibido);
+                return this.getMoneyFormat(this.valor_pagado)+" / "+this.getMoneyFormat(this.valor_cobrado);
             },
             goAmpliar(){
                 this.show_loading = true;

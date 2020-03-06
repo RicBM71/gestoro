@@ -18,8 +18,8 @@ class HelpDepositosController extends Controller
         if (request()->wantsJson())
             return [
                 'totales_concepto' => Deposito::totalesConcepto($data['compra_id']),
-                'valor_entregado'   => Deposito::valorEntregado(date('Y-m-d'), $data['cliente_id']),
-                'valor_recibido'   => Deposito::valorRecibido(date('Y-m-d'), $data['cliente_id'])
+                'valor_pagado'   => Deposito::valorPagado(date('Y-m-d'), $data['cliente_id']),
+                'valor_cobrado'   => Deposito::valorCobrado(date('Y-m-d'), $data['cliente_id'])
             ];
 
     }
