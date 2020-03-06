@@ -126,6 +126,7 @@ class DepositosController extends Controller
      */
     public function compra(Deposito $deposito)
     {
+        
         $compra = Compra::findOrFail($deposito->compra_id);
 
          if (request()->wantsJson())

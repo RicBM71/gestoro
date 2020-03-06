@@ -9,7 +9,7 @@ View Order
 |Referencia|Producto|Estado
 |---|---|---|
 @foreach($data['albaranes'] as $item)
-|{{$item->referencia}}|{{$item->nombre}}|{{' Estado: '.$item->estado}}
+|{{$item->referencia}}|{{$item->nombre}}|{{$item->estado}}
 @endforeach
 
 Saludos.<br>

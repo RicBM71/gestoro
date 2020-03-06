@@ -7,6 +7,7 @@ use App\Cobro;
 use App\Cruce;
 use App\Albalin;
 use App\Albaran;
+use App\Scopes\EmpresaScope;
 
 class CobroObserver
 {
@@ -90,7 +91,7 @@ class CobroObserver
     private function crearApunteCaja($albaran, $cobro){
 
         // CRUCE DE CAJA
-        $cruce = Cruce::where('empresa_id',$albaran->empresa_id)
+        $cruce = Cruce::withOutGlobalScope(EmpresaScope::class)->where('empresa_id',$albaran->empresa_id)
                         ->where('comven', 'V')
                         ->first();
 

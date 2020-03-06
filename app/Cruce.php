@@ -2,10 +2,19 @@
 
 namespace App;
 
+use App\Scopes\EmpresaScope;
 use Illuminate\Database\Eloquent\Model;
 
 class Cruce extends Model
 {
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new EmpresaScope);
+
+    }
 
     protected $fillable = [
         'empresa_id', 'comven', 'destino_empresa_id', 'username'

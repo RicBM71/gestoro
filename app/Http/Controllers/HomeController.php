@@ -242,13 +242,13 @@ class HomeController extends Controller
             //return new Factura($data);
 
 
-            $data_alb=['online' => 1];
+            // $data_alb=['online' => 1];
 
-            DB::table('albaranes')->where('albaranes.tipo_id', 3)
-                                ->whereDate('albaranes.updated_at', '<', $hoy)
-                                ->where('albaranes.online', 0)
-                                ->whereNull('albaranes.deleted_at')
-                                ->update($data_alb);
+            // DB::table('albaranes')->where('albaranes.tipo_id', 3)
+            //                     ->whereDate('albaranes.updated_at', '<', $hoy)
+            //                     ->where('albaranes.online', 0)
+            //                     ->whereNull('albaranes.deleted_at')
+            //                     ->update($data_alb);
 
             dispatch(new SendUpdateProductosOnline($data));
 

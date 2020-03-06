@@ -17,7 +17,7 @@ class CrucesController extends Controller
     public function index()
     {
 
-        $data = Cruce::with('destino')->get();
+        $data = Cruce::with('destino')->where('empresa_id', session('empresa_id'))->get();
 
         if (request()->wantsJson())
             return $data;

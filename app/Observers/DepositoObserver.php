@@ -9,6 +9,7 @@ use App\Concepto;
 use App\Deposito;
 use App\Hdeposito;
 use Carbon\Carbon;
+use App\Scopes\EmpresaScope;
 
 class DepositoObserver
 {
@@ -29,7 +30,7 @@ class DepositoObserver
 
             // CRUCE DE CAJA
 
-        $cruce = Cruce::where('empresa_id',$deposito->empresa_id)
+        $cruce = Cruce::withOutGlobalScope(EmpresaScope::class)->where('empresa_id',$deposito->empresa_id)
                         ->where('comven', 'C')
                         ->first();
 
