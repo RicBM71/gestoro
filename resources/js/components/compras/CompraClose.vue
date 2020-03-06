@@ -145,7 +145,14 @@
                                 >
                                 </v-text-field>
                             </v-flex>
-                            <v-flex sm2>
+                             <v-flex sm2>
+                                <v-text-field
+                                    class="inputPrice"
+                                    :value="totalOpDia()"
+                                    readoly
+                                    label="Total Entregado/Recibido hoy"
+                                >
+                                </v-text-field>
                             </v-flex>
                             <v-flex sm2 v-show="compra.fase_id <=4">
                                 <div class="text-xs-center">
@@ -216,6 +223,8 @@ import {mapState} from 'vuex'
                 conceptos: [],
 
                 valor_compras: 0,
+                valor_entregado : 0,
+                valor_recibido: 0,
 
         		status: false,
                 loading: false,
@@ -295,7 +304,17 @@ import {mapState} from 'vuex'
                         this.$toast.error(err.response.data.message);
                         this.$router.push({ name: this.ruta+'.index'})
                     })
-            }
+            },
+            compra: function () {
+
+                axios.post("/utilidades/helpdepo",{compra_id: this.compra.id,
+                                                   cliente_id: this.compra.cliente_id})
+                    .then(res => {
+                      //  this.totales_concepto = res.data.totales_concepto;
+                        this.valor_entregado = res.data.valor_entregado;
+                        this.valor_recibido = res.data.valor_recibido;
+                    })
+            },
 
         },
         computed: {
@@ -391,6 +410,9 @@ import {mapState} from 'vuex'
 			]),
             getMoneyFormat(value){
                 return new Intl.NumberFormat("de-DE",{style: "currency", currency: "EUR"}).format(parseFloat(value))
+            },
+            totalOpDia(){
+                return this.getMoneyFormat(this.valor_entregado)+" / "+this.getMoneyFormat(this.valor_recibido);
             },
             updateNota(){
                 if (this.compra.fase_id >= 0){

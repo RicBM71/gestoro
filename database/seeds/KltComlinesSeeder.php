@@ -99,7 +99,7 @@ class KltComlinesSeeder extends Seeder
                 'updated_at' => $row->sysfum.' '.$row->syshum,
             );
 
-            if ($i % 2000 == 0){
+            if ($i % 1000 == 0){
                 DB::table('comlines')->insert($data);
                 $data=array();
             }

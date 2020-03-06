@@ -94,6 +94,7 @@ class Deposito extends Model
 
         $q = DB::table('depositos')
                 ->select(DB::raw('ROUND(SUM(importe), 0) AS importe'))
+                ->where('empresa_id', session('empresa_id'))
                 ->where('compra_id', '=',$compra_id)
                 ->where('fecha', $fecha)
                 ->whereIn('concepto_id',[7,8,9])
@@ -107,6 +108,7 @@ class Deposito extends Model
 
         $q = DB::table('depositos')
                 ->select(DB::raw('ROUND(SUM(importe), 0) AS importe'))
+                ->where('empresa_id', session('empresa_id'))
                 ->where('compra_id', '<>',$compra_id)
                 ->where('cliente_id', $cliente_id)
                 ->where('fecha', $fecha)
@@ -126,6 +128,7 @@ class Deposito extends Model
 
         $q = DB::table('depositos')
                 ->select(DB::raw('ROUND(SUM(importe), 0) AS importe'))
+                ->where('empresa_id', session('empresa_id'))
                 ->where('cliente_id', $cliente_id)
                 ->where('fecha', $fecha)
                 ->whereIn('concepto_id',[7,8,9])
@@ -133,6 +136,33 @@ class Deposito extends Model
 
         return is_null($q->importe) ? 0 : $q->importe;
     }
+
+    public static function valorEntregado($fecha,$cliente_id){
+
+        $q = DB::table('depositos')
+                ->select(DB::raw('ROUND(SUM(importe), 0) AS importe'))
+                ->where('empresa_id', session('empresa_id'))
+                ->where('cliente_id', $cliente_id)
+                ->where('fecha', $fecha)
+                ->whereIn('concepto_id',[4,5,6,7,8,9,10,11,12])
+                ->first();
+
+        return is_null($q->importe) ? 0 : $q->importe;
+    }
+
+    public static function valorRecibido($fecha,$cliente_id){
+
+        $q = DB::table('depositos')
+                ->select(DB::raw('ROUND(SUM(importe), 0) AS importe'))
+                ->where('empresa_id', session('empresa_id'))
+                ->where('cliente_id', $cliente_id)
+                ->where('fecha', $fecha)
+                ->whereNotIn('concepto_id',[4,5,6,7,8,9,10,11,12])
+                ->first();
+
+        return is_null($q->importe) ? 0 : $q->importe;
+    }
+
 
     public function scopeRecuperaciones($query){
 

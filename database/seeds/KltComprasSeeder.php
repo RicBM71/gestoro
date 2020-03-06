@@ -102,8 +102,12 @@ class KltComprasSeeder extends Seeder
 
             $empresa_id = $contador->emp_com;
 
-            if ($row->empresa == 14 && getEjercicio($row->fechacomp) == 2020){
-                $serie_com = "B";
+            if ($row->empresa == 14 && $row->ejercicio == 2020){
+                if ($serie_com == 'M')
+                    $serie_com = "A";
+                else
+                    $serie_com = "B";
+
             }
 
 
@@ -153,7 +157,7 @@ class KltComprasSeeder extends Seeder
                 'updated_at' => $row->sysfum.' '.$row->syshum,
             );
 
-            if ($i % 2000 == 0){
+            if ($i % 1000 == 0){
                 DB::table('compras')->insert($data);
                 $data=array();
             }

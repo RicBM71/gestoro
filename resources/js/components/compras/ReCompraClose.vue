@@ -333,7 +333,7 @@
                         </v-flex>
                     </v-layout>
                     <v-layout row wrap>
-                        <v-flex sm9>
+                        <v-flex sm8>
                             <v-text-field
                                 v-model="compra.notas"
                                 append-icon="save"
@@ -342,8 +342,17 @@
                             >
                             </v-text-field>
                         </v-flex>
+                        <v-flex sm2>
+                            <v-text-field
+                                class="inputPrice"
+                                :value="totalOpDia()"
+                                readoly
+                                label="Total Entregado/Recibido hoy"
+                            >
+                            </v-text-field>
+                        </v-flex>
                         <v-flex sm1></v-flex>
-                        <v-flex sm2 v-show="compra.fase_id <=4 && hasAddCom">
+                        <v-flex sm1 v-show="compra.fase_id <=4 && hasAddCom">
                             <div class="text-xs-center">
                                 <v-btn
                                     small
@@ -464,6 +473,8 @@ import {mapState} from 'vuex'
                 lineas_deposito: [],
 
                 valor_compras: 0,
+                valor_entregado : 0,
+                valor_recibido: 0,
 
         		status: false,
                 loading: false,
@@ -520,7 +531,7 @@ import {mapState} from 'vuex'
                         this.grabaciones = res.data.grabaciones;
                         this.dias_cortesia = res.data.dias_cortesia;
                         this.cambio_recompra = res.data.cambio_recompra;
-                        
+
                         this.docu_ok = res.data.documentos.status > 0 ? true : false;
 
                         this.valor_compras = res.data.valor_compras;
@@ -714,9 +725,12 @@ import {mapState} from 'vuex'
             },
             compra: function () {
 
-                axios.post("/utilidades/helpdepo",{compra_id: this.compra.id})
+                axios.post("/utilidades/helpdepo",{compra_id: this.compra.id,
+                                                   cliente_id: this.compra.cliente_id})
                     .then(res => {
                         this.totales_concepto = res.data.totales_concepto;
+                        this.valor_entregado = res.data.valor_entregado;
+                        this.valor_recibido = res.data.valor_recibido;
                     })
 
                 this.deposito.dias =  (this.compra.retraso > 0) ? this.compra.retraso : this.compra.dias_custodia;
@@ -765,6 +779,9 @@ import {mapState} from 'vuex'
                             this.loading = false;
                         });
                 }
+            },
+            totalOpDia(){
+                return this.getMoneyFormat(this.valor_entregado)+" / "+this.getMoneyFormat(this.valor_recibido);
             },
             goAmpliar(){
                 this.show_loading = true;

@@ -325,7 +325,8 @@ import {mapGetters} from 'vuex';
         watch: {
             compra: function () {
 
-                axios.post("/utilidades/helpdepo",{compra_id: this.compra.id})
+                axios.post("/utilidades/helpdepo",{compra_id: this.compra.id,
+                                                   cliente_id: this.compra.cliente_id})
                     .then(res => {
                         this.totales_concepto = res.data.totales_concepto;
 
