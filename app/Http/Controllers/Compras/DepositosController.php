@@ -7,6 +7,7 @@ use App\Compra;
 use App\Cliente;
 use App\Concepto;
 use App\Deposito;
+use App\Scopes\EmpresaScope;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Compras\StoreDeposito;
 
@@ -124,10 +125,11 @@ class DepositosController extends Controller
      * @param Deposito $deposito
      * @return void
      */
-    public function compra(Deposito $deposito)
+    public function compra($deposito_id)
     {
-        
-        $compra = Compra::findOrFail($deposito->compra_id);
+        $deposito = Deposito::withoutGlobalScope(EmpresaScope::class)->findOrFail($deposito_id);
+
+        $compra = Compra::withoutGlobalScope(EmpresaScope::class)->findOrFail($deposito->compra_id);
 
          if (request()->wantsJson())
             return $compra;
