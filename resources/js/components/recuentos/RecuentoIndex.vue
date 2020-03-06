@@ -2,7 +2,7 @@
     <div>
         <loading :show_loading="show_loading"></loading>
             <div v-if="registros">
-                <my-dialog :dialog.sync="dialog" registro="registro"></my-dialog>
+                <my-dialog :dialog.sync="dialog" registro="registro" @destroyReg="destroyReg"></my-dialog>
                 <v-card>
                     <v-card-title>
                         <h2>{{titulo}}</h2>
@@ -70,9 +70,9 @@
                                 >
                                     <template slot="items" slot-scope="props">
                                         <td v-if="props.item.producto != null">{{props.item.producto.referencia }}</td>
-                                        <td v-else>ID:{{ props.item.producto_id}}</td>
+                                        <td v-else>ID:{{ props.item.producto_id }}</td>
                                         <td v-if="props.item.producto != null">{{ props.item.producto.nombre }}</td>
-                                        <td v-else>empresa: {{props.item.destino_empresa_id}}</td>
+                                        <td v-else>empresa origen: {{props.item.destino_empresa_id}} ¿Borrado?</td>
                                         <td v-if="props.item.estado != null">{{ props.item.estado.nombre }}</td>
                                         <td v-else>{{props.item.estado_id}}</td>
                                         <td v-if="props.item.rfid != null">{{ props.item.rfid.nombre }}</td>
@@ -86,12 +86,18 @@
                                                 local_offer
                                             </v-icon>
                                             <v-icon
+                                                small
+                                                @click="openDialog(props.item)"
+                                            >
+                                                delete
+                                            </v-icon>
+                                            <v-icon
                                                 v-if="props.item.rfid_id == 3"
                                                 small
                                                 class="mr-2"
                                                 @click="update(props.item)"
                                             >
-                                                warning
+                                                location_on
                                             </v-icon>
                                             <v-icon
                                                 v-if="props.item.rfid_id > 10"
@@ -176,7 +182,8 @@ import FiltroRec from './FiltroRec'
 		registros: false,
         dialog: false,
         show_loading: true,
-        editedIndex: 0
+        editedIndex: 0,
+        url:"/mto/recuentos"
       }
     },
     beforeMount(){
@@ -191,9 +198,8 @@ import FiltroRec from './FiltroRec'
         else
             this.unsetPagination();
 
-        axios.get('/mto/recuentos')
+        axios.get(this.url)
             .then(res => {
-                console.log(res.data);
                 this.items = res.data;
             })
             .catch(err =>{
@@ -243,8 +249,10 @@ import FiltroRec from './FiltroRec'
             this.editedIndex = this.items.indexOf(item)
             //this.editedItem = Object.assign({}, item)
 
-                    axios.put("/mto/recuentos/"+item.id, {rfid_id : item.rfid_id})
+                    axios.put(this.url+"/"+item.id, {rfid_id : item.rfid_id})
                         .then(res => {
+
+                            console.log(res);
 
                             Object.assign(this.items[this.editedIndex], res.data.recuento)
 
@@ -259,7 +267,33 @@ import FiltroRec from './FiltroRec'
                             this.show_loading = false;
                         });
 
-            },
+        },
+        openDialog (item){
+
+            this.dialog = true;
+            this.item_destroy = item;
+        },
+        destroyReg () {
+            this.dialog = false;
+
+            axios.post(this.url+'/'+this.item_destroy.id,{_method: 'delete'})
+                .then(response => {
+
+                    const index = this.items.indexOf(this.item_destroy)
+                    //this.items[index]=this.item_destroy;
+                    this.items.splice(index, 1)
+
+                    this.$toast.success(response.data.msg);
+                })
+            .catch(err => {
+                this.status = true;
+                //console.log(err);
+                var msg = err.response.data.message;
+                this.$toast.error(msg);
+
+            });
+
+        },
         goExcel(){
 
             this.show_loading = true;

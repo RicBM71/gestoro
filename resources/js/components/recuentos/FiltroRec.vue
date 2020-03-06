@@ -25,7 +25,7 @@
                         label="Estado RFID"
                         ></v-select>
                 </v-flex>
-                <v-flex sm7></v-flex>
+                <v-flex sm4></v-flex>
                 <v-flex sm1>
                     <v-btn @click="submit"  :loading="loading" round small block  color="info">
                         Filtrar

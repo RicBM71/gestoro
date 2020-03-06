@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Mto;
 
 use App\Caja;
+use App\Cruce;
 use App\Apunte;
 use Carbon\Carbon;
 use App\Exports\CajaExport;
@@ -21,6 +22,10 @@ class CajasController extends Controller
      */
     public function index()
     {
+
+        if (Cruce::count() >= 2){
+            return abort(403, 'Esta empresa no admite apuntes de caja');
+        }
 
         if (request()->session()->has('filtro_caj'))
             return $this->seleccionar();
