@@ -91,6 +91,8 @@ class DetalleVentasController extends Controller
             $primera = true;
             foreach ($albalins as $albalin){
 
+//                \Log::info($albalin);
+
                 $row_id++;
 
                 $arr[]=[
@@ -151,7 +153,7 @@ class DetalleVentasController extends Controller
                         ->whereDate('fecha_factura', '>=', $data['fecha_d'])
                         ->whereDate('fecha_factura', '<=', $data['fecha_h'])
                         ->whereNull('albaranes.deleted_at')
-                        ->groupBy('albaranes.id','albaran','iva_no_residente')
+                        ->groupBy('albaranes.id','albaran','iva_no_residente', 'fecha')
                         ->orderBy('fecha')
                         ->get();
     }
@@ -168,7 +170,7 @@ class DetalleVentasController extends Controller
                         ->where('fase_id', '<>', 10)
                         ->where('facturar', true)
                         ->whereNull('albaranes.deleted_at')
-                        ->groupBy('albaranes.id','albaran','iva_no_residente')
+                        ->groupBy('albaranes.id','albaran','iva_no_residente', 'fecha')
                         ->havingRaw('MAX('.DB::getTablePrefix().'cobros.fecha) >= ? AND MAX('.DB::getTablePrefix().'cobros.fecha) <= ?',[$data['fecha_d'],$data['fecha_h']])
                         ->orderBy('fecha')
                         ->get();

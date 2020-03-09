@@ -70,7 +70,8 @@ class VentasDepositoController extends Controller
 
         $campo_fecha = $facturado=='V' ? 'fecha_albaran' : 'fecha_factura';
         $campo_alb   = $facturado=='V' ? ',serie_albaran AS serie, albaran AS numero' : ',serie_factura AS serie, factura AS numero';
-        $campo_fecha_where = $facturado=='V' ? 'albaranes.updated_at' : 'fecha_factura';
+
+        $campo_fecha_where = $facturado=='V' ? 'albaranes.fecha_albaran' : 'fecha_factura';
 
         $select=DB::getTablePrefix().'empresas.nombre AS empresa'.$campo_alb.','.$campo_fecha.' AS fecha,'.
                 DB::getTablePrefix().'productos.referencia AS referencia,'.
@@ -111,7 +112,7 @@ class VentasDepositoController extends Controller
 
         $campo_fecha = $facturado=='V' ? 'fecha_albaran' : 'fecha_factura';
         $campo_alb   = $facturado=='V' ? ',serie_albaran AS serie, albaran AS numero' : ',serie_factura AS serie, factura AS numero';
-        $campo_fecha_where = $facturado=='V' ? 'albaranes.updated_at' : 'fecha_factura';
+        $campo_fecha_where = $facturado=='V' ? 'albaranes.fecha_albaran' : 'fecha_factura';
 
         $select=DB::getTablePrefix().'clientes.razon AS empresa'.$campo_alb.','.$campo_fecha.' AS fecha,'.
                 DB::getTablePrefix().'productos.referencia AS referencia,'.
