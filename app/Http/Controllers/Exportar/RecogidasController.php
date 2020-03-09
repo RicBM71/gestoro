@@ -15,16 +15,16 @@ class RecogidasController extends Controller
 {
     public function index(){
 
-        if (!esGestor() || !\esSupervisor()){
-            return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Gestor');
+        if (!esGestor() && !esSupervisor()){
+            return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Gestor/Supervisor');
         }
 
     }
 
     public function submit(Request $request){
 
-        if (!esGestor() || !\esSupervisor()){
-            return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Gestor');
+        if (!(esGestor() || !esSupervisor())){
+            return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Gestor/Supervisor');
         }
 
         $data = $request->validate([
