@@ -15,15 +15,15 @@ class RecogidasController extends Controller
 {
     public function index(){
 
-        if (!esGestor() && !esSupervisor()){
-            return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Gestor/Supervisor');
-        }
+        // if (!esGestor() && !esSupervisor()){
+        //     return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Gestor/Supervisor');
+        // }
 
     }
 
     public function submit(Request $request){
 
-        if (!(esGestor() || !esSupervisor())){
+        if (!(esGestor() || esSupervisor())){
             return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Gestor/Supervisor');
         }
 
