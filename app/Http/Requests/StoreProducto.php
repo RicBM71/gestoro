@@ -45,7 +45,8 @@ class StoreProducto extends FormRequest
             'precio_venta'     => ['numeric','required'],
             'ref_pol'          => ['nullable','string', 'max:20'],
             'cliente_id'       => ['nullable','integer'],
-            'univen'           => ['required', 'string', 'max:1']
+            'univen'           => ['required', 'string', 'max:1'],
+            'etiqueta_id'       => ['nullable','integer'],
 
         ];
 

@@ -219,6 +219,7 @@ export default {
                 { text: 'Tipos de Iva', name: 'iva.index' },
                 { text: 'Motivos Devolución', name: 'motivo.index' },
                 { text: 'Cruces Caja', name: 'cruce.index' },
+                { text: 'Cierre', name: 'tools.cierre' },
                 { text: 'Parámetros', name: 'parametro.edit' },
             ]
         },

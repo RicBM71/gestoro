@@ -139,7 +139,7 @@ class ApliPdfController extends Controller
 					$fila_pag++;
 				}
 
-			//	$this->obj->setEtiMasivo('id='.$row->id,'Y');
+                Producto::where('id', $row->id)->update(['etiqueta_id' => 5]);
 
 				if($fila_pag >= 22){
 					PDF::AddPage();

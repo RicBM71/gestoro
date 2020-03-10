@@ -264,6 +264,8 @@ Route::group([
 
         Route::put('reasignar/empresa/producto/{producto}', 'ReasignarEmpresaProductoController@update');
 
+        Route::post('cierre', 'CierreController@submit');
+
      //   Route::get('helpbanco', 'HelpBancosController@index');
     }
 );

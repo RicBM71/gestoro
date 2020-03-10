@@ -53,6 +53,8 @@ class KlRjImportaComprasSeeder extends Seeder
         $data = collect($cliente_kil);
 
         $data = $data->toArray();
+
+        $data = $data[0];
         $data['id']=null;
 
         \Log::info($data);
