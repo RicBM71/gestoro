@@ -27,17 +27,16 @@
                             >
                             </v-text-field>
                         </v-flex>
-                         <v-flex sm3>
-                            <v-text-field
+                        <v-flex sm3 d-flex>
+                            <v-select
                                 v-model="apunte.color"
                                 v-validate="'required'"
-                                :error-messages="errors.collect('color')"
-                                label="Color"
                                 data-vv-name="color"
                                 data-vv-as="color"
-                                v-on:keyup.enter="submit"
-                            >
-                            </v-text-field>
+                                :error-messages="errors.collect('color')"
+                                :items="colores"
+                                label="Colores"
+                                ></v-select>
                         </v-flex>
                     </v-layout>
                     <v-layout row wrap>
@@ -99,6 +98,7 @@ import MenuOpe from './MenuOpe'
       		return {
                 titulo:"Apunte",
                 apunte: {},
+                colores:[],
 
         		status: false,
                 loading: false,
@@ -113,6 +113,8 @@ import MenuOpe from './MenuOpe'
             if (id > 0)
                 axios.get('/mto/apuntes/'+id+'/edit')
                     .then(res => {
+                        this.colores = res.data.colores;
+                        console.log(this.colores);
                         this.apunte = res.data.apunte;
                         this.show = true;
                         this.show_loading = false;

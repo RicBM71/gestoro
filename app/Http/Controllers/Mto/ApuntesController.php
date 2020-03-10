@@ -64,10 +64,10 @@ class ApuntesController extends Controller
     public function edit(Apunte $apunte)
     {
 
-
         if (request()->wantsJson())
             return [
-                'apunte' =>$apunte
+                'colores'=> Apunte::selColores(),
+                'apunte' => $apunte
             ];
     }
 

@@ -329,8 +329,8 @@ Route::group([
             Route::post('/apuban/excel', 'ApuntesBancoController@excel');
 
 
-            Route::post('/recogidas', 'RecogidasController@submit');
         });
+        Route::post('/recogidas', 'RecogidasController@submit');
 
     }
 );
