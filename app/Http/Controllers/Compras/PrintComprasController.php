@@ -23,7 +23,9 @@ class PrintComprasController extends Controller
         $file = false;
 
         $this->compra = Compra::with(['cliente','grupo','tipo','fase'])->findOrFail($id);
-        $this->compra->update(['fase_id' => 4,'username'=>session('username')]);
+
+        if ($this->compra->fase_id <= 3)
+            $this->compra->update(['fase_id' => 4,'username'=>session('username')]);
 
         $totales_concepto = Deposito::totalesConcepto($this->compra->id);
 
