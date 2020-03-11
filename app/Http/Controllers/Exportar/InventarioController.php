@@ -21,8 +21,9 @@ class InventarioController extends Controller
         $data = $request->validate([
             'cliente_id'  => ['nullable','integer'],
             'clase_id'    => ['nullable','integer'],
-            'estado_id'    => ['nullable','integer'],
+            'estado_id'   => ['nullable','integer'],
             'grupo_id'    => ['required','integer'],
+            'tipoinv_id'  => ['required','max:1'],
         ]);
 
         return $this->detalle($data);
@@ -34,17 +35,29 @@ class InventarioController extends Controller
 
         // solo lístamos los productos de empresa origen porque este es el inventario real
         //  por esto quito globalScope
-        
-        $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','iva','estado','garantia','cliente'])
-                    ->select('productos.*')
-                    ->join('clases','clase_id','=','clases.id')
-                    ->where('empresa_id', session('empresa_id'))
-                    ->asociado($data['cliente_id'])
-                    ->estado($data['estado_id'])
-                    ->clase($data['clase_id'])
-                    ->whereIn('estado_id',[1,2,3])
-                    ->grupo($data['grupo_id'])
-                    ->get();
+        if ($data['tipoinv_id'] == 'C')
+            $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','iva','estado','garantia','cliente'])
+                        ->select('productos.*')
+                        ->join('clases','clase_id','=','clases.id')
+                        ->where('empresa_id', session('empresa_id'))
+                        ->asociado($data['cliente_id'])
+                        ->estado($data['estado_id'])
+                        ->clase($data['clase_id'])
+                        ->whereIn('estado_id',[1,2,3])
+                        ->grupo($data['grupo_id'])
+                        ->get();
+        else
+            $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','iva','estado','garantia','cliente'])
+                        ->select('productos.*')
+                        ->join('clases','clase_id','=','clases.id')
+                        ->where('destino_empresa_id', session('empresa_id'))
+                        ->asociado($data['cliente_id'])
+                        ->estado($data['estado_id'])
+                        ->clase($data['clase_id'])
+                        ->whereIn('estado_id',[1,2,3])
+                        ->grupo($data['grupo_id'])
+                        ->get();
+
 
         if (request()->wantsJson())
             return [

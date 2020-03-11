@@ -14,9 +14,42 @@ class KlRjImportaComprasSeeder extends Seeder
     public function run()
     {
 
-       $this->checkCliente(10000);
+        session('empresa_id', 2);
 
-       $compras = DB::connection('db2')->select('select * from compras WHERE empresa_id = ? AND fase_id()', [$id]);
+        $compras = DB::connection('db2')->select('select * from klt_albaranes WHERE empresa_id = 11');
+        foreach ($compras as $compra){
+
+            try {
+                //code...
+                $compra_quilates = Compra::findOrFail($compra->id);
+                continue;
+
+            } catch (\Exception $e) {
+                $this->crearCompra($compra);
+            }
+        }
+    }
+
+    private function crearCompra($row){
+
+        $this->checkCliente($row->cliente_id);
+
+        $data = collect($row);
+        $data = $data->toArray();
+        $data = $data[0];
+
+        DB::table('klt_compras')->insertGetId($data);
+
+        $this->crearLineas($row->compra_id);
+
+    }
+
+    private function crearLineas(){
+
+        $lineas = Comlines::where('compra_id')->get();
+        foreach ($lineas as $linea){
+            
+        }
 
     }
 

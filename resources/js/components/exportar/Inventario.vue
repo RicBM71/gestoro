@@ -3,7 +3,7 @@
         <v-card>
             <loading :show_loading="show_loading"></loading>
             <v-card-title color="indigo">
-                <h2 color="indigo">Inventario (por Origen Piezas)</h2>
+                <h2 color="indigo">Inventario</h2>
                 <v-spacer></v-spacer>
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
@@ -92,6 +92,19 @@
                             <v-btn @click="submit" :loading="show_loading" flat round small block  color="info">
                                 Enviar
                             </v-btn>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row wrap v-show="show_filtro">
+                        <v-flex sm3>
+                            <v-select
+                                v-model="tipoinv_id"
+                                v-validate="'required'"
+                                data-vv-name="tipoinv_id"
+                                data-vv-as="tipo"
+                                :error-messages="errors.collect('tipoinv_id')"
+                                :items="tiposinv"
+                                label="Tipo"
+                                ></v-select>
                         </v-flex>
                     </v-layout>
                     <v-layout row wrap v-if="items.length>0">
@@ -216,6 +229,11 @@ export default {
             clases: [],
             asociados: [],
             grupos:[],
+            tipoinv_id: 'C',
+            tiposinv:[
+                {value: 'C', text: 'Contable - origen pieza'},
+                {value: 'F', text: 'Ubicación de venta'},
+            ],
             grupo_id: null,
             clase_id: null,
             cliente_id: null,
@@ -276,7 +294,8 @@ export default {
                                 cliente_id: this.cliente_id,
                                 clase_id: this.clase_id,
                                 grupo_id:  this.grupo_id,
-                                estado_id: this.estado_id
+                                estado_id: this.estado_id,
+                                tipoinv_id: this.tipoinv_id
                             }
                             })
                         .then(res => {
