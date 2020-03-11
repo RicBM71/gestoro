@@ -226,7 +226,7 @@ export default {
             },
             operaciones:[
                     {value: 'C', text:"Compras"},
-                    // {value: 'V', text:"Ventas"},
+                    {value: 'V', text:"Ventas"},
                 ],
             operacion: 'C',
             show_loading: false,

@@ -62,6 +62,21 @@ class ApuntesBancoController extends Controller
 
      }
 
+     private function ventas($data){
+
+        return DB::table('cobros')
+             ->select('cobros.fecha','fpagos.nombre AS concepto','cobros.importe','cobros.notas AS notas','albaranes.albaran','fecha_albaran AS fecha_op','serie_albaran AS serie','razon')
+             ->join('fpagos','fpagos.id','=','fpago_id')
+             ->join('albaranes','albaranes.id','=','albaran_id')
+             ->join('clientes','clientes.id','=','cobros.cliente_id')
+             ->where('cobros.empresa_id',session('empresa_id'))
+             ->where('cobros.fpago_id', '>', 1)
+             ->whereDate('fecha','>=', $data['fecha_d'])
+             ->whereDate('fecha','<=', $data['fecha_h'])
+             ->get();
+
+     }
+
     public function excel(Request $request){
 
         return Excel::download(new ApuntesBancoExport($request->data), 'apuban.xlsx');
