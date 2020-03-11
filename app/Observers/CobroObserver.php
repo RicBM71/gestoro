@@ -97,9 +97,16 @@ class CobroObserver
 
         $empresa_destino = (!$cruce) ? $albaran->empresa_id :  $cruce->destino_empresa_id;
 
-        $dh = ($cobro->importe >= 0) ? "H" : "D";
+        if ($albaran->fase_id == 13){
+            $concepto = "ABONO ALBARÁN ".$albaran->alb_ser;
+            $cobro->importe = $cobro->importe * -1;
+            $dh = 'D';
+        }else{
+            $dh = ($cobro->importe >= 0) ? "H" : "D";
+            $concepto = "A CUENTA ALBARÁN ".$albaran->alb_ser;
+        }
 
-        $concepto = "A CUENTA ALBARÁN ".$albaran->alb_ser;
+
 
         $data = [
             'empresa_id' => $empresa_destino,

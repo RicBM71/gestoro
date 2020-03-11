@@ -264,6 +264,7 @@ export default {
             model: false,
             children: [
                 { icon: 'fireplace', text: 'Liquidar Lotes', name:'liquidar.index' },
+                { icon: 'forward', text: 'Inventario', name:'exportar.inventario' },
                 { icon: 'book', text: 'Libros', name: 'libro.index' },
                 { icon: 'check_circle_outline', text: 'Check Contadores', name:'contador.check' },
             ]
