@@ -183,7 +183,8 @@ export default {
             'hasFactura',
             'isGestor',
             'isSupervisor',
-            'empresaActiva'
+            'empresaActiva',
+            'hasLiquidar'
 		]),
     },
     data: () => ({
@@ -256,6 +257,18 @@ export default {
             ]
         },
 
+         mn_procesos_simple:{
+            icon: 'keyboard_arrow_up',
+            'icon-alt': 'keyboard_arrow_down',
+            text: 'Procesos',
+            model: false,
+            children: [
+                { icon: 'fireplace', text: 'Liquidar Lotes', name:'liquidar.index' },
+                { icon: 'book', text: 'Libros', name: 'libro.index' },
+                { icon: 'check_circle_outline', text: 'Check Contadores', name:'contador.check' },
+            ]
+        },
+
         mn_items: [
             { icon: 'people', text: 'Clientes', name:'cliente.index' },
             { icon: 'local_offer', text: 'Productos', name:'producto.index' },
@@ -324,21 +337,24 @@ export default {
 
                     this.mn_items.push(this.mn_etiquetas);
 
-                    if (this.isAdmin || this.isGestor){
+                    if (this.isGestor){
                         //this.drawer = true;
                         this.mn_items.push(this.mn_consultas);
                         this.mn_items.push(this.mn_consultas2);
+                    }else{
+                        if (this.isAdmin || this.hasLiquidar)
+                            this.mn_items.push(this.mn_procesos_simple);
                     }
 
                     this.empresa_id = this.user.empresa_id;
 
-                    if (this.isAdmin || this.isGestor)
+                    if (this.isAdmin && this.isGestor)
                         this.mn_items.push(this.mn_procesos);
 
                     if (this.isRoot)
                         this.mn_items.push(this.mn_root);
 
-                    if(this.isAdmin || this.isGestor)
+                    if(this.isAdmin && this.isGestor)
                         this.mn_items.push(this.mn_admin);
 
 
