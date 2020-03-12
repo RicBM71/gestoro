@@ -44,6 +44,7 @@
                                     v-model="cliente.tipodoc"
                                     :items="tiposdoc"
                                     label="Documento"
+                                    :disabled="computedDisabled"
                                     ></v-select>
                                 </v-flex>
 
@@ -56,6 +57,7 @@
                                         required
                                         data-vv-name="dni"
                                         data-vv-as="Documento"
+                                        :disabled="computedDisabled"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -69,6 +71,7 @@
                                         data-vv-name="nombre"
                                         data-vv-as="nombre"
                                         required
+                                        :disabled="computedDisabled"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -82,6 +85,7 @@
                                         data-vv-name="apellidos"
                                         data-vv-as="apellidos"
                                         required
+                                        :disabled="computedDisabled"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -95,6 +99,7 @@
                                         :error-messages="errors.collect('fecha_dni')"
                                         label="F. Validez"
                                         data-vv-name="fecha_dni"
+                                        :disabled="computedDisabled"
                                         v-on:keyup.enter="submit"                                    >
                                     </v-text-field>
                                 </v-flex>
@@ -108,6 +113,7 @@
                                         label="Razon"
                                         data-vv-name="razon"
                                         required
+                                        :disabled="computedDisabled"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -120,7 +126,7 @@
                                         :error-messages="errors.collect('fecha_nacimiento')"
                                         label="F. Nacimiento"
                                         data-vv-name="fecha_nacimiento"
-
+                                        :disabled="computedDisabled"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -133,6 +139,7 @@
                                         label="Tf. Móvil"
                                         data-vv-name="tfmovil"
                                         mask="### ### ###"
+                                        :disabled="computedDisabled"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -145,6 +152,7 @@
                                         data-vv-name="telefono1"
                                         data-vv-as="Teléfono"
                                         mask="### ### ###"
+                                        :disabled="computedDisabled"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -157,6 +165,7 @@
                                         data-vv-name="telefono2"
                                         data-vv-as="Teléfono"
                                         mask="### ### ###"
+                                        :disabled="computedDisabled"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -169,6 +178,7 @@
                                         :error-messages="errors.collect('direccion')"
                                         label="Dirección"
                                         data-vv-name="direccion"
+                                        :disabled="computedDisabled"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -179,6 +189,7 @@
                                         :error-messages="errors.collect('cpostal')"
                                         label="CP"
                                         data-vv-name="CP"
+                                        :disabled="computedDisabled"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -189,6 +200,7 @@
                                         :error-messages="errors.collect('poblacion')"
                                         label="Población"
                                         data-vv-name="poblacion"
+                                        :disabled="computedDisabled"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -199,6 +211,7 @@
                                         :error-messages="errors.collect('provincia')"
                                         label="Provincia"
                                         data-vv-name="provincia"
+                                        :disabled="computedDisabled"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -211,6 +224,7 @@
                                         :error-messages="errors.collect('nacpais')"
                                         label="Localidad Nac."
                                         data-vv-name="nacpais"
+                                        :disabled="computedDisabled"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -221,6 +235,7 @@
                                         :error-messages="errors.collect('nacpro')"
                                         label="Provincia Nac."
                                         data-vv-name="nacpro"
+                                        :disabled="computedDisabled"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -232,6 +247,7 @@
                                         :error-messages="errors.collect('email')"
                                         label="email"
                                         data-vv-name="email"
+                                        :disabled="computedDisabled"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -246,6 +262,7 @@
                                         mask="AA## #### #### #### #### ####"
                                         counter=24
                                         data-vv-name="iban"
+                                        :disabled="computedDisabled"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -258,6 +275,7 @@
                                         label="BIC"
                                         counter=11
                                         data-vv-name="bic"
+                                        :disabled="computedDisabled"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -267,6 +285,7 @@
                                     v-model="cliente.fpago_id"
                                     :items="fpagos"
                                     label="Forma de Pago"
+                                    :disabled="computedDisabled"
                                     ></v-select>
                                 </v-flex>
                                 <v-flex sm2>
@@ -309,6 +328,7 @@
                                         :error-messages="errors.collect('notas1')"
                                         label="Notas"
                                         data-vv-name="notas1"
+                                        :disabled="computedDisabled"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -398,7 +418,11 @@
                                 <v-flex sm3></v-flex>
                                 <v-flex sm2>
                                     <div class="text-xs-center">
-                                                <v-btn @click="submit"  round  :loading="loading" block  color="primary">
+                                                <v-btn
+                                                    :disabled="computedDisabled"
+                                                    @click="submit"
+                                                    round
+                                                    :loading="loading" block  color="primary">
                                         Guardar
                                         </v-btn>
                                     </div>
@@ -582,6 +606,12 @@ import {mapGetters} from 'vuex';
                 'isSupervisor',
                 'isAdmin'
             ]),
+            computedDisabled(){
+                if (this.cliente.dni.length <= 4)
+                    return !this.isAdmin;
+                else
+                    return false;
+            },
             computedFModFormat() {
                 moment.locale('es');
                 return this.cliente.updated_at ? moment(this.cliente.updated_at).format('D/MM/YYYY H:mm') : '';

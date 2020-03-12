@@ -33,6 +33,7 @@
                             label="Nombre"
                             data-vv-name="nombre"
                             data-vv-as="nombre"
+                            :disabled="computedDisabled"
                             required
                             v-on:keyup.enter="submit"
                         >
@@ -46,6 +47,7 @@
                             label="Apellidos"
                             data-vv-name="apellidos"
                             data-vv-as="apellidos"
+                            :disabled="computedDisabled"
                             required
                             v-on:keyup.enter="submit"
                         >
@@ -60,6 +62,7 @@
                             label="Tf. Móvil"
                             data-vv-name="tfmovil"
                             mask="### ### ###"
+                            :disabled="computedDisabled"
                             v-on:keyup.enter="submit"
                         >
                         </v-text-field>
@@ -72,6 +75,7 @@
                             data-vv-name="telefono1"
                             data-vv-as="Teléfono"
                             mask="### ### ###"
+                            :disabled="computedDisabled"
                             v-on:keyup.enter="submit"
                         >
                         </v-text-field>
@@ -84,6 +88,7 @@
                             data-vv-name="telefono2"
                             data-vv-as="Teléfono"
                             mask="### ### ###"
+                            :disabled="computedDisabled"
                             v-on:keyup.enter="submit"
                         >
                         </v-text-field>
@@ -95,6 +100,7 @@
                             :error-messages="errors.collect('email')"
                             label="email"
                             data-vv-name="email"
+                            :disabled="computedDisabled"
                             v-on:keyup.enter="submit"
                         >
                         </v-text-field>
@@ -108,6 +114,7 @@
                             :error-messages="errors.collect('direccion')"
                             label="Dirección"
                             data-vv-name="direccion"
+                            :disabled="computedDisabled"
                             v-on:keyup.enter="submit"
                         >
                         </v-text-field>
@@ -120,6 +127,7 @@
                             label="CP"
                             data-vv-name="cpostal"
                             data-vv-as="C.P."
+                            :disabled="computedDisabled"
                             v-on:keyup.enter="submit"
                         >
                         </v-text-field>
@@ -131,6 +139,7 @@
                             v-validate="'max:40'"
                             label="Población"
                             data-vv-name="poblacion"
+                            :disabled="computedDisabled"
                             v-on:keyup.enter="submit"
                         >
                         </v-text-field>
@@ -142,6 +151,7 @@
                             v-validate="'max:30'"
                             label="Provincia"
                             data-vv-name="provincia"
+                            :disabled="computedDisabled"
                             v-on:keyup.enter="submit"
                         >
                         </v-text-field>
@@ -154,6 +164,7 @@
                             :error-messages="errors.collect('notas1')"
                             label="Notas"
                             data-vv-name="notas1"
+                            :disabled="computedDisabled"
                             v-on:keyup.enter="submit"
                         >
                         </v-text-field>
@@ -183,6 +194,7 @@
     </div>
 </template>
 <script>
+import {mapGetters} from 'vuex';
 import moment from 'moment'
 export default {
     $_veeValidate: {
@@ -261,6 +273,15 @@ export default {
         },
     },
     computed: {
+        ...mapGetters([
+            'isAdmin',
+        ]),
+        computedDisabled(){
+            if (this.cliente.dni.length <= 4)
+                return !this.isAdmin;
+            else
+                return false;
+        },
     },
     methods:{
         atras(){
