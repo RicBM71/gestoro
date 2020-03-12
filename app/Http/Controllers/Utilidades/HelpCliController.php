@@ -76,6 +76,7 @@ class HelpCliController extends Controller
         ]);
 
         $data = Albaran::withoutGlobalScope(EmpresaScope::class)->with(['tipo','fase','empresa'])
+                ->tipo(null)
                 ->whereIn('empresa_id', session('empresas_usuario'))
                 ->whereYear('fecha_albaran', '>=',$data['ejercicio'] - 1)
                 ->where('cliente_id','=',$data['cliente_id'])

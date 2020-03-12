@@ -154,7 +154,7 @@ class AlbaranesController extends Controller
         $albarane = Albaran::withOutGlobalScope(EmpresaScope::class)->findOrFail($id);
 
         if ($albarane->tipo_id == 4 && !esGestor()){
-            return abort(404, 'No puedes visualizar este albarán - Gestor Requerido');
+            return abort(404, 'No se ha podido cargar este albarán - FRG');
         }
 
         // con esto cambiamos de empresa si la empresa no coincide

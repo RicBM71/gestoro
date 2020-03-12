@@ -28,9 +28,14 @@ class PrintAlbController extends Controller
 
     public function mail(Request $request, Albaran $albarane){
 
-        $albaran = Albaran::with(['cliente'])->findOrFail($albarane->id);
+        //$albaran = Albaran::with(['cliente'])->findOrFail($albarane->id);
+        $albarane->load(['cliente']);
 
-        if ($albaran->cliente->email=='')
+        if ($albarane->tipo_id == 4 && !esGestor()){
+            return abort(404, 'No puedes visualizar este albarán - Gestor Requerido');
+        }
+
+        if ($albarane->cliente->email=='')
             return response('El cliente no tiene email configurado', 403);
         // elseif (session('empresa')->email=='')
         //     return response('Configurar email empresa', 403);
@@ -40,13 +45,13 @@ class PrintAlbController extends Controller
 
         //\Log::info($from);
 
-        $this->print($albaran->id, true);
+        $this->print($albarane->id, true);
 
         $data = [
             'razon'=> session('empresa')->razon,
             'from'=> $from,
             'msg' => null,
-            'albaran' => $albaran
+            'albaran' => $albarane
         ];
 
         // con esto previsualizamos el mail
@@ -54,7 +59,7 @@ class PrintAlbController extends Controller
 
         dispatch(new SendFactura($data));
 
-        if ($albaran->factura > 0){
+        if ($albarane->factura > 0){
             $data_alb['fecha_notificacion'] =  Carbon::now();
             $data_alb['username']   = session('username');;
 
@@ -63,7 +68,8 @@ class PrintAlbController extends Controller
 
         if (request()->wantsJson())
             return [
-                'albaran'=> Albaran::with(['cliente','tipo','fase','fpago','cuenta','procedencia','motivo'])->findOrFail($albaran->id),
+                // 'albaran'=> Albaran::with(['cliente','tipo','fase','fpago','cuenta','procedencia','motivo'])->findOrFail($albaran->id),
+                'albaran' => $albarane->load(['cliente','tipo','fase','fpago','cuenta','procedencia','motivo']),
                 'message' => 'Mail enviado'];
 
     }
@@ -71,6 +77,10 @@ class PrintAlbController extends Controller
     public function print($id, $file=false){
 
         $this->albaran = Albaran::with(['cliente','tipo','fase'])->findOrFail($id);
+
+        if ($this->albaran->tipo_id == 4 && !esGestor()){
+            return abort(404, 'No puedes visualizar este albarán - Gestor Requerido');
+        }
 
         // constrola si la compra está recuperada para poder imprimir como factura
         // if ($this->albaran->fase_id != 5 || $this->albaran->factura <= 0 || $this->albaran->factura==''){
