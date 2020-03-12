@@ -14,7 +14,7 @@ class InventarioController extends Controller
 
     public function inventario(Request $request){
 
-        if (!auth()->user()->hasRole('edtpro')){
+        if (!auth()->user()->hasPermissionTo('edtpro')){
             return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Edit Productos');
         }
 

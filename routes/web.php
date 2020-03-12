@@ -299,9 +299,6 @@ Route::group([
             Route::post('/resconta', 'ResumenContableController@resconta');
             Route::post('/resconta/excel', 'ResumenContableController@excel');
 
-            Route::post('/inventario', 'InventarioController@inventario');
-            Route::post('/inventario/excel', 'InventarioController@excel');
-
             Route::post('/liquidados', 'LiquidadosController@liquidados');
             Route::post('/liquidados/excel', 'LiquidadosController@excel');
 
@@ -330,6 +327,9 @@ Route::group([
 
 
         });
+
+        Route::post('/inventario', 'InventarioController@inventario');
+        Route::post('/inventario/excel', 'InventarioController@excel');
         Route::post('/recogidas', 'RecogidasController@submit');
 
     }
