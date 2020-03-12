@@ -127,3 +127,14 @@ function trimestre($ejercicio,$trimestre){
     // echo Carbon::parse('2019-07-01')->endOfQuarter();
     // echo Carbon::parse('2019-10-01')->endOfQuarter();
 }
+
+function totalAlbalin($data){
+
+    $t = 0;
+    foreach ($data as $row){
+        $t =+ $row['importe_venta'];
+    }
+
+    return $t;
+
+}

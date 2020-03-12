@@ -7,6 +7,7 @@
             <th>Albarán</th>
             <th>F. Albaraán</th>
             <th>Tipo</th>
+            <th>Importe</th>
             <th>F. Factura</th>
             <th>Factura</th>
             <th>Fase</th>
@@ -21,6 +22,7 @@
             <td>{{ $item['serie_albaran'].$item['albaran']}}</td>
             <td>{{ getFecha($item['fecha_albaran'])}}</td>
             <td>{{ $item['tipo']['abreviatura']}}</td>
+            <td>{{ totalAlbalin($item['albalins'])}}</td>
             <td>{{ getFecha($item['fecha_factura'])}}</td>
             <td>{{ $item['serie_factura'].$item['factura']}}</td>
             <td>{{ $item['fase']['nombre']}}</td>
