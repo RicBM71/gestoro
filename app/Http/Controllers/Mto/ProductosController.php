@@ -17,6 +17,7 @@ use App\Traits\SessionTrait;
 use Illuminate\Http\Request;
 use App\Rules\RangoFechaRule;
 use App\Exports\InventarioExport;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProducto;
@@ -394,6 +395,13 @@ class ProductosController extends Controller
      */
     public function destroy($id)
     {
+
+        // comprobamos si el producto existe en algún albarán
+
+        if (DB::table('albalins')->where('producto_id', $id)->exists()){
+            return abort(411, 'El producto existe en albaranes, no se puede borrar');
+        }
+
         if (esAdmin()){
             $producto = Producto::withTrashed()->find($id);
         }else{
