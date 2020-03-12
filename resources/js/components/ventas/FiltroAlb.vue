@@ -136,6 +136,7 @@
     </v-form>
 </template>
 <script>
+import {mapGetters} from 'vuex'
 import moment from 'moment'
 export default {
     $_veeValidate: {
@@ -191,12 +192,20 @@ export default {
                 this.fpagos.push({value:0,text:"---"});
                 this.tipos.push({value:0,text:"---"});
 
+                // if (!this.isAdmin){
+                //     const index = this.tipos.indexOf(4);
+                //     this.tipos.splice(index, 1)
+                // }
+
             })
             .catch(err => {
                 this.$toast.error('Error al montar <filtro-alb>');
             })
     },
     computed: {
+        ...mapGetters([
+            'isAdmin',
+        ]),
         computedFechaD() {
             moment.locale('es');
             return this.fecha_d ? moment(this.fecha_d).format('L') : '';

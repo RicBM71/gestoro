@@ -233,8 +233,21 @@ class Albaran extends Model
 
     public static function scopeTipo($query, $tipo_id){
 
-        if (!Empty($tipo_id) && $tipo_id > 0)
-            return $query->where('tipo_id','=', $tipo_id);
+        if (esGestor()){
+            if (!Empty($tipo_id) && $tipo_id > 0)
+                return $query->where('tipo_id','=', $tipo_id);
+        }else{
+            if ($tipo_id == null)
+                return $query->whereIn('tipo_id', [3,5]);
+            else{
+
+                if ($tipo_id == 4) // para no permitir listar a los que no son gestores albaranes de nuevo
+                    $tipo_id = 0;
+
+                return $query->where('tipo_id','=', $tipo_id);
+            }
+        }
+
 
         return $query;
 

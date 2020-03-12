@@ -34,6 +34,7 @@ class AlbaranesController extends Controller
             $data = $this->miFiltro();
         }else{
             $data = Albaran::with(['cliente','albalins','tipo','fase'])
+                ->tipo(null)
                 ->where('fecha_albaran','=',Carbon::today())
                 ->get();
         }
@@ -151,6 +152,10 @@ class AlbaranesController extends Controller
     {
 
         $albarane = Albaran::withOutGlobalScope(EmpresaScope::class)->findOrFail($id);
+
+        if ($albarane->tipo_id == 4 && !esGestor()){
+            return abort(404, 'No puedes visualizar este albarán - Gestor Requerido');
+        }
 
         // con esto cambiamos de empresa si la empresa no coincide
         $collection = session('empresas_usuario');
