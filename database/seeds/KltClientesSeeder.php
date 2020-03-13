@@ -34,8 +34,8 @@ class KltClientesSeeder extends Seeder
 
                   $reg = DB::connection($this->bbdd)->select('select * from clientes where '.
                     'clientes.id >='.$d.' and clientes.id <='.$h
-                    .' AND clientes.id in (select DISTINCT cliente from albaranes WHERE empresa IN(1,2,4,11,12,14,17)) order by clientes.id');
-                    //.' AND clientes.id in (select DISTINCT cliente from albaranes) order by clientes.id');
+                    //.' AND clientes.id in (select DISTINCT cliente from albaranes WHERE empresa IN(1,2,4,11,12,14,17)) order by clientes.id');
+                    .' AND clientes.id in (select DISTINCT cliente from albaranes) order by clientes.id');
 
                 $this->insertaClientes($reg);
 

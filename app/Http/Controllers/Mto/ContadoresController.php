@@ -97,7 +97,7 @@ class ContadoresController extends Controller
             $sfa = 'FA';
             $sfr = 'FR';
         }elseif($data['tipo_id'] == 4){
-            $sa = 'A';
+            $sa = 'V';
             $sf = 'G';
             $sfa = 'GA';
             $sfr = 'GR';
