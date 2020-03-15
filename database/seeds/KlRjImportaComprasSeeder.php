@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 
 class KlRjImportaComprasSeeder extends Seeder
 {
+    protected $empresa_id;
     /**
      * Run the database seeds.
      *
@@ -16,7 +17,8 @@ class KlRjImportaComprasSeeder extends Seeder
     public function run()
     {
 
-        session('empresa_id', 4);
+        $this->empresa_id = 4;
+        session('empresa_id', $this->empresa_id);
 
         $compras = DB::connection('db2')->select('select * from klt_compras WHERE empresa_id = 12');
         foreach ($compras as $compra){
@@ -43,7 +45,7 @@ class KlRjImportaComprasSeeder extends Seeder
         //\Log::info($data);
 
         $data = $data->toArray();
-        //$data = $data[0];
+        $data['empresa_id'] = $this->empresa_id;
 
         DB::table('compras')->insertGetId($data);
 
@@ -56,12 +58,14 @@ class KlRjImportaComprasSeeder extends Seeder
         $lineas = DB::connection('db2')->select('select * from klt_comlines WHERE compra_id = ?',[$compra_id]);
         foreach ($lineas as $linea){
             $l = collect($linea)->toArray();
+            $l['empresa_id'] = $this->empresa_id;
             DB::table('comlines')->insertGetId($l);
         }
 
         $depo = DB::connection('db2')->select('select * from klt_depositos WHERE compra_id = ?',[$compra_id]);
         foreach ($depo as $linea){
             $l = collect($linea)->toArray();
+            $l['empresa_id'] = $this->empresa_id;
             DB::table('depositos')->insertGetId($l);
         }
 

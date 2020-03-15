@@ -143,6 +143,7 @@ import ExportRfid from './components/rfid/ExportRfid.vue';
 import EstadosRfid from './components/rfid/EstadosRfid.vue';
 
 import FindProducto from './components/tools/FindProducto.vue';
+import ImportarProducto from './components/tools/ImportarProducto.vue';
 import Cierre from './components/tools/Cierre.vue';
 
 export default [
@@ -697,6 +698,11 @@ export default [
                 path: '/tools/find/producto',
                 name: 'tools.find.producto',
                 component: FindProducto,
+            },
+            {
+                path: '/tools/importar/producto',
+                name: 'tools.importar.producto',
+                component: ImportarProducto,
             },
             {
                 path: '/tools/cierre',

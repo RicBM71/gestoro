@@ -263,6 +263,7 @@ Route::group([
         Route::post('intercambio', 'IntercambioController@submit');
 
         Route::put('reasignar/empresa/producto/{producto}', 'ReasignarEmpresaProductoController@update');
+        Route::post('importar/producto', 'ImportarProductoController@store');
 
         Route::post('cierre', 'CierreController@submit');
 
