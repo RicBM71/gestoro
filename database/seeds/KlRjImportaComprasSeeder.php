@@ -1,5 +1,7 @@
 <?php
 
+use App\Compra;
+use App\Scopes\EmpresaScope;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -14,17 +16,18 @@ class KlRjImportaComprasSeeder extends Seeder
     public function run()
     {
 
-        session('empresa_id', 2);
+        session('empresa_id', 4);
 
-        $compras = DB::connection('db2')->select('select * from klt_albaranes WHERE empresa_id = 11');
+        $compras = DB::connection('db2')->select('select * from klt_compras WHERE empresa_id = 12');
         foreach ($compras as $compra){
 
             try {
                 //code...
-                $compra_quilates = Compra::findOrFail($compra->id);
+                $compra_recupera = Compra::withOutGlobalScope(EmpresaScope::class)->findOrFail($compra->id);
                 continue;
 
             } catch (\Exception $e) {
+                \Log::info($compra->id);
                 $this->crearCompra($compra);
             }
         }
@@ -32,23 +35,34 @@ class KlRjImportaComprasSeeder extends Seeder
 
     private function crearCompra($row){
 
-        $this->checkCliente($row->cliente_id);
+
+        //$this->checkCliente($row->cliente_id);
 
         $data = collect($row);
+
+        //\Log::info($data);
+
         $data = $data->toArray();
-        $data = $data[0];
+        //$data = $data[0];
 
-        DB::table('klt_compras')->insertGetId($data);
+        DB::table('compras')->insertGetId($data);
 
-        $this->crearLineas($row->compra_id);
+        $this->crearLineas($row->id);
 
     }
 
-    private function crearLineas(){
+    private function crearLineas($compra_id){
 
-        $lineas = Comlines::where('compra_id')->get();
+        $lineas = DB::connection('db2')->select('select * from klt_comlines WHERE compra_id = ?',[$compra_id]);
         foreach ($lineas as $linea){
-            
+            $l = collect($linea)->toArray();
+            DB::table('comlines')->insertGetId($l);
+        }
+
+        $depo = DB::connection('db2')->select('select * from klt_depositos WHERE compra_id = ?',[$compra_id]);
+        foreach ($depo as $linea){
+            $l = collect($linea)->toArray();
+            DB::table('depositos')->insertGetId($l);
         }
 
     }
@@ -77,8 +91,8 @@ class KlRjImportaComprasSeeder extends Seeder
 
         return $cliente_id;
 
-         \Log::info("Creados ".$creados);
-         \Log::info("Existe ".$existen);
+        //  \Log::info("Creados ".$creados);
+        //  \Log::info("Existe ".$existen);
     }
 
     private function crearCliente($cliente_kil){
@@ -90,7 +104,7 @@ class KlRjImportaComprasSeeder extends Seeder
         $data = $data[0];
         $data['id']=null;
 
-        \Log::info($data);
+    //    \Log::info($data);
 
         return DB::table('clientes')->insertGetId($data);
 

@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class KlRjImportaProductosSeeder extends Seeder
@@ -12,7 +13,7 @@ class KlRjImportaProductosSeeder extends Seeder
     public function run()
     {
 
-        $referencias = '"KL53836","BM59347"';
+        $referencias = '"RE53369","RE58617"';
 
         // leo de kilates, origen
         $productos = DB::connection('db2')->select('select * from klt_productos WHERE referencia IN ('.$referencias.')');
@@ -43,13 +44,18 @@ class KlRjImportaProductosSeeder extends Seeder
     private function crearProducto($producto_kil){
 
         // foreach ($producto_kil as $d){
-             \Log::info(collect($producto_kil));
 
-        $data = collect($producto_kil)->toArray();
+            $data = collect($producto_kil)->toArray();
 
-        //$data['id']=null;
-        $data['empresa_id']=3;
-        $data['destino_empresa_id']=3;
+            //$data['id']=null;
+            $data['empresa_id']=4;
+            $data['destino_empresa_id']=4;
+            $data['created_at']=Carbon::now();
+            $data['updated_at']=Carbon::now();
+            $data['username']='recupera';
+
+            \Log::info($data);
+
 
         return DB::table('productos')->insertGetId($data);
 

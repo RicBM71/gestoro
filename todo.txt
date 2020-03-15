@@ -133,12 +133,12 @@ SELECT * FROM `klt_compras` where fase_id <> 5 and id in (select compra_id from 
 
 
 
-DELETE FROM klt_comlines where empresa_id not in(3,4,6,9,13,14,15,16);
-DELETE FROM klt_depositos where empresa_id not in(3,4,6,9,13,14,15,16);
-DELETE FROM klt_compras where empresa_id not in(3,4,6,9,13,14,15,16);
-DELETE FROM klt_albalins where empresa_id not in(3,4,6,9,13,14,15,16);
-DELETE FROM klt_cobros where empresa_id not in(3,4,6,9,13,14,15,16);
-DELETE FROM klt_albaranes where empresa_id not in(3,4,6,9,13,14,15,16);
-DELETE FROM klt_productos where empresa_id not in(3,4,6,9,13,14,15,16);
-DELETE FROM klt_cajas where empresa_id not in(3,4,6,9,13,14,15,16);
-DELETE FROM klt_empresas where id not in(3,4,6,9,13,14,15,16);
+DELETE FROM klt_comlines where empresa_id not in(1,2,3,4,5,11,12,14);
+DELETE FROM klt_depositos where empresa_id not in(1,2,3,4,5,11,12,14);
+DELETE FROM klt_compras where empresa_id not in(1,2,3,4,5,11,12,14);
+DELETE FROM klt_albalins where empresa_id not in(1,2,3,4,5,11,12,14);
+DELETE FROM klt_cobros where empresa_id not in(1,2,3,4,5,11,12,14);
+DELETE FROM klt_albaranes where empresa_id not in(1,2,3,4,5,11,12,14);
+DELETE FROM klt_productos where empresa_id not in(1,2,3,4,5,11,12,14);
+DELETE FROM klt_cajas where empresa_id not in(1,2,3,4,5,11,12,14);
+DELETE FROM klt_empresas where id not in(1,2,3,4,5,11,12,14);

@@ -120,7 +120,7 @@ import Loading from '@/components/shared/Loading'
             peso_gr: 0,
             ref_pol:"",
             iva_id: 1,
-            cliente_id: 0,
+            cliente_id: null,
             univen: 'U'
         },
     }),

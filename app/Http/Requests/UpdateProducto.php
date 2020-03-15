@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Clase;
+use App\Rules\RebuRule;
 use App\Rules\LeyesRule;
 use App\Rules\UnivenRule;
 use Illuminate\Validation\Rule;
@@ -34,7 +35,7 @@ class UpdateProducto extends FormRequest
             'clase_id'          => ['required','integer'],
             'estado_id'         => ['required','integer'],
             'compra_id'         => ['nullable','integer'],
-            'iva_id'            => ['required','integer'],
+            'iva_id'            => ['required','integer', new RebuRule($this->estado_id)],
             'referencia'        => ['required','max:20'],
             'univen'            => ['required', 'max:1'],
             'peso_gr'           => ['numeric','required'],
@@ -43,7 +44,7 @@ class UpdateProducto extends FormRequest
             'ref_pol'           => ['nullable', 'max:20', Rule::requiredIf($this->iva_id==2)],
             'caracteristicas'   => ['nullable','string', 'max:190'],
             'notas'             => ['string','nullable'],
-            'cliente_id'        => ['nullable', 'integer', Rule::requiredIf($this->iva_id==2 && $this->compra_id == null)],
+            'cliente_id'        => ['nullable', 'integer', Rule::requiredIf($this->iva_id==2 && $this->empresa_id <> $this->destino_empresa_id && $this->compra_id == null)],
             'almacen_id'        => ['nullable', 'integer'],
             'etiqueta_id'       => ['required', 'integer'],
             'stock'             => ['required', 'integer'],
