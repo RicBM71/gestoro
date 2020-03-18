@@ -16,42 +16,42 @@ class KltClientesSeeder extends Seeder
      */
     public function run()
     {
-              Cliente::truncate();
+            //   Cliente::truncate();
 
-              //$reg = DB::connection($this->bbdd)->select('select * from clientes where clientes.id in (select DISTINCT cliente from albaranes) order by clientes.id');
+            //   //$reg = DB::connection($this->bbdd)->select('select * from clientes where clientes.id in (select DISTINCT cliente from albaranes) order by clientes.id');
 
-              $count = DB::connection($this->bbdd)->table('clientes')->count();
+            //   $count = DB::connection($this->bbdd)->table('clientes')->count();
 
-              $d = $h = 0;
-              for ($x=1; $x<=$count;$x++){
+            //   $d = $h = 0;
+            //   for ($x=1; $x<=$count;$x++){
 
-                if ($d == 0)
-                    $d = 1;
-                else
-                    $d = $h + 1;
+            //     if ($d == 0)
+            //         $d = 1;
+            //     else
+            //         $d = $h + 1;
 
-                $h = $x * 4000;
+            //     $h = $x * 4000;
 
-                  $reg = DB::connection($this->bbdd)->select('select * from clientes where '.
-                    'clientes.id >='.$d.' and clientes.id <='.$h
-                    //.' AND clientes.id in (select DISTINCT cliente from albaranes WHERE empresa IN(1,2,4,11,12,14,17)) order by clientes.id');
-                    .' AND clientes.id in (select DISTINCT cliente from albaranes) order by clientes.id');
+            //       $reg = DB::connection($this->bbdd)->select('select * from clientes where '.
+            //         'clientes.id >='.$d.' and clientes.id <='.$h
+            //         //.' AND clientes.id in (select DISTINCT cliente from albaranes WHERE empresa IN(1,2,4,11,12,14,17)) order by clientes.id');
+            //         .' AND clientes.id in (select DISTINCT cliente from albaranes) order by clientes.id');
 
-                $this->insertaClientes($reg);
+            //     $this->insertaClientes($reg);
 
-              }
+            //   }
 
 
-            return;
+           // return;
 
                 // importar documentos
             Clidoc::truncate();
 
             $data=array();
-            $reg = DB::connection($this->bbdd)->select('select * from clidoc where cola="A" and id < 1000 order by id');
+            $reg = DB::connection($this->bbdd)->select('select * from clidoc where cola="A" order by id');
             $i=0;
 
-            $disco = 'disk_kl';
+            $disco = 'disk_klts';
 
             foreach ($reg as $row){
                 $i++;

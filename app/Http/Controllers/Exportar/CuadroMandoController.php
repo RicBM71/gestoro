@@ -276,8 +276,10 @@ class CuadroMandoController extends Controller
         return Excel::download(new CuadroMandoExport($request->data_com,
                                                     $request->data_inv,
                                                     $request->data_liq,
+                                                    $request->data_net,
                                                     $request->data_ven,
-                                                    $request->data_dep), 'mando.xlsx');
+                                                    $request->data_dep,
+                                                    $request->data_pro), 'mando.xlsx');
 
     }
 

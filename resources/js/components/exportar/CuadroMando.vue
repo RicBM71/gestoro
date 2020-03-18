@@ -377,10 +377,12 @@ export default {
                 responseType: 'blob', // important
                 data:{
                         data_com: this.items_comprados,
-                        data_inv: this.items_inventariados,
                         data_liq: this.items_liquidados,
+                        data_inv: this.items_inventariados,
+                        data_net: this.items_liquidado_neto,
                         data_ven: this.items_ventas,
                         data_dep: this.items_depositos,
+                        data_pro: this.items_inventario,
                     }
                 })
             .then(response => {

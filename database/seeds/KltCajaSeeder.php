@@ -23,7 +23,7 @@ class KltCajaSeeder extends Seeder
         foreach ($reg as $row){
 
             if ($emp_ant <> $row->empresa || $tie_ant <> $row->tienda){
-                $r = DB::connection('quilates')->select('select * from crulara WHERE empresa ='.$row->empresa.' AND tienda='.$row->tienda);
+                $r = DB::connection('quilates')->select('select * from crulara WHERE empresa ='.$row->empresa.' AND tienda='.$row->tienda.' AND YEAR(fecha)=2020');
                 foreach ($r as $cruce){
                 }
                 $emp_ant = $row->empresa;
