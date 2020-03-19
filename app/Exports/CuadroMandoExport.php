@@ -44,8 +44,8 @@ class CuadroMandoExport implements FromView
                 '5' => 'TALLER'
             ],
             'det_com'  => [
-                '1' => 'RECOMPRAS',
-                '2' => 'COMPRAS'
+                '1' => 'DEPOSITO RECOMPRAS (AC)',
+                '2' => 'DEPOSITO COMPRAS (AC)'
             ],
             'titulo' => 'Cuadro de mando',
         ]);

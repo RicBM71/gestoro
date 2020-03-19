@@ -289,7 +289,7 @@ export default {
         },
         detalle_ven(t){
             if (t==3)
-                return "VENTAS REBU + RESERVAS";
+                return "VENTAS REBU";
             else if(t==4)
                 return "VENTAS RG";
             else if(t==5)
