@@ -35,7 +35,7 @@ class ComprasController extends Controller
      */
     public function index()
     {
-        
+
         if (session('empresa')->getFlag(1) == false){
             return abort(411, 'Esta empresa no admite compras');
         }
@@ -457,6 +457,27 @@ class ComprasController extends Controller
                 'message' => 'Se ha modificado la fecha de recogida'
             ];
     }
+
+    public function desfacturar(Request $request, Compra $compra)
+    {
+
+        $data=[
+            'fecha_factura'=>null,
+            'factura'=>null,
+            'serie_fac'=>null,
+            'username'=>session('username'),
+            'updated_at'=> Carbon::now()
+        ];
+
+        $compra->update($data);
+
+        if (request()->wantsJson())
+            return [
+                'compra' => Compra::with(['cliente','grupo','tipo','fase'])->findOrFail($compra->id),
+                'message' => 'Se ha desfacturado la recompra!'
+            ];
+    }
+
 
      /**
      * Recibe las facturas por request, previamente de $this->lisfac()

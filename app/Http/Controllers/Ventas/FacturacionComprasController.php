@@ -86,7 +86,7 @@ class FacturacionComprasController extends Controller
 
         $data=[
             'fecha_factura'=>null,
-            'factura'=>0,
+            'factura'=>null,
             'serie_fac'=>null,
             'username'=>session('username'),
             'updated_at'=> Carbon::now()

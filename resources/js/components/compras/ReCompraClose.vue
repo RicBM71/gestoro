@@ -68,6 +68,21 @@
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <v-btn
+                            v-show="compra.factura > 0 "
+                            v-on="on"
+                            color="white"
+                            icon
+                            :disabled="computedDisabledDesfacturar"
+                            @click="goDesfacturar()"
+                        >
+                            <v-icon color="orange darken-2">new_releases</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>Desfacturar ReCompra</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                        <v-btn
                             v-if="cambio_recompra"
                             v-show="compra.fase_id <=4  && hasAddCom"
                             v-on="on"
@@ -567,6 +582,7 @@ import {mapState} from 'vuex'
             ...mapGetters([
                 'isSupervisor',
                 'isAdmin',
+                'isGestor',
                 'hasLiquidar',
                 'parametros',
                 'hasReaCompras',
@@ -581,6 +597,14 @@ import {mapState} from 'vuex'
                 }else{
                     return false;
                 }
+
+            },
+            computedDisabledDesfacturar(){
+
+                if (this.isAdmin && this.isGestor )
+                    return false;
+                else
+                    return true;
 
             },
             computedAmpliar(){
@@ -900,6 +924,25 @@ import {mapState} from 'vuex'
                             this.$toast.error(err.response.data.message);
                             this.loading = false;
                         });
+                }
+            },
+            goDesfacturar() {
+
+                if (confirm('¿Estás seguro que desea desfacturar la recompra?')){
+                    if (this.loading === false){
+                        this.loading = true;
+
+                        axios.put(this.url+"/"+this.compra.id+"/desfacturar" )
+                            .then(res => {
+                                this.compra = res.data.compra;
+                                this.$toast.success(res.data.message);
+                                this.loading = false;
+                            })
+                            .catch(err => {
+                                this.$toast.error(err.response.data.message);
+                                this.loading = false;
+                            });
+                    }
                 }
             },
             updateRecogida(f){
