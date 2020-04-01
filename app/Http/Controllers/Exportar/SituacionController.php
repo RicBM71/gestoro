@@ -132,6 +132,18 @@ class SituacionController extends Controller
                 ->whereNull('albaranes.deleted_at')
                 ->groupBy('concepto','dh');
 
+        $select='"%c" AS concepto, "%d" AS dh, SUM(precio_coste) AS importe';
+        $s1 = str_replace('%c',"NUEVOS PRODUCTOS (P. Coste)", $select);
+        $s1 = str_replace('%d',"H", $s1);
+        $union7 = DB::table('productos')
+                ->select(DB::raw($s1))
+                ->where('empresa_id', session('empresa')->id)
+                ->where('estado_id', '<=', 2)
+                ->whereDate('created_at','>=', $data['fecha_d'])
+                ->whereDate('created_at','<=', $data['fecha_h'])
+                ->whereNull('deleted_at')
+                ->groupBy('concepto','dh');
+
         $select='"%c" AS concepto, "%d" AS dh, SUM(importe) AS importe';
         $s1 = str_replace('%c',"VENTAS (facturadas)", $select);
         $s1 = str_replace('%d',"H", $s1);
@@ -155,6 +167,7 @@ class SituacionController extends Controller
                 ->union($union4)
                 ->union($union5)
                 ->union($union5b)
+                ->union($union7)
                 ->orderBy('importe','desc')
                 ->get();
 
