@@ -32,6 +32,19 @@ class ResumenContableController extends Controller
     private function detalle($data)
     {
 
+        $select='"COMPRAS-recu" AS nom_com,'.DB::getTablePrefix().'clases.nombre AS clase, '.DB::getTablePrefix().'comlines.quilates AS quilates, SUM(peso_gr) AS peso_gr, SUM('.DB::getTablePrefix().'comlines.importe) AS importe,  SUM(0) AS importe_venta';
+
+        $union0 = DB::table('compras')
+            ->select(DB::raw($select))
+            ->join('comlines','compras.id','=','compra_id')
+            ->join('clases','comlines.clase_id','=','clases.id')
+            ->where('compras.empresa_id', session('empresa')->id)
+            ->where('compras.tipo_id', 1)
+            ->whereDate('fecha_compra','>=', $data['fecha_d'])
+            ->whereDate('fecha_compra','<=', $data['fecha_h'])
+            ->groupBy(DB::raw('nom_com,clase,quilates WITH ROLLUP'))
+            ->get();
+
 
         $select='"COMPRAS" AS nom_com,'.DB::getTablePrefix().'clases.nombre AS clase, '.DB::getTablePrefix().'comlines.quilates AS quilates, SUM(peso_gr) AS peso_gr, SUM('.DB::getTablePrefix().'comlines.importe) AS importe,  SUM(0) AS importe_venta';
 
@@ -40,6 +53,7 @@ class ResumenContableController extends Controller
             ->join('comlines','compras.id','=','compra_id')
             ->join('clases','comlines.clase_id','=','clases.id')
             ->where('compras.empresa_id', session('empresa')->id)
+            ->where('compras.tipo_id', 2)
             ->whereDate('fecha_compra','>=', $data['fecha_d'])
             ->whereDate('fecha_compra','<=', $data['fecha_h'])
             ->groupBy(DB::raw('nom_com,clase,quilates WITH ROLLUP'))
@@ -87,7 +101,8 @@ class ResumenContableController extends Controller
 
       //  $collection = $collection->whereIn('nom_com',['COMPRAS','VENTAS','VENTAS REBU']);
 
-        return $union1->merge($union2)
+        return $union0->merge($union1)
+                      ->merge($union2)
                       ->merge($union3);
                     //   ->whereIn('nom_com',['COMPRAS','VENTAS'])
                     //   ->all();
