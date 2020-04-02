@@ -104,7 +104,7 @@ class SituacionController extends Controller
 
 
         $select='"%c" AS concepto, "%d" AS dh, SUM(importe) AS importe';
-        $s1 = str_replace('%c',"VENTAS REBU (facturadas)", $select);
+        $s1 = str_replace('%c',"VENTAS REBU", $select);
         $s1 = str_replace('%d',"H", $s1);
         $union5 = DB::table('cobros')
                 ->select(DB::raw($s1))
@@ -112,25 +112,25 @@ class SituacionController extends Controller
                 ->join('fpagos','cobros.fpago_id','=','fpagos.id')
                 ->where('albaranes.empresa_id', session('empresa')->id)
                 ->where('albaranes.tipo_id', 3)
-                // ->whereDate('cobros.fecha','>=', $data['fecha_d'])
-                // ->whereDate('cobros.fecha','<=', $data['fecha_h'])
-                ->whereDate('fecha_factura','>=', $data['fecha_d'])
-                ->whereDate('fecha_factura','<=', $data['fecha_h'])
+                ->whereDate('cobros.fecha','>=', $data['fecha_d'])
+                ->whereDate('cobros.fecha','<=', $data['fecha_h'])
+                // ->whereDate('fecha_factura','>=', $data['fecha_d'])
+                // ->whereDate('fecha_factura','<=', $data['fecha_h'])
                 ->whereNull('albaranes.deleted_at')
                 ->groupBy('concepto','dh');
 
-        $select='"%c" AS concepto, "%d" AS dh, SUM(precio_coste) AS importe';
-        $s1 = str_replace('%c',"COSTE REBU", $select);
-        $s1 = str_replace('%d',"D", $s1);
-        $union5b = DB::table('albaranes')
-                ->select(DB::raw($s1))
-                ->join('albalins','albaranes.id','=','albalins.albaran_id')
-                ->where('albaranes.empresa_id', session('empresa')->id)
-                ->where('albaranes.tipo_id', 3)
-                ->whereDate('fecha_factura','>=', $data['fecha_d'])
-                ->whereDate('fecha_factura','<=', $data['fecha_h'])
-                ->whereNull('albaranes.deleted_at')
-                ->groupBy('concepto','dh');
+        // $select='"%c" AS concepto, "%d" AS dh, SUM(precio_coste) AS importe';
+        // $s1 = str_replace('%c',"COSTE REBU", $select);
+        // $s1 = str_replace('%d',"D", $s1);
+        // $union5b = DB::table('albaranes')
+        //         ->select(DB::raw($s1))
+        //         ->join('albalins','albaranes.id','=','albalins.albaran_id')
+        //         ->where('albaranes.empresa_id', session('empresa')->id)
+        //         ->where('albaranes.tipo_id', 3)
+        //         ->whereDate('fecha_factura','>=', $data['fecha_d'])
+        //         ->whereDate('fecha_factura','<=', $data['fecha_h'])
+        //         ->whereNull('albaranes.deleted_at')
+        //         ->groupBy('concepto','dh');
 
         $select='"%c" AS concepto, "%d" AS dh, SUM(precio_coste) AS importe';
         $s1 = str_replace('%c',"NUEVOS PRODUCTOS (P. Coste)", $select);
@@ -145,7 +145,7 @@ class SituacionController extends Controller
                 ->groupBy('concepto','dh');
 
         $select='"%c" AS concepto, "%d" AS dh, SUM(importe) AS importe';
-        $s1 = str_replace('%c',"VENTAS (facturadas)", $select);
+        $s1 = str_replace('%c',"VENTAS R.G.", $select);
         $s1 = str_replace('%d',"H", $s1);
         $union6 = DB::table('cobros')
                 ->select(DB::raw($s1))
@@ -153,10 +153,10 @@ class SituacionController extends Controller
                 ->join('fpagos','cobros.fpago_id','=','fpagos.id')
                 ->where('albaranes.empresa_id', session('empresa')->id)
                 ->where('albaranes.tipo_id', 4)
-                // ->whereDate('cobros.fecha','>=', $data['fecha_d'])
-                // ->whereDate('cobros.fecha','<=', $data['fecha_h'])
-                ->whereDate('fecha_factura','>=', $data['fecha_d'])
-                ->whereDate('fecha_factura','<=', $data['fecha_h'])
+                ->whereDate('cobros.fecha','>=', $data['fecha_d'])
+                ->whereDate('cobros.fecha','<=', $data['fecha_h'])
+                // ->whereDate('fecha_factura','>=', $data['fecha_d'])
+                // ->whereDate('fecha_factura','<=', $data['fecha_h'])
                 ->whereNull('albaranes.deleted_at')
                 ->groupBy('concepto','dh')
                 ->union($union0)
@@ -166,7 +166,7 @@ class SituacionController extends Controller
                 ->union($union3)
                 ->union($union4)
                 ->union($union5)
-                ->union($union5b)
+                // ->union($union5b)
                 ->union($union7)
                 ->orderBy('importe','desc')
                 ->get();
