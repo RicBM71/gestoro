@@ -125,10 +125,11 @@ class DetalleVentasController extends Controller
 
     private function noFacturados($data){
         return DB::table('albaranes')
-                    ->select(DB::raw(DB::getTablePrefix().'albaranes.id,'.
-                                    DB::getTablePrefix().'albaranes.albaran,'.
-                                    DB::getTablePrefix().'albaranes.iva_no_residente, MAX('.
-                                    DB::getTablePrefix().'cobros.fecha) AS fecha'))
+                    // ->select(DB::raw(DB::getTablePrefix().'albaranes.id,'.
+                    //                 DB::getTablePrefix().'albaranes.albaran,'.
+                    //                 DB::getTablePrefix().'albaranes.iva_no_residente, MAX('.
+                    //                 DB::getTablePrefix().'cobros.fecha) AS fecha'))
+                        ->select(DB::raw('DISTINCT '.DB::getTablePrefix().'albaranes.id'))
                         ->join('cobros', 'albaran_id', '=', 'albaranes.id')
                         ->where('albaranes.empresa_id', session('empresa')->id)
                         ->where('tipo_id', $data['tipo_id'])
@@ -138,7 +139,7 @@ class DetalleVentasController extends Controller
                         ->whereNull('albaranes.deleted_at')
                         ->groupBy('albaranes.id','albaran','iva_no_residente')
                         ->havingRaw('MAX('.DB::getTablePrefix().'cobros.fecha) >= ? AND MAX('.DB::getTablePrefix().'cobros.fecha) <= ?',[$data['fecha_d'],$data['fecha_h']])
-                        ->orderBy('fecha')
+                        ->orderBy('albaranes.id')
                         ->get();
     }
 
@@ -160,10 +161,11 @@ class DetalleVentasController extends Controller
 
     private function todos($data){
         return DB::table('albaranes')
-                    ->select(DB::raw(DB::getTablePrefix().'albaranes.id,'.
-                                    DB::getTablePrefix().'albaranes.albaran,'.
-                                    DB::getTablePrefix().'albaranes.iva_no_residente, MAX('.
-                                    DB::getTablePrefix().'cobros.fecha) AS fecha'))
+                    // ->select(DB::raw(DB::getTablePrefix().'albaranes.id,'.
+                    //                 DB::getTablePrefix().'albaranes.albaran,'.
+                    //                 DB::getTablePrefix().'albaranes.iva_no_residente, MAX('.
+                    //                 DB::getTablePrefix().'cobros.fecha) AS fecha'))
+                        ->select(DB::raw('DISTINCT '.DB::getTablePrefix().'albaranes.id'))
                         ->join('cobros', 'albaran_id', '=', 'albaranes.id')
                         ->where('albaranes.empresa_id', session('empresa')->id)
                         ->where('tipo_id', $data['tipo_id'])
@@ -172,7 +174,7 @@ class DetalleVentasController extends Controller
                         ->whereNull('albaranes.deleted_at')
                         ->groupBy('albaranes.id','albaran','iva_no_residente', 'fecha')
                         ->havingRaw('MAX('.DB::getTablePrefix().'cobros.fecha) >= ? AND MAX('.DB::getTablePrefix().'cobros.fecha) <= ?',[$data['fecha_d'],$data['fecha_h']])
-                        ->orderBy('fecha')
+                        ->orderBy('albaranes.id')
                         ->get();
     }
 
