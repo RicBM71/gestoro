@@ -302,15 +302,15 @@ export default {
             ejercicio:new Date().toISOString().substr(0, 4),
             show_filtro: true,
             items: [],
-            fecha_d: new Date().toISOString().substr(0, 7)+"-01",
+            fecha_d: new Date().toISOString().substr(0, 4)+"-01-01",
             fecha_h: new Date().toISOString().substr(0, 10),
             menu_d: false,
             menu_h: false,
       }
     },
      beforeMount(){
-        // if (this.getLineasIndex.length > 0)
-        //     this.items = this.getLineasIndex;
+        if (this.getLineasIndex.length > 0)
+            this.items = this.getLineasIndex;
     },
     mounted(){
 
