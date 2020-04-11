@@ -233,6 +233,12 @@ import Loading from '@/components/shared/Loading'
                                         }
                                     }else{
                                         this.$toast.error(err.response.data.message);
+                                        // this.$toast.custom(err.response.data.message);
+                                    // this.$toast(err.response.data.message,{
+                                    //         color: 'gray',
+                                    //         timeout: 15000,
+                                    //         dismissable: true,
+                                    //         multiLine: true});
                                     }
                                     this.loading = this.show_loading = false;
                                 });

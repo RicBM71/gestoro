@@ -81,6 +81,11 @@ class FacturacionVentasController extends Controller
 
         $ejercicio = getEjercicio($d);
 
+        $max_fecha_factura = Albaran::whereYear('fecha_factura',$ejercicio)
+                                        ->where('tipo_id', $tipo_id)
+                                        ->where('tipo_factura', 2)
+                                        ->max('fecha_factura');
+
 
         foreach ($albaranes as $row){
 
@@ -110,6 +115,8 @@ class FacturacionVentasController extends Controller
                 if ($this->verificarSiHayProductosEnDeposito($row->id)){
                     return abort(411, 'Se han encontrado albaranes sin reubicar, reubicar antes de continuar!!');
                 }
+            if ($row->fecha < $max_fecha_factura)
+                return abort(411, 'Se han encontrado una factura anterior y rompe secuencia facturación. Proceso abortado! Alb: '.$row->albaran);
 
             $contador->ult_factura_auto++;
 

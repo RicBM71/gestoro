@@ -267,7 +267,7 @@
                                         :value="computedMargen"
                                         label="Márgen"
                                         class="inputPrice"
-                                        readonly
+                                        disabled
                                     >
                                     </v-text-field>
                                 </v-flex>
@@ -510,7 +510,8 @@ import {mapState} from 'vuex'
                     return true;
 
                 if (this.producto.estado_id == 3 || this.producto.estado_id == 4)
-                    return this.isAdmin;
+                    return false;
+                //     return this.isAdmin;
 
                 const hoy = new Date().toISOString().substr(0, 10);
                 if (this.producto.username == this.userName && this.producto.created_at.substr(0, 10) == hoy)

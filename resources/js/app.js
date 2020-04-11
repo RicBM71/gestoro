@@ -68,7 +68,7 @@ Vue.use(VuetifyToast, {
 	y: 'top',
 	color: 'info', // default
 	icon: 'info',
-	timeout: 3000, // default
+	timeout: 5000, // default
 	dismissable: true, // default
 	autoHeight: false, // default
 	multiLine: false, // default

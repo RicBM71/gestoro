@@ -132,7 +132,8 @@
   </v-layout>
 </template>
 <script>
-  export default {
+import {mapGetters} from 'vuex';
+export default {
     $_veeValidate: {
         validator: 'new'
     },
@@ -147,6 +148,9 @@
         search:"",
     }),
     computed:{
+         ...mapGetters([
+            'hasEdtFac',
+        ]),
         computedSubmit(){
             if (this.albaran.tipo_id >= 4){
                 return (this.editedItem.producto_id==0);
@@ -169,7 +173,7 @@
             return this.editedItem.producto.clase.nombre+" "+quilates+" "+caracteristicas+" "+peso;
         },
         computedCoste(){
-             return this.albaran.tipo_id == 5;
+             return (this.albaran.tipo_id == 5 || this.hasEdtFac);
         }
     },
     methods:{
