@@ -98,7 +98,7 @@
                                 label="Acción"
                                 ></v-select>
                         </v-flex>
-                        <v-flex sm2 v-if="accion=='F'">
+                        <v-flex sm2 v-if="accion!='D'">
                             <v-select
                                 v-model="cobro"
                                 :items="cobros"
@@ -148,7 +148,8 @@ import Loading from '@/components/shared/Loading'
                 cobro: "T",
 
                 acciones:[
-                    {value: 'F', text:"Facturar"},
+                    {value: 'C', text:"Facturar con Fecha Cobro"},
+                    {value: 'F', text:"Facturar con Fecha Fija"},
                     {value: 'D', text:"Desfacturar"},
                 ],
 

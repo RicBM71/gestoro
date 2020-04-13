@@ -57,10 +57,8 @@ class FacturacionVentasController extends Controller
        // $rango = trimestre($data['ejercicio'],$data['trimestre']);
 
         //      FACTURACIÓN
-        if ($data['accion']=='F'){
-
-
-            $facturas = $this->facturarAlbaranes($data['fecha_d'],$data['fecha_h'],$data['tipo_id'],$data['cobro']);
+        if ($data['accion'] !='D'){
+            $facturas = $this->facturarAlbaranes($data['fecha_d'],$data['fecha_h'],$data['tipo_id'],$data['cobro'],$data['accion']);
         }
         else{       // DESFACTURAR.
             $facturas = $this->desfacturarAlbaranes($data['fecha_d'],$data['fecha_h'],$data['tipo_id']);
@@ -75,7 +73,7 @@ class FacturacionVentasController extends Controller
     }
 
 
-    private function facturarAlbaranes($d,$h, $tipo_id, $cobro){
+    private function facturarAlbaranes($d,$h, $tipo_id, $cobro, $tipo_fecha){
 
         $albaranes = $this->pendientesDeFacturar($d,$h, $tipo_id, $cobro);
 
@@ -114,16 +112,20 @@ class FacturacionVentasController extends Controller
             if ($tipo_id == 3)
                 if ($this->verificarSiHayProductosEnDeposito($row->id)){
                     return abort(411, 'Se han encontrado albaranes sin reubicar, reubicar antes de continuar!!');
+
                 }
-            if ($row->fecha < $max_fecha_factura)
+            $fecha_factura = ($tipo_fecha == 'F') ? $h : $row->fecha; // fecha fija o fecha cobro.
+
+            if ($fecha_factura < $max_fecha_factura)
                 return abort(411, 'Se han encontrado una factura anterior y rompe secuencia facturación. Proceso abortado! Alb: '.$row->albaran);
 
             $contador->ult_factura_auto++;
 
+
             $data = [
                 'serie_factura' => $contador->serie_factura_auto,
                 'factura'       => $contador->ult_factura_auto,
-                'fecha_factura' => $row->fecha,
+                'fecha_factura' => $fecha_factura,
                 'factura_txt'   => $ejercicio.$contador->serie_factura_auto.$contador->ult_factura_auto,
                 'tipo_factura'  => 2,
                 'username'      => session('username')
