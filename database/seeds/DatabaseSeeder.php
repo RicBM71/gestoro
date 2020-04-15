@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
         $this->call(KltAlbaranesSeeder::class);
         $this->call(KltAlbalinSeeder::class);
         $this->call(KltCobrosSeeder::class);
-        // $this->call(KltCajaSeeder::class);
+        $this->call(KltCajaSeeder::class);
 
         // $this->call(EoEmpresasSeeder::class);
         // $this->call(EoUsuariosSeeder::class);
