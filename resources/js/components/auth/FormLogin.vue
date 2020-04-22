@@ -21,6 +21,8 @@
                 </div>
                 <v-text-field
                     prepend-icon="lock"
+                    :append-icon="show ? 'visibility_off' : 'visibility'"
+                    :type="show ? 'text' : 'password'"
                     v-model="password"
                     name="password"
                     label="Password"
@@ -29,8 +31,8 @@
                     data-vv-as="contraseña"
                     id="password"
                     v-validate="'required'"
-                    type="password"
                     :disabled="loading"
+                    @click:append="show = !show"
                 ></v-text-field>
                 <div v-if="err_pas" class="v-messages theme--light error--text  text-xs-center">
                     <strong>{{ err_pas }}</strong>
@@ -73,6 +75,7 @@ export default {
     },
     data() {
         return {
+            show: false,
             username:this.old_usr,
             //username:"ricardo.bm",
             password:"",

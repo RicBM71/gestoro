@@ -81,6 +81,7 @@ class ComprarController extends Controller
         $compra = Compra::findOrFail($id);
 
         $data_com['importe'] = $compra->importe + $importe;
+        $data_com['fecha_renovacion'] = null;
         $data_com['tipo_id'] = 2;
         $data_com['retencion'] = session()->get('parametros')->retencion;
         $data_com['username'] = session('username');
@@ -97,9 +98,11 @@ class ComprarController extends Controller
         $compra = Compra::findOrFail($id);
 
         $data_com['importe'] = $compra->importe - $importe;
+        $data_com['fecha_renovacion'] = $compra->fecha_compra->addDays($compra->dias_custodia);
         $data_com['tipo_id'] = 1;
         $data_com['retencion'] = 0;
         $data_com['username'] = session('username');
+
 
         $compra->update($data_com);
     }

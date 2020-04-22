@@ -111,7 +111,7 @@ class DepositosController extends Controller
     public function updateFase($id,$fase_id){
 
         $data=[
-            'fase_id'=> $fase_id,
+            'fase_id'  => $fase_id,
             'username' => session()->get('username')
         ];
 
