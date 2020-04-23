@@ -233,7 +233,7 @@ class PrintAlbController extends Controller
 
             $txt = $txt_garantia.$row->producto->nombre;
 			if ($row->producto->quilates != null){
-				$txt.= ' '.$row->producto->quilates.'K';
+				$txt.= ' ('.strtoupper($row->producto->clase->nombre).' '.$row->producto->quilates.'KT)';
             }
             $txt.=$leyenda;
 
