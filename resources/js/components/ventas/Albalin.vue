@@ -277,7 +277,7 @@ export default {
     methods:{
         conCaracteristicas(item){
 
-            const quilates = item.producto.quilates > 0 ? item.producto.quilates+"K" : "";
+            const quilates = item.producto.quilates > 0 ? item.producto.quilates+"KT" : "";
 
             const peso = (item.producto.peso_gr && item.producto.univen == "G") > 0 ? item.producto.peso_gr+" gr." : "";
 
