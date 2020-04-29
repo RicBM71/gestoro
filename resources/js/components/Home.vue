@@ -212,6 +212,7 @@ export default {
             text: 'Root',
             model: false,
             children: [
+                { text: 'Ampliación COVID', name: 'tools.ampliar' },
                 { text: 'Find Producto', name: 'tools.find.producto' },
                 { text: 'Importar Producto', name: 'tools.importar.producto' },
                 { text: 'Usuarios', name: 'users.index' },

@@ -143,6 +143,7 @@ import ExportRfid from './components/rfid/ExportRfid.vue';
 import EstadosRfid from './components/rfid/EstadosRfid.vue';
 
 import FindProducto from './components/tools/FindProducto.vue';
+import AmpliarMasivo from './components/tools/AmpliarMasivo.vue';
 import ImportarProducto from './components/tools/ImportarProducto.vue';
 import Cierre from './components/tools/Cierre.vue';
 
@@ -703,6 +704,11 @@ export default [
                 path: '/tools/importar/producto',
                 name: 'tools.importar.producto',
                 component: ImportarProducto,
+            },
+            {
+                path: '/tools/amplimasivo',
+                name: 'tools.ampliar',
+                component: AmpliarMasivo,
             },
             {
                 path: '/tools/cierre',

@@ -267,6 +267,7 @@ Route::group([
         Route::post('importar/producto', 'ImportarProductoController@store');
 
         Route::post('cierre', 'CierreController@submit');
+        Route::post('amplimasivo', 'AmpliarMasivoController@submit');
 
      //   Route::get('helpbanco', 'HelpBancosController@index');
     }
