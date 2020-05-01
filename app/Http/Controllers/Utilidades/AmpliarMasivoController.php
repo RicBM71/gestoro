@@ -32,10 +32,13 @@ class AmpliarMasivoController extends Controller
         $depositos = array();
         foreach ($compras as $compra){
 
+            if ($compra->retraso <= 0)
+                continue;
+
             $fecha = Carbon::parse($compra->fecha_renovacion);
 
             $reg['fecha_renovacion'] = $fecha->addDays($data['dias']);
-            $reg['username'] = session('username');
+            $reg['username'] = 'Gerencia';
 
             $compra->update($reg);
 
@@ -48,7 +51,7 @@ class AmpliarMasivoController extends Controller
                 'importe'   => 0,
                 'dias'      => $data['dias'],
                 'notas'     => 'Suspensión x Estado de Alarma',
-                'username'  => 'admin',
+                'username'  => 'Gerencia',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             );

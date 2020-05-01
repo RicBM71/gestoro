@@ -89,7 +89,7 @@ import Loading from '@/components/shared/Loading'
                 loading: false,
 
                 show_loading: true,
-                titulo:'Amplición masiva COVID'
+                titulo:'Ampliación masiva COVID'
       		}
         },
         mounted(){

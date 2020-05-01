@@ -84,6 +84,46 @@ class KltCajaSeeder extends Seeder
                 $data=array();
             }
         }
+
         DB::table('cajas')->insert($data);
+
+        // return;
+
+        // $reg = DB::connection('quilates')
+        //     ->select('select * from saldos WHERE YEAR(fecha)=2020');
+
+        // $data=array();
+        // $emp_ant = $tie_ant = -1;
+        // foreach ($reg as $row){
+
+        //     if ($emp_ant <> $row->empresa || $tie_ant <> $row->tienda){
+        //         $r = DB::connection('quilates')->select('select * from crulara WHERE empresa ='.$row->empresa.' AND tienda='.$row->tienda);
+        //         foreach ($r as $cruce){
+        //         }
+        //         $emp_ant = $row->empresa;
+        //         $tie_ant = $row->tienda;
+        //     }
+
+        //     $concepto = "REGULARIZACIÓN";
+
+        //     $data[]=array(
+
+        //         'fecha'=>$row->fecha,
+        //         'dh'=> 'H',
+        //         'empresa_id'=> $cruce->emp_alb,
+        //         'nombre' => $concepto,
+        //         'importe'=> ($row->saldo),
+        //         'manual'=>  'R',
+        //         'apunte_id' => null,
+        //         'username' => $row->sysusr,
+        //         'created_at' => $row->sysfum.' '.$row->syshum,
+        //         'updated_at' => $row->sysfum.' '.$row->syshum,
+        //     );
+
+        // }
+
+        // DB::table('cajas')->insert($data);
+
+
     }
 }
