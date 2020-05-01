@@ -58,6 +58,7 @@ class ContadorCheckController extends Controller
                                 ->where('empresa_id', $row->empresa_id)
                                 ->whereYear('fecha_compra', $ejercicio)
                                 ->where('grupo_id', $row->grupo_id)
+                                ->where('serie_com', $row->serie_com)
                                 ->first();
 
             $recuperaciones = DB::table('compras')->select(DB::raw('count(*) AS reg'))
