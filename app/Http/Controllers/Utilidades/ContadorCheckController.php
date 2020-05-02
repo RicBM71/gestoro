@@ -102,15 +102,15 @@ class ContadorCheckController extends Controller
 
                 if ($albaran->tipo_factura == 1){
                     $factura = $row->ult_factura;
-                    $tipofac = 'SERIE MANUAL';
+                    $tipofac = 'FACTURAS s/MANUAL';
                 }
                 elseif ($albaran->tipo_factura == 2){
                     $factura = $row->ult_factura_auto;
-                    $tipofac = 'SERIE AUTO';
+                    $tipofac = 'FACTURAS s/AUTO';
                 }
                 elseif ($albaran->tipo_factura == 3){
                     $factura = $row->ult_factura_abono;
-                    $tipofac = 'SERIE ABONOS';
+                    $tipofac = 'FACTURAS s/ABONOS';
                 }
 
                 if ($factura == 0 && $albaran->reg == 0)
