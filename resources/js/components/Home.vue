@@ -181,6 +181,7 @@ export default {
             'isRoot',
             'isAdmin',
             'hasFactura',
+            'hasUsers',
             'isGestor',
             'isSupervisor',
             'empresaActiva',
@@ -316,6 +317,16 @@ export default {
             ],
         },
 
+        mn_users: {
+            icon: 'keyboard_arrow_up',
+            'icon-alt': 'keyboard_arrow_down',
+            text: 'Administración',
+            model: false,
+            children: [
+                { icon: 'supervised_user_circle', text: 'Usuarios', name: 'users.index' },                
+            ]
+        },
+
         mn_etiquetas:{
             icon: 'keyboard_arrow_up',
             'icon-alt': 'keyboard_arrow_down',
@@ -358,6 +369,8 @@ export default {
                         this.mn_items.push(this.mn_root);
 
                     if(this.isAdmin && this.isGestor)
+                        this.mn_items.push(this.mn_admin);
+                    else(this.hasUsers)
                         this.mn_items.push(this.mn_admin);
 
 

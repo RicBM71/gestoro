@@ -155,6 +155,9 @@ const getters = {
     hasDesLoc: (state) =>{
         return (state.permisos.indexOf('desloc') >= 0) ? true : false;
     },
+    hasUsers: (state) =>{
+        return (state.permisos.indexOf('users') >= 0) ? true : false;
+    },
 };
 
 /*
