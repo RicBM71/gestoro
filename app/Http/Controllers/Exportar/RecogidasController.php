@@ -9,7 +9,7 @@ use App\Rules\RangoFechaRule;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\ServiciosTallerExport;
+use App\Exports\RecogidasExport;
 
 class RecogidasController extends Controller
 {
@@ -39,8 +39,9 @@ class RecogidasController extends Controller
     private function detalle($data){
 
         $result = DB::table('compras')
-                        ->select('compras.*','empresas.nombre AS empresa')
+                        ->select('compras.*','empresas.nombre AS empresa','clientes.razon')
                         ->join('empresas','empresas.id','=','empresa_id')
+                        ->join('clientes','clientes.id','=','cliente_id')
                         ->whereIn('compras.empresa_id', session('empresas_usuario'))
                         ->where('tipo_id', 1)
                         ->whereIn('fase_id', [4,5])
@@ -53,15 +54,15 @@ class RecogidasController extends Controller
 
     }
 
-    //  /**
-    //  * Recibe las facturas por request, previamente de $this->lisfac()
-    //  *
-    //  * @param Request $request
-    //  * @return void
-    //  */
-    // public function excel(Request $request){
+     /**
+     * Recibe las facturas por request, previamente de $this->lisfac()
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function excel(Request $request){
 
-    //     return Excel::download(new ServiciosTallerExport($request->data, 'Taller '.$request->titulo), 'file.xlsx');
+        return Excel::download(new RecogidasExport($request->data, 'Recogidas'), 'file.xlsx');
 
-    // }
+    }
 }

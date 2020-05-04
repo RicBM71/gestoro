@@ -334,6 +334,7 @@ Route::group([
         Route::post('/inventario', 'InventarioController@inventario');
         Route::post('/inventario/excel', 'InventarioController@excel');
         Route::post('/recogidas', 'RecogidasController@submit');
+        Route::post('/recogidas/excel', 'RecogidasController@excel');
 
     }
 );

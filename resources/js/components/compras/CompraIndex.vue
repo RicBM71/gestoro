@@ -9,21 +9,21 @@
                     <h2>{{titulo}}</h2>
                     <v-spacer></v-spacer>
                     <v-tooltip bottom>
-                    <template v-slot:activator="{ on }">
-                        <v-btn
-                            v-show="items.length > 0 && isGestor"
-                            v-on="on"
-                            color="white"
-                            icon
-                            @click="goExcel()"
-                        >
-                            <v-avatar size="32px">
-                                <img class="img-fluid" src="/assets/excel.png">
-                            </v-avatar>
-                        </v-btn>
-                    </template>
-                    <span>Exportar a Excel</span>
-                </v-tooltip>
+                        <template v-slot:activator="{ on }">
+                            <v-btn
+                                v-show="items.length > 0 && isGestor"
+                                v-on="on"
+                                color="white"
+                                icon
+                                @click="goExcel()"
+                            >
+                                <v-avatar size="32px">
+                                    <img class="img-fluid" src="/assets/excel.png">
+                                </v-avatar>
+                            </v-btn>
+                        </template>
+                        <span>Exportar a Excel</span>
+                    </v-tooltip>
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on }">
                             <v-btn

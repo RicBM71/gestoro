@@ -39,7 +39,7 @@ class DepositoObserver
             // NOMBRE CONCEPTO
         $concepto = (Concepto::find($deposito->concepto_id));
 
-        $dh = (in_array($deposito->concepto_id,[1,16])) ? "D" : "H";
+        $dh = (in_array($deposito->concepto_id,[1,13,16])) ? "D" : "H";
 
             //DATOS COMPRA, lo de abjo sobra no?
       //  $compra = Compra::findOrFail($deposito->compra_id);

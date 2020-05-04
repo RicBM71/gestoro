@@ -19,7 +19,7 @@
                     </template>
                     <span>Selección</span>
                 </v-tooltip>
-                <!-- <v-tooltip bottom>
+                <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <v-btn
                             v-show="items.length > 0"
@@ -34,7 +34,7 @@
                         </v-btn>
                     </template>
                     <span>Exportar a Excel</span>
-                </v-tooltip> -->
+                </v-tooltip>
             </v-card-title>
         </v-card>
         <v-card>
@@ -136,6 +136,8 @@
                                     <tr>
                                         <td>{{props.item.empresa}}</td>
                                         <td>{{ albser(props.item) }}</td>
+                                        <td class="text-xs-right">{{ props.item.importe | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                        <td>{{ props.item.razon }}</td>                                        
                                         <td>{{ formatDate(props.item.fecha_compra) }} </td>
                                         <td>{{ formatDate(props.item.fecha_recogida) }}</td>
                                     </tr>
@@ -172,6 +174,16 @@ export default {
                 text: 'Compra',
                 align: 'left',
                 value: 'com_ser',
+            },
+            {
+                text: 'Importe',
+                align: 'left',
+                value: 'importe',
+            },
+            {
+                text: 'Cliente',
+                align: 'left',
+                value: 'razon',
             },
             {
                 text: 'F. Compra',
@@ -273,6 +285,37 @@ export default {
                 });
 
             }
+        },
+        goExcel(){
+
+            this.show_loading = true;
+            axios({
+                url: '/exportar/recogidas/excel',
+                method: 'POST',
+                responseType: 'blob', // important
+                data:{ data: this.items }
+                })
+            .then(response => {
+
+                let blob = new Blob([response.data])
+                let link = document.createElement('a')
+                link.href = window.URL.createObjectURL(blob)
+
+                link.download = "Recogidas."+new Date().getFullYear()+(new Date().getMonth()+1)+(new Date().getDate())+'.xlsx';
+
+                document.body.appendChild(link);
+                link.click()
+                document.body.removeChild(link);
+
+                this.$toast.success('Download Ok! '+link.download);
+
+                this.show_loading = false;
+
+            })
+            .catch(err => {
+                this.$toast.error(err.response.data.message);
+                this.show_loading = false;
+            });
         },
     }
 }
