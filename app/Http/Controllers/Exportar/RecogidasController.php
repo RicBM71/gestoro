@@ -43,7 +43,7 @@ class RecogidasController extends Controller
                         ->join('empresas','empresas.id','=','empresa_id')
                         ->whereIn('compras.empresa_id', session('empresas_usuario'))
                         ->where('tipo_id', 1)
-                        ->where('fase_id', 4)
+                        ->whereIn('fase_id', [4,5])
                         ->whereDate('compras.fecha_recogida','>=', $data['fecha_d'])
                         ->whereDate('compras.fecha_recogida','<=', $data['fecha_h'])
                         ->whereNull('compras.deleted_at')
