@@ -41,7 +41,7 @@ class AmpliarMasivoController extends Controller
                 $fecha = Carbon::parse($compra->fecha_renovacion);
 
                 $reg['fecha_renovacion'] = $fecha->subDays(49);
-                $reg['username'] = 'Gerencia x';
+                $reg['username'] = 'Gerencia';
     
                 $compra->update($reg);
 
