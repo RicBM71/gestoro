@@ -317,15 +317,15 @@ export default {
             ],
         },
 
-        mn_users: {
-            icon: 'keyboard_arrow_up',
-            'icon-alt': 'keyboard_arrow_down',
-            text: 'Administración',
-            model: false,
-            children: [
-                { icon: 'supervised_user_circle', text: 'Usuarios', name: 'users.index' },                
-            ]
-        },
+        // mn_users: {
+        //     icon: 'keyboard_arrow_up',
+        //     'icon-alt': 'keyboard_arrow_down',
+        //     text: 'Administración',
+        //     model: false,
+        //     children: [
+        //         { icon: 'supervised_user_circle', text: 'Usuarios', name: 'users.index' },                
+        //     ]
+        // },
 
         mn_etiquetas:{
             icon: 'keyboard_arrow_up',
@@ -370,7 +370,7 @@ export default {
 
                     if(this.isAdmin && this.isGestor)
                         this.mn_items.push(this.mn_admin);
-                    else(this.hasUsers)
+                    else if(this.hasUsers)
                         this.mn_items.push(this.mn_admin);
 
 
