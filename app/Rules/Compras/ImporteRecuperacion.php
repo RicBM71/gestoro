@@ -26,9 +26,10 @@ class ImporteRecuperacion implements Rule
      */
     public function passes($attribute, $value)
     {        
+        //dejo importe mayor de recuperación por si hay acuenta (por recuperacion efe+tar)
 
-        if ($value > $this->compra->imp_recu)
-            return false;
+        if ($value > $this->compra->imp_recu)            
+            return esAdmin();
 
         return true;
     }
