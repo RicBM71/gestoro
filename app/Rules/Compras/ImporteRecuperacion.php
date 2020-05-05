@@ -25,7 +25,7 @@ class ImporteRecuperacion implements Rule
      * @return bool
      */
     public function passes($attribute, $value)
-    {
+    {        
 
         if ($value > $this->compra->imp_recu)
             return false;
@@ -40,6 +40,6 @@ class ImporteRecuperacion implements Rule
      */
     public function message()
     {
-        return 'Importe recuperación supera al de compra';
+        return 'Importe recuperación supera al de compra - admin';
     }
 }

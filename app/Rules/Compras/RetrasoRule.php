@@ -26,7 +26,7 @@ class RetrasoRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        return !($this->compra->retraso > 0 );
+        return !($this->compra->retraso > 10 );
     }
 
     /**

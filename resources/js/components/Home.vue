@@ -355,14 +355,11 @@ export default {
                         //this.drawer = true;
                         this.mn_items.push(this.mn_consultas);
                         this.mn_items.push(this.mn_consultas2);
-                    }else{
-                        if (this.isAdmin || this.hasLiquidar)
-                            this.mn_items.push(this.mn_procesos_simple);
                     }
 
                     this.empresa_id = this.user.empresa_id;
 
-                    if (this.isAdmin && this.isGestor)
+                    if (this.hasLiquidar || this.hasFactura)
                         this.mn_items.push(this.mn_procesos);
 
                     if (this.isRoot)

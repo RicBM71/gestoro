@@ -36,7 +36,7 @@ class StoreRecuperar extends FormRequest
             'concepto_id' => ['required','integer','between:10,12'],
             'cliente_id' => ['required','integer'],
             'compra_id' => ['required','integer'],
-            'fecha' => ['required','date', new FechaRecuperacion($compra), new RetrasoRule($compra)],
+            'fecha' => ['required','date', new FechaRecuperacion($compra), new RetrasoRule($compra), new AmpliacionAntesDeRecuperacion($compra)],
             'importe' => ['required','numeric', new ImporteRecuperacion($compra), new ImporteMinRecuperacionRule($compra), new LimiteEfectivoAcuenta($this->cliente_id, $this->fecha, $this->concepto_id)],
             'notas'         => ['nullable', 'max:190']
         ];

@@ -235,6 +235,10 @@ class PrintAlbController extends Controller
 			if ($row->producto->quilates != null){
 				$txt.= ' ('.strtoupper($row->producto->clase->nombre).' '.$row->producto->quilates.'KT)';
             }
+            // pide peso kilates.
+            if ($this->albaran->tipo_id == 3 && $row->producto->peso_gr <> 0)
+                $txt.= ' '.getDecimal($row->producto->peso_gr).' gr.';
+
             $txt.=$leyenda;
 
             if ($row->producto->caracteristicas != '')

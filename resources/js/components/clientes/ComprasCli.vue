@@ -31,6 +31,8 @@
                             <td>{{ formatDate(props.item.fecha_compra) }} {{ props.item.tipo.nombre[0] }}</td>
                             <td class="text-xs-right">{{ props.item.importe | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                             <td>{{ props.item.retraso }}</td>
+                            <td v-if="props.item.fase_id == 4">{{ formatDate(props.item.fecha_renovacion) }}</td>
+                            <td v-else>-</td>
                             <td :class="props.item.fase.color">{{ props.item.fase.nombre }}</td>
                             <td>{{ props.item.notas }}</td>
                             <td class="justify-center layout px-0">
@@ -107,6 +109,12 @@ import {mapActions} from 'vuex'
                 align: 'left',
                 value: 'retraso',
                 width: '1%'
+            },
+            {
+                text: 'F. Renova',
+                align: 'left',
+                value: 'fecha_renovacion',
+                width: '12%'
             },
             {
                 text: 'Fase',

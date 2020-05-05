@@ -540,7 +540,7 @@ class PrintComprasController extends Controller
 
             $txt = $row->concepto;
 			if ($row->quilates != null){
-				$txt.= ' '.$row->quilates.'K';
+				$txt.= ' '.$row->quilates.'KT';
 			}
 
 			if ($row->colores != null)
@@ -549,7 +549,8 @@ class PrintComprasController extends Controller
 			if ($row->grabaciones != null)
                 $txt.= " (".$row->grabaciones.") ";
 
-            $peso = ($row->peso_gr > 0 && $es_compra) ? " ".getDecimal($row->peso_gr).' gr.' : null;
+            //$peso = ($row->peso_gr > 0 && $es_compra) ? " ".getDecimal($row->peso_gr).' gr.' : null;
+            $peso = ($row->peso_gr > 0) ? " ".getDecimal($row->peso_gr).' gr.' : null;
 
             $txt.=$peso;
 

@@ -23,9 +23,9 @@ class RecogidasController extends Controller
 
     public function submit(Request $request){
 
-        if (!(esGestor() || esSupervisor())){
-            return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Gestor/Supervisor');
-        }
+        // if (!(esGestor() || esSupervisor())){
+        //     return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Gestor/Supervisor');
+        // }
 
         $data = $request->validate([
             'fecha_d'  => ['required','date', new RangoFechaRule($request->fecha_d, $request->fecha_h)],

@@ -215,6 +215,13 @@ export default {
             },
       }
     },
+    mounted(){
+        var fecha = new Date();
+        fecha.setDate(fecha.getDate() + 1);
+
+        this.fecha_d = this.fecha_h = fecha;
+
+    },
     computed: {
         ...mapGetters([
         ]),
