@@ -137,7 +137,7 @@
                                         <td>{{props.item.empresa}}</td>
                                         <td>{{ albser(props.item) }}</td>
                                         <td class="text-xs-right">{{ props.item.importe | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
-                                        <td>{{ props.item.razon }}</td>                                        
+                                        <td>{{ props.item.razon }}</td>
                                         <td>{{ formatDate(props.item.fecha_compra) }} </td>
                                         <td>{{ formatDate(props.item.fecha_recogida) }}</td>
                                     </tr>
@@ -215,13 +215,14 @@ export default {
             },
       }
     },
-    mounted(){
-        var fecha = new Date();
-        fecha.setDate(fecha.getDate() + 1);
+    // mounted(){
+    //     var fecha = new Date();
 
-        this.fecha_d = this.fecha_h = fecha;
 
-    },
+    //     this.fecha_d = fecha.setDate(fecha.getDate() + 1);
+    //     this.fecha_h = fecha.setDate(fecha.getDate() + 1);
+
+    // },
     computed: {
         ...mapGetters([
         ]),
