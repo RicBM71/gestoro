@@ -73,6 +73,8 @@
                                         <td v-else>ID:{{ props.item.producto_id }}</td>
                                         <td v-if="props.item.producto != null">{{ props.item.producto.nombre }}</td>
                                         <td v-else>empresa origen: {{props.item.destino_empresa_id}} ¿Borrado?</td>
+                                        <td class="text-xs-right" v-if="props.item.producto != null">{{ props.item.producto.precio_coste | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                        <td v-else></td>
                                         <td v-if="props.item.estado != null">{{ props.item.estado.nombre }}</td>
                                         <td v-else>{{props.item.estado_id}}</td>
                                         <td v-if="props.item.rfid != null">{{ props.item.rfid.nombre }}</td>
@@ -156,6 +158,11 @@ import FiltroRec from './FiltroRec'
             },
             {
             text: 'Producto',
+            align: 'left',
+            value: 'producto.precio_coste'
+            },
+            {
+            text: 'P. Coste',
             align: 'left',
             value: 'producto.nombre'
             },
@@ -252,7 +259,7 @@ import FiltroRec from './FiltroRec'
                     axios.put(this.url+"/"+item.id, {rfid_id : item.rfid_id})
                         .then(res => {
 
-                            console.log(res);
+                            // console.log(res);
 
                             Object.assign(this.items[this.editedIndex], res.data.recuento)
 

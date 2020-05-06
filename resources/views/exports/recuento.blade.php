@@ -8,6 +8,7 @@
             <th>NOMBRE</th>
             <th>ESTADO</th>
             <th>SITUACION</th>
+            <th>P. Coste</th>
             <th>Notas</th>
         </tr>
     </thead>
@@ -19,12 +20,14 @@
                 <td>{{ $item['producto']['nombre']}}</td>
                 <td>{{ $item['estado']['nombre']}}</td>
                 <td>{{ $item['rfid']['nombre']}}</td>
+                <td>{{ $item['producto']['precio_coste']}}</td>
                 <td>{{ $item['producto']['notas']}}</td>
             @else
                 <td>{{ $item['producto_id']}}</td>
                 <td>n/d</td>
                 <td>n/d</td>
                 <td>{{ $item['rfid']['nombre']}}</td>
+                <td>n/d</td>
                 <td></td>
             @endif
         </tr>
