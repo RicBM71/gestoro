@@ -549,8 +549,10 @@ class PrintComprasController extends Controller
 			if ($row->grabaciones != null)
                 $txt.= " (".$row->grabaciones.") ";
 
-            //$peso = ($row->peso_gr > 0 && $es_compra) ? " ".getDecimal($row->peso_gr).' gr.' : null;
-            $peso = ($row->peso_gr > 0) ? " ".getDecimal($row->peso_gr).' gr.' : null;
+            if (session('empresa')->getFlag(7))
+                $peso = ($row->peso_gr > 0) ? " ".getDecimal($row->peso_gr).' gr.' : null;
+            else
+                $peso = ($row->peso_gr > 0 && !$es_compra) ? " ".getDecimal($row->peso_gr).' gr.' : null;
 
             $txt.=$peso;
 
