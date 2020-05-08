@@ -8,7 +8,7 @@
                 <v-card-text>
                     <v-form>
                         <v-container>
-                            <v-layout row wrap>
+                            <v-layout row wrap v-if="!multiple">
                                 <v-flex sm3>
                                     <v-menu
                                         v-model="menu1"
@@ -66,7 +66,106 @@
                                         data-vv-as="importe"
                                         class="inputPrice"
                                         type="number"
+
+                                        v-on:keyup.enter="submit"
+                                    >
+                                   </v-text-field>
+                                </v-flex>
+                            </v-layout>
+                            <v-layout row wrap v-else>
+                                <v-flex sm3>
+                                    <v-menu
+                                        v-model="menu1"
+                                        :close-on-content-click="false"
+                                        :nudge-right="40"
+                                        lazy
+                                        transition="scale-transition"
+                                        offset-y
+                                        full-width
+                                        min-width="290px"
                                         :readonly="!isSupervisor"
+                                    >
+                                        <v-text-field
+                                            slot="activator"
+                                            :value="computedFecha"
+                                            label="Fecha"
+                                            v-validate="'required'"
+                                            data-vv-name="fecha"
+                                            append-icon="event"
+                                            readonly
+                                            data-vv-as="Fecha"
+                                            :error-messages="errors.collect('fecha')"
+                                            ></v-text-field>
+                                        <v-date-picker
+                                            v-model="deposito_recu.fecha"
+                                            :min="fecha_min"
+                                            :max="hoy"
+                                            no-title
+                                            locale="es"
+                                            first-day-of-week=1
+                                            @input="menu1 = false"
+                                            :readonly="!isSupervisor"
+                                        ></v-date-picker>
+                                    </v-menu>
+                                </v-flex>
+                                <v-flex sm6 d-flex>
+                                    <v-select
+                                        v-model="deposito_recu.concepto_id"
+                                        :items="conceptos_rec1"
+                                        label="Concepto"
+                                        v-validate="'required'"
+                                        :error-messages="errors.collect('concepto_id')"
+                                        data-vv-name="concepto_id"
+                                        data-vv-as="concepto"
+
+                                    ></v-select>
+                                </v-flex>
+                               <v-flex sm3>
+                                   <v-text-field
+                                        v-model="importe1"
+                                        v-validate="'required|decimal:2|min:1'"
+                                        :error-messages="errors.collect('importe1')"
+                                        append-icon="swap_vert"
+                                        @click:append="toggleImp()"
+                                        label="Importe"
+                                        data-vv-name="importe1"
+                                        data-vv-as="importe"
+                                        class="inputPrice"
+                                        type="number"
+
+                                        v-on:keyup.enter="submit"
+                                    >
+                                   </v-text-field>
+                                </v-flex>
+                            </v-layout>
+                            <v-layout row wrap v-if="multiple">
+                                <v-flex sm3>
+                                </v-flex>
+                                <v-flex sm6 d-flex>
+                                    <v-select
+                                        v-model="concepto_id2"
+                                        :items="conceptos_rec2"
+                                        label="Concepto"
+                                        v-validate="'required'"
+                                        :error-messages="errors.collect('concepto_id2')"
+                                        data-vv-name="concepto_id2"
+                                        data-vv-as="concepto"
+
+                                    ></v-select>
+                                </v-flex>
+                               <v-flex sm3>
+                                   <v-text-field
+                                        v-model="importe2"
+                                        v-validate="'required|decimal:2|min:0'"
+                                        :error-messages="errors.collect('importe2')"
+                                        append-icon="clear"
+                                        @click:append="clear()"
+                                        label="Importe"
+                                        data-vv-name="importe2"
+                                        data-vv-as="importe"
+                                        class="inputPrice"
+                                        type="number"
+                                        readonly
                                         v-on:keyup.enter="submit"
                                     >
                                    </v-text-field>
@@ -80,6 +179,14 @@
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
+                                </v-flex>
+                            </v-layout>
+                            <v-layout row wrap>
+                                <v-flex sm2>
+                                    <v-switch
+                                        v-model="multiple"
+                                        label="Múltiple"
+                                    ></v-switch>
                                 </v-flex>
                             </v-layout>
                         </v-container>
@@ -111,8 +218,16 @@ export default {
       return {
         menu1: false,
 
+        concepto_id2: 12,
+        importe1: 0,
+        importe2: 0,
+        multiple: false,
+
         disabled: false,
+
         conceptos_rec: [],
+        conceptos_rec1: [],
+        conceptos_rec2: [],
         url: "/compras/recuperar",
         loading: false,
         result: false,
@@ -131,11 +246,19 @@ export default {
             this.$router.go(-1)
         }
 
+        // this.importe1 = parseFloat(this.deposito_recu.importe);
+        // this.importe2 = parseFloat(0);
+
+        this.importe1 = this.deposito_recu.importe;
 
         axios.get(this.url)
             .then(res => {
                 this.conceptos_rec = res.data.conceptos;
+                this.conceptos_rec1 = res.data.conceptos1;
+                this.conceptos_rec2 = res.data.conceptos2;
+
                 this.deposito_recu.concepto_id = this.conceptos_rec[0].value;
+
             })
             .catch(err => {
                 this.$toast.error(err.response.data.message);
@@ -156,7 +279,25 @@ export default {
             return this.deposito_recu.fecha ? moment(this.deposito_recu.fecha).format('L') : '';
         },
     },
+    watch: {
+
+        importe1: function () {
+
+            if (this.importe1 != this.deposito_recu.importe)
+                this.importe2 = this.deposito_recu.importe - this.importe1;
+        },
+
+    },
     methods:{
+        toggleImp(){
+            var n = this.importe2;
+
+            this.importe2 = this.importe1;
+            this.importe1 = n;
+        },
+        clear(){
+            this.importe2 = 0;
+        },
         validarBloqueo(){
             if (this.isSupervisor) return true;
 
@@ -176,9 +317,21 @@ export default {
 
             this.deposito_recu.importe = Math.round(this.compra.importe_renovacion * (this.deposito_recu.dias / this.compra.dias_custodia),0);
 
-
         },
         submit(){
+
+            if (this.multiple){
+
+                this.deposito_recu.importe = parseFloat(this.importe1) + this.importe2;
+                this.deposito_recu.importe1 = parseFloat(this.importe1);
+                this.deposito_recu.importe2 = this.importe2;
+                this.deposito_recu.concepto_id2 = this.concepto_id2;
+
+            }else{
+                this.deposito_recu.importe1 = parseFloat(this.deposito_recu.importe);
+                this.deposito_recu.importe2 = 0;
+            }
+
             if (this.loading === false){
                 this.loading = true;
                 this.$validator.validateAll().then((result) => {

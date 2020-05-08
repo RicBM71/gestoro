@@ -15,6 +15,8 @@ class RecuperarController extends Controller
         if (request()->wantsJson())
         return [
             'conceptos' => Concepto::selConceptosC()->recuperar()->get(),
+            'conceptos1' => Concepto::selConceptosC()->where('id', 10)->get(),
+            'conceptos2' => Concepto::selConceptosC()->whereIn('id',[11,12])->get(),
         ];
 
     }
@@ -36,14 +38,28 @@ class RecuperarController extends Controller
      */
     public function store(StoreRecuperar $request)
     {
+
         $data = $request->validated();
+
 
         $data['empresa_id'] = session()->get('empresa')->id;
         $data['username'] = $request->user()->username;
 
-        $reg = Deposito::create($data);
+        $importe_total = $data['importe'];
+        if ($data['importe1'] > 0){ // hay dos medios de pago en la recuperacion
+            $data['importe'] = $data['importe1'];
+            // crea el primero
+            $reg = Deposito::create($data);
+        }
 
-        $this->actualizaCompra($reg->compra_id, $data['importe'], $data['fecha']);
+        if ($data['importe2'] > 0){ // hay dos medios de pago en la recuperacion
+            // crea el segundo
+            $data['importe'] = $data['importe2'];
+            $data['concepto_id'] = $data['concepto_id2'];
+            $reg = Deposito::create($data);
+        }
+
+        $this->actualizaCompra($reg->compra_id, $importe_total, $data['fecha']);
 
         $compra = Compra::with(['cliente','grupo','tipo','fase'])->findOrFail($reg->compra_id);
 
@@ -68,9 +84,17 @@ class RecuperarController extends Controller
 
         $deposito = Deposito::findOrFail($id);
 
-        $deposito->delete();
+        // por si hay recuperacion con dos medios de pago
 
-        $this->actualizaCompra($deposito->compra_id, $deposito->importe * -1, null);
+        $depositos = Deposito::where('compra_id', $deposito->compra_id)
+                              ->whereIn('concepto_id',[10,11,12])
+                              ->get();
+        foreach ($depositos as $row){
+
+            $this->actualizaCompra($row->compra_id, $row->importe * -1, null);
+            $row->delete();
+
+        }
 
 
         $compra = Compra::with(['cliente','grupo','tipo','fase'])->findOrFail($deposito->compra_id);

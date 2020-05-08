@@ -14,9 +14,10 @@ class ImporteMinRecuperacionRule implements Rule
      *
      * @return void
      */
-    public function __construct($compra)
+    public function __construct($compra, $imp_total_recu)
     {
         $this->compra = $compra;
+        $this->imp_total_recu = $imp_total_recu;
     }
 
     /**
@@ -28,10 +29,17 @@ class ImporteMinRecuperacionRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        // saltarse esto supone que el valor de venta (recuperación) sería inferior al de compra.
-        // dumpin, ojo!
+        
         $totales = Deposito::totalesConcepto($this->compra->id);
-        if (($totales[2]+$value) < $totales[0])
+
+        if (esAdmin()){
+            return (($totales[2]+$this->imp_total_recu) >=  $this->compra->importe);
+        }
+
+
+        // saltarse esto supone que el valor de venta (recuperación) sería inferior al de compra.
+        // dumpin, ojo! OJO PORQUE FALLA SI LO DEJAMOS PASAR, HAY REVISAR EN OBSERVER IMPORTE PRESTAMO
+        if (($totales[2]+$this->imp_total_recu) <  $this->compra->imp_recu)
             return false;
 
         return true;

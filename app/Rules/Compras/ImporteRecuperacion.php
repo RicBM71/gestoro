@@ -12,9 +12,10 @@ class ImporteRecuperacion implements Rule
      *
      * @return void
      */
-    public function __construct($compra)
+    public function __construct($compra, $imp_total_recu)
     {
         $this->compra = $compra;
+        $this->imp_total_recu = $imp_total_recu;
     }
 
     /**
@@ -25,10 +26,10 @@ class ImporteRecuperacion implements Rule
      * @return bool
      */
     public function passes($attribute, $value)
-    {        
+    {
         //dejo importe mayor de recuperación por si hay acuenta (por recuperacion efe+tar)
 
-        if ($value > $this->compra->imp_recu)            
+        if ($this->imp_total_recu > $this->compra->imp_recu)
             return esAdmin();
 
         return true;
