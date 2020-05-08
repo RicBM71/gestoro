@@ -14,6 +14,7 @@ class RecuperarController extends Controller
 
         if (request()->wantsJson())
         return [
+            'conceptos' => Concepto::selConceptosC()->recuperar()->get(),
             'conceptos1' => Concepto::selConceptosC()->where('id', 10)->get(),
             'conceptos2' => Concepto::selConceptosC()->whereIn('id',[11,12])->get(),
         ];
