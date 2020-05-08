@@ -5,49 +5,40 @@ namespace App\Rules\Compras;
 use App\Deposito;
 use Illuminate\Contracts\Validation\Rule;
 
-class LimiteEfectivoAcuenta implements Rule
+class LimiteEfectivoRecuperarRule implements Rule
 {
-    protected $cliente_id;
-    protected $fecha_deposito;
-    protected $esEfectivo = array(7,10); // a cuenta + recuperado
-    protected $concepto_id;
-
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct($cliente_id, $fecha, $concepto_id)
+    public function __construct($cliente_id, $fecha, $imp_total)
     {
+
         $this->cliente_id = $cliente_id;
         $this->fecha_deposito = $fecha;
-        $this->concepto_id = $concepto_id;
+        $this->imp_total = $imp_total;
+
     }
 
     /**
      * Determine if the validation rule passes.
      *
      * @param  string  $attribute
-     * @param  mixed  $value (el valor a cuenta)
+     * @param  mixed  $value
      * @return bool
      */
     public function passes($attribute, $value)
     {
-
-        if (auth()->user()->hasPermissionTo('salefe'))
-            return true;
-
-            // se va a guardar el importe como por banco
-        if (!in_array($this->concepto_id, $this->esEfectivo))
+        if (auth()->user()->hasPermissionTo('salefe') || $value == 0)
             return true;
 
         $imp = Deposito::valorAcuentaEnFecha($this->fecha_deposito, $this->cliente_id);
 
-        if (($imp + $value) > session('parametros')->lim_efe)
+        if (($imp + $this->imp_total) > session('parametros')->lim_efe)
             return false;
 
         return true;
-
     }
 
     /**
@@ -57,6 +48,6 @@ class LimiteEfectivoAcuenta implements Rule
      */
     public function message()
     {
-        return 'El importe supera el límite de efectivo '.$this->concepto_id;
+        return 'Supera límite efectivo';
     }
 }

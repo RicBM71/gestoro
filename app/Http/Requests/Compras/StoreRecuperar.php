@@ -3,13 +3,13 @@
 namespace App\Http\Requests\Compras;
 
 use App\Compra;
-use App\Rules\compras\AmpliacionAntesDeRecuperacion;
-use App\Rules\Compras\FechaRecuperacion;
-use App\Rules\Compras\ImporteMinRecuperacionRule;
-use App\Rules\Compras\ImporteRecuperacion;
-use App\Rules\Compras\LimiteEfectivoAcuenta;
 use App\Rules\Compras\RetrasoRule;
+use App\Rules\Compras\FechaRecuperacion;
+use App\Rules\Compras\ImporteRecuperacion;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\Compras\ImporteMinRecuperacionRule;
+use App\Rules\Compras\LimiteEfectivoRecuperarRule;
+use App\Rules\compras\AmpliacionAntesDeRecuperacion;
 
 class StoreRecuperar extends FormRequest
 {
@@ -30,14 +30,18 @@ class StoreRecuperar extends FormRequest
      */
     public function rules()
     {
+
         $compra = Compra::findOrFail($this->compra_id);
 
         return [
-            'concepto_id' => ['required','integer','between:10,12'],
-            'cliente_id' => ['required','integer'],
-            'compra_id' => ['required','integer'],
-            'fecha' => ['required','date', new FechaRecuperacion($compra), new RetrasoRule($compra), new AmpliacionAntesDeRecuperacion($compra)],
-            'importe' => ['required','numeric', new ImporteRecuperacion($compra), new ImporteMinRecuperacionRule($compra), new LimiteEfectivoAcuenta($this->cliente_id, $this->fecha, $this->concepto_id)],
+            'concepto_id'   => ['required','integer','between:10,12'],
+            'cliente_id'    => ['required','integer'],
+            'compra_id'     => ['required','integer'],
+            'fecha'         => ['required','date', new FechaRecuperacion($compra), new RetrasoRule($compra), new AmpliacionAntesDeRecuperacion($compra)],
+            'importe'       => ['required','numeric', new ImporteRecuperacion($compra), new ImporteMinRecuperacionRule($compra)],
+            'importe1'      => ['numeric',  new LimiteEfectivoRecuperarRule($this->fecha, $this->cliente_id, $this->importe)],
+            'importe2'      => ['numeric'],
+            'concepto_id2'  => ['integer','between:10,12'],
             'notas'         => ['nullable', 'max:190']
         ];
     }

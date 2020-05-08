@@ -58,15 +58,46 @@
                                 </v-flex>
                                <v-flex sm3>
                                    <v-text-field
-                                        v-model="deposito_recu.importe"
+                                        v-model="importe1"
                                         v-validate="'required|decimal:2|min:1'"
-                                        :error-messages="errors.collect('importe')"
+                                        :error-messages="errors.collect('importe1')"
                                         label="Importe"
-                                        data-vv-name="importe"
+                                        data-vv-name="importe1"
                                         data-vv-as="importe"
                                         class="inputPrice"
                                         type="number"
                                         :readonly="!isSupervisor"
+                                        v-on:keyup.enter="submit"
+                                    >
+                                   </v-text-field>
+                                </v-flex>
+                            </v-layout>
+                            <v-layout row wrap>
+                                <v-flex sm3>
+                                </v-flex>
+                                <v-flex sm6 d-flex>
+                                    <v-select
+                                        v-model="concepto_id2"
+                                        :items="conceptos_rec2"
+                                        label="Concepto"
+                                        v-validate="'required'"
+                                        :error-messages="errors.collect('concepto_id2')"
+                                        data-vv-name="concepto_id2"
+                                        data-vv-as="concepto"
+
+                                    ></v-select>
+                                </v-flex>
+                               <v-flex sm3>
+                                   <v-text-field
+                                        v-model="importe2"
+                                        v-validate="'required|decimal:2|min:0'"
+                                        :error-messages="errors.collect('importe2')"
+                                        label="Importe"
+                                        data-vv-name="importe2"
+                                        data-vv-as="importe"
+                                        class="inputPrice"
+                                        type="number"
+                                        readonly
                                         v-on:keyup.enter="submit"
                                     >
                                    </v-text-field>
@@ -111,8 +142,13 @@ export default {
       return {
         menu1: false,
 
+        concepto_id2: 12,
+        importe1: 0,
+        importe2: 0,
+
         disabled: false,
         conceptos_rec: [],
+        conceptos_rec2: [],
         url: "/compras/recuperar",
         loading: false,
         result: false,
@@ -131,11 +167,15 @@ export default {
             this.$router.go(-1)
         }
 
+        this.importe1 = parseFloat(this.deposito_recu.importe);
 
         axios.get(this.url)
             .then(res => {
-                this.conceptos_rec = res.data.conceptos;
+                this.conceptos_rec = res.data.conceptos1;
+                this.conceptos_rec2 = res.data.conceptos2;
+                console.log(this.conceptos_rec);
                 this.deposito_recu.concepto_id = this.conceptos_rec[0].value;
+
             })
             .catch(err => {
                 this.$toast.error(err.response.data.message);
@@ -155,6 +195,15 @@ export default {
             moment.locale('es');
             return this.deposito_recu.fecha ? moment(this.deposito_recu.fecha).format('L') : '';
         },
+    },
+    watch: {
+
+        importe1: function () {
+            console.log(this.importe1)
+            if (this.importe1 != this.deposito_recu.importe)
+                this.importe2 = this.deposito_recu.importe - this.importe1;
+        },
+
     },
     methods:{
         validarBloqueo(){
@@ -176,9 +225,15 @@ export default {
 
             this.deposito_recu.importe = Math.round(this.compra.importe_renovacion * (this.deposito_recu.dias / this.compra.dias_custodia),0);
 
-
         },
         submit(){
+            this.deposito_recu.importe = parseFloat(this.importe1) + this.importe2;
+
+            this.deposito_recu.importe1 = parseFloat(this.importe1);
+            this.deposito_recu.importe2 = this.importe2;
+            this.deposito_recu.concepto_id2 = this.concepto_id2;
+            console.log(this.deposito_recu);
+
             if (this.loading === false){
                 this.loading = true;
                 this.$validator.validateAll().then((result) => {
