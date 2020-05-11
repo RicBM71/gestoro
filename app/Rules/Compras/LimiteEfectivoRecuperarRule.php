@@ -12,10 +12,11 @@ class LimiteEfectivoRecuperarRule implements Rule
      *
      * @return void
      */
-    public function __construct($cliente_id, $fecha, $imp_total)
+    public function __construct($fecha, $compra, $concepto_id, $imp_total)
     {
 
-        $this->cliente_id = $cliente_id;
+        $this->compra = $compra;
+        $this->concepto_id = $concepto_id;
         $this->fecha_deposito = $fecha;
         $this->imp_total = $imp_total;
 
@@ -33,9 +34,13 @@ class LimiteEfectivoRecuperarRule implements Rule
         if (auth()->user()->hasPermissionTo('salefe') || $value == 0)
             return true;
 
-        $imp = Deposito::valorAcuentaEnFecha($this->fecha_deposito, $this->cliente_id);
+        if ($this->concepto_id == 10 && ($this->compra->importe + $this->compra->importe_renovacion) >= session('parametros')->lim_efe)
+            return false;
 
-        if (($imp + $this->imp_total) > session('parametros')->lim_efe)
+            // compruebo ante posibles recuperaciones en el mismo día.
+        $imp = Deposito::valorAcuentaEnFecha($this->fecha_deposito, $this->compra->cliente_id);
+
+        if ($this->concepto_id == 10 && ($imp + $this->imp_total) >= session('parametros')->lim_efe)
             return false;
 
         return true;
@@ -48,6 +53,6 @@ class LimiteEfectivoRecuperarRule implements Rule
      */
     public function message()
     {
-        return 'Supera límite efectivo';
+        return 'Recuperación supera límite efectivo';
     }
 }

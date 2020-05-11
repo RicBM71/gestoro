@@ -28,17 +28,17 @@ class StoreAcuenta extends FormRequest
     {
         $compra = Compra::findOrFail($this->compra_id);
 
-        $imp = ($this->user()->hasRole('Supervisor')) ?
-                    ['required','numeric',new ImporteAcuenta($compra), new LimiteEfectivoAcuenta($this->cliente_id, $this->fecha, $this->concepto_id)] :
-                    ['required','numeric','min:0',new ImporteAcuenta($compra), new LimiteEfectivoAcuenta($this->cliente_id, $this->fecha, $this->concepto_id)];
+        // $imp = ($this->user()->hasPermissionTo('salefe')==false) ?
+        //             ['required','numeric',new ImporteAcuenta($compra), new LimiteEfectivoAcuenta($this->cliente_id, $this->fecha, $this->concepto_id)] :
+        //             ['required','numeric','min:0',new ImporteAcuenta($compra), new LimiteEfectivoAcuenta($this->cliente_id, $this->fecha, $this->concepto_id)];
 
         return [
             'concepto_id' => ['required','integer','between:7,9'],
-            'cliente_id' => ['required','integer'],
-            'compra_id' => ['required','integer'],
-            'fecha' => ['required','date'],
-            'importe' => $imp,
-            'notas'         => ['nullable', 'max:190']
+            'cliente_id'  => ['required','integer'],
+            'compra_id'   => ['required','integer'],
+            'fecha'       => ['required','date'],
+            'importe'     => ['required','numeric','min:0',new ImporteAcuenta($compra), new LimiteEfectivoAcuenta($compra, $this->concepto_id)],
+            'notas'       => ['nullable', 'max:190']
         ];
     }
 

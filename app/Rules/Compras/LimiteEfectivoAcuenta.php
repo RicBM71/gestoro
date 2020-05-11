@@ -10,6 +10,7 @@ class LimiteEfectivoAcuenta implements Rule
     protected $cliente_id;
     protected $fecha_deposito;
     protected $esEfectivo = array(7,10); // a cuenta + recuperado
+    protected $compra;
     protected $concepto_id;
 
     /**
@@ -17,10 +18,10 @@ class LimiteEfectivoAcuenta implements Rule
      *
      * @return void
      */
-    public function __construct($cliente_id, $fecha, $concepto_id)
+    public function __construct($compra, $concepto_id)
     {
-        $this->cliente_id = $cliente_id;
-        $this->fecha_deposito = $fecha;
+
+        $this->compra = $compra;
         $this->concepto_id = $concepto_id;
     }
 
@@ -38,12 +39,15 @@ class LimiteEfectivoAcuenta implements Rule
             return true;
 
             // se va a guardar el importe como por banco
-        if (!in_array($this->concepto_id, $this->esEfectivo))
+        //if (!in_array($this->concepto_id, $this->esEfectivo))
+        if ($this->concepto_id != 7)
             return true;
 
-        $imp = Deposito::valorAcuentaEnFecha($this->fecha_deposito, $this->cliente_id);
+        if (($this->compra->importe + $this->compra->importe_renovacion) >= session('parametros')->lim_efe)
 
-        if (($imp + $value) > session('parametros')->lim_efe)
+        // $imp = Deposito::valorAcuentaEnFecha($this->fecha_deposito, $this->cliente_id);
+
+        // if (($imp + $value) > session('parametros')->lim_efe)
             return false;
 
         return true;
@@ -57,6 +61,6 @@ class LimiteEfectivoAcuenta implements Rule
      */
     public function message()
     {
-        return 'El importe supera el límite de efectivo '.$this->concepto_id;
+        return 'El importe supera el límite de efectivo ';
     }
 }
