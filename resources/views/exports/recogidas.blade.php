@@ -16,7 +16,7 @@
     @foreach($data as $item)
         <tr>
             <td>{{ $item['empresa']}}</td>
-            <td>{{ $item['serie_com'].$item['albaran']}}</td>
+            <td>{{ $item['serie_com'].' '.$item['albaran'].'-'.substr(getEjercicio($item['fecha_compra']), -2)}}</td>
             <td>{{ $item['importe']}}</td>
             <td>{{ $item['razon']}}</td>
             <td>{{ getFecha($item['fecha_compra'])}}</td>

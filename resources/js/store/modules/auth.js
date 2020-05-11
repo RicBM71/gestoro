@@ -23,7 +23,8 @@ const initialState = {
     parametros: Object,
     img_fondo: null,
     stock: null,
-    aislar: null
+    aislar: null,
+    flex_cortesia: null,
 };
 
 /*
@@ -43,7 +44,8 @@ const mutations = {
         state.permisos = payload.user.permisos;
         state.parametros = payload.user.parametros;
         state.img_fondo = payload.user.img_fondo;
-        state.aislar = payload.user.aislar_empresas
+        state.aislar = payload.user.aislar_empresas;
+        state.flex_cortesia= payload.user.flex_cortesia;
 	},
 	[UNSET_USER](state, payload) {
         state.id = null;
@@ -56,7 +58,8 @@ const mutations = {
         state.permisos = [];
         state.parametros = {};
         state.img_fondo=null;
-        state.aislar=null
+        state.aislar=null;
+        state.flex_cortesia=null;
 	}
 };
 
@@ -157,6 +160,9 @@ const getters = {
     },
     hasUsers: (state) =>{
         return (state.permisos.indexOf('users') >= 0) ? true : false;
+    },
+    flexCortesia: (state) =>{
+        return state.flex_cortesia;
     },
 };
 

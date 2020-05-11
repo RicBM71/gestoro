@@ -587,7 +587,8 @@ import {mapState} from 'vuex'
                 'parametros',
                 'hasReaCompras',
                 'userName',
-                'hasAddCom'
+                'hasAddCom',
+                'flexCortesia'
             ]),
             computedAuthLiquidar(){
 
@@ -638,26 +639,40 @@ import {mapState} from 'vuex'
                     return true; // está bloqueado por fecha
                 else{
 
-                    if (this.isSupervisor) return false;
+                    if (this.isAdmin) return false;
 
-                    if (this.totales_concepto[1] == 0) // si no hay retraso y no hay ninguna ampliación adicional.
-                        return (this.compra.retraso > this.dias_cortesia) ? true : false;
-                    else    // damos cuartelillo en la primera ampliación, en el resto hay que pagar intereses salvo un administrador.
-                        return (this.compra.retraso > 0) ? true : false;
+                    if (this.flexCortesia)
+                        return (this.compra.retraso <= this.dias_cortesia) ? false : true
+                    else{
+                        if (this.totales_concepto[1] == 0 ) // si no hay retraso y no hay ninguna ampliación adicional.
+                            return (this.compra.retraso > this.dias_cortesia) ? true : false;
+                        else    // damos cuartelillo en la primera ampliación, en el resto hay que pagar intereses salvo un administrador.
+                            return (this.compra.retraso > 0) ? true : false;
+                        }
                     }
             },
             computedDisabledRecuperar(){
 
-                // con esto un supervisor, tiene que hacer una ampliación con importe a cero, así queda constancia
+                // con esto un administrador, tiene que hacer una ampliación con importe a cero, así queda constancia
                 if (this.isAdmin) return false; // lo dejo para poder recupear aún bloqueado.
 
                 if (new Date() < new Date(this.compra.fecha_bloqueo))
                     return true; // está bloqueado por fecha
                 else{
-                    if (this.totales_concepto[1] == 0)
-                        return (this.compra.retraso > this.dias_cortesia) ? true : false;
-                    else
-                        return (this.compra.retraso > 0) ? true : false;
+                    
+                    if (this.flexCortesia)
+                        return (this.compra.retraso <= this.dias_cortesia) ? false : true;
+                    else{
+                        if (this.totales_concepto[1] == 0 ) // si no hay retraso y no hay ninguna ampliación adicional.
+                            return (this.compra.retraso > this.dias_cortesia) ? true : false;
+                        else    // damos cuartelillo en la primera ampliación, en el resto hay que pagar intereses salvo un administrador.
+                            return (this.compra.retraso > 0) ? true : false;
+                        }
+                    // if (this.totales_concepto[1] == 0)
+                    //     return (this.compra.retraso > this.dias_cortesia) ? true : false;
+                    // else
+                    //     //return (this.compra.retraso > 0) ? true : false;
+                    //     return (this.compra.retraso > this.dias_cortesia) ? true : false;
                     }
             },
             computedReabrir(){

@@ -101,6 +101,7 @@ class HomeController extends Controller
             'empresas'      => $empresas,
             'parametros'    =>$parametros,
             'img_fondo'     => $empresa->img_fondo,
+            'flex_cortesia' => $empresa->getFlag(8),
             'aislar_empresas'  => $parametros->aislar_empresas
         ];
 
