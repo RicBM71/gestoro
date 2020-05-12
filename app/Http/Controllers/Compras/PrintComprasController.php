@@ -538,7 +538,7 @@ class PrintComprasController extends Controller
         $total=0;
 		foreach ($lineas as $row) {
 
-            $txt = $row->concepto;
+            $txt = $row->concepto.' '.$row->clase->nombre;
 			if ($row->quilates != null){
 				$txt.= ' '.$row->quilates.'KT';
 			}
