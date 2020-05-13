@@ -29,10 +29,10 @@ class ImporteMinRecuperacionRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        
+
         $totales = Deposito::totalesConcepto($this->compra->id);
 
-        if (esAdmin()){
+        if (esSupervisor()){
             return (($totales[2]+$this->imp_total_recu) >=  $this->compra->importe);
         }
 

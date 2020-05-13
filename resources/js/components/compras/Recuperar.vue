@@ -66,7 +66,7 @@
                                         data-vv-as="importe"
                                         class="inputPrice"
                                         type="number"
-
+                                        :readonly="!isSupervisor"
                                         v-on:keyup.enter="submit"
                                     >
                                    </v-text-field>
@@ -132,7 +132,6 @@
                                         data-vv-as="importe"
                                         class="inputPrice"
                                         type="number"
-
                                         v-on:keyup.enter="submit"
                                     >
                                    </v-text-field>
