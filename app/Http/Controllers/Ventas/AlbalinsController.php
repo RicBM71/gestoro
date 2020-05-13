@@ -20,7 +20,9 @@ class AlbalinsController extends Controller
 
         if (request()->wantsJson())
             return [
-                'lineas' => Albalin::with(['producto.clase','producto.garantia'])->AlbaranId($data['albaran_id'])->get(),
+                'lineas' => Albalin::with(['producto' => function ($query) {
+                                                $query->withTrashed();
+                                            },'producto.clase','producto.garantia'])->AlbaranId($data['albaran_id'])->get(),
                 'totales' => Albalin::totalAlbaranByAlb($data['albaran_id']),
                 'albaran' => Albaran::withOutGlobalScope(EmpresaScope::class)->with(['cliente','tipo','fase','motivo','fpago','cuenta','fpago','procedencia'])->findOrFail($data['albaran_id']),
             ];

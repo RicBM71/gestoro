@@ -23,7 +23,7 @@
                                     >
                                         star
                                     </v-icon> {{ props.item.producto.referencia }}</td>
-                                <td>{{ props.item.producto.nombre }}</td>
+                                <td>{{ concepto(props.item) }}</td>
                                 <td class="text-xs-right">{{ props.item.unidades | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                                 <td v-if="isSupervisor" class="text-xs-right">{{ props.item.precio_coste | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                                 <td v-else>-</td>
@@ -275,6 +275,12 @@ export default {
         },
     },
     methods:{
+        concepto(item) {
+            if (item.notas != null)
+                return item.producto.nombre + ' ** ' + item.notas;
+            else
+                return item.producto.nombre;
+        },
         conCaracteristicas(item){
 
             const quilates = item.producto.quilates > 0 ? item.producto.quilates+"KT" : "";

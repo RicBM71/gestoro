@@ -1,6 +1,5 @@
 <?php
 
-
 Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -9,6 +8,18 @@ Route::post('/profile/avatar', 'HomeController@avatar');
 Route::put('/profile/destroy', 'HomeController@destroy');
 
 // Route::get('/test', 'HomeController@test');
+// Route::get('test', function () {
+
+//     $lin = (Albalin::with(['producto' => function ($query) {
+//         $query->withTrashed();
+//     },'producto.clase','producto.garantia'])->AlbaranId(263596)->get());
+//     foreach ($lin as $row){
+//         echo $row->producto->nombre;
+//         echo $row->producto->clase->nombre;
+//     }
+
+//     return 'Hello World';
+// });
 
 Route::get('/expired', 'HomeController@expired')->name('expired');
 

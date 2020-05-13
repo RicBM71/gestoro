@@ -397,10 +397,11 @@ class ProductosController extends Controller
     {
 
         // comprobamos si el producto existe en algún albarán
+        // LO QUITO, SI NO FUNCIONA Relación en albalín, que en principio si, habrá que cambiar por estado_id a 1.
 
-        if (DB::table('albalins')->where('producto_id', $id)->exists()){
-            return abort(411, 'El producto existe en albaranes, no se puede borrar');
-        }
+        // if (DB::table('albalins')->where('producto_id', $id)->exists()){
+        //     return abort(411, 'El producto existe en albaranes, no se puede borrar');
+        // }
 
         if (esAdmin()){
             $producto = Producto::withTrashed()->find($id);

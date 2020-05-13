@@ -232,7 +232,7 @@ class PrintAlbController extends Controller
             }
 
             $txt = $txt_garantia.$row->producto->nombre;
-			if ($row->producto->quilates != null){
+			if ($this->albaran->tipo_id == 3 && $row->producto->quilates != null){
 				$txt.= ' ('.strtoupper($row->producto->clase->nombre).' '.$row->producto->quilates.'KT)';
             }
             // pide peso kilates.
@@ -245,7 +245,7 @@ class PrintAlbController extends Controller
                 $txt.=(' '.$row->producto->caracteristicas);
 
             if ($row->notas != ''){
-                $txt.=' ('.$row->notas.')';
+                $txt.=' ** '.$row->notas.' ';
             }
 
             $h = $alto=PDF::getStringHeight(95,$txt);
