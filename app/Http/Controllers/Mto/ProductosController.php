@@ -116,7 +116,7 @@ class ProductosController extends Controller
                         ->asociado($data['cliente_id'])
                         ->orderBy('id','desc')
                         ->get()
-                        ->take(999);
+                        ->take(1999);
 
         }else{
 
@@ -135,7 +135,7 @@ class ProductosController extends Controller
                         ->asociado($data['cliente_id'])
                         ->orderBy('id','desc')
                         ->get()
-                        ->take(999);
+                        ->take(1999);
 
         }
 
