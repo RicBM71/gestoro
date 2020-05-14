@@ -621,7 +621,7 @@ import {mapState} from 'vuex'
 
                 if (this.compra.fase_id != 4) return false;
 
-                if (this.isAdmin)
+                if (this.isSupervisor)
                     return true;
                 else
 
@@ -639,7 +639,7 @@ import {mapState} from 'vuex'
                     return true; // está bloqueado por fecha
                 else{
 
-                    if (this.isAdmin) return false;
+                    if (this.isSupervisor) return false;
 
                     if (this.flexCortesia)
                         return (this.compra.retraso <= this.dias_cortesia) ? false : true
@@ -654,12 +654,12 @@ import {mapState} from 'vuex'
             computedDisabledRecuperar(){
 
                 // con esto un administrador, tiene que hacer una ampliación con importe a cero, así queda constancia
-                if (this.isAdmin) return false; // lo dejo para poder recupear aún bloqueado.
+                if (this.isSupervisor) return false; // lo dejo para poder recupear aún bloqueado.
 
                 if (new Date() < new Date(this.compra.fecha_bloqueo))
                     return true; // está bloqueado por fecha
                 else{
-                    
+
                     if (this.flexCortesia)
                         return (this.compra.retraso <= this.dias_cortesia) ? false : true;
                     else{

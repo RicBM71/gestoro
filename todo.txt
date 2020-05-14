@@ -142,3 +142,10 @@ DELETE FROM klt_albaranes where empresa_id not in(1,2,3,4,5,11,12,14);
 DELETE FROM klt_productos where empresa_id not in(1,2,3,4,5,11,12,14);
 DELETE FROM klt_cajas where empresa_id not in(1,2,3,4,5,11,12,14);
 DELETE FROM klt_empresas where id not in(1,2,3,4,5,11,12,14);
+
+
+
+delete from klt_comlines where compra_id in (SELECT id FROM `klt_compras` WHERE serie_com = "A");
+delete from klt_depositos where compra_id in (SELECT id FROM `klt_compras` WHERE serie_com = "A");
+delete FROM `klt_compras` WHERE serie_com = "A"
+
