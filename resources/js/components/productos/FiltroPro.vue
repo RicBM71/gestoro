@@ -163,13 +163,24 @@
                         required
                         ></v-select>
                 </v-flex>
-                <v-flex sm2>
+                <v-flex sm1>
+                    <v-select
+                        v-model="reg.alta"
+                        v-validate="'required'"
+                        data-vv-name="alta"
+                        data-vv-as="alta"
+                        :error-messages="errors.collect('alta')"
+                        :items="activos"
+                        label="Activos"
+                        ></v-select>
+                </v-flex>
+                <!-- <v-flex sm2>
                     <v-switch
                         label="Solo Activos"
                         v-model="reg.alta"
                         color="primary">
                     ></v-switch>
-                </v-flex>
+                </v-flex> -->
                 <v-flex sm2>
                     <v-switch
                         label="Online"
@@ -275,7 +286,7 @@ export default {
                 estado_id: null,
                 quilates:"",
                 online:false,
-                alta: true,
+                alta: 'S',
                 fecha_d: "", //new Date().toISOString().substr(0, 10),
                 fecha_h: "",
                 tipo_fecha: 'C',
@@ -287,6 +298,11 @@ export default {
             internos:[
                 {value: 'I', text: 'Internos'},
                 {value: 'E', text: 'Externos'},
+                {value: 'T', text: 'Todos'},
+            ],
+            activos:[
+                {value: 'S', text: 'Si'},
+                {value: 'N', text: 'No'},
                 {value: 'T', text: 'Todos'},
             ],
             fechas:[

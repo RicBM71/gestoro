@@ -73,7 +73,7 @@ class ProductosController extends Controller
             'notas'         =>['string','nullable'],
             'quilates'      =>['integer','nullable'],
             'online'        =>['boolean'],
-            'alta'          =>['boolean'],
+            'alta'          =>['string','required'],
             'cliente_id'    =>['nullable','integer'],
             'tipo_fecha'    =>['string','required'],
             'fecha_d'       =>['nullable','date',new RangoFechaRule($request->fecha_d, $request->fecha_h)],
@@ -102,7 +102,7 @@ class ProductosController extends Controller
                         ->localizacion($data['sinscope'])
                         ->empresa($data['empresa_id'])
                         ->destino($data['destino_empresa_id'])
-                        ->borrados($data['alta'])
+                        ->alta($data['alta'])
                         ->referencia($data['referencia'])
                         ->fecha($data['fecha_d'],$data['fecha_h'],$data['tipo_fecha'])
                         ->clase($data['clase_id'])
@@ -121,7 +121,7 @@ class ProductosController extends Controller
         }else{
 
             $data = Producto::with(['clase','estado','destino','empresa','cliente'])
-                        ->borrados($data['alta'])
+                        ->alta($data['alta'])
                         ->referencia($data['referencia'])
                         ->fecha($data['fecha_d'],$data['fecha_h'],$data['tipo_fecha'])
                         ->clase($data['clase_id'])

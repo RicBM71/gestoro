@@ -223,11 +223,14 @@ Class Producto extends Model
 
     }
 
-    public static function scopeBorrados($query, $alta){
-        if ($alta)
-            return $query;//->withTrashed();
+    public static function scopeAlta($query, $alta){
+        if ($alta == 'S')
+            return $query;
+        else if($alta == 'N')
+            return $query->onlyTrashed();
+        else
+            return $query->withTrashed();
 
-        return $query->onlyTrashed();
     }
 
 
