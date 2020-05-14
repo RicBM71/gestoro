@@ -44,10 +44,10 @@ class TrasladarController extends Controller
 
     public function update(Request $request, Compra $compra){
 
-        if (!esRoot())
-            if ($compra->fecha_compra != date('Y-m-d')){
-                return abort(403, 'Solo pueden trasladarse compras en el mismo día');
-            }
+        
+        if (Carbon::parse($compra->fecha_compra) != Carbon::today()){
+            return abort(403, 'Solo pueden trasladarse si fecha compra es igual a hoy. Contactar admin');
+        }
 
 
         $libro = Libro::restaContadorCompra($compra->ejercicio, $compra->grupo_id, $compra->albaran, 0);

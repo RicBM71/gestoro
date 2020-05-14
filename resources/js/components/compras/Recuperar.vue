@@ -164,7 +164,7 @@
                                         data-vv-as="importe"
                                         class="inputPrice"
                                         type="number"
-                                        readonly
+
                                         v-on:keyup.enter="submit"
                                     >
                                    </v-text-field>
@@ -321,10 +321,11 @@ export default {
 
             if (this.multiple){
 
-                this.deposito_recu.importe = parseFloat(this.importe1) + this.importe2;
+                this.deposito_recu.importe = parseFloat(this.importe1) + parseFloat(this.importe2);
                 this.deposito_recu.importe1 = parseFloat(this.importe1);
                 this.deposito_recu.importe2 = this.importe2;
                 this.deposito_recu.concepto_id2 = this.concepto_id2;
+                
 
             }else{
                 this.deposito_recu.importe1 = parseFloat(this.deposito_recu.importe);
