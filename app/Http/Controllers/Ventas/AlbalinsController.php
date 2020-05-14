@@ -53,7 +53,8 @@ class AlbalinsController extends Controller
 
         if (request()->wantsJson())
             return [
-                'lineas' => Albalin::with('producto')->AlbaranId($reg->albaran_id)->get(),
+                'lineas' => Albalin::with(['producto' => function ($query) {
+                                            $query->withTrashed();}])->AlbaranId($reg->albaran_id)->get(),
                 'totales' => Albalin::totalAlbaranByAlb($reg->albaran_id)
             ];
 

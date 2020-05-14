@@ -88,7 +88,9 @@ class PrintAlbController extends Controller
         // }
             //return abort(411,'La compra no está recuperada y/o facturada');;
 
-        $this->lineasAlbaran = Albalin::with(['producto.clase','producto.garantia','producto.iva'])->albaranId($this->albaran->id)->orderBy('id')->get();
+        $this->lineasAlbaran = Albalin::with(['producto' => function ($query) {
+                                                $query->withTrashed();},
+                                              'producto.clase','producto.garantia','producto.iva'])->albaranId($this->albaran->id)->orderBy('id')->get();
 
         $empresa  = session()->get('empresa');
 

@@ -158,7 +158,9 @@ class PrintHojaTallerController extends Controller
 
         //return;
 
-        $lineas = Albalin::with(['producto.clase','producto.garantia','producto.iva'])->albaranId($this->albaran->id)->orderBy('id')->get();
+        $lineas = Albalin::with(['producto' => function ($query) {
+                                      $query->withTrashed();},
+                                'producto.clase','producto.garantia','producto.iva'])->albaranId($this->albaran->id)->orderBy('id')->get();
 
 		foreach ($lineas as $row) {
 

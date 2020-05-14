@@ -86,7 +86,9 @@ class DetalleVentasController extends Controller
 
             $albaran = Albaran::find($row->id);
 
-            $albalins = Albalin::with('producto.clase')->where('albaran_id', $row->id)->get();
+            $albalins = Albalin::with(['producto' => function ($query) {
+                                                    $query->withTrashed();},
+                                        'producto.clase')->where('albaran_id', $row->id)->get();
 
             $primera = true;
             foreach ($albalins as $albalin){

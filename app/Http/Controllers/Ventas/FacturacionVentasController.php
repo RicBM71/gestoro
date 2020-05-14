@@ -141,7 +141,9 @@ class FacturacionVentasController extends Controller
 
     private function verificarSiHayProductosEnDeposito($albaran_id){
 
-        $lineas = Albalin::with('producto')->where('albaran_id', $albaran_id)->get();
+        $lineas = Albalin::with(['producto' => function ($query) {
+                                      $query->withTrashed();
+                                }])->where('albaran_id', $albaran_id)->get();
 
 
         foreach ($lineas as $row){
