@@ -287,13 +287,16 @@ import {mapGetters} from 'vuex';
         },
         computed: {
             ...mapGetters([
-                'isAdmin'
+                'isAdmin',
+                'isSupervisor'
             ]),
             computedHayDepositos(){
 
-                if (this.isAdmin) return false;
+                return !this.isSupervisor;
 
-                return this.totales_concepto[0] != 0;
+                // if (this.isAdmin) return false;
+
+                // return this.totales_concepto[0] != 0;
             },
             computedTxtMod(){
                 return "Mod. "+this.compra.username;

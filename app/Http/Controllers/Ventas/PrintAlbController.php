@@ -197,8 +197,17 @@ class PrintAlbController extends Controller
         PDF::setXY(115,28);
         PDF::MultiCell(90, 5,  'NIF.: '.$this->albaran->cliente->dni,'', 'L', 0, 1, '', '', true,0,false,true,5,'M',false);
 
+        if ($this->albaran->clitxt <> null)
+            if (strlen($this->albaran->cliente->dni) > 4)
+                $razon = $this->albaran->cliente->razon.' - '.$this->albaran->clitxt;
+            else
+                $razon = '## '.$this->albaran->clitxt;
+        else
+            $razon = $this->albaran->cliente->razon;
+
+
         PDF::setXY(115,35);
-        PDF::MultiCell(90, 5,  $this->albaran->cliente->razon, '', 'L', 0, 1, '', '', true,0,false,true,5,'M',false);
+        PDF::MultiCell(90, 5,  $razon, '', 'L', 0, 1, '', '', true,0,false,true,5,'M',false);
         PDF::setX(115);
         PDF::MultiCell(90, 5,  $this->albaran->cliente->direccion,'', 'L', 0, 1, '', '', true,0,false,true,5,'M',false);
         PDF::setX(115);
