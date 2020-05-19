@@ -47,6 +47,16 @@ function getIbanPrint($iban){
 
 }
 
+function getTelefono($n){
+
+    if (strlen($n) != 9) return $n;
+
+    if ($n[0]=='6' || $n[0]=='7')
+        return substr($n,0,3).' '.substr($n,3,3).' '.substr($n,6,3);
+    else
+        return substr($n,0,2).' '.substr($n,2,3).' '.substr($n,5,2).' '.substr($n,7,2);
+
+}
 
 function sumarDiasAFecha($fecha, $dias){
 

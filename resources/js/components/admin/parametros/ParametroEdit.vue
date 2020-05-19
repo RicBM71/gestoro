@@ -102,6 +102,17 @@
                                         >
                                         </v-text-field>
                                     </v-flex>
+                                     <v-flex sm1>
+                                        <v-text-field
+                                            v-model="parametro.frm_compras"
+                                            v-validate="'required|max:2'"
+                                            :error-messages="errors.collect('frm_compras')"
+                                            label="Formulario Compras"
+                                            data-vv-name="frm_compras"
+                                            v-on:keyup.enter="submit"
+                                        >
+                                        </v-text-field>
+                                    </v-flex>
                                 </v-layout>
                                 <v-layout row wrap>
                                     <v-flex sm2>

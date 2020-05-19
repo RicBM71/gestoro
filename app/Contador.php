@@ -175,7 +175,7 @@ class Contador extends Model
             return $data;
 
           } catch (\Exception $e) {
-                return abort(404, 'Contador no existe! '.$ejercicio);
+                return abort(404, 'Emp: '.$empresa_id.' - Contador no existe! '.$ejercicio);
                 //return abort(404, 'Contador no existe! '.$e->getMessage());
           }
     }

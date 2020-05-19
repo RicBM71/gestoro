@@ -42,6 +42,7 @@ class ReubicarAlbaranesController extends Controller
                     ->where('fase_id', 11)
                     ->whereNull('factura')
                     ->whereNull('albaranes.deleted_at')
+                    ->where('facturar', true)
                     ->where('productos.empresa_id','<>',session('empresa')->id)
                     ->get();
 
@@ -184,6 +185,8 @@ class ReubicarAlbaranesController extends Controller
     }
 
     private function crearAlbaran($albaran, $nueva_empresa_id){
+
+        \Log::info($albaran->id);
 
         $data_new['empresa_id']     = $nueva_empresa_id;
 
