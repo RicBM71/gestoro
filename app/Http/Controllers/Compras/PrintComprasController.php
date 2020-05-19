@@ -44,6 +44,8 @@ class PrintComprasController extends Controller
 
         $empresa  = session()->get('empresa');
 
+        $this->formulario = session()->get('parametros')->frm_compras;
+
         ob_end_clean();
 
         if ($this->formulario == "GE")
@@ -517,7 +519,7 @@ class PrintComprasController extends Controller
 
         PDF::SetFont('helvetica', 'R', 9, '', false);
 
-        PDF::SetXY(15, 68);
+        PDF::SetXY(15, 78);
 		$txt = ("La empresa ".session("empresa")->razon." con CIF.:".session("empresa")->cif.
         " se compromete a reservar para su venta el lote con Número de asiento ".$this->compra->alb_ser.
         " comprado el día arriba indicado y descrito en el libro oficial de registro de conformidad".
