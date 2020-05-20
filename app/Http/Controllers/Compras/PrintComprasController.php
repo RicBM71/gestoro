@@ -357,7 +357,7 @@ class PrintComprasController extends Controller
 		PDF::Ln();
 		PDF::SetFontSize(8);
 
-		$txt=("Vendo al establecimiento arriba indicado los objetos detallados a continuación, declarando que los mismos".
+		$txt=("  Vendo al establecimiento arriba indicado los objetos detallados a continuación, declarando que los mismos".
 				" son de mi absoluta propiedad y que no son procedentes los mismos de mala o dudosa apropiación por mi parte. ".
 				"En caso de reclamación de dichos objetos me comprometo a justificar su procedencia, respondiendo".
 				" de los perjuicios y gastos que hubiere por esta causa.\n");
@@ -373,7 +373,7 @@ class PrintComprasController extends Controller
 		PDF::Write($h=0, $txt, $link='', $fill=0, $align='J', $ln=true, $stretch=0, $firstline=false, $firstblock=false, $maxh=0);
 		PDF::Ln();
 
-		$txt=("He recibido en esta fecha la cantidad de ".getCurrency($this->compra->imp_pres)." ".
+		$txt=("  He recibido en esta fecha la cantidad de ".getCurrency($this->compra->imp_pres)." ".
               "en concepto de venta de ".$operacon." que a continuación detallo y declaro son de mi propiedad.\n");
 
         if ($this->compra->retencion > 0){
@@ -523,7 +523,7 @@ class PrintComprasController extends Controller
         PDF::SetFont('helvetica', 'R', 9, '', false);
 
         PDF::SetXY(15, 78);
-		$txt = ("La empresa ".session("empresa")->razon." con CIF.:".session("empresa")->cif.
+		$txt = ("  La empresa ".session("empresa")->razon." con CIF.:".session("empresa")->cif.
         " se compromete a reservar para su venta el lote con Número de asiento ".$this->compra->alb_ser.
         " comprado el día arriba indicado y descrito en el libro oficial de registro de conformidad".
         " al Real Decreto 197/1988 de 22 de febrero, compuesto los objetos más abajo detallados.\n");
@@ -533,7 +533,7 @@ class PrintComprasController extends Controller
 				"de la fecha de este contrato NUNCA ANTES y OBLIGATORIAMENTE DEBERÁN DE AVISAR con UN DÍA de ANTELACIÓN.".
 				"\n\n");
 
-		$txt.= ("Queda de manifiesto que pasados ".$dias_cortesia." días de la fecha tope de recuperación ".
+		$txt.= ("  Queda de manifiesto que pasados ".$dias_cortesia." días de la fecha tope de recuperación ".
 				"y de no materializarse la misma por la parte compradora se podrá disponer de el/los objeto/s reseñados ".
 				"en el libro de Registro Oficial, sin perjuicio a las partes intervinientes. Se entiende por ello ".
 				"la falta de interés por la RECOMPRA. La empresa ").
@@ -972,7 +972,7 @@ class PrintComprasController extends Controller
 
         PDF::Ln();
         //PDF::SetXY(15, 68);
-		$txt = ("La empresa ".session("empresa")->razon." con CIF.:".session("empresa")->cif.
+		$txt = ("  La empresa ".session("empresa")->razon." con CIF.:".session("empresa")->cif.
         " se compromete a reservar para su venta el lote con Número de asiento ".$this->compra->alb_ser.
         " comprado el día arriba indicado y descrito en el libro oficial de registro de conformidad".
         " al Real Decreto 197/1988 de 22 de febrero, compuesto los objetos más abajo detallados.\n");
@@ -982,7 +982,7 @@ class PrintComprasController extends Controller
 				"de la fecha de este contrato NUNCA ANTES y OBLIGATORIAMENTE DEBERÁN DE AVISAR con UN DÍA de ANTELACIÓN.".
 				"\n\n");
 
-		$txt.= ("Queda de manifiesto que pasados ".$dias_cortesia." días de la fecha tope de recuperación ".
+		$txt.= ("  Queda de manifiesto que pasados ".$dias_cortesia." días de la fecha tope de recuperación ".
 				"y de no materializarse la misma por la parte compradora se podrá disponer de el/los objeto/s reseñados ".
 				"en el libro de Registro Oficial, sin perjuicio a las partes intervinientes. Se entiende por ello ".
 				"la falta de interés por la RECOMPRA. La empresa ").
