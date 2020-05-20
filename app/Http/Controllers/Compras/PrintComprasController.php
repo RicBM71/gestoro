@@ -159,7 +159,7 @@ class PrintComprasController extends Controller
                 $file = '@'.(Storage::get($f));
                 $pdf->setJPEGQuality(75);
 
-                $pdf->Image($file, $x='5', $y='2', $w=0, $h=0, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false);
+                $pdf->Image($file, $x='10', $y='4', $w=0, $h=25, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false);
                 //$pdf->Image($file, 10, 1, 40, 18, '', null, 'M', true, 150, 'L', false, false, 0, false, false, false);
 
             }
@@ -174,17 +174,19 @@ class PrintComprasController extends Controller
 
             $pdf->SetFont('helvetica', 'R', 9, '', false);
 
-            $y = 20;
-            $pdf->SetXY(16, $y);
+            $y = 28;
+            $pdf->SetXY(10, $y);
             $pdf->Write($h=0,  session('empresa')->razon, '', 0, 'L', true, 0, false, true, 0);
-            $pdf->SetXY(16, $y+=5);
-            $pdf->Write($h=0,  session('empresa')->direccion, '', 0, 'L', true, 0, false, true, 0);
-            $pdf->SetXY(16, $y+=5);
-            $pdf->Write($h=0,  session('empresa')->cpostal.' '.session('empresa')->poblacion, '', 0, 'L', true, 0, false, true, 0);
             $pdf->SetXY(170, $y);
 
             $pdf->SetFont('helvetica', 'B', 9, '', false);
             $pdf->Write($h=0, 'Tf.: '.getTelefono(session('empresa')->telefono1), '', 0, 'L', true, 0, false, true, 0);
+
+            $pdf->SetFont('helvetica', 'R', 9, '', false);
+            $pdf->SetXY(10, $y+=5);
+            $pdf->Write($h=0,  session('empresa')->direccion.''.session('empresa')->cpostal.' '.session('empresa')->poblacion, '', 0, 'L', true, 0, false, true, 0);
+            // $pdf->SetXY(16, $y+=5);
+            // $pdf->Write($h=0,  session('empresa')->cpostal.' '.session('empresa')->poblacion, '', 0, 'L', true, 0, false, true, 0);
             // $pdf->SetXY(16, $y+=5);
            // $pdf->Write($h=0,  'CIF.: '.session('empresa')->cif, '', 0, 'L', true, 0, false, true, 0);
 
@@ -727,9 +729,9 @@ class PrintComprasController extends Controller
                   $f = str_replace('storage', 'public', session()->get('empresa')->img_logo);
 
                   $file = '@'.(Storage::get($f));
-                  $pdf->setJPEGQuality(75);
+                  //$pdf->setJPEGQuality(75);
 
-                  $pdf->Image($file, $x='5', $y='2', $w=0, $h=0, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false);
+                  $pdf->Image($file, $x='10', $y='4', $w=0, $h=25, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false);
                   //$pdf->Image($file, 10, 1, 40, 18, '', null, 'M', true, 150, 'L', false, false, 0, false, false, false);
 
               }

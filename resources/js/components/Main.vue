@@ -96,7 +96,7 @@
             <v-flex xs8>
                 <v-responsive>
                     <v-layout column>
-                        <v-img class="img-fluid" :src="logo"></v-img>
+                        <v-img max-height="190" contain class="img-fluid" :src="logo"></v-img>
                     </v-layout>
                 </v-responsive>
             </v-flex>

@@ -211,7 +211,7 @@ class PrintRecuController extends Controller
 
                 $file = '@'.(Storage::get($f));
                 $pdf->setJPEGQuality(75);
-                $pdf->Image($file, $x='5', $y='2', $w=0, $h=0, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false);
+                $pdf->Image($file, $x='5', $y='2', $w=0, $h=25, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false);
 
             }
 
@@ -226,13 +226,13 @@ class PrintRecuController extends Controller
             $pdf->SetFont('helvetica', 'R', 9, '', false);
 
             $y = 25;
-            $pdf->SetXY(16, $y);
+            $pdf->SetXY(10, $y);
             $pdf->Write($h=0,  session('empresa')->razon, '', 0, 'L', true, 0, false, true, 0);
-            $pdf->SetXY(16, $y+=5);
+            $pdf->SetXY(10, $y+=5);
             $pdf->Write($h=0,  session('empresa')->direccion, '', 0, 'L', true, 0, false, true, 0);
-            $pdf->SetXY(16, $y+=5);
+            $pdf->SetXY(10, $y+=5);
             $pdf->Write($h=0,  session('empresa')->cpostal.' '.session('empresa')->poblacion, '', 0, 'L', true, 0, false, true, 0);
-            $pdf->SetXY(16, $y+=5);
+            $pdf->SetXY(10, $y+=5);
             $pdf->Write($h=0,  'CIF.: '.session('empresa')->cif, '', 0, 'L', true, 0, false, true, 0);
 
             //$pdf->MultiCell(34, 157, session('empresa')->razon, 0, 'L', 0, 0, '', '', true);
