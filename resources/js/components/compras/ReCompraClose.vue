@@ -78,7 +78,7 @@
                             <v-icon color="orange darken-2">new_releases</v-icon>
                         </v-btn>
                     </template>
-                    <span>Desfacturar ReCompra</span>
+                    <span>Desfacturar ReCompra - Reabrir requerido</span>
                 </v-tooltip>
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
@@ -602,7 +602,7 @@ import {mapState} from 'vuex'
             },
             computedDisabledDesfacturar(){
 
-                if (this.isAdmin && this.isGestor )
+                if (this.hasReaCompras )
                     return false;
                 else
                     return true;
