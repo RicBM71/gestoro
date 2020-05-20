@@ -19,6 +19,7 @@ class Empresa extends Model
     // 6: Factura (deshabilitar para empresas de depósito por ejemplo)
     // 7: Peso en compras
     // 8: aplicar siempre días cortesía, aún cuando no sea la primera renovación
+    // 9: IBAN Renovaciones
 
     use SoftDeletes;
 

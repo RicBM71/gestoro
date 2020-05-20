@@ -6,6 +6,7 @@ use PDF;
 use App\Libro;
 use App\Clidoc;
 use App\Compra;
+use App\Cuenta;
 use App\Comline;
 use App\Deposito;
 use App\Http\Controllers\Controller;
@@ -656,6 +657,8 @@ class PrintComprasController extends Controller
     }
 
     private function cabeLin(){
+
+
         PDF::MultiCell(30, 4,"", "", 'L', 0, 1, '', '', true,0,false,true,5,'M',false);
         $txt = "CONCEPTO";
 		$imp = "IMPORTE";
@@ -699,7 +702,17 @@ class PrintComprasController extends Controller
 			PDF::MultiCell(70, 7, (""), 'LRB', 'C', 0, 0, '', '', true,0,false,true,5,'B',false);
 			PDF::MultiCell(36, 7, "", 'RB', 'C', 0, 0, '', '', true,0,false,true,5,'M',false);
 			PDF::MultiCell(38, 7,  "", "LB", 'L', 0, 0, '', '', true,0,false,true,10,'M',false);
-			PDF::MultiCell(38, 7,  "", "BLR", 'L', 0, 1, '', '', true,0,false,true,10,'M',false);
+            PDF::MultiCell(38, 7,  "", "BLR", 'L', 0, 1, '', '', true,0,false,true,10,'M',false);
+
+            if (session('empresa')->getFlag(9)){
+                try {
+                    PDF::SetFont('helvetica', 'R', 9, '', false);
+                    $cuenta = Cuenta::defecto()->firstOrFail();
+                    $txt = "* Puede realizar su renovación a través del siguiente número de cuenta IBAN: ".getIbanPrint($cuenta->iban).", indicando en el concepto de la transferencia: RENOVA ".$this->compra->alb_ser.".";
+                    PDF::MultiCell(180, 5,  $txt, "0", 'L', 0, 1, '', '', true,0,false,true,15,'M',false);
+                } catch (\Exception $e) {
+                }
+            }
 
 			// PDF::MultiCell(80, 5,  "", "0", 'L', 0, 0, '', '', true,0,false,true,5,'M',false);
 
