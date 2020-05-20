@@ -708,7 +708,7 @@ class PrintComprasController extends Controller
                 try {
                     PDF::SetFont('helvetica', 'R', 9, '', false);
                     $cuenta = Cuenta::defecto()->firstOrFail();
-                    $txt = "* Puede realizar su renovación a través del siguiente número de cuenta IBAN: ".getIbanPrint($cuenta->iban).", indicando en el concepto de la transferencia: RENOVA ".$this->compra->alb_ser.".";
+                    $txt = "* Puede realizar su renovación a través del siguiente número de cuenta IBAN: ".getIbanPrint($cuenta->iban).", indicando en el concepto de la transferencia: RENOVAR ".$this->compra->alb_ser.".";
                     PDF::MultiCell(180, 5,  $txt, "0", 'L', 0, 1, '', '', true,0,false,true,15,'M',false);
                 } catch (\Exception $e) {
                 }
@@ -1023,9 +1023,16 @@ class PrintComprasController extends Controller
             PDF::MultiCell(36, 5,  ("Firma de quien autoriza"), "T", 'L', 0, 0, '', '', true,0,false,true,5,'M',false);
             PDF::MultiCell(2, 5,  "", "", 'L', 0, 0, '', '', true,0,false,true,5,'M',false);
 			PDF::MultiCell(38, 5,  ("Firma de autorizado"), "T", 'L', 0, 1, '', '', true,0,false,true,5,'M',false);
-			// PDF::MultiCell(80, 5,  "", "0", 'L', 0, 0, '', '', true,0,false,true,5,'M',false);
 
-			// PDF::MultiCell(80, 10,  "", "0", 'L', 0, 0, '', '', true,0,false,true,10,'M',false);
+            if (session('empresa')->getFlag(9)){
+                try {
+                    PDF::SetFont('helvetica', 'R', 9, '', false);
+                    $cuenta = Cuenta::defecto()->firstOrFail();
+                    $txt = "* Puede realizar su renovación a través del siguiente número de cuenta IBAN: ".getIbanPrint($cuenta->iban).", indicando en el concepto de la transferencia: RENOVAR ".$this->compra->alb_ser.".";
+                    PDF::MultiCell(180, 5,  $txt, "0", 'L', 0, 1, '', '', true,0,false,true,15,'M',false);
+                } catch (\Exception $e) {
+                }
+            }
 		}
 
     }

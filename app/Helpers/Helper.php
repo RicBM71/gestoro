@@ -40,10 +40,11 @@ function getIbanPrint($iban){
     $iban = str_split($iban,4);
 
     foreach ($iban as $e){
+
         $iban_print .= $e.' ';
     }
 
-    return $iban_print;
+    return substr($iban_print,0,-1);
 
 }
 
