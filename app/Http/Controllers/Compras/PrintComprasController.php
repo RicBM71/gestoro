@@ -185,9 +185,9 @@ class PrintComprasController extends Controller
 
             $pdf->SetFont('helvetica', 'R', 9, '', false);
             $pdf->SetXY(10, $y+=5);
-            $pdf->Write($h=0,  session('empresa')->direccion.''.session('empresa')->cpostal.' '.session('empresa')->poblacion, '', 0, 'L', true, 0, false, true, 0);
-            // $pdf->SetXY(16, $y+=5);
-            // $pdf->Write($h=0,  session('empresa')->cpostal.' '.session('empresa')->poblacion, '', 0, 'L', true, 0, false, true, 0);
+            $pdf->Write($h=0,  session('empresa')->direccion, '', 0, 'L', true, 0, false, true, 0);
+            $pdf->SetXY(10, $y+=5);
+            $pdf->Write($h=0,  session('empresa')->cpostal.' '.session('empresa')->poblacion, '', 0, 'L', true, 0, false, true, 0);
             // $pdf->SetXY(16, $y+=5);
            // $pdf->Write($h=0,  'CIF.: '.session('empresa')->cif, '', 0, 'L', true, 0, false, true, 0);
 
@@ -305,6 +305,7 @@ class PrintComprasController extends Controller
         PDF::setXY(165,14);
         PDF::MultiCell(36, 8,  $num_doc,'', 'C', 1, 1, '', '', true,0,false,true,8,'M',false);
 
+        PDF::Ln();
         PDF::Ln();
         PDF::Ln();
 
@@ -522,7 +523,7 @@ class PrintComprasController extends Controller
 
         PDF::SetFont('helvetica', 'R', 9, '', false);
 
-        PDF::SetXY(15, 78);
+        PDF::SetXY(15, 84);
 		$txt = ("  La empresa ".session("empresa")->razon." con CIF.:".session("empresa")->cif.
         " se compromete a reservar para su venta el lote con Número de asiento ".$this->compra->alb_ser.
         " comprado el día arriba indicado y descrito en el libro oficial de registro de conformidad".
