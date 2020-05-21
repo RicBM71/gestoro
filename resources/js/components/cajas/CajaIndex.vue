@@ -303,7 +303,7 @@ import {mapActions} from "vuex";
         colorear(item, ali=false){
             var a = ali ? 'text-xs-right' : '';
 
-            if (item.manual == 'C')
+            if (item.manual == 'R')
                 return a+' brown--text darken-1 font-weight-bold';
 
             if (item.apunte_id > 0){
@@ -343,7 +343,7 @@ import {mapActions} from "vuex";
 
         },
         puedeBorrar(item){
-            if (item.manual == 'C'){ // es apunte de cierre
+            if (item.manual == 'R'){ // es apunte de cierre
                 return (this.isSupervisor)
             }else{
                 return (item.manual == "S" || item.manual == "R") && this.isAdmin;

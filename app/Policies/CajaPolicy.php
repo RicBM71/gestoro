@@ -30,13 +30,13 @@ class CajaPolicy
      */
     public function update(User $authUser, Caja $caja)
     {
-        if ($caja->manual == 'N'){
+        if (!in_array($caja->manual,['N','C','V'])){
             return $this->deny('El apunte es automático, no se puede modificar');
         }
 
-        if ($caja->manual == 'C'){
-             return $this->deny('El apunte de cierre no se puede modificar');
-        }
+        // if ($caja->manual == 'R'){
+        //      return $this->deny('El apunte de cierre no se puede modificar');
+        // }
 
         if ($caja->manual == 'R' && !$authUser->hasRole('Admin') ){
             return $this->deny('Acceso denegado. Contactar con un administrador');

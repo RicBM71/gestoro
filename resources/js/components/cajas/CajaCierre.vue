@@ -490,7 +490,7 @@ import {mapGetters} from 'vuex';
                 caja: {
                     fecha: new Date().toISOString().substr(0, 10),
                     importe: null,
-                    manual: 'C',
+                    manual: 'R',
                     deposito_id:null,
                     cobro_id: null
                 },

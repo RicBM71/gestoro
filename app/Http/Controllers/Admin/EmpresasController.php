@@ -133,6 +133,11 @@ class EmpresasController extends Controller
             $empresa = Empresa::findOrFail($id);
         }
 
+        if ($empresa->id == session('empresa')->id){
+            return abort(403, 'NO se puede borrar la empresa activa!');
+        }
+
+
         $this->authorize('delete', $empresa);
 
         if ($empresa->trashed()) {
