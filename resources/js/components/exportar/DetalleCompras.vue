@@ -298,7 +298,8 @@ export default {
     },
      beforeMount(){
         if (this.getLineasIndex.length > 0)
-            this.items = this.getLineasIndex;
+            if (this.getPagination.model == this.pagination.model)
+                this.items = this.getLineasIndex;
     },
     mounted(){
 
@@ -356,7 +357,7 @@ export default {
         },
         clase(item){
             if (item.quilates > 0)
-                return item.clase + " " + item.quilates;
+                return item.clase + " " + item.quilates + " KT";
             else
                 return item.clase;
         },

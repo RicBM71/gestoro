@@ -310,7 +310,8 @@ export default {
     },
      beforeMount(){
         if (this.getLineasIndex.length > 0)
-            this.items = this.getLineasIndex;
+            if (this.getPagination.model == this.pagination.model)
+                this.items = this.getLineasIndex;
     },
     mounted(){
 
