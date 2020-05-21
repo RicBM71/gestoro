@@ -451,7 +451,7 @@
                                         @click="goDestroyDocu()"
                                         v-if="puedeBorrar"
                                         color="red darken-4"
-                                        dark> <v-icon>delete_forever</v-icon>*Eliminar Documentos</v-btn>
+                                        dark> <v-icon>delete_forever</v-icon>Eliminar Documentos</v-btn>
                                 </div>
                             </v-flex>
                         </v-layout>

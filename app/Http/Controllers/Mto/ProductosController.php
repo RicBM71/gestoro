@@ -341,6 +341,12 @@ class ProductosController extends Controller
             $parametros = false;
         }
 
+        if ($producto->deleted_at != null){
+            $this->show($producto->id);
+            return;
+        }
+
+
         $this->authorize('update', $producto);
 
         if (request()->wantsJson())

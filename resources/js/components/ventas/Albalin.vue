@@ -37,7 +37,7 @@
                                     <v-icon
                                         small
                                         class="mr-2"
-                                        @click="goProducto(props.item.producto_id)"
+                                        @click="goProducto(props.item.producto)"
                                     >
                                         local_offer
                                     </v-icon>
@@ -300,8 +300,13 @@ export default {
                 return item.producto.clase.nombre+": "+ notas + " # " + nombre_interno;
 
         },
-        goProducto(producto_id){
-            this.$router.push({ name: 'producto.edit', params: { id: producto_id } })
+        goProducto(producto){
+
+            if (producto.deleted_at == null)
+                this.$router.push({ name: 'producto.edit', params: { id: producto.id } })
+            else
+                this.$router.push({ name: 'producto.show', params: { id: producto.id } })
+
         },
         create(){
             this.dialog_lin = true;

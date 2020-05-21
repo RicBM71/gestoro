@@ -25,6 +25,11 @@
         <v-card>
             <v-form>
                  <v-container  v-if="!show_loading">
+                     <v-layout row wrap  v-if="producto.deleted_at != null">
+                       <v-flex sm2>
+                            <h3 class="red--text darken-4">PRODUCTO BORRADO!</h3>
+                        </v-flex>
+                     </v-layout>
                      <v-layout row wrap>
                          <v-flex sm2>
                             <v-text-field
