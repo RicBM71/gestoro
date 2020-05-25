@@ -164,6 +164,7 @@ class LibrosController extends Controller
             'dias_custodia'=> ['required','integer',],
             'interes'=> ['required', 'numeric'],
             'codigo_pol'=> ['string','nullable'],
+            'nombre_csv'=> ['string','nullable'],
 
         ]);
 

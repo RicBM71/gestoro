@@ -876,13 +876,16 @@ class PrintComprasController extends Controller
         $num_doc = $this->compra->alb_ser;
 
         // //PDF::SetFillColor(235, 235, 235);
-        // PDF::SetFillColor(215, 235, 255);
+        PDF::SetFillColor(215, 235, 255);
 
-        PDF::SetFont('helvetica', 'R',10, '', false);
+
         PDF::setXY(14,38);
-        PDF::MultiCell(60, 8, $fecha.' '.$num_doc,'', 'L', 0, 0, '', '', true,0,false,true,8,'M',false);
+        PDF::SetFont('helvetica', 'B', 10, '', false);
+        PDF::MultiCell(44, 8, $fecha.' '.$num_doc,'', 'C', 1, 1, '', '', true,0,false,true,7,'M',false);
+        // PDF::SetFont('helvetica', '', 7, '', false);
+        // PDF::MultiCell(118, 4,  "Nº de asiento", 'T', 'L', 0, 0, '', '', true,0,false,true,5,'M',false);
 
-        //PDF::setXY(165,14);
+        // PDF::setXY(165,14);
         // PDF::MultiCell(36, 8,  $num_doc,'', 'C', 0, 1, '', '', true,0,false,true,8,'M',false);
 
         // PDF::Ln();
