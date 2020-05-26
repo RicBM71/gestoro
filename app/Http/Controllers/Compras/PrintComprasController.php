@@ -160,7 +160,7 @@ class PrintComprasController extends Controller
                 $file = '@'.(Storage::get($f));
                 $pdf->setJPEGQuality(75);
 
-                $pdf->Image($file, $x='10', $y='4', $w=0, $h=25, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false);
+                $pdf->Image($file, $x='5', $y='4', $w=0, $h=25, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false);
                 //$pdf->Image($file, 10, 1, 40, 18, '', null, 'M', true, 150, 'L', false, false, 0, false, false, false);
 
             }
