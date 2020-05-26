@@ -65,7 +65,6 @@
                                 data-vv-name="apunte_id"
                                 data-vv-as="apunte_id"
                                 :items="apuntes"
-
                                 label="Apunte"
                             ></v-select>
                         </v-flex>
@@ -121,7 +120,7 @@
                                 :error-messages="errors.collect('manual')"
                                 :items="origenes"
                                 label="Origen"
-                                :readonly="!isAdmin"
+                                :readonly="!isGestor"
                                 ></v-select>
                         </v-flex>
                          <v-flex sm2>
@@ -190,7 +189,7 @@ import {mapGetters} from 'vuex';
                 ],
                 origenes:[
                     {value: 'S', text:"Manual"},
-                    {value: 'R', text:"Regularización"},
+                    {value: 'G', text:"Regularización"},
                 ],
                 saldo: 0,
                 loading: false,
@@ -223,6 +222,7 @@ import {mapGetters} from 'vuex';
         },
         computed: {
         ...mapGetters([
+                'isGestor',
                 'isSupervisor',
                 'isAdmin'
             ]),

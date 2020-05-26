@@ -307,6 +307,8 @@ import {mapActions} from "vuex";
 
             if (item.manual == 'R')
                 return a+' brown--text darken-1 font-weight-bold';
+            else if (item.manual == 'G')
+                return a+' gray--text darken-1 font-weight-bold';
 
             if (item.apunte_id > 0){
                 if (item.apunte.color != null)
