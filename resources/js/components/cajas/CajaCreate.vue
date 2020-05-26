@@ -67,7 +67,7 @@
                                 :error-messages="errors.collect('manual')"
                                 :items="origenes"
                                 label="Origen"
-                                :readonly="!isAdmin"
+                                :readonly="!isGestor"
                                 ></v-select>
                         </v-flex>
                          <v-flex sm3 d-flex>
@@ -155,7 +155,7 @@ import {mapGetters} from 'vuex';
                 ruta: "caja",
                 origenes:[
                     {value: 'S', text:"Manual"},
-                    {value: 'R', text:"Regularización"},
+                    {value: 'G', text:"Regularización"},
                 ],
                 dhs:[
                     {value: 'D', text:"Debe"},
@@ -188,10 +188,11 @@ import {mapGetters} from 'vuex';
         computed: {
             ...mapGetters([
                 'isAdmin',
+                'isGestor',
                 'isSupervisor',
             ]),
             computedEditFecha(){
-                
+
                 return !this.isSupervisor;
             },
             computedFecha() {

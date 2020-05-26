@@ -20,36 +20,61 @@ class KlRjImportaComprasSeeder extends Seeder
         $this->empresa_id = 4;
         session('empresa_id', $this->empresa_id);
 
-        $compras = DB::connection('db2')->select('select * from klt_compras WHERE empresa_id = 12');
-        foreach ($compras as $compra){
+        $klt_compras = array('8-19','5-20');
+
+        foreach ($klt_compras as $row){
+            $data = explode("-", $row);
+
+            
+
+            $ejercicio  = $data[1] + 2000;
+            $albaran    = $data[0];
+
+            $compra_kilates = DB::connection('db2')->select('select * from klt_compras WHERE empresa_id = 1 AND year(fecha_compra) = ? AND albaran = ?',[$ejercicio, $albaran]);
 
             try {
                 //code...
-                $compra_recupera = Compra::withOutGlobalScope(EmpresaScope::class)->findOrFail($compra->id);
+                $compra_rejoya = Compra::whereYear('fecha_compra', $ejercicio)
+                                        ->where('albaran', $albaran)
+                                        ->firstOrFail();
                 continue;
 
             } catch (\Exception $e) {
-                \Log::info($compra->id);
-                $this->crearCompra($compra);
+                \Log::info($compra_kilates->id);
+                $this->crearCompra($compra_kilates);
             }
         }
+
+        // $compras = DB::connection('db2')->select('select * from klt_compras WHERE empresa_id = 1');
+        // foreach ($compras as $compra){
+
+        //     try {
+        //         //code...
+        //         $compra_recupera = Compra::withOutGlobalScope(EmpresaScope::class)->findOrFail($compra->id);
+        //         continue;
+
+        //     } catch (\Exception $e) {
+        //         \Log::info($compra->id);
+        //         $this->crearCompra($compra);
+        //     }
+        // }
     }
 
-    private function crearCompra($row){
+    private function crearCompra($compra_kilates){
 
 
-        //$this->checkCliente($row->cliente_id);
+        $this->checkCliente($compra_kilates->cliente_id);
 
-        $data = collect($row);
+        $data = collect($compra_kilates);
 
         //\Log::info($data);
 
         $data = $data->toArray();
-        $data['empresa_id'] = $this->empresa_id;
+        $data['empresa_id'] = session('empresa')->id;
 
         DB::table('compras')->insertGetId($data);
 
-        $this->crearLineas($row->id);
+        $this->crearLineas($compra_kilates->id);
 
     }
 

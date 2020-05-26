@@ -35,7 +35,7 @@ class CajasController extends Controller
 
                 return [
                     'caja'  => Caja::with('apunte')
-                                        ->admin()
+                                        ->gestor()
                                         ->orderBy('fecha','desc')
                                         ->where('fecha','=',$hoy)
                                         ->get(),
@@ -84,6 +84,7 @@ class CajasController extends Controller
                         ->dh($data['dh'])
                         ->manual($data['manual'])
                         ->apunte($data['apunte_id'])
+                        ->gestor()
                         ->orderby('fecha')
                         ->get()
                         ->take(500);
@@ -124,8 +125,8 @@ class CajasController extends Controller
 
         if (request()->wantsJson())
             return [
-                'caja'=>$reg,
-                'message' => 'EL registro ha sido creado'
+                'caja'    =>    $reg,
+                'message' =>    'EL registro ha sido creado'
             ];
     }
 

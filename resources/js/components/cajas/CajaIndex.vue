@@ -51,12 +51,14 @@
             <v-card>
                 <v-container>
                     <v-layout row wrap>
-                        <v-flex xs2 class="font-weight-bold">
+                        <v-flex xs2 class="font-weight-bold" v-if="isGestor">
                             Debe: {{total_debe | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}
                         </v-flex>
-                        <v-flex xs2 class="font-weight-bold">
+                        <v-flex xs2 v-else></v-flex>
+                        <v-flex xs2 class="font-weight-bold" v-if="isGestor">
                             Haber: {{total_haber | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}
                         </v-flex>
+                        <v-flex xs2 v-else></v-flex>
                         <v-flex xs2 class="font-weight-bold">
                             Saldo a {{fecha_saldo}}
                         </v-flex>
@@ -330,7 +332,10 @@ import {mapActions} from "vuex";
         },
         puedeEditar(item){
 
-            if (item.manual == 'R' && this.isAdmin)
+            if (item.manual == 'R' && this.isSupervisor)
+                return true;
+
+            if (item.manual == 'G' && this.isGestor)
                 return true;
 
             if (item.manual != 'S') return false;
