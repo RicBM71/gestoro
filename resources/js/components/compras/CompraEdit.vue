@@ -149,7 +149,7 @@
                                 data-vv-as="días"
                                 :error-messages="errors.collect('dias_custodia')"
                                 label="Días Custodia"
-                                :readonly="computedHayDepositos"
+                                :readonly="computedCustodia"
                                 v-on:keyup.enter="submit"
                             >
                             </v-text-field>
@@ -312,6 +312,11 @@ import {mapGetters} from 'vuex';
                 // if (this.isAdmin) return false;
 
                 // return this.totales_concepto[0] != 0;
+            },
+            computedCustodia(){
+
+                return this.totales_concepto[0] != 0;
+                
             },
             computedTxtMod(){
                 return "Mod. "+this.compra.username;

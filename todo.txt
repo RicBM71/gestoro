@@ -152,4 +152,5 @@ delete FROM `klt_compras` WHERE serie_com = "A"
 UPDATE `klt_cajas` set manual = "R" WHERE manual = "C" and nombre like "CIERRE%"
 
 
-update klt_compras set interes_recuperacion = interes, importe_recuperacion = importe_renovacion where tipo_id = 1
+update klt_compras set interes_recuperacion = interes, importe_recuperacion = importe_renovacion where tipo_id = 1;
+update klt_libros set interes_recuperacion = interes

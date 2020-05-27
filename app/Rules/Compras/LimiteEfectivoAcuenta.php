@@ -43,7 +43,7 @@ class LimiteEfectivoAcuenta implements Rule
         if ($this->concepto_id != 7)
             return true;
 
-        if (($this->compra->importe + $this->compra->importe_renovacion) >= session('parametros')->lim_efe)
+        if (($this->compra->importe + $this->compra->importe_recuperacion) >= session('parametros')->lim_efe)
 
         // $imp = Deposito::valorAcuentaEnFecha($this->fecha_deposito, $this->cliente_id);
 

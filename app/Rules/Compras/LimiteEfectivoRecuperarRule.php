@@ -34,7 +34,7 @@ class LimiteEfectivoRecuperarRule implements Rule
         if (auth()->user()->hasPermissionTo('salefe') || $value == 0)
             return true;
 
-        if ($this->concepto_id == 10 && ($this->compra->importe + $this->compra->importe_renovacion) >= session('parametros')->lim_efe)
+        if ($this->concepto_id == 10 && ($this->compra->importe + $this->compra->importe_recuperacion) >= session('parametros')->lim_efe)
             return false;
 
             // compruebo ante posibles recuperaciones en el mismo día.
