@@ -98,7 +98,18 @@
                                 readonly                            >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm1>
+                        <v-flex sm1 v-if="parametros.doble_interes">
+                            <v-text-field
+                                v-model="compra.papeleta"
+                                v-validate="'numeric'"
+                                data-vv-name="papeleta"
+                                :error-messages="errors.collect('papeleta')"
+                                label="Papeleta"
+                                v-on:keyup.enter="submit"
+                            >
+                            </v-text-field>
+                        </v-flex>
+                        <v-flex sm2 v-else>
                             <v-text-field
                                 v-model="compra.papeleta"
                                 v-validate="'numeric'"
@@ -124,7 +135,7 @@
                             >
                             </v-text-field>
                         </v-flex>
-                         <v-flex sm1>
+                        <v-flex sm1 v-if="parametros.doble_interes">
                             <v-text-field
                                 v-show="compra.tipo_id==1"
                                 class="centered-input"
@@ -303,7 +314,8 @@ import {mapGetters} from 'vuex';
         computed: {
             ...mapGetters([
                 'isAdmin',
-                'isSupervisor'
+                'isSupervisor',
+                'parametros'
             ]),
             computedHayDepositos(){
 
@@ -316,7 +328,7 @@ import {mapGetters} from 'vuex';
             computedCustodia(){
 
                 return this.totales_concepto[0] != 0;
-                
+
             },
             computedTxtMod(){
                 return "Mod. "+this.compra.username;
