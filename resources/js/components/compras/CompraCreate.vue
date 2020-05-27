@@ -164,6 +164,7 @@ import Loading from '@/components/shared/Loading'
                     importe_renovacion:0,
                     importe_acuenta:0,
                     interes: 0,
+                    interes_recuperacion:0,
                     fase_id: 1,
                     factura: "",
                     fecha_factura: "",
@@ -349,6 +350,7 @@ import Loading from '@/components/shared/Loading'
                 this.loading = true;
                 this.$validator.validateAll().then((result) => {
                     if (result){
+
                             axios.post(this.url, this.compra)
                             .then(response => {
 

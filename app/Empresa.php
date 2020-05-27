@@ -20,6 +20,7 @@ class Empresa extends Model
     // 7: Peso en compras
     // 8: aplicar siempre días cortesía, aún cuando no sea la primera renovación
     // 9: IBAN Renovaciones
+    // 10 Bloquear importe recuperación. Si se entrega a cuanta no disminuye el importe, queda como al inicio del préstamo durante toda la vida del mismo.
 
     use SoftDeletes;
 

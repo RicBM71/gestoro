@@ -57,9 +57,12 @@ class Comline extends Model
                 $total->importe = 0;
             }
 
+
+
             $data['username'] = session('username');
             $data['importe'] = $total->importe;
             $data['importe_renovacion'] = round($total->importe * $compra->interes / 100, 0);
+            $data['importe_recuperacion'] = round($total->importe * $compra->interes_recuperacion / 100, 0);
 
             $compra->update($data);
 

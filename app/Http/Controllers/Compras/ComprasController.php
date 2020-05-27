@@ -150,6 +150,7 @@ class ComprasController extends Controller
         $data['albaran']      = $contador['albaran'];
         $data['serie_com']    = $contador['serie_com'];
         $data['interes']      = $contador['interes'];
+        $data['interes_recuperacion']      = $contador['interes_recuperacion'];
         $data['dias_custodia'] = $contador['dias_custodia'];
 
         $data['fecha_bloqueo'] = Compra::Bloqueo($request->fecha_compra, $contador['semdia_bloqueo']);
@@ -157,9 +158,11 @@ class ComprasController extends Controller
         if ($data['tipo_id']==1){
             $data['fecha_renovacion'] = $fecha_compra->addDays($contador['dias_custodia']);
             $data['importe_renovacion'] = 0;//round($compra->importe * $compra->interes / 100, 0);
+            $data['importe_recuperacion'] = 0;
         }else{
             $data['fecha_renovacion'] = null;
             $data['importe_renovacion'] = 0;
+            $data['importe_recuperacion'] = 0;
             $data['retencion'] = session()->get('parametros')->retencion;
         }
 
@@ -306,9 +309,12 @@ class ComprasController extends Controller
         $data['fecha_bloqueo'] = Compra::Bloqueo($request->fecha_compra, $contador['semdia_bloqueo']);
 
         if ($data['tipo_id']==1){
+            $data['retencion'] = 0;
             if ($compra->interes <> $data['interes']){
-                $data['retencion'] = 0;
                 $data['importe_renovacion'] = round(($compra->importe - $compra->importe_acuenta) * $data['interes'] / 100, 0);
+            }
+            if ($compra->interes_recuperacion <> $data['interes_recuperacion']){
+                $data['importe_recuperacion'] = round(($compra->importe - $compra->importe_acuenta) * $data['interes_recuperacion'] / 100, 0);
             }
             if ($compra->dias_custodia <> $data['dias_custodia']){
                 $fecha_compra = Carbon::parse($data['fecha_compra']);
@@ -410,10 +416,12 @@ class ComprasController extends Controller
             if ($totales_concepto[1] == 0)
                 $data['fecha_renovacion'] = $fecha_compra->addDays($compra->dias_custodia);
             $data['importe_renovacion'] = round($compra->importe * $compra->interes / 100, 0);
+            $data['importe_recuperacion'] = round(($compra->importe - $compra->importe_acuenta) * $data['interes_recuperacion'] / 100, 0);
         }else{
             if ($totales_concepto[1] == 0){
                 $data['fecha_renovacion'] = null;
                 $data['importe_renovacion'] = 0;
+                $data['importe_recuperacion'] = 0;
             }
         }
 

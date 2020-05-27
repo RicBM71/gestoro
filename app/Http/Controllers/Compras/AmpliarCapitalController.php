@@ -99,6 +99,7 @@ class AmpliarCapitalController extends Controller
         //$data_com['importe_acuenta'] = $compra->importe_acuenta - $importe;
         $data_com['importe'] = $compra->importe + $importe;
         $data_com['importe_renovacion'] = round(($compra->importe - ($compra->importe_acuenta - $importe))  * $compra->interes / 100, 0);
+        $data_com['importe_recuperacion'] = round(($compra->importe - ($compra->importe_acuenta - $importe))  * $compra->interes_recuperacion / 100, 0);
         $data_com['username'] = session('username');
 
         $imp_new = $comline->importe + $importe;

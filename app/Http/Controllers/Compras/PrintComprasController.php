@@ -527,10 +527,10 @@ class PrintComprasController extends Controller
 		$txt = ("  La empresa ".session("empresa")->razon." con CIF.:".session("empresa")->cif.
         " se compromete a reservar para su venta el lote con Número de asiento ".$this->compra->alb_ser.
         " comprado el día arriba indicado y descrito en el libro oficial de registro de conformidad".
-        " al Real Decreto 197/1988 de 22 de febrero, compuesto los objetos más abajo detallados.\n");
+        " al Real Decreto 197/1988 de 22 de febrero, compuesto los objetos más abajo detallados.\n\n");
         PDF::MultiCell($w=180, $h=0, $txt, $border='', $align='J', $fill=0, $ln=1, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
 
-		$txt = ("La recuperación se podrá realizar transcurridos ".($this->compra->dias_custodia)." días ".
+		$txt = (" La recuperación se podrá realizar transcurridos ".($this->compra->dias_custodia)." días ".
 				"de la fecha de este contrato NUNCA ANTES y OBLIGATORIAMENTE DEBERÁN DE AVISAR con UN DÍA de ANTELACIÓN.".
 				"\n\n");
 
@@ -982,7 +982,7 @@ class PrintComprasController extends Controller
         " al Real Decreto 197/1988 de 22 de febrero, compuesto los objetos más abajo detallados.\n");
         PDF::MultiCell($w=180, $h=0, $txt, $border='', $align='J', $fill=0, $ln=1, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
 
-		$txt = ("La recuperación se podrá realizar transcurridos ".($this->compra->dias_custodia)." días ".
+		$txt = ("  La recuperación se podrá realizar transcurridos ".($this->compra->dias_custodia)." días ".
 				"de la fecha de este contrato NUNCA ANTES y OBLIGATORIAMENTE DEBERÁN DE AVISAR con UN DÍA de ANTELACIÓN.".
 				"\n\n");
 

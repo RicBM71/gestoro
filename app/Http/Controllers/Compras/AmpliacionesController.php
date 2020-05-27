@@ -128,10 +128,10 @@ class AmpliacionesController extends Controller
         $importe = round($compra->importe_renovacion * $cuotas, 0);
 
         return [
-            'importe' => $importe,
+            'importe'      => $importe,
             'retraso_real' => $compra->retraso,
-            'dias'  => $retraso,
-            'precio_dia' => round($compra->importe_renovacion / $compra->dias_custodia, 2)
+            'dias'         => $retraso,
+            'precio_dia'   => round($compra->importe_renovacion / $compra->dias_custodia, 2)
         ];
 
     }

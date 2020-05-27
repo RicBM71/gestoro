@@ -15,7 +15,7 @@ class Compra extends Model
         'empresa_id', 'grupo_id','dias_custodia', 'ejercicio','serie_com','albaran','cliente_id','tipo_id',
         'fecha_compra','fecha_bloqueo','fecha_renovacion','fecha_recogida','importe',
         'importe_renovacion','importe_acuenta', 'interes','fase_id', 'factura','fecha_factura',
-        'serie_fac','papeleta','notas', 'username','retencion'
+        'serie_fac','papeleta','notas', 'username','retencion', 'interes_recuperacion', 'importe_recuperacion'
     ];
 
     protected $casts = [
@@ -136,7 +136,7 @@ class Compra extends Model
     public function getImpRecuAttribute(){
 
         //$imp =  $this->importe + $this->getImpRenovaAttribute() - $this->importe_acuenta;
-        $imp =  $this->importe + $this->importe_renovacion - $this->importe_acuenta;
+        $imp =  $this->importe + $this->importe_recuperacion - $this->importe_acuenta;
 
         if ($imp < 0 ) return 0;
         else return $imp;

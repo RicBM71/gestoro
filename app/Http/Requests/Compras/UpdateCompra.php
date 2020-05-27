@@ -25,14 +25,15 @@ class UpdateCompra extends FormRequest
     {
         // if ($this->user()->hasPermissionTo('Edita Compras')){
             return [
-                'dias_custodia'=> ['required', 'numeric'],
-                'interes'      => ['required','numeric'],
-                'papeleta'     => ['numeric','nullable'],
-                'fecha_compra' => ['required','date'],
-                'albaran'      => ['required','integer','min:1'],
-                'notas'        => ['nullable','max:191'],
-                'fase_id'      => ['integer','required'],
-                'tipo_id'      => ['integer','required'],
+                'dias_custodia'         => ['required', 'numeric'],
+                'interes'               => ['required','numeric'],
+                'interes_recuperacion'  => ['required','numeric'],
+                'papeleta'              => ['numeric','nullable'],
+                'fecha_compra'          => ['required','date'],
+                'albaran'               => ['required','integer','min:1'],
+                'notas'                 => ['nullable','max:191'],
+                'fase_id'               => ['integer','required'],
+                'tipo_id'               => ['integer','required'],
             ];
         // }else{
         //     return [

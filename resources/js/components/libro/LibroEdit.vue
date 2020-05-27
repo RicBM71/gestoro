@@ -116,8 +116,21 @@
                                 v-model="libro.interes"
                                 v-validate="'required|decimal'"
                                 :error-messages="errors.collect('interes')"
-                                label="Interés"
+                                label="Interés Renovación"
                                 data-vv-name="interes"
+                                data-vv-as="interés"
+                                required
+                                v-on:keyup.enter="submit"
+                            >
+                            </v-text-field>
+                        </v-flex>
+                         <v-flex sm2>
+                            <v-text-field
+                                v-model="libro.interes_recuperacion"
+                                v-validate="'required|decimal'"
+                                :error-messages="errors.collect('interes_recuperacion')"
+                                label="Interés Recuperación"
+                                data-vv-name="interes_recuperacion"
                                 data-vv-as="interés"
                                 required
                                 v-on:keyup.enter="submit"

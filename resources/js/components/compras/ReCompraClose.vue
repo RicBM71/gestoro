@@ -280,7 +280,7 @@
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm2>
+                        <v-flex sm1>
                             <v-text-field
                                 v-model="compra.papeleta"
                                 label="Papeleta"
@@ -292,7 +292,16 @@
                             <v-text-field
                                 class="centered-input"
                                 v-model="computedInteres"
-                                label="Interes %"
+                                label="% Renovación"
+                                readonly
+                            >
+                            </v-text-field>
+                        </v-flex>
+                        <v-flex sm1>
+                            <v-text-field
+                                class="centered-input"
+                                v-model="computedInteresRecu"
+                                label="% Recuperación"
                                 readonly
                             >
                             </v-text-field>
@@ -691,6 +700,9 @@ import {mapState} from 'vuex'
             },
             computedInteres(){
                 return this.getDecimalFormat(this.compra.interes);
+            },
+            computedInteresRecu(){
+                return this.getDecimalFormat(this.compra.interes_recuperacion);
             },
             computedValorCompras(){
                 return this.getMoneyFormat(parseFloat(this.compra.importe)+parseFloat(this.valor_compras));

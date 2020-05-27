@@ -422,6 +422,13 @@
                                         color="primary">
                                     ></v-switch>
                                 </v-flex>
+                                <v-flex sm3>
+                                    <v-switch
+                                        label="Bloquear Imp/Recuperación"
+                                        v-model="sw[10]"
+                                        color="primary">
+                                    ></v-switch>
+                                </v-flex>
                             </v-layout>
                             <v-layout row wrap>
                                    <v-flex sm5></v-flex>

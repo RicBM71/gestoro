@@ -120,10 +120,12 @@ class RecuperarController extends Controller
 
         $compra = Compra::findOrFail($id);
 
-        $imp_ren = round(($compra->importe - ($compra->importe_acuenta + $importe))  * $compra->interes / 100, 0);
+        $imp_renovacion = round(($compra->importe - ($compra->importe_acuenta + $importe))  * $compra->interes / 100, 0);
+        $imp_recuperacion = round(($compra->importe - ($compra->importe_acuenta + $importe))  * $compra->interes_recuperacion / 100, 0);
 
-        //($imp_ren < 0) ?: 0;
-        if ($imp_ren < 0) $imp_ren = 0;
+        //($imp_renovacion < 0) ?: 0;
+        if ($imp_renovacion < 0) $imp_renovacion = 0;
+        if ($imp_recuperacion < 0) $imp_recuperacion = 0;
 
         $fase_id = ($importe > 0) ? 5 : 4;
 
@@ -132,7 +134,8 @@ class RecuperarController extends Controller
         if ($compra->fecha_recogida < $fecha)
             $data_com['fecha_recogida']  = $fecha;
         $data_com['importe_acuenta'] = $compra->importe_acuenta + $importe;
-        $data_com['importe_renovacion'] = $imp_ren;
+        $data_com['importe_renovacion'] = $imp_renovacion;
+        $data_com['importe_recuperacion'] = $imp_recuperacion;
         $data_com['username'] = session('username');
 
         $compra->update($data_com);

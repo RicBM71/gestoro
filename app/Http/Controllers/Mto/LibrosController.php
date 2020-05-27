@@ -163,6 +163,7 @@ class LibrosController extends Controller
             'semdia_bloqueo'=> ['required','string','max:3'],
             'dias_custodia'=> ['required','integer',],
             'interes'=> ['required', 'numeric'],
+            'interes_recuperacion'=> ['required', 'numeric'],
             'codigo_pol'=> ['string','nullable'],
             'nombre_csv'=> ['string','nullable'],
 

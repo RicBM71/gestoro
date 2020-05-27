@@ -98,7 +98,7 @@
                                 readonly                            >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm2>
+                        <v-flex sm1>
                             <v-text-field
                                 v-model="compra.papeleta"
                                 v-validate="'numeric'"
@@ -118,7 +118,22 @@
                                 data-vv-name="interes"
                                 data-vv-as="interés"
                                 :error-messages="errors.collect('interes')"
-                                label="Interes %"
+                                label="% Renovación"
+                                :readonly="computedHayDepositos"
+                                v-on:keyup.enter="submit"
+                            >
+                            </v-text-field>
+                        </v-flex>
+                         <v-flex sm1>
+                            <v-text-field
+                                v-show="compra.tipo_id==1"
+                                class="centered-input"
+                                v-model="compra.interes_recuperacion"
+                                v-validate="'decimal|max_value:40'"
+                                data-vv-name="interes_recuperacion"
+                                data-vv-as="interés"
+                                :error-messages="errors.collect('interes_recuperacion')"
+                                label="% Recuperación"
                                 :readonly="computedHayDepositos"
                                 v-on:keyup.enter="submit"
                             >
