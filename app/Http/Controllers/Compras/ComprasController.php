@@ -310,6 +310,10 @@ class ComprasController extends Controller
                 $data['retencion'] = 0;
                 $data['importe_renovacion'] = round(($compra->importe - $compra->importe_acuenta) * $data['interes'] / 100, 0);
             }
+            if ($compra->dias_custodia <> $data['dias_custodia']){
+                $fecha_compra = Carbon::parse($data['fecha_compra']);
+                $data['fecha_renovacion'] = $fecha_compra->addDays($data['dias_custodia']);
+            }
         }else{
             $data['fecha_renovacion'] = null;
             $data['importe_renovacion'] = 0;
