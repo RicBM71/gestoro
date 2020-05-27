@@ -171,6 +171,9 @@ class LibrosController extends Controller
 
         $data['username'] = $request->user()->username;
 
+        if (session('parametros')->doble_interes == false)
+            $data['interes_recuperacion'] = $data['interes'];
+
 
         $libro->update($data);
 

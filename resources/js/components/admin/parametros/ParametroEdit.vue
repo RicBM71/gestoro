@@ -113,6 +113,24 @@
                                         >
                                         </v-text-field>
                                     </v-flex>
+                                    <v-flex sm1>
+                                        <v-text-field
+                                            v-model="parametro.tag_renovar"
+                                            v-validate="'required'"
+                                            :error-messages="errors.collect('tag_renovar')"
+                                            label="Tag Renovar TRANSF."
+                                            data-vv-name="tag_renovar"
+                                            v-on:keyup.enter="submit"
+                                        >
+                                        </v-text-field>
+                                    </v-flex>
+                                    <v-flex sm2>
+                                        <v-switch
+                                            label="Doble Interés"
+                                            v-model="parametro.doble_interes"
+                                            color="primary">
+                                        ></v-switch>
+                                    </v-flex>
                                 </v-layout>
                                 <v-layout row wrap>
                                     <v-flex sm2>

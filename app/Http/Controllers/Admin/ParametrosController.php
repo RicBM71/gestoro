@@ -42,7 +42,9 @@ class ParametrosController extends Controller
             'aislar_empresas'=> ['required','boolean'],
             'carpeta_docs'   => ['required','string'],
             'email_productos_online' => ['nullable','email'],
-            'frm_compras'   => ['required','string','max:2'],
+            'frm_compras'    => ['required','string','max:2'],
+            'doble_interes'  => ['required','boolean'],
+            'tag_renovar'    => ['required','string'],
 
         ]);
 

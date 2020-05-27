@@ -99,10 +99,10 @@ class HomeController extends Controller
             'roles'         => $role_user,
             'permisos'      => $permisos_user,
             'empresas'      => $empresas,
-            'parametros'    =>$parametros,
+            'parametros'    => $parametros,
             'img_fondo'     => $empresa->img_fondo,
             'flex_cortesia' => $empresa->getFlag(8),
-            'aislar_empresas'  => $parametros->aislar_empresas
+            'aislar_empresas'  => $parametros->aislar_empresas,
         ];
 
         // envio mail de modificación de productos

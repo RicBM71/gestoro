@@ -124,7 +124,7 @@
                             >
                             </v-text-field>
                         </v-flex>
-                         <v-flex sm2>
+                        <v-flex sm2 v-if="parametros.doble_interes">
                             <v-text-field
                                 v-model="libro.interes_recuperacion"
                                 v-validate="'required|decimal'"
@@ -137,6 +137,7 @@
                             >
                             </v-text-field>
                         </v-flex>
+
                         <v-flex sm2>
                             <v-text-field
                                 v-model="libro.semdia_bloqueo"
@@ -272,6 +273,7 @@
 import moment from 'moment'
 import Loading from '@/components/shared/Loading'
 import MenuOpe from './MenuOpe'
+import {mapGetters} from 'vuex';
 
 	export default {
 		$_veeValidate: {
@@ -314,6 +316,9 @@ import MenuOpe from './MenuOpe'
                     })
         },
         computed: {
+            ...mapGetters([
+                'parametros'
+            ]),
             computedFModFormat() {
                 moment.locale('es');
                 return this.libro.updated_at ? moment(this.libro.updated_at).format('D/MM/YYYY H:mm') : '';

@@ -280,7 +280,15 @@
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm1>
+                        <v-flex sm1 v-if="parametros.doble_interes">
+                            <v-text-field
+                                v-model="compra.papeleta"
+                                label="Papeleta"
+                                readonly
+                            >
+                            </v-text-field>
+                        </v-flex>
+                        <v-flex sm2 v-else>
                             <v-text-field
                                 v-model="compra.papeleta"
                                 label="Papeleta"
@@ -297,7 +305,7 @@
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm1>
+                        <v-flex sm1 v-if="parametros.doble_interes">
                             <v-text-field
                                 class="centered-input"
                                 v-model="computedInteresRecu"
@@ -597,7 +605,8 @@ import {mapState} from 'vuex'
                 'hasReaCompras',
                 'userName',
                 'hasAddCom',
-                'flexCortesia'
+                'flexCortesia',
+                'parametros'
             ]),
             computedAuthLiquidar(){
 

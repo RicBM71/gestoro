@@ -422,7 +422,7 @@
                                         color="primary">
                                     ></v-switch>
                                 </v-flex>
-                                <v-flex sm3>
+                                <v-flex sm3 v-if="isRoot">
                                     <v-switch
                                         label="Bloquear Imp/Recuperación"
                                         v-model="sw[10]"

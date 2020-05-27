@@ -709,7 +709,7 @@ class PrintComprasController extends Controller
                 try {
                     PDF::SetFont('helvetica', 'R', 9, '', false);
                     $cuenta = Cuenta::defecto()->firstOrFail();
-                    $txt = "* Puede realizar su renovación a través del siguiente número de cuenta IBAN: ".getIbanPrint($cuenta->iban).", indicando en el concepto de la transferencia: RENOVAR ".$this->compra->alb_ser.".";
+                    $txt = "* Puede realizar su renovación a través del siguiente número de cuenta IBAN: ".getIbanPrint($cuenta->iban).", indicando en el concepto de la transferencia: ".session('parametros')->tag_renovar." ".$this->compra->alb_ser.".";
                     PDF::MultiCell(180, 5,  $txt, "0", 'L', 0, 1, '', '', true,0,false,true,15,'M',false);
                 } catch (\Exception $e) {
                 }
