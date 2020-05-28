@@ -131,8 +131,10 @@ class RecuperarController extends Controller
 
         $data_com['fase_id'] = $fase_id;
 
-        if ($compra->fecha_recogida < $fecha)
+        //if ($compra->fecha_recogida < $fecha)
+        if ($compra->fecha_recogida == null)
             $data_com['fecha_recogida']  = $fecha;
+
         $data_com['importe_acuenta'] = $compra->importe_acuenta + $importe;
         $data_com['importe_renovacion'] = $imp_renovacion;
         $data_com['importe_recuperacion'] = $imp_recuperacion;

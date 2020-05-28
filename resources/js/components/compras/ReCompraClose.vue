@@ -226,7 +226,14 @@
                                 </v-date-picker>
                             </v-dialog>
                         </v-flex>
-                        <v-flex sm2 v-else></v-flex>
+                        <v-flex sm2 v-else>
+                            <v-text-field
+                                v-model="computedFechaRecogida"
+                                label="Fecha Recogida"
+                                readonly
+                            >
+                            </v-text-field>
+                        </v-flex>
                         <v-flex sm2>
                             <v-text-field
                                 v-model="computedFechaBloqueo"
@@ -254,9 +261,11 @@
                         </v-flex>
                         <v-flex sm2 v-else>
                             <v-text-field
-                                v-model="computedFechaRecogida"
-                                label="Fecha Recuperación"
+                                v-if="isGestor"
+                                v-model="computedTotalPrestamo"
+                                label="Total Recuperado"
                                 readonly
+                                class="centered-input"
                             >
                             </v-text-field>
                         </v-flex>
@@ -608,6 +617,11 @@ import {mapState} from 'vuex'
                 'flexCortesia',
                 'parametros'
             ]),
+            computedTotalPrestamo(){
+
+                return this.getDecimalFormat(this.totales_concepto[1] + this.totales_concepto[2] + this.totales_concepto[3]);
+
+            },
             computedAuthLiquidar(){
 
                 if (this.compra.fase_id !=5 || this.compra.resto_custodia < 0){ // no está recuperado
@@ -642,8 +656,7 @@ import {mapState} from 'vuex'
                 if (this.isSupervisor)
                     return true;
                 else
-
-                return (this.compra.retraso <= 0)
+                    return (this.compra.retraso <= 0)
                 // lo dejamos para cualquier User JL.
                 //return !this.isSupervisor;
 
