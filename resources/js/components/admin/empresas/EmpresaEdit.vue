@@ -422,6 +422,13 @@
                                         color="primary">
                                     ></v-switch>
                                 </v-flex>
+                                <v-flex sm3>
+                                    <v-switch
+                                        label="IBAN Reservas"
+                                        v-model="sw[11]"
+                                        color="primary">
+                                    ></v-switch>
+                                </v-flex>
                                 <v-flex sm3 v-if="isRoot">
                                     <v-switch
                                         label="Bloquear Imp/Recuperación"

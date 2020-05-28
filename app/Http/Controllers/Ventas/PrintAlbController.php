@@ -420,11 +420,28 @@ class PrintAlbController extends Controller
             PDF::SetFont('helvetica', 'B', 9, '', false);
             $resto = $this->totales['importe_venta'] - $total_cobrado;
             PDF::Ln();
-            if ($this->albaran->tipo_id == 3 )
-                PDF::MultiCell(140, 5, 'PENDIENTE COBRO '.getDecimal($resto)." €", '', 'L', 0, 0, '', '', true);
+            if ($this->albaran->tipo_id == 3 ){
+                PDF::MultiCell(140, 5, 'PENDIENTE COBRO '.getDecimal($resto)." €", '', 'L', 0, 1, '', '', true);
+
+                if (session('empresa')->getFlag(11)){
+                    try {
+                        PDF::SetFont('helvetica', 'I', 9, '', false);
+                        $cuenta = Cuenta::defecto()->firstOrFail();
+                        $txt = "* Puede realizar sus pagos a cuenta a través del siguiente número de cuenta IBAN: ".getIbanPrint($cuenta->iban).", indicando en el concepto de la transferencia RESERVA ".$this->albaran->alb_ser.".";
+                        PDF::MultiCell(190, 5, $txt, '', 'L', 0, 1, '', '', true);
+
+                    } catch (\Exception $e) {
+                    }
+                }
+
+            }
             else
                 PDF::MultiCell(140, 5, 'RESTO '.getDecimal($resto)." €", '', 'L', 0, 0, '', '', true);
             PDF::Ln();
+
+
+
+
         }elseif ($this->albaran->tipo_id == 3 && $this->albaran->fase_id == 11){
             PDF::SetFont('helvetica', 'B', 9, '', false);
             PDF::Ln();
