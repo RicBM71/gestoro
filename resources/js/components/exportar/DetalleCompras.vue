@@ -185,6 +185,14 @@
                                 <td class="text-xs-right">{{ props.item.importe | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                 <td class="justify-center layout px-0">
                                     <v-icon
+                                            v-show="props.item.productos > ''"
+                                            small
+                                            class="mr-2"
+                                            @click="props.expanded = !props.expanded"
+                                        >
+                                            visibility
+                                        </v-icon>
+                                    <v-icon
                                         small
                                         class="mr-2"
                                         @click="editItem(props.item)"
@@ -193,6 +201,15 @@
                                     </v-icon>
                                 </td>
                             </template>
+                            <template v-slot:expand="props">
+                                    <v-card flat>
+                                        <v-card-text class="font-italic">
+                                            <span :key="producto.id" v-for="producto in props.item.productos">
+                                                {{ producto.referencia+' '+producto.nombre+' # ' }}
+                                            </span>
+                                        </v-card-text>
+                                    </v-card>
+                                </template>
                             <template slot="pageText" slot-scope="props">
                                 Registros {{ props.pageStart }} - {{ props.pageStop }} de {{ props.itemsLength }}
                             </template>

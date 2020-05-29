@@ -154,6 +154,7 @@ class AbonosController extends Controller
             Albalin::create($albalin_new);
 
             $data = ['estado_id'   => 2,
+                    'etiqueta_id'  => 4,
                     'username'    => $albaran_new->username];
 
             if ($cancelacion === false && $albaran_new->tipo_id == 3){ // es rebu

@@ -1,5 +1,8 @@
 <?php
 
+use App\Compra;
+use App\Scopes\EmpresaScope;
+
 Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -8,18 +11,25 @@ Route::post('/profile/avatar', 'HomeController@avatar');
 Route::put('/profile/destroy', 'HomeController@destroy');
 
 // Route::get('/test', 'HomeController@test');
-// Route::get('test', function () {
+Route::get('test', function () {
 
-//     $lin = (Albalin::with(['producto' => function ($query) {
-//         $query->withTrashed();
-//     },'producto.clase','producto.garantia'])->AlbaranId(263596)->get());
-//     foreach ($lin as $row){
-//         echo $row->producto->nombre;
-//         echo $row->producto->clase->nombre;
-//     }
+    $where = DB::getTablePrefix().'compras.id > 0';
 
-//     return 'Hello World';
-// });
+    $data = Compra::withOutGlobalScope(EmpresaScope::class)->select('compras.id','tipo_id','serie_com','albaran','fecha_compra','concepto','grabaciones','clases.nombre AS clase','comlines.quilates AS quilates','peso_gr','comlines.importe')
+    ->with(['productos'])
+    ->join('comlines','compras.id','=','comlines.compra_id')
+    ->join('clases','clase_id','=','clases.id')
+    ->where('compras.empresa_id', session('empresa')->id)
+    ->whereYear('fecha_compra','=', 2020)
+    ->where('tipo_id', 2)
+    ->where('clase_id', 1)
+    ->whereRaw($where)
+    ->get()->take(10);
+
+    return $data;
+
+    return 'Hello World';
+});
 
 Route::get('/expired', 'HomeController@expired')->name('expired');
 

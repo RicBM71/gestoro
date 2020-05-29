@@ -48,8 +48,8 @@ class ExportRfidController extends Controller
 
             $load[]=$this->formatearLinea($row);
 
-            $row->update(['etiqueta_id'=>5,
-                          'username' => session('username')]);
+            $row->update(['etiqueta_id' =>5,
+                          'username'    => session('username')]);
 
         }
 
