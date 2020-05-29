@@ -425,10 +425,11 @@ class PrintAlbController extends Controller
 
                 if (session('empresa')->getFlag(11)){
                     try {
+                        PDF::Ln();
                         PDF::SetFont('helvetica', 'I', 9, '', false);
                         $cuenta = Cuenta::defecto()->firstOrFail();
-                        $txt = "* Puede realizar sus pagos a cuenta a través del siguiente número de cuenta IBAN: ".getIbanPrint($cuenta->iban).", indicando en el concepto de la transferencia RESERVA ".$this->albaran->alb_ser.".";
-                        PDF::MultiCell(190, 5, $txt, '', 'L', 0, 1, '', '', true);
+                        $txt = "* Puede realizar sus pagos a cuenta a través del siguiente número de cuenta IBAN: ".getIbanPrint($cuenta->iban).", indicando en el concepto de la transferencia RESERVA ".$this->albaran->serie_albaran.$this->albaran->albaran.".";
+                        PDF::MultiCell(188, 5, $txt, '', 'L', 0, 1, '', '', true);
 
                     } catch (\Exception $e) {
                     }
@@ -437,9 +438,6 @@ class PrintAlbController extends Controller
             }
             else
                 PDF::MultiCell(140, 5, 'RESTO '.getDecimal($resto)." €", '', 'L', 0, 0, '', '', true);
-            PDF::Ln();
-
-
 
 
         }elseif ($this->albaran->tipo_id == 3 && $this->albaran->fase_id == 11){
@@ -454,7 +452,8 @@ class PrintAlbController extends Controller
 
     private function pieRebu(){
 
-        PDF::Ln();
+        PDF::MultiCell(188, 1, "", '', 'L', 0, 1, '', '', true);
+        //PDF::Ln();
 
         PDF::SetFont('helvetica', 'RI', 9, '', false);
         PDF::MultiCell(188, 6, session('parametros')->pie_rebu1, '', 'L', 0, 1, '', '', true);

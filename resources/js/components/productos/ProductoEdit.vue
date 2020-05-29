@@ -292,7 +292,7 @@
                                         data-vv-as="garantia"
                                         :error-messages="errors.collect('garantia_id')"
                                         :items="garantias"
-                                        :disabled="producto.estado_id > 3"
+                                        :disabled="computedEditGarantia"
                                         label="Garantía"
                                     ></v-select>
                                 </v-flex>
@@ -305,7 +305,7 @@
                                         label="Meses"
                                         data-vv-name="meses_garantia"
                                         data-vv-as="meses"
-                                        :disabled="producto.estado_id > 3"
+                                        :disabled="computedEditGarantia"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -321,7 +321,7 @@
                                         offset-y
                                         full-width
                                         min-width="290px"
-                                        :disabled="producto.estado_id > 3"
+                                        :disabled="computedEditGarantia"
                                     >
                                         <v-text-field
                                             slot="activator"
@@ -331,7 +331,7 @@
                                             data-vv-as="Última Revisión"
                                             :error-messages="errors.collect('fecha_ultima_revision')"
                                             readonly
-                                            :disabled="producto.estado_id > 3"
+                                            :disabled="computedEditGarantia"
                                             ></v-text-field>
                                         <v-date-picker
                                             v-model="producto.fecha_ultima_revision"
@@ -506,6 +506,13 @@ import {mapState} from 'vuex'
             },
             computedLabelRef(){
                 return "Referencia/Id "+this.producto.id;
+            },
+            computedEditGarantia(){
+
+                if (this.hasEditPro == true) return false;
+
+                return producto.estado_id > 3
+
             },
             computedEditPro(){
 
