@@ -22,6 +22,16 @@
                                 data-vv-name="nombre"
                             ></v-textarea>
                         </v-flex>
+                        <v-flex sm12>
+                            <v-text-field
+                                v-model="nombre_interno"
+                                v-validate="'required'"
+                                ref="nombre_interno"
+                                :error-messages="errors.collect('nombre_interno')"
+                                label="Indicar Nombre Interno"
+                                data-vv-name="nombre_interno"
+                            ></v-text-field>
+                        </v-flex>
                     </v-layout>
                     <v-layout wrap>
                         <v-flex sm1></v-flex>
@@ -80,7 +90,14 @@
                         </v-flex>
                     </v-layout>
                     <v-layout wrap>
-                        <v-flex sm5></v-flex>
+                        <v-flex sm1></v-flex>
+                        <v-flex sm4 d-flex>
+                                <v-select
+                                v-model="destino_empresa_id"
+                                :items="empresas"
+                                label="Destino venta"
+                                ></v-select>
+                        </v-flex>
                         <v-flex sm2>
                             <v-text-field
                                 v-model="precio_gr"
@@ -156,6 +173,8 @@
         show_peso: false,
         show_quil: false,
         nombre:"",
+        nombre_interno:"",
+        destino_empresa_id:"",
         quilates:"",
         clase_id:0,
         imp_gr: 0,
@@ -165,13 +184,16 @@
         precio_venta:0,
         precio_gr: 0,
         clases:[],
+        empresas:[],
     }),
     beforeMount(){
         if (this.compra.grupo_id > 0){
 
             axios.get('/utilidades/helpgrupos/'+this.compra.grupo_id+'/clases')
                 .then(res => {
+                    this.destino_empresa_id = this.compra.empresa_id;
                     this.clases = res.data.clases;
+                    this.empresas = res.data.empresas;
                     this.itemCreate.clase_id = this.clases[0].value;
                     this.selClase(this.itemCreate.clase_id);
 
@@ -267,7 +289,9 @@
                                 peso_gr: this.peso_gr,
                                 quilates: this.quilates,
                                 etiqueta_id: 3,
-                                univen: 'U'
+                                univen: 'U',
+                                destino_empresa_id: this.destino_empresa_id,
+                                nombre_interno: this.nombre_interno
                             })
                             .then(res => {
                                 this.$emit('update:dialog_pro', false)

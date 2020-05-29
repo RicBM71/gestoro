@@ -8,6 +8,7 @@ use App\Clase;
 use App\Grupo;
 use App\Libro;
 use App\Estado;
+use App\Empresa;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -30,6 +31,7 @@ class HelpGruposController extends Controller
         if (request()->wantsJson())
             return [
                 'clases'=> Clase::selClases($grupo_id),
+                'empresas' => Empresa::selEmpresas()->Venta()->get(),
             ];
 
     }

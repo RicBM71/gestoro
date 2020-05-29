@@ -19,7 +19,20 @@
                 </template>
                 <span>Ir a cliente</span>
             </v-tooltip>
-                <v-tooltip bottom>
+            <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                    <v-btn
+                        v-on="on"
+                        color="white"
+                        icon
+                        @click="goBackCompra()"
+                    >
+                        <v-icon color="primary">shopping_cart</v-icon>
+                    </v-btn>
+                </template>
+                <span>Volver a compra</span>
+            </v-tooltip>
+            <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <v-btn
                             v-on="on"
@@ -249,6 +262,9 @@ import {mapGetters} from 'vuex';
         },
     	methods:{
             goBack(){
+                this.$router.go(-1);
+            },
+            goBackCompra(){
                 if (this.compra.tipo_id == 1)
                     this.$router.push({ name: 'recompra.close', params: { id: this.compra.id } })
                 else

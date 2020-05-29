@@ -15,7 +15,7 @@ Route::get('test', function () {
 
     $where = DB::getTablePrefix().'compras.id > 0';
 
-    $data = Compra::withOutGlobalScope(EmpresaScope::class)->select('compras.id','tipo_id','serie_com','albaran','fecha_compra','concepto','grabaciones','clases.nombre AS clase','comlines.quilates AS quilates','peso_gr','comlines.importe')
+    $data = Compra::withOutGlobalScope(EmpresaScope::class)->select('comlines.id','compra_id','tipo_id','serie_com','albaran','fecha_compra','concepto','grabaciones','clases.nombre AS clase','comlines.quilates AS quilates','peso_gr','comlines.importe')
     ->with(['productos'])
     ->join('comlines','compras.id','=','comlines.compra_id')
     ->join('clases','clase_id','=','clases.id')

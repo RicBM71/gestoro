@@ -168,6 +168,7 @@
                 <v-layout row wrap>
                     <v-flex xs12>
                         <v-data-table
+                            item-key="comline_id"
                             :headers="headers"
                             :search="search"
                             @update:pagination="updateEventPagina"
@@ -199,13 +200,21 @@
                                     >
                                         edit
                                     </v-icon>
+                                    <v-icon
+                                        v-if="props.item.fecha_liquidado != null"
+                                        small
+                                        class="mr-2"
+                                        @click="goLiquidar(props.item)"
+                                    >
+                                        save
+                                    </v-icon>
                                 </td>
                             </template>
                             <template v-slot:expand="props">
                                     <v-card flat>
                                         <v-card-text class="font-italic">
                                             <span :key="producto.id" v-for="producto in props.item.productos">
-                                                {{ producto.referencia+' '+producto.nombre+' # ' }}
+                                                {{ producto.nombre+' - ' }}
                                             </span>
                                         </v-card-text>
                                     </v-card>
@@ -279,7 +288,7 @@ export default {
             {
                 text: 'Acciones',
                 align: 'Center',
-                value: 'id',
+                value: 'comlines.id',
                 width: '1%'
             }],
             search:"",
@@ -386,6 +395,12 @@ export default {
 
             this.$router.push({ name: ruta+'.close', params: { id: item.id } })
 
+        },
+        goLiquidar(item){
+
+            this.setPagination(this.paginaActual);
+
+            this.$router.push({ name: 'compra.liquidar', params: {compra_id: item.id } })
         },
         submit(){
 

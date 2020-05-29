@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\DetalleComprasExport;
+use App\Rules\MaxDiasRangoFechaRule;
 
 class DetalleComprasController extends Controller
 {
@@ -38,7 +39,7 @@ class DetalleComprasController extends Controller
 
         $data = $request->validate([
             'fecha_d'  => ['required','date', new RangoFechaRule($request->fecha_d, $request->fecha_h)],
-            'fecha_h'  => ['required','date'],
+            'fecha_h'  => ['required','date', new MaxDiasRangoFechaRule($request->fecha_d, $request->fecha_h)],
             'tipo_id'=> ['required','integer'],
             'clase_id'=> ['required','integer'],
             'operacion'=> ['required','string'],
@@ -58,7 +59,7 @@ class DetalleComprasController extends Controller
             $where = DB::getTablePrefix().'compras.id > 0';
 
         $union0 = Compra::withOutGlobalScope(EmpresaScope::class)
-            ->select('compras.id','tipo_id','serie_com','albaran','fecha_compra','concepto','grabaciones','clases.nombre AS clase','comlines.quilates AS quilates','peso_gr','comlines.importe')
+            ->select('compras.id','comlines.id AS comline_id','tipo_id','serie_com','albaran','fecha_compra','concepto','grabaciones','clases.nombre AS clase','comlines.quilates AS quilates','peso_gr','comlines.importe','fecha_liquidado')
                 ->with(['productos'])
                 ->join('comlines','compras.id','=','comlines.compra_id')
                 ->join('clases','clase_id','=','clases.id')

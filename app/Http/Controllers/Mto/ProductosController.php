@@ -263,7 +263,8 @@ class ProductosController extends Controller
         $data = $request->validated();
 
         $data['empresa_id'] = session()->get('empresa')->id;
-        $data['destino_empresa_id'] = session()->get('empresa')->id;
+        if ($data['destino_empresa_id'] == null)
+            $data['destino_empresa_id'] = session()->get('empresa')->id;
         $data['almacen_id'] = session()->get('empresa')->almacen_id;
 
         //$data['etiqueta_id']  = $data['clase_id'] == 3 ? 3 : 1;
