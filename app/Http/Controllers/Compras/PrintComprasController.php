@@ -879,9 +879,9 @@ class PrintComprasController extends Controller
         //PDF::SetFillColor(234,234,234);
 
 
-        PDF::setXY(14,40);
+        PDF::setXY(140,40);
         PDF::SetFont('helvetica', 'B', 12, '', false);
-        PDF::MultiCell(60, 6, $fecha.' '.$num_doc,'', 'L', 0, 0, '', '', true,0,false,true,6,'M',false);
+        PDF::MultiCell(60, 6, $fecha.' '.$num_doc,'', 'R', 0, 0, '', '', true,0,false,true,6,'M',false);
         // PDF::SetFont('helvetica', '', 7, '', false);
         // PDF::MultiCell(118, 4,  "Nº de asiento", 'T', 'L', 0, 0, '', '', true,0,false,true,5,'M',false);
 

@@ -249,7 +249,10 @@ import FiltroRec from './FiltroRec'
 
             this.setPagination(this.paginaActual);
 
-            this.$router.push({ name: 'producto.edit', params: { id: item.producto_id } })
+            if (item.producto == null)
+                this.$router.push({ name: 'producto.show', params: { id: item.producto_id } })
+            else
+                this.$router.push({ name: 'producto.edit', params: { id: item.producto_id } })
         },
         update(item) {
 

@@ -23,10 +23,13 @@ class DetalleComprasController extends Controller
             return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Gestor');
         }
 
+        $param_frm = session('frm_detacom') !=null ? session('frm_detacom') : false;
+
         if (request()->wantsJson())
             return [
                 'tipos' => Tipo::selTiposCom(),
-                'clases' => Clase::selGrupoClase()
+                'clases' => Clase::selGrupoClase(),
+                'param_frm' => $param_frm
             ];
 
     }
@@ -44,6 +47,8 @@ class DetalleComprasController extends Controller
             'clase_id'=> ['required','integer'],
             'operacion'=> ['required','string'],
         ]);
+
+        session(['frm_detacom' => $data]);
 
         return $this->detalle($data);
 

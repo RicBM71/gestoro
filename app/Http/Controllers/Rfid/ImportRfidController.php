@@ -91,9 +91,9 @@ class ImportRfidController extends Controller
 
        // \Log::info(session('empresa_id'));
 
-         DB::table('recuentos')->where('empresa_id', session('empresa_id'))
-                               ->whereIn('rfid_id',[1,6])
-                               ->delete();
+        //  DB::table('recuentos')->where('empresa_id', session('empresa_id'))
+        //                        ->whereIn('rfid_id',[1,6])
+        //                        ->delete();
 
 
         return $this->load();

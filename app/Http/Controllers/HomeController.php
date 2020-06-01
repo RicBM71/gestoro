@@ -183,7 +183,7 @@ class HomeController extends Controller
     private function unloadSession($request){
         $data = $request->session()->all();
         foreach ($data as $key => $value){
-            if (strstr($key, '_', true)=='filtro'){
+            if (strstr($key, '_', true)=='filtro' || strstr($key, '_', true)=='frm'){
                 $request->session()->forget($key);
             }
         }

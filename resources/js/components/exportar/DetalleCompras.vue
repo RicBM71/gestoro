@@ -201,7 +201,7 @@
                                         edit
                                     </v-icon>
                                     <v-icon
-                                        v-if="props.item.fecha_liquidado != null"
+                                        v-if="props.item.fecha_liquidado != null && hasLiquidar"
                                         small
                                         class="mr-2"
                                         @click="goLiquidar(props.item)"
@@ -322,7 +322,7 @@ export default {
             menu_h: false,
       }
     },
-     beforeMount(){
+    beforeMount(){
         if (this.getLineasIndex.length > 0)
             if (this.getPagination.model == this.pagination.model)
                 this.items = this.getLineasIndex;
@@ -331,6 +331,15 @@ export default {
 
          axios.get('/exportar/detacom')
             .then(res => {
+                //console.log(res.data.param_frm);
+                if (res.data.param_frm != false){
+                    this.fecha_d = res.data.param_frm.fecha_d;
+                    this.fecha_h = res.data.param_frm.fecha_h;
+                    this.operacion = res.data.param_frm.operacion;
+                    this.clase_id = res.data.param_frm.clase_id;
+                    this.tipo_id = res.data.param_frm.tipo_id;
+
+                }
                 this.tipos = res.data.tipos;
                 this.clases = res.data.clases;
 
@@ -354,6 +363,7 @@ export default {
         ...mapGetters([
             'getPagination',
             'getLineasIndex',
+            'hasLiquidar'
         ]),
         computedFechaD() {
             moment.locale('es');

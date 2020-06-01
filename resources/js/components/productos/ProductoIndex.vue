@@ -91,7 +91,7 @@
                                     <td class="text-xs-right">{{ props.item.precio_coste | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                     <td class="text-xs-right">{{ props.item.precio_venta | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                     <td :class="props.item.estado.color">{{ props.item.estado.nombre }}</td>
-                                    <td v-if="props.item.empresa != null">{{ props.item.empresa.sigla }}/{{ props.item.destino.sigla}}</td>
+                                    <td v-if="props.item.empresa != null && props.item.destino != null">{{ props.item.empresa.sigla }}/{{ props.item.destino.sigla}}</td>
                                     <td v-else>ERROR AL ASIGNAR O/D {{ props.item.empresa_id + "/" + props.item.destino_empresa_id}}</td>
                                     <td class="justify-center layout px-0">
                                         <v-icon
