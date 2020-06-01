@@ -312,6 +312,10 @@ class ComprasController extends Controller
             $data['retencion'] = 0;
             if ($compra->interes <> $data['interes']){
                 $data['importe_renovacion'] = round(($compra->importe - $compra->importe_acuenta) * $data['interes'] / 100, 0);
+                if (session('parametros')->doble_interes == false){
+                    $data['interes_recuperacion'] = $data['interes'];
+                    $data['importe_recuperacion'] = round(($compra->importe - $compra->importe_acuenta) * $data['interes_recuperacion'] / 100, 0);
+                }
             }
             if ($compra->interes_recuperacion <> $data['interes_recuperacion']){
                 $data['importe_recuperacion'] = round(($compra->importe - $compra->importe_acuenta) * $data['interes_recuperacion'] / 100, 0);
