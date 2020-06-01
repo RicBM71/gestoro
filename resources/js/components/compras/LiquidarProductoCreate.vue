@@ -25,7 +25,7 @@
                         <v-flex sm12>
                             <v-text-field
                                 v-model="nombre_interno"
-                                v-validate="'required'"
+                                v-validate="'max:190'"
                                 ref="nombre_interno"
                                 :error-messages="errors.collect('nombre_interno')"
                                 label="Indicar Nombre Interno"
