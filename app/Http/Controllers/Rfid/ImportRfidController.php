@@ -64,7 +64,9 @@ class ImportRfidController extends Controller
                         ->whereNull('deleted_at')
                         ->whereNotIn('id',function($query){
                             $query->select('producto_id')->from('recuentos');})
+                    //    ->toSql();
                         ->get();
+        //\Log::info($perdidas);
 
         $data = array();
         foreach ($perdidas as $producto) {

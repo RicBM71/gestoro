@@ -69,16 +69,12 @@
                                     rows-per-page-text="Registros por página"
                                 >
                                     <template slot="items" slot-scope="props">
-                                        <td v-if="props.item.producto != null">{{props.item.producto.referencia }}</td>
-                                        <td v-else>ID:{{ props.item.producto_id }}</td>
-                                        <td v-if="props.item.producto != null">{{ props.item.producto.nombre }}</td>
-                                        <td v-else>empresa origen: {{props.item.destino_empresa_id}} ¿Borrado?</td>
-                                        <td class="text-xs-right" v-if="props.item.producto != null">{{ props.item.producto.precio_coste | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
-                                        <td v-else></td>
-                                        <td v-if="props.item.estado != null">{{ props.item.estado.nombre }}</td>
-                                        <td v-else>{{props.item.estado_id}}</td>
-                                        <td v-if="props.item.rfid != null">{{ props.item.rfid.nombre }}</td>
-                                        <td v-else>{{props.item.rfid_id}}</td>
+                                        <td>{{props.item.referencia }}</td>
+                                        <td v-if="props.item.deleted_at == null">{{ props.item.nombre }}</td>
+                                        <td v-else class="tachado">{{ props.item.nombre }}</td>
+                                        <td class="text-xs-right">{{ props.item.precio_coste | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                        <td>{{ props.item.estado }}</td>
+                                        <td>{{ props.item.rfid }}</td>
                                         <td class="justify-center layout px-0">
                                             <v-icon
                                                 small
@@ -154,27 +150,27 @@ import FiltroRec from './FiltroRec'
             {
             text: 'Referencia',
             align: 'left',
-            value: 'producto.referencia'
+            value: 'referencia'
             },
             {
             text: 'Producto',
             align: 'left',
-            value: 'producto.precio_coste'
+            value: 'nombre'
             },
             {
             text: 'P. Coste',
             align: 'left',
-            value: 'producto.nombre'
+            value: 'precio_coste'
             },
             {
             text: 'Estado',
             align: 'left',
-            value: 'estado.nombre'
+            value: 'estado'
             },
             {
             text: 'Situación',
             align: 'left',
-            value: 'rfid.nombre'
+            value: 'rfid'
             },
             {
             text: 'Acciones',
@@ -194,16 +190,23 @@ import FiltroRec from './FiltroRec'
       }
     },
     beforeMount(){
+        // console.log(this.getLineasIndex);
+        // if (this.getLineasIndex.length > 0)
+        //     if (this.getPagination.model == this.pagination.model)
+        //         this.items = this.getLineasIndex;
 
+         if (this.getPagination.model == this.pagination.model){
+            this.updatePosPagina(this.getPagination);
+            this.show_loading = false;
+            this.registros = true;
+        }
+        else{
+            this.unsetPagination();
+        }
     },
     mounted()
     {
 
-        if (this.getPagination.model == this.pagination.model){
-            this.updatePosPagina(this.getPagination);
-        }
-        else
-            this.unsetPagination();
 
         axios.get(this.url)
             .then(res => {
@@ -214,13 +217,17 @@ import FiltroRec from './FiltroRec'
                 this.$router.push({ name: 'dash' })
             })
             .finally(()=> {
+                console.log(this.pagination);
                 this.show_loading = false;
                 this.registros = true;
             });
+
+
     },
     computed: {
         ...mapGetters([
             'getPagination',
+            'getLineasIndex',
             'isRoot',
             'isAdmin',
             'isSupervisor',
@@ -249,10 +256,10 @@ import FiltroRec from './FiltroRec'
 
             this.setPagination(this.paginaActual);
 
-            if (item.producto == null)
-                this.$router.push({ name: 'producto.show', params: { id: item.producto_id } })
-            else
+            if (item.deleted_at == null)
                 this.$router.push({ name: 'producto.edit', params: { id: item.producto_id } })
+            else
+                this.$router.push({ name: 'producto.show', params: { id: item.producto_id } })
         },
         update(item) {
 

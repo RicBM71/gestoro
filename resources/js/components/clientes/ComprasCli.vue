@@ -2,7 +2,14 @@
     <v-card>
         <v-container>
             <v-layout row wrap>
-                <v-flex xs6></v-flex>
+                <v-flex xs2>
+                    <v-switch
+                        label="Depósitos"
+                        v-model="depositos"
+                        color="primary"
+                    ></v-switch>
+                </v-flex>
+                <v-flex xs4></v-flex>
                 <v-flex xs6>
                     <v-spacer></v-spacer>
                     <v-text-field
@@ -78,7 +85,8 @@ import {mapActions} from 'vuex'
             rowsPerPage: 10,
             sortBy: "alb_ser",
         },
-        search:"",
+        search:"DEPÓSITO",
+        depositos: true,
         headers: [
             {
                 text: 'Empresa',
@@ -172,7 +180,17 @@ import {mapActions} from 'vuex'
         ...mapGetters([
             'getPagination',
             'empresaActiva'
-        ])
+        ]),
+    },
+    watch: {
+        depositos: function () {
+
+            if (this.depositos){
+                this.search = "DEPÓSITO";
+            }else{
+                this.search = null;
+            }
+        }
     },
     methods:{
         ...mapActions([

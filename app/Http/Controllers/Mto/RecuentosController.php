@@ -24,7 +24,13 @@ class RecuentosController extends Controller
      */
     public function index()
     {
-        $data = Recuento::with(['producto','rfid','estado'])->get();
+        //$data = Recuento::with(['producto','rfid','estado'])->get();
+        $data = Recuento::withOutGlobalScope(EmpresaProductoScope::class)
+                    ->select('referencia','producto_id','productos.nombre AS nombre','precio_coste','rfids.nombre AS rfid','estados.nombre AS estado','productos.deleted_at')
+                    ->join('productos','productos.id','=','producto_id')
+                    ->join('rfids','rfids.id','=','rfid_id')
+                    ->join('estados','estados.id','=','productos.estado_id')
+                    ->get();
 
         if (request()->wantsJson())
             return $data;
@@ -54,29 +60,45 @@ class RecuentosController extends Controller
 
         $data = session('filtro_rec');
 
-        $recuento = Recuento::with(['producto','rfid','estado'])
-                            ->rfid($data['rfid_id'])
-                            ->get();
-
-        if ($data['clase_id'] == null)
-            return $recuento;
-        else{
-
-            $response = array();
-            foreach ($recuento as $row){
-
-                if ($row->producto != null){
-                    if ($row->producto->clase_id != $data['clase_id'])
-                        continue;
-
-                    $response[] = $row;
-                }
-
-            }
-
-            return $response;
-
+        if ($data['clase_id'] == null){
+            $op_clase = '>=';
+            $data['clase_id'] = 0;
+        }else{
+            $op_clase = '=';
         }
+
+        return Recuento::withOutGlobalScope(EmpresaProductoScope::class)
+                    ->select('referencia','producto_id','productos.nombre AS nombre','precio_coste','rfids.nombre AS rfid','estados.nombre AS estado','productos.deleted_at')
+                    ->join('productos','productos.id','=','producto_id')
+                    ->join('rfids','rfids.id','=','rfid_id')
+                    ->join('estados','estados.id','=','productos.estado_id')
+                    ->rfid($data['rfid_id'])
+                    ->where('clase_id', $op_clase, $data['clase_id'])
+                    ->get();
+
+        // $recuento = Recuento::with(['producto','rfid','estado'])
+        //                     ->rfid($data['rfid_id'])
+        //                     ->get();
+
+        // if ($data['clase_id'] == null)
+        //     return $recuento;
+        // else{
+
+        //     $response = array();
+        //     foreach ($recuento as $row){
+
+        //         if ($row->producto != null){
+        //             if ($row->producto->clase_id != $data['clase_id'])
+        //                 continue;
+
+        //             $response[] = $row;
+        //         }
+
+        //     }
+
+        //     return $response;
+
+        // }
 
 
     }

@@ -138,8 +138,10 @@ class PrintAlbController extends Controller
         $this->printAlbalin($this->lineasAlbaran);
 
         if ($this->albaran->tipo_id == 3){
-            if ($this->albaran->factura == "")
+            if ($this->albaran->factura == ""){
                 $this->PagosCliente();
+                $this->IbanReservas();
+            }
             if ($this->albaran->motivo_id > 0)
                 $this->impMotivo();
             else
@@ -415,6 +417,7 @@ class PrintAlbController extends Controller
             $total_cobrado+= $cobro->importe;
         }
 
+
         //if ($this->albaran->tipo_id == 3 && $this->albaran->fase_id == 10){
         if ($this->albaran->fase_id == 10){
             PDF::SetFont('helvetica', 'B', 9, '', false);
@@ -422,19 +425,6 @@ class PrintAlbController extends Controller
             PDF::Ln();
             if ($this->albaran->tipo_id == 3 ){
                 PDF::MultiCell(140, 5, 'PENDIENTE COBRO '.getDecimal($resto)." €", '', 'L', 0, 1, '', '', true);
-
-                if (session('empresa')->getFlag(11)){
-                    try {
-                        PDF::Ln();
-                        PDF::SetFont('helvetica', 'I', 9, '', false);
-                        $cuenta = Cuenta::defecto()->firstOrFail();
-                        $txt = "* Puede realizar sus pagos a cuenta a través del siguiente número de cuenta IBAN: ".getIbanPrint($cuenta->iban).", indicando en el concepto de la transferencia RESERVA ".$this->albaran->serie_albaran.$this->albaran->albaran.".";
-                        PDF::MultiCell(188, 5, $txt, '', 'L', 0, 1, '', '', true);
-
-                    } catch (\Exception $e) {
-                    }
-                }
-
             }
             else
                 PDF::MultiCell(140, 5, 'RESTO '.getDecimal($resto)." €", '', 'L', 0, 0, '', '', true);
@@ -448,6 +438,25 @@ class PrintAlbController extends Controller
         }
 
 
+    }
+
+    private function IbanReservas(){
+
+        if ($this->albaran->tipo_id <> 3 || $this->albaran->fase_id <> 10)
+            return;
+
+        if (session('empresa')->getFlag(11)){
+            try {
+                $cuenta = Cuenta::defecto()->firstOrFail();
+                PDF::Ln();
+                PDF::SetFont('helvetica', 'BI', 9, '', false);
+                $txt = "* Puede realizar sus pagos a cuenta a través del siguiente número de cuenta IBAN: ".getIbanPrint($cuenta->iban).", indicando en el concepto de la transferencia RESERVA ".$this->albaran->serie_albaran.$this->albaran->albaran.".";
+                PDF::MultiCell(188, 5, $txt, '', 'L', 0, 1, '', '', true);
+
+            } catch (\Exception $e) {
+                \Log::info('falla cuenta');
+            }
+        }
     }
 
     private function pieRebu(){
