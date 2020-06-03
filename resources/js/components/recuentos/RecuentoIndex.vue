@@ -7,6 +7,19 @@
                     <v-card-title>
                         <h2>{{titulo}}</h2>
                         <v-spacer></v-spacer>
+                        <!-- <v-tooltip bottom>
+                            <template v-slot:activator="{ on }">
+                                <v-btn
+                                    v-on="on"
+                                    color="white"
+                                    icon
+                                    @click="goEstados"
+                                >
+                                    <v-icon color="primary">push_pin</v-icon>
+                                </v-btn>
+                            </template>
+                                <span>Estados recuento</span>
+                        </v-tooltip> -->
                         <v-tooltip bottom>
                             <template v-slot:activator="{ on }">
                                 <v-btn
@@ -113,6 +126,28 @@
                                 </v-data-table>
                             </v-flex>
                         </v-layout>
+                        <!-- <v-layout row wrap>
+                                <v-data-iterator
+                                    :items="items"
+                                    content-tag="v-layout"
+                                    hide-actions
+                                    row
+                                    wrap
+                                    >
+                                </v-data-iterator>
+                                <v-card>
+                                    <v-card-title class="subheading font-weight-bold">{{ props.item.name }}</v-card-title>
+
+                                    <v-divider></v-divider>
+
+                                    <v-list dense>
+                                        <v-list-tile>
+                                            <v-list-tile-content>Calories:</v-list-tile-content>
+                                            <v-list-tile-content class="align-end">{{ props.item.calories }}</v-list-tile-content>
+                                        </v-list-tile>
+                                    </v-list>
+                                </v-card>
+                        </v-layout> -->
                     </v-container>
                 </v-card>
             </div>
@@ -186,7 +221,8 @@ import FiltroRec from './FiltroRec'
         dialog: false,
         show_loading: true,
         editedIndex: 0,
-        url:"/mto/recuentos"
+        url:"/mto/recuentos",
+        estados_recuento:[]
       }
     },
     beforeMount(){
@@ -211,13 +247,14 @@ import FiltroRec from './FiltroRec'
         axios.get(this.url)
             .then(res => {
                 this.items = res.data;
+                console.log(res.data);
             })
             .catch(err =>{
                 this.$toast.error(err.response.data.message);
                 this.$router.push({ name: 'dash' })
             })
             .finally(()=> {
-                console.log(this.pagination);
+
                 this.show_loading = false;
                 this.registros = true;
             });
@@ -307,6 +344,25 @@ import FiltroRec from './FiltroRec'
                 //console.log(err);
                 var msg = err.response.data.message;
                 this.$toast.error(msg);
+
+            });
+
+        },
+        goEstados(){
+
+            axios.post(this.url+'/estados')
+                .then(res => {
+                    console.log(res);
+                    this.estados_recuento = res.estados;
+                })
+            .catch(err => {
+                this.status = true;
+                var msg = err.response.data.message;
+                this.$toast.error(msg);
+
+            })
+            .finally(()=> {
+
 
             });
 

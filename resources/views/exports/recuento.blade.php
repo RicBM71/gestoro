@@ -15,19 +15,20 @@
     <tbody>
     @foreach($data as $item)
         <tr>
-            @if($item['producto'] != null)
-                <td>{{ $item['producto']['referencia']}}</td>
-                <td>{{ $item['producto']['nombre']}}</td>
-                <td>{{ $item['estado']['nombre']}}</td>
-                <td>{{ $item['rfid']['nombre']}}</td>
-                <td>{{ $item['producto']['precio_coste']}}</td>
-                <td>{{ $item['producto']['notas']}}</td>
+            @if($item['deleted_at'] == null)
+                <td>{{ $item['referencia']}}</td>
+                <td>{{ $item['nombre']}}</td>
+                <td>{{ $item['estado']}}</td>
+                <td>{{ $item['rfid']}}</td>
+                <td>{{ $item['precio_coste']}}</td>
+                <td>{{ $item['notas']}}</td>
             @else
-                <td>{{ $item['producto_id']}}</td>
-                <td>n/d</td>
-                <td>n/d</td>
-                <td>{{ $item['rfid']['nombre']}}</td>
-                <td>n/d</td>
+                <td>{{ $item['referencia']}}</td>
+                <td>{{ $item['nombre']}}</td>
+                <td>{{ $item['estado']}}</td>
+                <td>BORRADO</td>
+                <td>{{ $item['precio_coste']}}</td>
+                <td>{{ $item['notas']}}</td>
                 <td></td>
             @endif
         </tr>

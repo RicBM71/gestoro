@@ -63,9 +63,10 @@ class ExportRfidController extends Controller
     private function perdidas($data){
 
 
-        $perdidas = Recuento::with(['producto.clase'])->where('rfid_id', 3)->orderBy('producto_id')->get()->take($data['tag']);
+        $perdidas = Recuento::with(['producto.clase'])->where('rfid_id', 3)->orderBy('producto_id')->get();//->take($data['tag']);
 
         $load = array();
+        $i=0;
         foreach ($perdidas as $row) {
 
             $load[]=$this->formatearLinea($row->producto);
@@ -96,7 +97,7 @@ class ExportRfidController extends Controller
         $long = strlen($precio_coste);
 
         if ($producto->etiqueta_id == 3)
-            $pvp = $producto->importe_venta;
+            $pvp = $producto->precio_venta;
         else
             $pvp = 0;
 
@@ -106,9 +107,15 @@ class ExportRfidController extends Controller
         if ($pos === FALSE)
             $costecod="-";
         else
-            $costecod="BR".	rand(0, 99).$precios_coste.rand(0, 99);
+            $costecod="BR".	rand(0, 99).$precio_coste.rand(0, 99);
 
-        $clase =  ($producto->quilates > 0) ? $producto->quilates.'K' : null;
+        if ($producto->clase_id == 1)
+            $clase = $producto->quilates.'K '.getDecimal($producto->peso_gr);
+        else
+            $clase = getDecimal($producto->peso_gr).' gr';
+
+
+        //$clase =  ($producto->quilates > 0) ? $producto->quilates.'K' : null;
 
         return [
             'reg'           => '01',

@@ -26,7 +26,7 @@ class RecuentosController extends Controller
     {
         //$data = Recuento::with(['producto','rfid','estado'])->get();
         $data = Recuento::withOutGlobalScope(EmpresaProductoScope::class)
-                    ->select('referencia','producto_id','productos.nombre AS nombre','precio_coste','rfids.nombre AS rfid','estados.nombre AS estado','productos.deleted_at')
+                    ->select('referencia','producto_id','productos.nombre AS nombre','precio_coste','rfids.nombre AS rfid','estados.nombre AS estado','productos.deleted_at', 'productos.notas')
                     ->join('productos','productos.id','=','producto_id')
                     ->join('rfids','rfids.id','=','rfid_id')
                     ->join('estados','estados.id','=','productos.estado_id')
@@ -68,7 +68,7 @@ class RecuentosController extends Controller
         }
 
         return Recuento::withOutGlobalScope(EmpresaProductoScope::class)
-                    ->select('referencia','producto_id','productos.nombre AS nombre','precio_coste','rfids.nombre AS rfid','estados.nombre AS estado','productos.deleted_at')
+                    ->select('referencia','producto_id','productos.nombre AS nombre','precio_coste','rfids.nombre AS rfid','estados.nombre AS estado','productos.deleted_at','productos.notas AS notas')
                     ->join('productos','productos.id','=','producto_id')
                     ->join('rfids','rfids.id','=','rfid_id')
                     ->join('estados','estados.id','=','productos.estado_id')
@@ -296,7 +296,7 @@ class RecuentosController extends Controller
         else
             DB::table('recuentos')->where('empresa_id',session('empresa_id'))
                 ->where('rfid_id',3)
-            ->delete();
+                ->delete();
 
         return response('Recuento borrado', 200);
 
@@ -317,6 +317,19 @@ class RecuentosController extends Controller
 
         return Excel::download(new RecuentoExport($request->data, 'Recuento '.session('empresa')->razon), 'recuento.xlsx');
 
+
+    }
+
+    public function estados(Request $request){
+
+      // return "lll";
+
+        if (request()->wantsJson())
+            return DB::table('recuentos')
+                ->select(DB::raw('COUNT(*) as registros, nombre'))
+                ->join('rfids','rfids.id','=','rfid_id')
+                ->groupBy('nombre')
+                ->get();
 
     }
 
