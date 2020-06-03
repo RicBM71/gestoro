@@ -87,37 +87,77 @@
                                         <td v-else class="tachado">{{ props.item.nombre }}</td>
                                         <td class="text-xs-right">{{ props.item.precio_coste | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                         <td>{{ props.item.estado }}</td>
-                                        <td>{{ props.item.rfid }}</td>
+                                        <td v-if = "props.item.rfid_id == 2">{{ props.item.rfid+" O:"+props.item.origen+"/D:"+props.item.destino }}</td>
+                                        <td v-else>{{ props.item.rfid }}</td>
                                         <td class="justify-center layout px-0">
-                                            <v-icon
-                                                small
-                                                class="mr-2"
-                                                @click="goProducto(props.item)"
-                                            >
-                                                local_offer
-                                            </v-icon>
-                                            <v-icon
-                                                small
-                                                @click="openDialog(props.item)"
-                                            >
-                                                delete
-                                            </v-icon>
-                                            <v-icon
-                                                v-if="props.item.rfid_id == 3 || (props.item.rfid_id == 4 && props.item.deleted_at == null)"
-                                                small
-                                                class="mr-2"
-                                                @click="update(props.item)"
-                                            >
-                                                location_on
-                                            </v-icon>
-                                            <v-icon
-                                                v-if="props.item.rfid_id > 10"
-                                                small
-                                                class="mr-2"
-                                                @click="update(props.item)"
-                                            >
-                                                location_off
-                                            </v-icon>
+                                            <v-tooltip bottom>
+                                                <template v-slot:activator="{ on }">
+                                                    <v-btn
+                                                        :disabled="props.item.rfid_id == 2"
+                                                        small
+                                                        v-on="on"
+                                                        icon
+                                                        @click="goProducto(props.item)"
+                                                    >
+                                                        <v-icon color="green">local_offer</v-icon>
+                                                    </v-btn>
+                                                </template>
+                                                <span>Ir a producto</span>
+                                            </v-tooltip>
+                                            <v-tooltip bottom>
+                                                <template v-slot:activator="{ on }">
+                                                    <v-btn
+                                                        small
+                                                        v-on="on"
+                                                        icon
+                                                        @click="openDialog(props.item)"
+                                                    >
+                                                        <v-icon color="orange">cancel</v-icon>
+                                                    </v-btn>
+                                                </template>
+                                                <span>Eliminar de recuento</span>
+                                            </v-tooltip>
+                                            <v-tooltip bottom>
+                                                <template v-slot:activator="{ on }">
+                                                    <v-btn
+                                                        :disabled="!(props.item.rfid_id == 2 || props.item.rfid_id == 3 || (props.item.rfid_id == 4 && props.item.deleted_at == null))"
+                                                        small
+                                                        v-on="on"
+                                                        icon
+                                                        @click="update(props.item)"
+                                                    >
+                                                        <v-icon>location_on</v-icon>
+                                                    </v-btn>
+                                                </template>
+                                                <span>Producto Encontrado</span>
+                                            </v-tooltip>
+                                            <v-tooltip bottom>
+                                                <template v-slot:activator="{ on }">
+                                                    <v-btn
+                                                        :disabled="!(props.item.rfid_id > 10)"
+                                                        small
+                                                        v-on="on"
+                                                        icon
+                                                        @click="update(props.item)"
+                                                    >
+                                                        <v-icon>location_off</v-icon>
+                                                    </v-btn>
+                                                </template>
+                                                <span>Producto NO encontrado</span>
+                                            </v-tooltip>
+                                            <v-tooltip bottom>
+                                                <template v-slot:activator="{ on }">
+                                                    <v-btn
+                                                        small
+                                                        v-on="on"
+                                                        icon
+                                                        @click="bajaProducto(props.item)"
+                                                    >
+                                                        <v-icon color="red">delete</v-icon>
+                                                    </v-btn>
+                                                </template>
+                                                <span>Baja Producto</span>
+                                            </v-tooltip>
                                         </td>
                                     </template>
                                     <template slot="pageText" slot-scope="props">
@@ -225,29 +265,21 @@ import FiltroRec from './FiltroRec'
         estados_recuento:[]
       }
     },
-    beforeMount(){
-        // console.log(this.getLineasIndex);
-        // if (this.getLineasIndex.length > 0)
-        //     if (this.getPagination.model == this.pagination.model)
-        //         this.items = this.getLineasIndex;
-
-         if (this.getPagination.model == this.pagination.model){
-            this.updatePosPagina(this.getPagination);
-            this.show_loading = false;
-            this.registros = true;
-        }
-        else{
-            this.unsetPagination();
-        }
-    },
     mounted()
     {
+        console.log(this.empresaActiva);
 
+        this.pagination.model="recuentos"+this.empresaActiva;
+
+        if (this.getPagination.model == this.pagination.model)
+            this.updatePosPagina(this.getPagination);
+        else
+            this.unsetPagination();
 
         axios.get(this.url)
             .then(res => {
                 this.items = res.data;
-                console.log(res.data);
+                //console.log(res.data);
             })
             .catch(err =>{
                 this.$toast.error(err.response.data.message);
@@ -263,6 +295,7 @@ import FiltroRec from './FiltroRec'
     },
     computed: {
         ...mapGetters([
+            'empresaActiva',
             'getPagination',
             'getLineasIndex',
             'isRoot',
@@ -331,13 +364,33 @@ import FiltroRec from './FiltroRec'
         destroyReg () {
             this.dialog = false;
 
-            axios.post(this.url+'/'+this.item_destroy.id,{_method: 'delete'})
+            axios.post(this.url+'/'+this.item_destroy.recuento_id,{_method: 'delete'})
                 .then(response => {
 
                     const index = this.items.indexOf(this.item_destroy)
                     //this.items[index]=this.item_destroy;
                     this.items.splice(index, 1)
 
+                    this.$toast.success(response.data.msg);
+                })
+            .catch(err => {
+                this.status = true;
+                //console.log(err);
+                var msg = err.response.data.message;
+                this.$toast.error(msg);
+
+            });
+
+        },
+        bajaProducto (item) {
+
+            this.editedIndex = this.items.indexOf(item)
+
+            axios.post('mto/productos/'+item.producto_id,{_method: 'delete'})
+                .then(response => {
+
+                    item.deleted_at = response.data.producto.deleted_at;
+                    Object.assign(this.items[this.editedIndex], item)
                     this.$toast.success(response.data.msg);
                 })
             .catch(err => {

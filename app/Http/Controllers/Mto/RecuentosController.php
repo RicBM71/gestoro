@@ -26,10 +26,13 @@ class RecuentosController extends Controller
     {
         //$data = Recuento::with(['producto','rfid','estado'])->get();
         $data = Recuento::withOutGlobalScope(EmpresaProductoScope::class)
-                    ->select('referencia','producto_id','productos.nombre AS nombre','precio_coste','rfids.nombre AS rfid','estados.nombre AS estado','productos.deleted_at', 'productos.notas', 'rfid_id', 'recuentos.id AS recuento_id')
+                    ->select('referencia','producto_id','productos.nombre AS nombre','precio_coste','rfids.nombre AS rfid','estados.nombre AS estado',
+                             'productos.deleted_at', 'productos.notas', 'rfid_id', 'recuentos.id AS recuento_id', 'productos.empresa_id AS origen',
+                             'productos.destino_empresa_id AS destino')
                     ->join('productos','productos.id','=','producto_id')
                     ->join('rfids','rfids.id','=','rfid_id')
                     ->join('estados','estados.id','=','productos.estado_id')
+                    ->where('recuentos.empresa_id', session('empresa_id'))
                     ->get();
 
         if (request()->wantsJson())
@@ -68,10 +71,13 @@ class RecuentosController extends Controller
         }
 
         return Recuento::withOutGlobalScope(EmpresaProductoScope::class)
-                    ->select('referencia','producto_id','productos.nombre AS nombre','precio_coste','rfids.nombre AS rfid','estados.nombre AS estado','productos.deleted_at','productos.notas','rfid_id', 'recuentos.id AS recuento_id')
+                    ->select('referencia','producto_id','productos.nombre AS nombre','precio_coste','rfids.nombre AS rfid','estados.nombre AS estado',
+                             'productos.deleted_at','productos.notas','rfid_id', 'recuentos.id AS recuento_id', 'productos.empresa_id AS origen',
+                             'productos.destino_empresa_id AS destino')
                     ->join('productos','productos.id','=','producto_id')
                     ->join('rfids','rfids.id','=','rfid_id')
                     ->join('estados','estados.id','=','productos.estado_id')
+                    ->where('recuentos.empresa_id', session('empresa_id'))
                     ->rfid($data['rfid_id'])
                     ->where('clase_id', $op_clase, $data['clase_id'])
                     ->get();
