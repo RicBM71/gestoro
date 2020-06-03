@@ -411,10 +411,12 @@ class ProductosController extends Controller
         // }
 
         if (esAdmin()){
-            $producto = Producto::withTrashed()->find($id);
+            $producto = Producto::withOutGlobalScope(EmpresaProductoScope::class)->withTrashed()->findOrFail($id);
         }else{
             $producto = Producto::findOrFail($id);
         }
+
+        \Log::info($producto);
 
         if ($producto->trashed()) {
             $producto->restore();

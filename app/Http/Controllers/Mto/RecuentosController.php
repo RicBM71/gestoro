@@ -26,7 +26,7 @@ class RecuentosController extends Controller
     {
         //$data = Recuento::with(['producto','rfid','estado'])->get();
         $data = Recuento::withOutGlobalScope(EmpresaProductoScope::class)
-                    ->select('referencia','producto_id','productos.nombre AS nombre','precio_coste','rfids.nombre AS rfid','estados.nombre AS estado','productos.deleted_at', 'productos.notas')
+                    ->select('referencia','producto_id','productos.nombre AS nombre','precio_coste','rfids.nombre AS rfid','estados.nombre AS estado','productos.deleted_at', 'productos.notas', 'rfid_id', 'recuentos.id AS recuento_id')
                     ->join('productos','productos.id','=','producto_id')
                     ->join('rfids','rfids.id','=','rfid_id')
                     ->join('estados','estados.id','=','productos.estado_id')
@@ -68,7 +68,7 @@ class RecuentosController extends Controller
         }
 
         return Recuento::withOutGlobalScope(EmpresaProductoScope::class)
-                    ->select('referencia','producto_id','productos.nombre AS nombre','precio_coste','rfids.nombre AS rfid','estados.nombre AS estado','productos.deleted_at','productos.notas AS notas')
+                    ->select('referencia','producto_id','productos.nombre AS nombre','precio_coste','rfids.nombre AS rfid','estados.nombre AS estado','productos.deleted_at','productos.notas','rfid_id', 'recuentos.id AS recuento_id')
                     ->join('productos','productos.id','=','producto_id')
                     ->join('rfids','rfids.id','=','rfid_id')
                     ->join('estados','estados.id','=','productos.estado_id')
@@ -224,7 +224,10 @@ class RecuentosController extends Controller
         $recuento->load(['producto','rfid','estado']);
 
         if (request()->wantsJson())
-            return ['recuento'=>$recuento, 'message' => 'EL registro ha sido modificado'];
+            return [
+                'rfid'      => $recuento->rfid->nombre,
+                'rfid_id'   => $data['rfid_id'],
+                'message'   => 'EL registro ha sido modificado'];
 
     }
 

@@ -103,7 +103,7 @@
                                                 delete
                                             </v-icon>
                                             <v-icon
-                                                v-if="props.item.rfid_id == 3"
+                                                v-if="props.item.rfid_id == 3 || (props.item.rfid_id == 4 && props.item.deleted_at == null)"
                                                 small
                                                 class="mr-2"
                                                 @click="update(props.item)"
@@ -303,12 +303,13 @@ import FiltroRec from './FiltroRec'
             this.editedIndex = this.items.indexOf(item)
             //this.editedItem = Object.assign({}, item)
 
-                    axios.put(this.url+"/"+item.id, {rfid_id : item.rfid_id})
+                    axios.put(this.url+"/"+item.recuento_id, {rfid_id : item.rfid_id})
                         .then(res => {
 
                             // console.log(res);
-
-                            Object.assign(this.items[this.editedIndex], res.data.recuento)
+                            item.rfid = res.data.rfid;
+                            item.rfid_id = res.data.rfid_id;
+                            Object.assign(this.items[this.editedIndex], item)
 
                             this.$toast.success(res.data.message);
                             this.loading = false;
