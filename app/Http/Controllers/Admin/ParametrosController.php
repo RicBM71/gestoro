@@ -45,6 +45,7 @@ class ParametrosController extends Controller
             'frm_compras'    => ['required','string','max:2'],
             'doble_interes'  => ['required','boolean'],
             'tag_renovar'    => ['required','string'],
+            'notificar_iban' => ['required','boolean'],
 
         ]);
 

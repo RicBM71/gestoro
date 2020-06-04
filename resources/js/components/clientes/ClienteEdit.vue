@@ -254,7 +254,36 @@
                                 </v-flex>
                             </v-layout>
                             <v-layout row wrap>
-                                <v-flex sm4>
+                                <v-flex sm1>
+                                    <v-text-field
+                                        class="inputPrice"
+                                        v-model="cliente.interes"
+                                        v-validate="'required'"
+                                        :error-messages="errors.collect('interes')"
+                                        data-vv-name="interes"
+                                        data-vv-as="interés"
+                                        label="Interés Renovación"
+                                        :disabled="!isSupervisor"
+                                        v-on:keyup.enter="submit"
+                                    >
+                                    </v-text-field>
+                                </v-flex>
+                                <v-flex sm1>
+                                    <v-text-field
+                                        v-if="parametros.doble_interes"
+                                        class="inputPrice"
+                                        v-model="cliente.interes_recuperacion"
+                                        v-validate="'required'"
+                                        data-vv-name="interes_recuperacion"
+                                        data-vv-as="interés"
+                                        :error-messages="errors.collect('doble_interes')"
+                                        label="Interés Recuperación"
+                                        :disabled="!isSupervisor"
+                                        v-on:keyup.enter="submit"
+                                    >
+                                    </v-text-field>
+                                </v-flex>
+                                <v-flex sm3>
                                     <v-text-field
                                         v-model="cliente.iban"
                                         :error-messages="errors.collect('iban')"
@@ -267,7 +296,7 @@
                                     >
                                     </v-text-field>
                                 </v-flex>
-                                <v-flex sm3>
+                                <v-flex sm2>
                                     <v-text-field
                                         v-model="cliente.bic"
                                         v-validate="rules"
@@ -322,7 +351,7 @@
                                 </v-flex>
                             </v-layout>
                             <v-layout row wrap>
-                                <v-flex sm12>
+                                <v-flex sm10>
                                     <v-text-field
                                         v-model="cliente.notas"
                                         :error-messages="errors.collect('notas1')"
@@ -333,9 +362,6 @@
                                     >
                                     </v-text-field>
                                 </v-flex>
-                            </v-layout>
-
-                            <v-layout row wrap>
                                 <v-flex sm2>
                                      <v-select
                                         v-model="cliente.bloqueado"
@@ -344,7 +370,17 @@
                                         :disabled="!isSupervisor"
                                     ></v-select>
                                 </v-flex>
-                                 <v-flex sm2>
+                            </v-layout>
+
+                            <v-layout row wrap>
+                                <v-flex sm2>
+                                    <v-switch
+                                        label="Notificar IBAN"
+                                        v-model="cliente.notificar_iban"
+                                        color="primary"
+                                    ></v-switch>
+                                </v-flex>
+                                <v-flex sm2>
                                     <v-switch
                                         label="Prv. Asociado"
                                         v-model="cliente.asociado"
@@ -418,11 +454,11 @@
                                 <v-flex sm3></v-flex>
                                 <v-flex sm2>
                                     <div class="text-xs-center">
-                                                <v-btn
-                                                    :disabled="computedDisabled"
-                                                    @click="submit"
-                                                    round
-                                                    :loading="loading" block  color="primary">
+                                        <v-btn
+                                            :disabled="computedDisabled"
+                                            @click="submit"
+                                            round
+                                            :loading="loading" block  color="primary">
                                         Guardar
                                         </v-btn>
                                     </div>
@@ -517,6 +553,9 @@ import {mapGetters} from 'vuex';
                     bic               :"",
                     fpago_id          :"",
                     username          :"",
+                    interes           :0,
+                    interes_recuperacion: 0,
+                    notificar_iban    : false
                 },
 
                 bloqcli:[
@@ -604,8 +643,15 @@ import {mapGetters} from 'vuex';
         computed: {
             ...mapGetters([
                 'isSupervisor',
-                'isAdmin'
+                'isAdmin',
+                'parametros'
             ]),
+            computedInteres(){
+                return this.getDecimalFormat(this.cliente.interes);
+            },
+            computedInteresRecu(){
+                return this.getDecimalFormat(this.cliente.interes_recuperacion);
+            },
             computedDisabled(){
                 if (this.cliente.dni.length <= 4)
                     return !this.isAdmin;
@@ -666,6 +712,9 @@ import {mapGetters} from 'vuex';
             }
         },
     	methods:{
+            getDecimalFormat(value){
+                return new Intl.NumberFormat("de-DE",{style: "decimal",minimumFractionDigits:2}).format(parseFloat(value))
+            },
             submit() {
 
                 if (this.loading === false){

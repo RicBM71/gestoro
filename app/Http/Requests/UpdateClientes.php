@@ -59,6 +59,9 @@ class UpdateClientes extends FormRequest
             'iban'              => ['nullable','iban', 'max:50'],
             'bic'               => ['nullable','bic', 'max:11'],
             'fpago_id'          => ['integer'],
+            'interes'           => ['numeric','required'],
+            'interes_recuperacion' => ['numeric','required'],
+            'notificar_iban'    => ['boolean'],
         ];
         // Rule::unique('clientes')
         //     ->ignore($this->route('cliente')->id)->where(function ($query) {return $query->where('empresa_id', session()->get('empresa')->id; })];

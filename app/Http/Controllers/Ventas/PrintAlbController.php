@@ -445,7 +445,7 @@ class PrintAlbController extends Controller
         if ($this->albaran->tipo_id <> 3 || $this->albaran->fase_id <> 10)
             return;
 
-        if (session('empresa')->getFlag(11)){
+        if (session('empresa')->getFlag(11) && $this->albaran->cliente->notificar_iban == TRUE){
             try {
                 $cuenta = Cuenta::defecto()->firstOrFail();
                 PDF::Ln();

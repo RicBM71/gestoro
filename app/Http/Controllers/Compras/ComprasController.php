@@ -7,6 +7,7 @@ use App\Tipo;
 use App\Libro;
 use App\Clidoc;
 use App\Compra;
+use App\Cliente;
 use App\Empresa;
 use App\Concepto;
 use App\Deposito;
@@ -145,12 +146,15 @@ class ComprasController extends Controller
         //$ejercicio = substr($request->fecha_compra,0,4);
 
         $contador = Libro::incrementaContador($ejercicio, $request->grupo_id, $request->albaran);
+        $cliente  = Cliente::findOrfail($data['cliente_id']);
 
         $data['ejercicio']    = $ejercicio;
         $data['albaran']      = $contador['albaran'];
         $data['serie_com']    = $contador['serie_com'];
-        $data['interes']      = $contador['interes'];
-        $data['interes_recuperacion']      = $contador['interes_recuperacion'];
+
+        $data['interes'] = ($cliente->interes == 0) ? $contador['interes'] : $cliente->interes;
+        $data['interes_recuperacion'] = ($cliente->interes_recuperacion == 0) ? $contador['interes_recuperacion'] : $cliente->interes_recuperacion;
+
         $data['dias_custodia'] = $contador['dias_custodia'];
 
         $data['fecha_bloqueo'] = Compra::Bloqueo($request->fecha_compra, $contador['semdia_bloqueo']);

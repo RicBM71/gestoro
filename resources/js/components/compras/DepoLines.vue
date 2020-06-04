@@ -119,7 +119,6 @@ export default {
         ...mapGetters([
             'isSupervisor',
             'hasBorraCompras',
-            'hasReaCompras',
             'userName',
             'hasAddCom'
         ]),

@@ -34,7 +34,7 @@ class ReabrirLoteRule implements Rule
             else
                 return esSupervisor();
         }else{
-            return (esRoot() || hasReabreCompras());
+            return (hasReabreCompras());
         }
 
     }

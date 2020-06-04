@@ -172,6 +172,8 @@ import Loading from '@/components/shared/Loading'
                     papeleta: "",
                     notas:"",
                     username:"",
+                    interes:0,
+                    interes_recuperacion:0
                 },
                 cliente: {
                     id: 0,

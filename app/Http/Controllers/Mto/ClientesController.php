@@ -102,7 +102,7 @@ class ClientesController extends Controller
 
         $data['empresa_id'] = session()->get('empresa')->comun_empresa_id;
         $data['username'] = $request->user()->username;
-
+        $data['notificar_iban'] = session('parametros')->notificar_iban;
 
         $reg = Cliente::create($data);
 
@@ -164,6 +164,9 @@ class ClientesController extends Controller
 
         $data = $request->validated();
 
+        if (session('parametros')->doble_interes == false){
+            $data['interes_recuperacion'] = $data['interes'];
+        }
 
         $data['username'] = $request->user()->username;
 

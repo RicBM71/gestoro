@@ -216,6 +216,37 @@
                     </v-flex>
                 </v-layout>
                 <v-layout row wrap>
+                    <v-flex sm1>
+                        <v-text-field
+                            class="inputPrice"
+                            v-model="cliente.interes"
+                            v-validate="'required'"
+                            :error-messages="errors.collect('interes')"
+                            data-vv-name="interes"
+                            data-vv-as="interés"
+                            label="Interés Renovación"
+                            :disabled="!isSupervisor"
+                            v-on:keyup.enter="submit"
+                        >
+                        </v-text-field>
+                    </v-flex>
+                    <v-flex sm1>
+                        <v-text-field
+                            v-if="parametros.doble_interes"
+                            class="inputPrice"
+                            v-model="cliente.interes_recuperacion"
+                            v-validate="'required'"
+                            data-vv-name="interes_recuperacion"
+                            data-vv-as="interés"
+                            :error-messages="errors.collect('doble_interes')"
+                            label="Interés Recuperación"
+                            :disabled="!isSupervisor"
+                            v-on:keyup.enter="submit"
+                        >
+                        </v-text-field>
+                    </v-flex>
+                </v-layout>
+                <v-layout row wrap>
                     <v-flex sm8></v-flex>
                     <v-flex sm2>
                         <div class="text-xs-center">
@@ -239,6 +270,7 @@
     </div>
 </template>
 <script>
+import {mapGetters} from 'vuex';
 import moment from 'moment'
 export default {
     $_veeValidate: {
@@ -278,6 +310,8 @@ export default {
                 notas             :"",
                 bloqueado         :"N",
                 iva_no_residente  : false,
+                interes: 0,
+                interes_recuperacion:0
             },
             tiposdoc:[
                     {value: 'N', text:"DNI/NIE"},
@@ -316,43 +350,47 @@ export default {
         },
     },
     computed: {
-            computedFN: {
-                // getter
-                get: function () {
-                    moment.locale('es');
-                    return this.cliente.fecha_nacimiento ? moment(this.cliente.fecha_nacimiento).format('DD/MM/YYYY') : '';
-                },
-                // setter
-                set: function (newValue) {
-
-                    if (newValue.length == 8){
-                            var f = newValue.substring(4,8)+"-"+
-                                    newValue.substring(2,4)+"-"+
-                                    newValue.substring(0,2);
-
-                        this.cliente.fecha_nacimiento = f;
-                    }
-                }
+        ...mapGetters([
+            'isSupervisor',
+            'parametros'
+        ]),
+        computedFN: {
+            // getter
+            get: function () {
+                moment.locale('es');
+                return this.cliente.fecha_nacimiento ? moment(this.cliente.fecha_nacimiento).format('DD/MM/YYYY') : '';
             },
-            computedFDNI: {
-                // getter
-                get: function () {
-                  moment.locale('es');
-                    return this.cliente.fecha_dni ? moment(this.cliente.fecha_dni).format('DD/MM/YYYY') : '';
-                },
-                // setter
-                set: function (newValue) {
+            // setter
+            set: function (newValue) {
 
-                    if (newValue.length == 8){
-                            var f = newValue.substring(4,8)+"-"+
-                                    newValue.substring(2,4)+"-"+
-                                    newValue.substring(0,2);
+                if (newValue.length == 8){
+                        var f = newValue.substring(4,8)+"-"+
+                                newValue.substring(2,4)+"-"+
+                                newValue.substring(0,2);
 
-                        this.cliente.fecha_dni = f;
-                    }
+                    this.cliente.fecha_nacimiento = f;
                 }
             }
         },
+        computedFDNI: {
+            // getter
+            get: function () {
+                moment.locale('es');
+                return this.cliente.fecha_dni ? moment(this.cliente.fecha_dni).format('DD/MM/YYYY') : '';
+            },
+            // setter
+            set: function (newValue) {
+
+                if (newValue.length == 8){
+                        var f = newValue.substring(4,8)+"-"+
+                                newValue.substring(2,4)+"-"+
+                                newValue.substring(0,2);
+
+                    this.cliente.fecha_dni = f;
+                }
+            }
+        }
+    },
     methods:{
         atras(){
             this.$emit('update:fase_valid', 1);

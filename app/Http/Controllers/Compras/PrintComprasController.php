@@ -705,7 +705,7 @@ class PrintComprasController extends Controller
 			PDF::MultiCell(38, 7,  "", "LB", 'L', 0, 0, '', '', true,0,false,true,10,'M',false);
             PDF::MultiCell(38, 7,  "", "BLR", 'L', 0, 1, '', '', true,0,false,true,10,'M',false);
 
-            if (session('empresa')->getFlag(9)){
+            if (session('empresa')->getFlag(9) && $this->compra->cliente->notificar_iban == TRUE){
                 try {
                     PDF::SetFont('helvetica', 'R', 9, '', false);
                     $cuenta = Cuenta::defecto()->firstOrFail();
@@ -1028,7 +1028,7 @@ class PrintComprasController extends Controller
             PDF::MultiCell(2, 5,  "", "", 'L', 0, 0, '', '', true,0,false,true,5,'M',false);
 			PDF::MultiCell(38, 5,  ("Firma de autorizado"), "T", 'L', 0, 1, '', '', true,0,false,true,5,'M',false);
 
-            if (session('empresa')->getFlag(9)){
+            if (session('empresa')->getFlag(9) && $this->compra->cliente->notificar_iban == TRUE){
                 try {
                     PDF::SetFont('helvetica', 'R', 9, '', false);
                     $cuenta = Cuenta::defecto()->firstOrFail();
