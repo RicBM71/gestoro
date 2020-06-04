@@ -481,6 +481,7 @@ import {mapState} from 'vuex'
 
                         this.asociados.push({value: null, text: '-'});
                         this.garantias.push({value: null, text: '-'});
+                        this.almacenes.push({value: null, text: '-'});
 
                         this.show_quilates = this.producto.clase.quilates;
 

@@ -90,20 +90,17 @@
                                         <td v-if = "props.item.rfid_id == 2">{{ props.item.rfid+" O:"+props.item.origen+"/D:"+props.item.destino }}</td>
                                         <td v-else>{{ props.item.rfid }}</td>
                                         <td class="justify-center layout px-0">
-                                            <v-tooltip bottom>
-                                                <template v-slot:activator="{ on }">
+
                                                     <v-btn
                                                         :disabled="props.item.rfid_id == 2"
                                                         small
-                                                        v-on="on"
                                                         icon
                                                         @click="goProducto(props.item)"
                                                     >
-                                                        <v-icon color="green">local_offer</v-icon>
+                                                        <v-icon color="blue">local_offer</v-icon>
                                                     </v-btn>
-                                                </template>
-                                                <span>Ir a producto</span>
-                                            </v-tooltip>
+
+
                                             <v-tooltip bottom>
                                                 <template v-slot:activator="{ on }">
                                                     <v-btn
@@ -117,30 +114,30 @@
                                                 </template>
                                                 <span>Eliminar de recuento</span>
                                             </v-tooltip>
-                                            <v-tooltip bottom>
+                                            <v-tooltip bottom v-if="!(props.item.rfid_id == 2 || props.item.rfid_id == 3 || (props.item.rfid_id == 4 && props.item.deleted_at == null))">
                                                 <template v-slot:activator="{ on }">
                                                     <v-btn
-                                                        :disabled="!(props.item.rfid_id == 2 || props.item.rfid_id == 3 || (props.item.rfid_id == 4 && props.item.deleted_at == null))"
+
                                                         small
                                                         v-on="on"
                                                         icon
                                                         @click="update(props.item)"
                                                     >
-                                                        <v-icon>location_on</v-icon>
+                                                        <v-icon color="green">location_on</v-icon>
                                                     </v-btn>
                                                 </template>
                                                 <span>Producto Encontrado</span>
                                             </v-tooltip>
-                                            <v-tooltip bottom>
+                                            <v-tooltip bottom v-else>
                                                 <template v-slot:activator="{ on }">
                                                     <v-btn
-                                                        :disabled="!(props.item.rfid_id > 10)"
+
                                                         small
                                                         v-on="on"
                                                         icon
                                                         @click="update(props.item)"
                                                     >
-                                                        <v-icon>location_off</v-icon>
+                                                        <v-icon color="red">location_off</v-icon>
                                                     </v-btn>
                                                 </template>
                                                 <span>Producto NO encontrado</span>
@@ -153,7 +150,7 @@
                                                         icon
                                                         @click="bajaProducto(props.item)"
                                                     >
-                                                        <v-icon color="red">delete</v-icon>
+                                                        <v-icon color="red darken-4">delete</v-icon>
                                                     </v-btn>
                                                 </template>
                                                 <span>Baja Producto</span>

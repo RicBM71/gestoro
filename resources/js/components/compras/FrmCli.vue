@@ -215,7 +215,7 @@
                         </v-text-field>
                     </v-flex>
                 </v-layout>
-                <v-layout row wrap>
+                <v-layout row wrap v-if="isSupervisor">
                     <v-flex sm1>
                         <v-text-field
                             class="inputPrice"
