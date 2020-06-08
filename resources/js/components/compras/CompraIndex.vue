@@ -76,6 +76,9 @@
                                     <td>{{ props.item.alb_ser }}</td>
                                     <td>{{ formatDate(props.item.fecha_compra) }} {{ props.item.tipo.nombre[0] }}</td>
                                     <td class="text-xs-right">{{ props.item.importe | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                    <td v-if="(parametros.doble_interes == true && props.item.tipo_id == 1)" class="text-xs-center">{{ props.item.interes | currency('', 0, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}/{{ props.item.interes_recuperacion | currency('', 0, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                    <td v-if="(parametros.doble_interes == false && props.item.tipo_id == 1)" class="text-xs-center">{{ props.item.interes | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                    <td v-if="props.item.tipo_id != 1" class="text-xs-center">-</td>
                                     <td v-if="props.item.fase_id == 4">{{ props.item.retraso }}</td>
                                     <td v-else>-</td>
                                     <td :class="props.item.fase.color">{{ props.item.fase.nombre }}</td>
@@ -185,6 +188,12 @@ import {mapActions} from "vuex";
                 value: 'importe'
             },
             {
+                text: '% Ren',
+                align: 'left',
+                value: 'interes',
+                width: '2%'
+            },
+            {
                 text: 'Ret',
                 align: 'left',
                 value: 'retraso',
@@ -240,7 +249,8 @@ import {mapActions} from "vuex";
             'hasBorraCompras',
             'getPagination',
             'isSupervisor',
-            'isGestor'
+            'isGestor',
+            'parametros'
         ])
     },
     methods:{

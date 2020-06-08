@@ -300,6 +300,7 @@
                                     this.$router.push({ name: 'producto.edit', params: { id: res.data.producto.id } })
                                 else{
                                     //this.$forceUpdate()
+                                    console.log(res.data.producto);
                                     this.$emit('update:itemCreate', res.data.producto)
                                     this.$emit('update:ir_a_edit', true)
                                 }
