@@ -44,7 +44,7 @@
                                 <v-text-field
                                     slot="activator"
                                     :value="computedFechaH"
-                                    label="Fecha Compra"
+                                    label="Hasta F. Compra"
                                     append-icon="event"
                                     v-validate="'date_format:dd/MM/yyyy'"
                                     data-vv-name="fecha_h"

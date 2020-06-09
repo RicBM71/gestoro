@@ -512,7 +512,7 @@ import {mapState} from 'vuex'
 
                 if (this.hasEditPro == true) return false;
 
-                return producto.estado_id > 3
+                return this.producto.estado_id > 3;
 
             },
             computedEditPro(){
