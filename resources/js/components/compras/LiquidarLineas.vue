@@ -77,6 +77,7 @@ export default {
             editedItem: {},
             itemCreate:{
                 nombre:"",
+                nombre_interno:"",
                 peso_gr:0,
                 quilates:"",
                 precio_coste:0,
@@ -201,6 +202,7 @@ export default {
         openDialog(item){
 
             this.itemCreate.nombre = item.concepto;
+            this.itemCreate.nombre_interno = '';
             this.itemCreate.precio_coste = item.importe;
             this.itemCreate.peso_gr = item.peso_gr;
             this.itemCreate.clase_id = item.clase_id;

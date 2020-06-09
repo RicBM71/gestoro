@@ -227,6 +227,7 @@
             this.nombre = this.itemCreate.nombre;
             this.quilates = this.itemCreate.quilates;
             this.imp_gr = (this.itemCreate.peso_gr == 0) ? 0 : this.itemCreate.precio_coste / this.itemCreate.peso_gr;
+            this.nombre_interno = '';
 
             this.peso_gr = this.itemCreate.peso_gr;
             this.precio_coste = this.itemCreate.precio_coste;

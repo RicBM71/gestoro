@@ -257,9 +257,10 @@ import {mapGetters} from 'vuex';
         },
         watch:{
             productoCreado: function () {
-                this.productos.push(this.productoCreado);
+                //this.productos.push(this.productoCreado);
                 axios.get(this.url+'/'+this.compra.id+'/edit')
                     .then(res => {
+                        this.productos = res.data.productos;
                         this.peso_compra = res.data.peso_compra;
                         this.peso_inventario = res.data.peso_inventario;
 
