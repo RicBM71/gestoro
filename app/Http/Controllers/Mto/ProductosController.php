@@ -416,7 +416,7 @@ class ProductosController extends Controller
             $producto = Producto::findOrFail($id);
         }
 
-        \Log::info($producto);
+       // \Log::info($producto);
 
         if ($producto->trashed()) {
             $producto->restore();

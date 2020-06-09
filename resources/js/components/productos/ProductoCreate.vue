@@ -121,7 +121,8 @@ import Loading from '@/components/shared/Loading'
             ref_pol:"",
             iva_id: 1,
             cliente_id: null,
-            univen: 'U'
+            univen: 'U',
+            destino_empresa_id:null,
         },
     }),
     mounted(){
