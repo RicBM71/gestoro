@@ -135,8 +135,6 @@ class Empresa extends Model
                 'ult_producto' => $ult_producto,
             ];
 
-            \Log::info($ult_producto);
-
             DB::table('empresas')->where('id', session('empresa')->id)->update($data);
 
             $l = strlen($ult_producto);

@@ -164,6 +164,11 @@ class ClientesController extends Controller
 
         $data = $request->validated();
 
+        // ya veremos si conviene dejar esto, nunca ha estado en producción. 10.06.2020
+        // if ($data['fecha_dni'] >= $cliente->fecha_dni){
+        //     Clidoc::where('cliente_id', $cliente->id)->delete();
+        // }
+
         if (session('parametros')->doble_interes == false){
             $data['interes_recuperacion'] = $data['interes'];
         }

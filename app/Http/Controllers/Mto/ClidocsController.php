@@ -6,6 +6,7 @@ use App\Clidoc;
 use App\Cliente;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Http\Requests\StoreClidocs;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
@@ -23,13 +24,11 @@ class ClidocsController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(StoreClidocs $request)
     {
-        $data = $request->validate([
-            'cliente_id' => ['required', 'integer',Rule::unique('clidocs')],
-            'img1' => ['string','nullable'],
-            'img2' => ['string','nullable'],
-        ]);
+
+        $data = $request->validated();
+
 
         $data['username'] = $request->user()->username;
 
