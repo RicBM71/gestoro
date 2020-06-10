@@ -315,7 +315,7 @@
                             <v-select
                                 v-model="albaran.procedencia_empresa_id"
                                 :error-messages="errors.collect('procedencia_empresa_id')"
-                                v-validate="'required'"
+                                v-validate="'numeric'"
                                 data-vv-name="procedencia_empresa_id"
                                 data-vv-as="Empresa"
                                 :items="empresas"
@@ -566,6 +566,9 @@ import {mapState} from 'vuex'
                         this.talleres = res.data.talleres;
                         this.empresas = res.data.empresas;
 
+                        this.empresas.push({value: null, text: '-'});
+
+
                         this.reLoadCobros();
 
                     })
@@ -637,7 +640,7 @@ import {mapState} from 'vuex'
             computedCancelar(){
                 if (this.totales.total == 0)
                     return false;
-                    
+
                     // si es factura manual o no está facturado ni vendido
                 if (this.albaran.tipo_factura <= 1 && this.albaran.fase_id == 10){
                     return this.isSupervisor;

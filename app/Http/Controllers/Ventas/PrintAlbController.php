@@ -189,7 +189,7 @@ class PrintAlbController extends Controller
         PDF::MultiCell(36, 8,  $num_doc,'', 'C', 1, 1, '', '', true,0,false,true,8,'M',false);
 
         if ($this->albaran->factura > 0 && $this->albaran->tipo_id >= 4){
-            PDF::setXY(12,50);
+            PDF::setXY(12,55);
             PDF::SetFont('helvetica', 'R',8, '', false);
             PDF::MultiCell(50, 6,  "ALBARÁN ".$this->albaran->alb_ser.' - '.getFecha($this->albaran->fecha_albaran),'', 'C', 1, 1, '', '', true,0,false,true,6,'M',false);
         }
@@ -316,12 +316,17 @@ class PrintAlbController extends Controller
 
         PDF::SetFillColor(215, 235, 255);
         PDF::MultiCell(118, 8, '', '', '', 0, 0, '', '', true);
-        PDF::MultiCell(40, 8, 'TOTAL', 0, 'C', 1, 0, '', '', true, 0, false, true, 8, 'M');
-        PDF::MultiCell(3, 8, '', 0, 'R', 0, 0, '', '', true, 0, false, true, 8, 'M');
-        if ($this->albaran->factura > 0)
+        if ($this->albaran->factura > 0){
+            PDF::MultiCell(40, 8, 'TOTAL', 0, 'C', 1, 0, '', '', true, 0, false, true, 8, 'M');
+            PDF::MultiCell(3, 8, '', 0, 'R', 0, 0, '', '', true, 0, false, true, 8, 'M');
             PDF::MultiCell(26, 8, getCurrency($this->totales['total']), 0, 'R', 1, 1, '', '', true, 0, false, true, 8, 'M');
-        else
+        }
+        else{
+            $txt = ($this->albaran->tipo_id == 3 || ($this->albaran->tipo_id > 3 && $this->totales['iva'] == 0)) ? 'TOTAL' : 'TOTAL SIN IVA';
+            PDF::MultiCell(40, 8, $txt, 0, 'C', 1, 0, '', '', true, 0, false, true, 8, 'M');
+            PDF::MultiCell(3, 8, '', 0, 'R', 0, 0, '', '', true, 0, false, true, 8, 'M');
             PDF::MultiCell(26, 8, getCurrency($this->totales['importe_venta']), 0, 'R', 1, 1, '', '', true, 0, false, true, 8, 'M');
+        }
 
 
         PDF::SetFont('helvetica', 'R', 8, '', false);
@@ -369,10 +374,9 @@ class PrintAlbController extends Controller
 
     private function cabeLin(){
 
-        PDF::SetFont('helvetica', 'RB', 8, '', false);
 
-        PDF::Ln();
-        PDF::Ln();
+        PDF::Ln(5);
+        PDF::SetFont('helvetica', 'RB', 8, '', false);
 
         PDF::Cell(20, 6, 'REFERENCIA', 'TRB', 0, 'C');
         PDF::Cell(96, 6, 'PRODUCTO', 'TRB', 0, 'C');
@@ -539,9 +543,14 @@ class PrintAlbController extends Controller
     private function impPiezaTaller(){
 
         PDF::Ln();
+        PDF::Ln();
 
+        PDF::SetFillColor(215, 235, 255);
+
+        PDF::setXY(12,64);
         PDF::SetFont('helvetica', 'I', 9, '', false);
         PDF::MultiCell(188, 16, $this->albaran->notas_ext, '', 'L', 1, 1, '', '', true, 0, false, true, 16, 'M');
+        PDF::setX(12);
         PDF::MultiCell(188, 2, '', '', 'L', 1, 1, '', '', true, 0, false, true, 2, 'M');
     }
 

@@ -38,7 +38,7 @@ class UpdateAlbaranRequest extends FormRequest
 
         if ($this->tipo_id == 5){
             $data['taller_id']=['required','integer'];
-            $data['procedencia_empresa_id']=['required','integer'];
+            $data['procedencia_empresa_id']=['nullable','integer'];
         }
 
         return $data;

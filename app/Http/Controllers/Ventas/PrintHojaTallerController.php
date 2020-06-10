@@ -121,16 +121,29 @@ class PrintHojaTallerController extends Controller
         PDF::SetFont('helvetica', 'BR', 10, '', false);
         PDF::MultiCell(92, 5,$this->albaran->taller->nombre,'', 'L', 0, 0, '', '', true,0,false,true,5,'M',false);
 
-        $procedencia = Empresa::findOrfail($this->albaran->procedencia_empresa_id);
+        try {
+            //code...
+            $procedencia = Empresa::findOrfail($this->albaran->procedencia_empresa_id);
 
-        PDF::Ln();
-        PDF::SetFont('helvetica', 'R', 10, '', false);
-        PDF::MultiCell(48, 5, 'Entrega: '.getFecha($this->albaran->fecha_notificacion),'', 'L', 0, 0, '', '', true,0,false,true,5,'M',false);
-        PDF::MultiCell(80, 5, $procedencia->nombre,'', 'L', 0, 0, '', '', true,0,false,true,5,'M',false);
+            PDF::Ln();
+            PDF::SetFont('helvetica', 'R', 10, '', false);
+            PDF::MultiCell(48, 5, 'Entrega: '.getFecha($this->albaran->fecha_notificacion),'', 'L', 0, 0, '', '', true,0,false,true,5,'M',false);
+            PDF::MultiCell(80, 5, $procedencia->nombre,'', 'L', 0, 0, '', '', true,0,false,true,5,'M',false);
 
-        PDF::MultiCell(20, 5,'','', 'L', 0, 0, '', '', true,0,false,true,5,'M',false);
-        PDF::MultiCell(48, 5, 'Entrega: '.getFecha($this->albaran->fecha_notificacion),'', 'L', 0, 0, '', '', true,0,false,true,5,'M',false);
-        PDF::MultiCell(92, 5, $procedencia->nombre,'', 'L', 0, 1, '', '', true,0,false,true,5,'M',false);
+            PDF::MultiCell(20, 5,'','', 'L', 0, 0, '', '', true,0,false,true,5,'M',false);
+            PDF::MultiCell(48, 5, 'Entrega: '.getFecha($this->albaran->fecha_notificacion),'', 'L', 0, 0, '', '', true,0,false,true,5,'M',false);
+            PDF::MultiCell(92, 5, $procedencia->nombre,'', 'L', 0, 1, '', '', true,0,false,true,5,'M',false);
+        } catch (\Exception $e) {
+
+            PDF::Ln();
+            PDF::SetFont('helvetica', 'R', 10, '', false);
+            PDF::MultiCell(48, 5, 'Entrega: '.getFecha($this->albaran->fecha_notificacion),'', 'L', 0, 0, '', '', true,0,false,true,5,'M',false);
+            PDF::MultiCell(80, 5, 'n/d','', 'L', 0, 0, '', '', true,0,false,true,5,'M',false);
+
+            PDF::MultiCell(20, 5,'','', 'L', 0, 0, '', '', true,0,false,true,5,'M',false);
+            PDF::MultiCell(48, 5, 'Entrega: '.getFecha($this->albaran->fecha_notificacion),'', 'L', 0, 0, '', '', true,0,false,true,5,'M',false);
+            PDF::MultiCell(92, 5, 'n/d','', 'L', 0, 1, '', '', true,0,false,true,5,'M',false);
+        }
 
 
         PDF::Ln();

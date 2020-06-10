@@ -49,6 +49,7 @@
                                 </v-flex>
                                 <v-flex sm2>
                                     <v-text-field
+                                        v-show="producto.estado_id <= 4"
                                         v-model="producto.ref_pol"
                                         v-validate="'required_if:iva_id,2'"
                                         :error-messages="errors.collect('ref_pol')"
