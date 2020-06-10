@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Scopes\AislarEmpresaScope;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -37,7 +38,7 @@ class Empresa extends Model
     protected $fillable = [
         'nombre', 'razon', 'cif', 'poblacion', 'direccion', 'cpostal','provincia', 'telefono1','telefono2',
         'contacto', 'email', 'web', 'txtpie1', 'txtpie2', 'flags','sigla', 'titulo','comun_empresa_id',
-        'img_logo','img_fondo','certificado','passwd_cer', 'almacen_id','scan_doc','username','deposito_empresa_id'
+        'img_logo','img_fondo','certificado','passwd_cer', 'almacen_id','scan_doc','username','deposito_empresa_id','ult_producto'
     ];
 
     public function setCifAttribute($cif)
@@ -55,6 +56,12 @@ class Empresa extends Model
     public function setWebAttribute($web)
     {
         $this->attributes['web'] = strtolower($web);
+
+    }
+
+    public function setSiglaAttribute($sigla)
+    {
+        $this->attributes['sigla'] = strtoupper($sigla);
 
     }
 
@@ -116,5 +123,29 @@ class Empresa extends Model
 
     public function getFlag($flag){
         return $this->flags[$flag];
+    }
+
+    public function setIncrementaProducto($producto_id){
+
+        if (session('empresa')->ult_producto > 0){
+
+            $ult_producto = session('empresa')->ult_producto + 1;
+
+            $data = [
+                'ult_producto' => $ult_producto,
+            ];
+
+            \Log::info($ult_producto);
+
+            DB::table('empresas')->where('id', session('empresa')->id)->update($data);
+
+            $l = strlen($ult_producto);
+
+            return ($l <= 3) ? "0".str_repeat('0', 3-$l).$ult_producto : $ult_producto;
+
+        }
+
+        return $producto_id;
+
     }
 }

@@ -49,7 +49,8 @@ class StoreEmpresas extends FormRequest
             'almacen_id'    => ['nullable','integer'],
             'comun_empresa_id'  => ['required','integer'],
             'deposito_empresa_id' => ['required','integer'],
-            'scan_doc'   => ['nullable','date'],
+            'scan_doc'      => ['nullable','date'],
+            'ult_producto'  => ['integer', 'min:0'],
         ];
 
         // if ($this->filled('id'))

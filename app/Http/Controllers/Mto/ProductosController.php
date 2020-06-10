@@ -276,8 +276,14 @@ class ProductosController extends Controller
 
         $reg = Producto::create($data);
 
-        //$data['referencia']=session('empresa')->sigla.'-'.$reg->id;
-        $data['referencia']=session('empresa')->sigla.$reg->id;
+        $data['referencia']=session('empresa')->sigla.session('empresa')->setIncrementaProducto($reg->id);
+
+        // if (session('empresa')->ult_producto == 0)
+        //     $data['referencia']=session('empresa')->sigla.$reg->id;
+        // else{
+        //     \Log::info('pasa');
+        //     $data['referencia']=session('empresa')->sigla.session('empresa')->setIncrementaProducto();
+        // }
 
         $reg->update($data);
 

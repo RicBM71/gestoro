@@ -121,16 +121,6 @@
                                         >
                                         </v-text-field>
                                     </v-flex>
-                                    <v-flex sm2>
-                                        <v-text-field
-                                            v-model="empresa.sigla"
-                                            :error-messages="errors.collect('sigla')"
-                                            label="Sigla"
-                                            data-vv-name="sigla"
-                                            v-on:keyup.enter="submit"
-                                        >
-                                        </v-text-field>
-                                    </v-flex>
                                 </v-layout>
                                 <v-layout row wrap>
                                     <v-flex sm3>
@@ -234,6 +224,29 @@
                                             :disabled="!isRoot"
                                         ></v-select>
                                     </v-flex>
+                                    <v-flex sm2>
+                                        <v-text-field
+                                            v-model="empresa.sigla"
+                                            :error-messages="errors.collect('sigla')"
+                                            label="Sigla"
+                                            data-vv-name="sigla"
+                                            v-on:keyup.enter="submit"
+                                        >
+                                        </v-text-field>
+                                    </v-flex>
+                                    <v-flex sm2>
+                                        <v-text-field
+                                            v-model="empresa.ult_producto"
+                                            v-validate="'required|min_value:0'"
+                                            :error-messages="errors.collect('ult_producto')"
+                                            label="Numerar Producto"
+                                            data-vv-name="ult_producto"
+                                            data-vv-as="Contador"
+                                            v-on:keyup.enter="submit"
+                                        >
+                                        </v-text-field>
+                                    </v-flex>
+
                                 </v-layout>
                                 <v-layout row wrap>
                                     <v-flex sm12>

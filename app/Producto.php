@@ -16,7 +16,7 @@ Class Producto extends Model
         'quilates','caracteristicas','peso_gr','precio_coste', 'precio_venta',
         'compra_id', 'ref_pol','estado_id','etiqueta_id','referencia', 'univen',
         'destino_empresa_id','iva_id','cliente_id','online','deleted_at','notas','username',
-        'garantia_id','meses_garantia','fecha_ultima_revision','stock'
+        'garantia_id','meses_garantia','fecha_ultima_revision','stock',
     ];
 
     protected $casts = [
