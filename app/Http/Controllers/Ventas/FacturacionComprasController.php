@@ -7,6 +7,7 @@ use App\Grupo;
 use App\Libro;
 use App\Compra;
 use App\Comline;
+use App\Deposito;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Exports\FacturasExport;
@@ -115,6 +116,8 @@ class FacturacionComprasController extends Controller
 
         $compras = $this->comprasRecuperadasSinFacturar($d, $h, $libro->grupo_id);
 
+
+
         $iva = Iva::findOrFail(2); // rebu.
 
         $data['username'] = session('username');
@@ -165,9 +168,11 @@ class FacturacionComprasController extends Controller
      */
     private function comprasRecuperadasSinFacturar($d, $h, $grupo_id){
 
+
         return DB::table('compras')
             ->join('depositos', 'compras.id', '=', 'depositos.compra_id')
-            ->select('compras.*','depositos.fecha')
+            ->select(DB::raw('DISTINCT '.DB::getTablePrefix().'compras.id, '.DB::getTablePrefix().'compras.*,'.DB::getTablePrefix().'depositos.fecha'))
+            //->select('compras.*','depositos.fecha')
                 ->where('compras.empresa_id',session('empresa')->id)
                 ->where('compras.grupo_id', $grupo_id)
                 ->whereDate('fecha','>=', $d)
