@@ -148,7 +148,7 @@ class PrintAlbController extends Controller
                 $this->pieRebu();
         }else{
             // if ($this->albaran->factura != null)
-            //     $this->PagosCliente();
+            $this->PagosCliente();
             if ($this->albaran->motivo_id > 0)
                 $this->impMotivo();
             $this->formaDePago();
@@ -316,17 +316,18 @@ class PrintAlbController extends Controller
 
         PDF::SetFillColor(215, 235, 255);
         PDF::MultiCell(118, 8, '', '', '', 0, 0, '', '', true);
-        if ($this->albaran->factura > 0){
+
+        //if ($this->albaran->factura > 0){
             PDF::MultiCell(40, 8, 'TOTAL', 0, 'C', 1, 0, '', '', true, 0, false, true, 8, 'M');
             PDF::MultiCell(3, 8, '', 0, 'R', 0, 0, '', '', true, 0, false, true, 8, 'M');
             PDF::MultiCell(26, 8, getCurrency($this->totales['total']), 0, 'R', 1, 1, '', '', true, 0, false, true, 8, 'M');
-        }
-        else{
-            $txt = ($this->albaran->tipo_id == 3 || ($this->albaran->tipo_id > 3 && $this->totales['iva'] == 0)) ? 'TOTAL' : 'TOTAL SIN IVA';
-            PDF::MultiCell(40, 8, $txt, 0, 'C', 1, 0, '', '', true, 0, false, true, 8, 'M');
-            PDF::MultiCell(3, 8, '', 0, 'R', 0, 0, '', '', true, 0, false, true, 8, 'M');
-            PDF::MultiCell(26, 8, getCurrency($this->totales['importe_venta']), 0, 'R', 1, 1, '', '', true, 0, false, true, 8, 'M');
-        }
+        // }
+        // else{
+        //     $txt = ($this->albaran->tipo_id == 3 || ($this->albaran->tipo_id > 3 && $this->totales['iva'] == 0)) ? 'TOTAL' : 'TOTAL SIN IVA';
+        //     PDF::MultiCell(40, 8, $txt, 0, 'C', 1, 0, '', '', true, 0, false, true, 8, 'M');
+        //     PDF::MultiCell(3, 8, '', 0, 'R', 0, 0, '', '', true, 0, false, true, 8, 'M');
+        //     PDF::MultiCell(26, 8, getCurrency($this->totales['importe_venta']), 0, 'R', 1, 1, '', '', true, 0, false, true, 8, 'M');
+        // }
 
 
         PDF::SetFont('helvetica', 'R', 8, '', false);
@@ -411,6 +412,8 @@ class PrintAlbController extends Controller
                 PDF::MultiCell(80, 6, 'Pagos a Cuenta', 'B', 'L', 0, 1, '', '', true);
             elseif ($this->albaran->tipo_id == 4 )
                 PDF::MultiCell(80, 6, 'ANTICIPOS', 'B', 'L', 0, 1, '', '', true);
+            elseif ($this->albaran->tipo_id == 5 )
+                PDF::MultiCell(80, 6, 'Pagos a Cuenta', 'B', 'L', 0, 1, '', '', true);
         }
 
         $total_cobrado = 0;

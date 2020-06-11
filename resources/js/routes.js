@@ -144,6 +144,8 @@ import EstadosRfid from './components/rfid/EstadosRfid.vue';
 
 import FindProducto from './components/tools/FindProducto.vue';
 import AmpliarMasivo from './components/tools/AmpliarMasivo.vue';
+import CambioInteres from './components/tools/CambioInteres.vue';
+
 import ImportarProducto from './components/tools/ImportarProducto.vue';
 import Cierre from './components/tools/Cierre.vue';
 
@@ -709,6 +711,11 @@ export default [
                 path: '/tools/amplimasivo',
                 name: 'tools.ampliar',
                 component: AmpliarMasivo,
+            },
+            {
+                path: '/tools/cambiointeres',
+                name: 'tools.interes',
+                component: CambioInteres,
             },
             {
                 path: '/tools/cierre',

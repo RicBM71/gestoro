@@ -214,6 +214,7 @@ export default {
             model: false,
             children: [
                 { text: 'Ampliación COVID', name: 'tools.ampliar' },
+                { text: 'Cambio Masivo Interés', name: 'tools.interes' },
                 { text: 'Find Producto', name: 'tools.find.producto' },
                 { text: 'Importar Producto', name: 'tools.importar.producto' },
                 { text: 'Usuarios', name: 'users.index' },
@@ -323,7 +324,7 @@ export default {
         //     text: 'Administración',
         //     model: false,
         //     children: [
-        //         { icon: 'supervised_user_circle', text: 'Usuarios', name: 'users.index' },                
+        //         { icon: 'supervised_user_circle', text: 'Usuarios', name: 'users.index' },
         //     ]
         // },
 

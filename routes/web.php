@@ -290,6 +290,7 @@ Route::group([
 
         Route::post('cierre', 'CierreController@submit');
         Route::post('amplimasivo', 'AmpliarMasivoController@submit');
+        Route::post('cambiointeres', 'CambioInteresController@submit');
 
      //   Route::get('helpbanco', 'HelpBancosController@index');
     }
