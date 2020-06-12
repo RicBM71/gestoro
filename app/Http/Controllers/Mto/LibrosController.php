@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Rules\LibroUniqueRule;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateLibroRequest;
 
 class LibrosController extends Controller
 {
@@ -146,28 +147,10 @@ class LibrosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Libro $libro)
+    public function update(UpdateLibroRequest $request, Libro $libro)
     {
-        $data = $request->validate([
-            'nombre' => ['required', 'string', 'max:50'],
-            'grupo_id' => ['required', new LibroUniqueRule($libro->ejercicio, $libro->id)],
-            'ejercicio'=> ['required','integer'],
-            'ult_compra'=> ['required','integer'],
-            'ult_factura'=> ['required','integer'],
-            'serie_fac'=> ['required'],
-            'serie_com'=> ['required'],
-            'grabaciones'=> ['required'],
-            'recompras'=> ['required'],
-            'peso_frm'=> ['required'],
-            'cerrado'=> ['required'],
-            'semdia_bloqueo'=> ['required','string','max:3'],
-            'dias_custodia'=> ['required','integer',],
-            'interes'=> ['required', 'numeric'],
-            'interes_recuperacion'=> ['required', 'numeric'],
-            'codigo_pol'=> ['string','nullable'],
-            'nombre_csv'=> ['string','nullable'],
 
-        ]);
+        $data = $request->validated();
 
         $data['username'] = $request->user()->username;
 

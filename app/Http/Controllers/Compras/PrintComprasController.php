@@ -121,6 +121,9 @@ class PrintComprasController extends Controller
         $this->setAutorizacionfrmCompra1($copia);
         $this->setLineasRecomprafrmCompra1($this->lineasCompra, false);
 
+        if ($copia)
+            $this->rrss();
+
     }
 
     /**
@@ -782,6 +785,8 @@ class PrintComprasController extends Controller
 
           PDF::setFooterCallback(function($pdf) {
 
+
+
               PDF::SetFont('helvetica', 'R', 6);
 
               $html='En cumplimiento al Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo, de 27 de abril de '.
@@ -976,13 +981,13 @@ class PrintComprasController extends Controller
 
         PDF::Ln();
         //PDF::SetXY(15, 68);
-		$txt = ("  La empresa ".session("empresa")->razon." con CIF.:".session("empresa")->cif.
+		$txt = (" La empresa ".session("empresa")->razon." con CIF.:".session("empresa")->cif.
         " se compromete a reservar para su venta el lote con Número de asiento ".$this->compra->alb_ser.
         " comprado el día arriba indicado y descrito en el libro oficial de registro de conformidad".
-        " al Real Decreto 197/1988 de 22 de febrero, compuesto los objetos más abajo detallados.\n");
+        " al Real Decreto 197/1988 de 22 de febrero, compuesto los objetos más abajo detallados.\n\n");
         PDF::MultiCell($w=180, $h=0, $txt, $border='', $align='J', $fill=0, $ln=1, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
 
-		$txt = ("  La recuperación se podrá realizar transcurridos ".($this->compra->dias_custodia)." días ".
+		$txt = (" La recuperación se podrá realizar transcurridos ".($this->compra->dias_custodia)." días ".
 				"de la fecha de este contrato NUNCA ANTES y OBLIGATORIAMENTE DEBERÁN DE AVISAR con UN DÍA de ANTELACIÓN.".
 				"\n\n");
 
@@ -1039,6 +1044,23 @@ class PrintComprasController extends Controller
             }
 		}
 
+    }
+
+    private function rrss(){
+
+        return;
+
+        $f = 'public/assets/insta.jpg';
+
+        $file = '@'.(Storage::get($f));
+       // $pdf->setJPEGQuality(75);
+
+        PDF::Image($file, $x='15', $y='255', $w=0, $h=5, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false);
+
+        PDF::SetFont('helvetica', 'IB', 8);
+        PDF::setXY(22,255);
+        PDF::MultiCell(60, 5, "prestige_joyeros", '0', 'L', 0, 1, '', '', true,0,false,true,5,'M',false);
+        //PDF::Write($h=0, "prestige_joyeros", '', 0, 'J', true, 0, false, true, 0);
     }
 
 

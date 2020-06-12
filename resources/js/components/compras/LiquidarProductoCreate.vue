@@ -178,7 +178,7 @@
         quilates:"",
         clase_id:0,
         imp_gr: 0,
-        margen: 40.00,
+        margen: 0,
         peso_gr: 0,
         precio_coste: 0,
         precio_venta:0,
@@ -212,15 +212,24 @@
             this.precio_venta = Math.round(this.precio_coste * (1 +(this.margen / 100)));
         },
         peso_gr: function () {
-            if (this.peso_gr > 0)
+            if (this.peso_gr > 0){
                 this.precio_coste = Math.round(this.peso_gr * this.imp_gr);
+            }
+
+                this.precio_venta = Math.round(this.peso_gr * this.precio_gr);
         },
         precio_gr: function () {
             this.precio_venta = Math.round(this.peso_gr * this.precio_gr);
         },
-        precio_coste: function () {
-            this.precio_venta = Math.round(this.precio_coste * (1 +(this.margen / 100)));
+        imp_gr: function () {
+            this.precio_venta = Math.round(this.precio_coste * this.imp_gr);
         },
+        // precio_coste: function () {
+        //     if (this.imp_gr > 0)
+        //         this.precio_venta = Math.round(this.precio_coste * this.imp_gr);
+        //     else
+        //     this.precio_venta = Math.round(this.precio_coste * (1 +(this.margen / 100)));
+        // },
         dialog_pro: function () {
 
             this.clase_id = this.itemCreate.clase_id;
@@ -301,7 +310,7 @@
                                     this.$router.push({ name: 'producto.edit', params: { id: res.data.producto.id } })
                                 else{
                                     //this.$forceUpdate()
-                                    console.log(res.data.producto);
+                                    
                                     this.$emit('update:itemCreate', res.data.producto)
                                     this.$emit('update:ir_a_edit', true)
                                 }
