@@ -166,8 +166,7 @@ export default {
                 this.apuntes = res.data;
                 this.apuntes.push({value: null, text: '-'});
                 if (this.isAdmin)
-                    this.ma_items.push({value: 'R', text: 'Regularización'});
-
+                    this.ma_items.push({value: 'G', text: 'Regularización'});
             })
             .catch(err =>{
 

@@ -5,14 +5,15 @@ namespace App\Http\Controllers\Exportar;
 use App\Tipo;
 use App\Clase;
 use App\Compra;
+use App\Quilate;
 use App\Scopes\EmpresaScope;
 use Illuminate\Http\Request;
 use App\Rules\RangoFechaRule;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Rules\MaxDiasRangoFechaRule;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\DetalleComprasExport;
-use App\Rules\MaxDiasRangoFechaRule;
 
 class DetalleComprasController extends Controller
 {
@@ -29,6 +30,7 @@ class DetalleComprasController extends Controller
             return [
                 'tipos' => Tipo::selTiposCom(),
                 'clases' => Clase::selGrupoClase(),
+                'quilates' => Quilate::selQuilates(),
                 'param_frm' => $param_frm
             ];
 
@@ -41,11 +43,12 @@ class DetalleComprasController extends Controller
         }
 
         $data = $request->validate([
-            'fecha_d'  => ['required','date', new RangoFechaRule($request->fecha_d, $request->fecha_h)],
-            'fecha_h'  => ['required','date', new MaxDiasRangoFechaRule($request->fecha_d, $request->fecha_h)],
-            'tipo_id'=> ['required','integer'],
-            'clase_id'=> ['required','integer'],
-            'operacion'=> ['required','string'],
+            'fecha_d'   => ['required','date', new RangoFechaRule($request->fecha_d, $request->fecha_h)],
+            'fecha_h'   => ['required','date', new MaxDiasRangoFechaRule($request->fecha_d, $request->fecha_h)],
+            'tipo_id'   => ['required','integer'],
+            'clase_id'  => ['required','integer'],
+            'operacion' => ['required','string'],
+            'quilates'  => ['nullable','integer'],
         ]);
 
         session(['frm_detacom' => $data]);
@@ -63,6 +66,12 @@ class DetalleComprasController extends Controller
         else
             $where = DB::getTablePrefix().'compras.id > 0';
 
+        if ($data['quilates'] > 0)
+            $where_k =  DB::getTablePrefix().'comlines.quilates = '.$data['quilates'];
+        else
+            $where_k = DB::getTablePrefix().'compras.id > 0';
+          //  ->whereRaw($where)
+
         $union0 = Compra::withOutGlobalScope(EmpresaScope::class)
             ->select('compras.id','comlines.id AS comline_id','tipo_id','serie_com','albaran','fecha_compra','concepto','grabaciones','clases.nombre AS clase','comlines.quilates AS quilates','peso_gr','comlines.importe','fecha_liquidado')
                 ->with(['productos'])
@@ -75,6 +84,7 @@ class DetalleComprasController extends Controller
                 ->where('clase_id', $data['clase_id'])
                 // ->where('comlines.concepto', 'like', '%sello%')
                 ->whereRaw($where)
+                ->whereRaw($where_k)
                 ->get();
 
 

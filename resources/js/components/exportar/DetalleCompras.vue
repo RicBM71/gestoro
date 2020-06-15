@@ -128,6 +128,17 @@
                                 required
                                 ></v-select>
                         </v-flex>
+                        <v-flex sm1>
+                            <v-select
+                                v-model="quilate"
+                                :items="quilates"
+                                label="Quilates"
+                                v-validate="'numeric'"
+                                :error-messages="errors.collect('quilate')"
+                                data-vv-name="quilate"
+                                data-vv-as="quilates"
+                            ></v-select>
+                        </v-flex>
                         <v-flex sm2>
                             <v-select
                                 v-model="operacion"
@@ -320,6 +331,8 @@ export default {
             fecha_h: new Date().toISOString().substr(0, 10),
             menu_d: false,
             menu_h: false,
+            quilate: null,
+            quilates: []
       }
     },
     beforeMount(){
@@ -342,6 +355,9 @@ export default {
                 }
                 this.tipos = res.data.tipos;
                 this.clases = res.data.clases;
+                this.quilates = res.data.quilates;
+
+                this.quilates.push({value:null,text:"---"});
 
             })
             .catch(err =>{
@@ -429,6 +445,7 @@ export default {
                                 clase_id: this.clase_id,
                                 tipo_id: this.tipo_id,
                                 operacion: this.operacion,
+                                quilates: this.quilate
                             }
                             })
                         .then(res => {

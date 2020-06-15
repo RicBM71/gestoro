@@ -125,6 +125,14 @@ class Comline extends Model
 
     }
 
+    // public function scopeQuilates($query, $quilates)
+    // {
+
+    //     if ($quilates > 0)
+    //         $query->where('quilates', '=', $quilates);
+
+    // }
+
     public static function totalCompra($id){
         return DB::table('comlines')
                 ->select(DB::raw('SUM(peso_gr) AS peso_gr, ROUND(SUM(importe), 2) AS importe'))
