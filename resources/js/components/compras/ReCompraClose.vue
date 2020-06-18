@@ -191,6 +191,17 @@
                                 readonly
                             >
                             </v-text-field>
+                            <v-select
+                                v-if="computedShowUbicacion"
+                                v-model="compra.almacen_id"
+                                v-validate="'numeric'"
+                                data-vv-name="almacen_id"
+                                data-vv-as="Ubicación"
+                                :error-messages="errors.collect('almacen_id')"
+                                :items="almacenes"
+                                label="Ubicación"
+                                @change="changeAlmacen()"
+                                ></v-select>
                         </v-flex>
                         <v-flex sm2 v-if="compra.fase_id <=4">
                              <v-dialog
@@ -235,16 +246,7 @@
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm2 v-if="computedEstaBloqueado">
-                            <v-text-field
-                                v-model="computedFechaBloqueo"
-                                label="Bloqueado hasta"
-                                error
-                                readonly
-                            >
-                            </v-text-field>
-                        </v-flex>
-                        <v-flex sm2 v-else>
+                        <v-flex sm2>
                             <v-text-field
                                 v-model="computedFechaBloqueo"
                                 label="Fin Bloqueo"
@@ -563,6 +565,7 @@ import {mapState} from 'vuex'
                 grabaciones: false,
                 dias_cortesia: 0,
                 cambio_recompra: false,
+                almacenes:[]
 
       		}
         },
@@ -579,6 +582,9 @@ import {mapState} from 'vuex'
 
                          if (res.data.parametros != false)
                             this.setAuthUser(res.data.parametros.user);
+
+                        this.almacenes = res.data.almacenes;
+                        this.almacenes.push({value: null, text: '-'});
 
                         this.grabaciones = res.data.grabaciones;
                         this.dias_cortesia = res.data.dias_cortesia;
@@ -693,8 +699,9 @@ import {mapState} from 'vuex'
                         }
                     }
             },
-            computedEstaBloqueado(){
-                return (new Date() < new Date(this.compra.fecha_bloqueo));
+            computedShowUbicacion(){
+
+                return (new Date() >= new Date(this.compra.fecha_bloqueo) && this.compra.factura == null && this.compra.fase_id <= 4);
             },
             computedDisabledRecuperar(){
 
@@ -1028,6 +1035,20 @@ import {mapState} from 'vuex'
             },
             goLiquidar(){
                  this.$router.push({ name: 'compra.liquidar', params: {compra_id: this.compra.id } })
+            },
+            changeAlmacen(){
+
+                axios.put(this.url+"/"+this.compra.id+"/almacen",{almacen_id: this.compra.almacen_id})
+                    .then(res => {
+                        this.$toast.success(res.data.message);
+                        //this.$router.push({ name: 'recompra.close', params: { id: this.compra.id } })
+                    })
+                    .catch(err => {
+                        this.$toast.error(err.response.data.message);
+                    })
+                    .finally(()=> {
+                        this.loading = false;
+                    });
             }
 
     }
@@ -1060,4 +1081,5 @@ input[type=number]::-webkit-outer-spin-button {
     padding-top: 1px;
     margin-top: 1px;
 }
+
 </style>

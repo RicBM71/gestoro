@@ -7,6 +7,7 @@ use App\Tipo;
 use App\Libro;
 use App\Clidoc;
 use App\Compra;
+use App\Almacen;
 use App\Cliente;
 use App\Empresa;
 use App\Concepto;
@@ -100,6 +101,7 @@ class ComprasController extends Controller
                             ->fecha($data['fecha_d'],$data['fecha_h'],$data['quefecha'])
                             ->grupo($data['grupo_id'])
                             ->fase($data['fase_id'])
+                            ->almacen($data['almacen_id'])
                             ->get();
 
     }
@@ -234,7 +236,8 @@ class ComprasController extends Controller
                 'lineas_deposito'   => Deposito::CompraId($compra->id)->get(),
                 'grabaciones'       => $grabaciones,
                 'dias_cortesia'     => $dias_cortesia,
-                'cambio_recompra'   => $cambio_recompra
+                'cambio_recompra'   => $cambio_recompra,
+                'almacenes'         => Almacen::selAlmacenes(),
             ];
 
     }
@@ -495,6 +498,23 @@ class ComprasController extends Controller
             return [
                 'compra' => Compra::with(['cliente','grupo','tipo','fase'])->findOrFail($compra->id),
                 'message' => 'Se ha desfacturado la recompra!'
+            ];
+    }
+
+    public function almacen(Request $request, Compra $compra)
+    {
+        $data = $request->validate([
+            'almacen_id'      => ['nullable', 'integer'],
+        ]);
+
+        $data['username'] = $request->user()->username;
+
+        $compra->update($data);
+
+        if (request()->wantsJson())
+            return [
+               // 'compra' => $compra = Compra::with(['cliente','grupo','tipo','fase'])->findOrFail($compra->id),
+                'message' => 'Se ha actualizado la ubicación'
             ];
     }
 

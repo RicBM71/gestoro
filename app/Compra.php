@@ -15,7 +15,7 @@ class Compra extends Model
         'empresa_id', 'grupo_id','dias_custodia', 'ejercicio','serie_com','albaran','cliente_id','tipo_id',
         'fecha_compra','fecha_bloqueo','fecha_renovacion','fecha_recogida','importe',
         'importe_renovacion','importe_acuenta', 'interes','fase_id', 'factura','fecha_factura',
-        'serie_fac','papeleta','notas', 'username','retencion', 'interes_recuperacion', 'importe_recuperacion'
+        'serie_fac','papeleta','notas', 'username','retencion', 'interes_recuperacion', 'importe_recuperacion','almacen_id'
     ];
 
     protected $casts = [
@@ -265,6 +265,15 @@ class Compra extends Model
 
         if (!Empty($grupo_id))
             return $query->where('grupo_id','=', $grupo_id);
+
+        return $query;
+
+    }
+
+    public static function scopeAlmacen($query, $almacen_id){
+
+        if (!Empty($almacen_id))
+            return $query->where('almacen_id','=', $almacen_id);
 
         return $query;
 

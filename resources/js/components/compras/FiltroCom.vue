@@ -123,6 +123,17 @@
                         color="primary">
                     ></v-switch>
                 </v-flex>
+                <v-flex sm2>
+                    <v-select
+                        v-model="almacen_id"
+                        v-validate="'numeric'"
+                        data-vv-name="almacen_id"
+                        data-vv-as="Ubicación"
+                        :error-messages="errors.collect('almacen_id')"
+                        :items="almacenes"
+                        label="Ubicación"
+                    ></v-select>
+                </v-flex>
                 <v-spacer></v-spacer>
                 <v-flex sm2>
                     <v-btn @click="submit"  :loading="loading" round small block  color="info">
@@ -154,10 +165,12 @@ export default {
             loading: false,
             result: false,
 
+            almacen_id: null,
             tipo_id: 0,
             tipos: [],
             fases: [],
             grupos: [],
+            almacenes:[],
             grupo_id: "",
             fase_id:"",
             menu_h: false,
@@ -182,6 +195,9 @@ export default {
 
                 this.fases = res.data.fases;
                 this.tipos = res.data.tipos;
+
+                this.almacenes = res.data.almacenes;
+                this.almacenes.push({value: null, text: '---'});
 
                 this.fases.push({value:-1,text:"---"});
                 this.fase_id = -1;
@@ -225,7 +241,8 @@ export default {
                                 fase_id: this.fase_id,
                                 tipo_id: this.tipo_id,
                                 retraso: this.retraso,
-                                vivos: this.vivos
+                                vivos: this.vivos,
+                                almacen_id: this.almacen_id
                             }
                         )
                         .then(res => {

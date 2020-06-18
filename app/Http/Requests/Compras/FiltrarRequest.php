@@ -34,7 +34,8 @@ class FiltrarRequest extends FormRequest
             'fecha_h'  => ['required','date', new MaxDiasRangoFechaRule($this->fecha_d, $this->fecha_h)],
             'quefecha' => ['required'],
             'retraso'  => ['nullable','integer'],
-            'vivos'    => ['boolean']
+            'vivos'       => ['boolean'],
+            'almacen_id'  => ['nullable','integer'],
         ];
     }
 }

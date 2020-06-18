@@ -162,6 +162,7 @@ Route::group([
         Route::put('compras/{compra}/obs', 'ComprasController@obs');
         Route::put('compras/{compra}/tipo', 'ComprasController@tipo');
         Route::put('compras/{compra}/fase', 'ComprasController@fase');
+        Route::put('compras/{compra}/almacen', 'ComprasController@almacen');
         Route::put('compras/{compra}/recogida', 'ComprasController@recogida');
         Route::put('compras/{compra}/desfacturar', 'ComprasController@desfacturar');
         Route::post('compras/filtrar', 'ComprasController@filtrar');
