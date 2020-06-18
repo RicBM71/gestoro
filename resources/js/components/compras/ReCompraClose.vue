@@ -205,7 +205,7 @@
                             >
                                 <template v-slot:activator="{ on }">
                                 <v-text-field
-                                   :value="computedFechaRecogida"
+                                    :value="computedFechaRecogida"
                                     label="Fecha Recogida"
                                     prepend-icon="event"
                                     readonly
@@ -216,6 +216,7 @@
                                 </template>
                                 <v-date-picker
                                     v-model="compra.fecha_recogida"
+                                    :min="compra.fecha_bloqueo"
                                     locale="es"
                                     first-day-of-week=1
                                     scrollable
@@ -575,6 +576,7 @@ import {mapState} from 'vuex'
                     .then(res => {
 
                         this.compra = res.data.compra;
+
                          if (res.data.parametros != false)
                             this.setAuthUser(res.data.parametros.user);
 
