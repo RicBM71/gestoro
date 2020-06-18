@@ -15,6 +15,7 @@
             <th>PROVEEDOR</th>
             <th>Notas</th>
             <th>Interno</th>
+            <th>Etiqueta</th>
             <th>Borrado</th>
         </tr>
     </thead>
@@ -40,6 +41,7 @@
             @endif
             <td>{{ $item['notas']}}</td>
             <td>{{ $item['compra_id'] > 0 ? 'Si' : 'No'}}
+            <td>{{ $item['etiqueta']['nombre']}}</td>
             <td>{{ $item['deleted_at'] != null ? 'Anulado '.$item['username'] : ''}}
         </tr>
     @endforeach

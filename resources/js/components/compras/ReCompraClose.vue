@@ -234,7 +234,16 @@
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm2>
+                        <v-flex sm2 v-if="computedEstaBloqueado">
+                            <v-text-field
+                                v-model="computedFechaBloqueo"
+                                label="Bloqueado hasta"
+                                error
+                                readonly
+                            >
+                            </v-text-field>
+                        </v-flex>
+                        <v-flex sm2 v-else>
                             <v-text-field
                                 v-model="computedFechaBloqueo"
                                 label="Fin Bloqueo"
@@ -681,6 +690,9 @@ import {mapState} from 'vuex'
                             return (this.compra.retraso > 0) ? true : false;
                         }
                     }
+            },
+            computedEstaBloqueado(){
+                return (new Date() < new Date(this.compra.fecha_bloqueo));
             },
             computedDisabledRecuperar(){
 

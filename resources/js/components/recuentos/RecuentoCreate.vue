@@ -141,14 +141,10 @@
                                     rows-per-page-text="Registros por página"
                                 >
                                     <template slot="items" slot-scope="props">
-                                        <td v-if="props.item.producto != null">{{props.item.producto.referencia }}</td>
-                                        <td v-else>ID:{{ props.item.producto_id}}</td>
-                                        <td v-if="props.item.producto != null">{{ props.item.producto.nombre }}</td>
-                                        <td v-else>No existe en esta empresa</td>
-                                        <td v-if="props.item.estado != null">{{ props.item.estado.nombre }}</td>
-                                        <td v-else>{{props.item.estado_id}}</td>
-                                        <td v-if="props.item.rfid != null">{{ props.item.rfid.nombre }}</td>
-                                        <td v-else>{{props.item.rfid_id}}</td>
+                                        <td>{{props.item.referencia }}</td>
+                                        <td>{{ props.item.nombre }}</td>
+                                        <td>{{ props.item.estado }}</td>
+                                        <td>{{ props.item.rfid }}</td>
                                         <td class="justify-center layout px-0">
                                             <v-icon
                                                 small

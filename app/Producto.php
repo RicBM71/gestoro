@@ -117,6 +117,12 @@ Class Producto extends Model
     	return ($this->belongsTo(Cliente::class));
     }
 
+    public function etiqueta()
+    {
+    	return ($this->belongsTo(Etiqueta::class));
+    }
+
+
     public function albalins(){
         return ($this->hasMany(Albalins::class));
     }

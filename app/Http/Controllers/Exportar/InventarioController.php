@@ -36,7 +36,7 @@ class InventarioController extends Controller
         // solo lístamos los productos de empresa origen porque este es el inventario real
         //  por esto quito globalScope
         if ($data['tipoinv_id'] == 'C')
-            $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','iva','estado','garantia','cliente'])
+            $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','iva','estado','garantia','cliente','etiqueta'])
                         ->select('productos.*')
                         ->join('clases','clase_id','=','clases.id')
                         ->where('empresa_id', session('empresa_id'))
@@ -47,7 +47,7 @@ class InventarioController extends Controller
                         ->grupo($data['grupo_id'])
                         ->get();
         else
-            $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','iva','estado','garantia','cliente'])
+            $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','iva','estado','garantia','cliente','etiqueta'])
                         ->select('productos.*')
                         ->join('clases','clase_id','=','clases.id')
                         ->where('destino_empresa_id', session('empresa_id'))
