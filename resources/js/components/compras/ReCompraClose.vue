@@ -193,6 +193,7 @@
                             </v-text-field>
                             <v-select
                                 v-if="computedShowUbicacion"
+                                :disabled="!isSupervisor"
                                 v-model="compra.almacen_id"
                                 v-validate="'numeric'"
                                 data-vv-name="almacen_id"
