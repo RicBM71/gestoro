@@ -117,13 +117,6 @@
                 </v-flex>
                 <v-flex sm1></v-flex>
                 <v-flex sm2>
-                    <v-switch
-                        label="Recuento"
-                        v-model="vivos"
-                        color="primary">
-                    ></v-switch>
-                </v-flex>
-                <v-flex sm2>
                     <v-select
                         v-model="almacen_id"
                         v-validate="'numeric'"
@@ -133,6 +126,13 @@
                         :items="almacenes"
                         label="Ubicación"
                     ></v-select>
+                </v-flex>
+                <v-flex sm2>
+                    <v-switch
+                        label="Recuento"
+                        v-model="vivos"
+                        color="primary">
+                    ></v-switch>
                 </v-flex>
                 <v-spacer></v-spacer>
                 <v-flex sm2>

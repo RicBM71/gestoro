@@ -98,7 +98,7 @@ class ProductosController extends Controller
 
         if (session('parametros')->aislar_empresas == false){
 
-            $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','estado','destino','empresa','cliente'])
+            $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','estado','destino','empresa','cliente','etiqueta'])
                         ->localizacion($data['sinscope'])
                         ->empresa($data['empresa_id'])
                         ->destino($data['destino_empresa_id'])
@@ -120,7 +120,7 @@ class ProductosController extends Controller
 
         }else{
 
-            $data = Producto::with(['clase','estado','destino','empresa','cliente'])
+            $data = Producto::with(['clase','estado','destino','empresa','cliente','etiqueta'])
                         ->alta($data['alta'])
                         ->referencia($data['referencia'])
                         ->fecha($data['fecha_d'],$data['fecha_h'],$data['tipo_fecha'])
