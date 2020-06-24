@@ -31,16 +31,28 @@ class ImporteMinRecuperacionRule implements Rule
     {
 
         $totales = Deposito::totalesConcepto($this->compra->id);
+        // \Log::info($totales);
+        // \Log::info($this->imp_total_recu);
+        // \Log::info($this->compra->imprecu);
+        // \Log::info($this->compra->toArray());
 
-        if (esSupervisor()){
-            return (($totales[2]+$this->imp_total_recu) >=  $this->compra->importe);
-        }
+
+        if ($this->imp_total_recu < $this->compra->imprecu)
+            return esSupervisor();
 
 
-        // saltarse esto supone que el valor de venta (recuperación) sería inferior al de compra.
-        // dumpin, ojo! OJO PORQUE FALLA SI LO DEJAMOS PASAR, HAY REVISAR EN OBSERVER IMPORTE PRESTAMO
-        if (($totales[2]+$this->imp_total_recu) <  $this->compra->imp_recu)
-            return false;
+
+
+
+        // if (esSupervisor()){
+        //     return (($totales[2]+$this->imp_total_recu) >=  $this->compra->importe);
+        // }
+
+
+        // // saltarse esto supone que el valor de venta (recuperación) sería inferior al de compra.
+        // // dumpin, ojo! OJO PORQUE FALLA SI LO DEJAMOS PASAR, HAY REVISAR EN OBSERVER IMPORTE PRESTAMO
+        // if (($totales[2]+$this->imp_total_recu) <  $this->compra->imp_recu)
+        //     return false;
 
         return true;
     }
