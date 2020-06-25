@@ -26,7 +26,7 @@ class UpdateLibroRequest extends FormRequest
     {
         return [
             'nombre' => ['required', 'string', 'max:50'],
-            'grupo_id' => ['required', new LibroUniqueRule($libro->ejercicio, $libro->id)],
+            'grupo_id' => ['required', new LibroUniqueRule($this->ejercicio, $this->id)],
             'ejercicio'=> ['required','integer'],
             'ult_compra'=> ['required','integer'],
             'ult_factura'=> ['required','integer'],
