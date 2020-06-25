@@ -276,8 +276,22 @@
                                         v-validate="'required'"
                                         data-vv-name="interes_recuperacion"
                                         data-vv-as="interés"
-                                        :error-messages="errors.collect('doble_interes')"
+                                        :error-messages="errors.collect('interes_recuperacion')"
                                         label="Interés Recuperación"
+                                        :disabled="!isSupervisor"
+                                        v-on:keyup.enter="submit"
+                                    >
+                                    </v-text-field>
+                                </v-flex>
+                                 <v-flex sm1>
+                                    <v-text-field
+                                        class="inputPrice"
+                                        v-model="cliente.descuento"
+                                        v-validate="'required'"
+                                        data-vv-name="descuento"
+                                        data-vv-as="descuento"
+                                        :error-messages="errors.collect('descuento')"
+                                        label="Dto. Ventas"
                                         :disabled="!isSupervisor"
                                         v-on:keyup.enter="submit"
                                     >
@@ -309,7 +323,7 @@
                                     >
                                     </v-text-field>
                                 </v-flex>
-                                <v-flex sm3 d-flex>
+                                <v-flex sm2 d-flex>
                                     <v-select
                                     v-model="cliente.fpago_id"
                                     :items="fpagos"

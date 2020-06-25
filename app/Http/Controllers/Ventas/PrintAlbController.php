@@ -280,18 +280,19 @@ class PrintAlbController extends Controller
 
             if ($this->albaran->factura > 0){
                 if ($row->iva == 0)
-                    PDF::MultiCell($w=12, $h, '('.$row->iva_id.') '.getDecimal($row->iva), $border='R', $align='R', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
+                    PDF::MultiCell($w=10, $h, '('.$row->iva_id.') '.getDecimal($row->iva), $border='R', $align='R', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
                 else
                     if ($row->producto->iva->rebu)
-                        PDF::MultiCell($w=12, $h, getDecimal($row->iva).'*', $border='R', $align='C', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
+                        PDF::MultiCell($w=10, $h, getDecimal($row->iva).'*', $border='R', $align='C', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
                     else
-                        PDF::MultiCell($w=12, $h, getDecimal($row->iva), $border='R', $align='R', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
+                        PDF::MultiCell($w=10, $h, getDecimal($row->iva), $border='R', $align='R', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
             }else{
-                PDF::MultiCell($w=12, $h,"", $border='R', $align='R', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
+                PDF::MultiCell($w=10, $h,"", $border='R', $align='R', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
             }
-            PDF::MultiCell($w=18, $h, getDecimal($row->unidades), $border='R', $align='R', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
+            PDF::MultiCell($w=16, $h, getDecimal($row->unidades), $border='R', $align='R', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
             $dec = ($this->albaran->tipo_id == 3) ? 2 : 2;
-            PDF::MultiCell($w=20, $h, getDecimal($row->importe_unidad, $dec), $border='R', $align='R', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
+            PDF::MultiCell($w=16, $h, getDecimal($row->importe_unidad, $dec), $border='R', $align='R', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
+            PDF::MultiCell($w=10, $h, getDecimal($row->descuento, 2), $border='R', $align='R', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
             PDF::MultiCell($w=20, $h, getDecimal($row->importe_venta), $border='', $align='R', $fill=0, $ln=1, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
 
         }
@@ -300,16 +301,18 @@ class PrintAlbController extends Controller
 
         PDF::MultiCell($w=20, $h, '', $border='R', $align='L', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
         PDF::MultiCell($w=96, $h, '', $border='R', $align='L', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
-        PDF::MultiCell($w=12, $h, '', $border='R', $align='L', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
-        PDF::MultiCell($w=18, $h, '', $border='R', $align='L', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
-        PDF::MultiCell($w=20, $h, '', $border='R', $align='L', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
+        PDF::MultiCell($w=10, $h, '', $border='R', $align='L', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
+        PDF::MultiCell($w=16, $h, '', $border='R', $align='L', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
+        PDF::MultiCell($w=16, $h, '', $border='R', $align='L', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
+        PDF::MultiCell($w=10, $h, '', $border='R', $align='L', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
         PDF::MultiCell($w=20, $h, '', $border='', $align='R', $fill=0, $ln=1, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
         $h=6;
         PDF::MultiCell($w=20, $h, '', $border='T', $align='L', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
         PDF::MultiCell($w=96, $h, '', $border='T', $align='L', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
-        PDF::MultiCell($w=12, $h, '', $border='T', $align='L', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
-        PDF::MultiCell($w=18, $h, '', $border='T', $align='L', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
-        PDF::MultiCell($w=20, $h, '', $border='T', $align='L', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
+        PDF::MultiCell($w=10, $h, '', $border='T', $align='L', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
+        PDF::MultiCell($w=16, $h, '', $border='T', $align='L', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
+        PDF::MultiCell($w=16, $h, '', $border='T', $align='L', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
+        PDF::MultiCell($w=10, $h, '', $border='T', $align='L', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
         PDF::MultiCell($w=20, $h, '', $border='T', $align='R', $fill=0, $ln=1, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
 
         PDF::SetFont('helvetica', 'R', 10, '', false);
@@ -381,9 +384,10 @@ class PrintAlbController extends Controller
 
         PDF::Cell(20, 6, 'REFERENCIA', 'TRB', 0, 'C');
         PDF::Cell(96, 6, 'PRODUCTO', 'TRB', 0, 'C');
-        PDF::Cell(12, 6, 'IVA', 'TRB', 0, 'C');
-        PDF::Cell(18, 6, 'Uds.', 'TRB', 0, 'C');
-        PDF::Cell(20, 6, 'Imp. Ud.', 'TRB', 0, 'C');
+        PDF::Cell(10, 6, 'IVA', 'TRB', 0, 'C');
+        PDF::Cell(16, 6, 'Uds.', 'TRB', 0, 'C');
+        PDF::Cell(16, 6, 'Imp. Ud.', 'TRB', 0, 'C');
+        PDF::Cell(10, 6, '% Dto', 'TRB', 0, 'C');
         PDF::Cell(20, 6, 'IMPORTE', 'TB', 0, 'C');
         // PDF::MultiCell(160, 4,$txt, 'TRB', 'C', 0, 0, '', '', true);
         // PDF::MultiCell(20, 4,$imp, 'TB', 'C', 0, 1, '', '', true);
@@ -392,9 +396,10 @@ class PrintAlbController extends Controller
         PDF::SetFont('helvetica', 'R', 8, '', false);
         PDF::MultiCell(20, 2,"", 'R', '', 0, 0, '', '', true);
         PDF::MultiCell(96, 2,"", 'R', '', 0, 0, '', '', true);
-        PDF::MultiCell(12, 2,"", 'R', '', 0, 0, '', '', true);
-        PDF::MultiCell(18, 2,"", 'R', '', 0, 0, '', '', true);
-        PDF::MultiCell(20, 2,"", 'R', '', 0, 0, '', '', true);
+        PDF::MultiCell(10, 2,"", 'R', '', 0, 0, '', '', true);
+        PDF::MultiCell(16, 2,"", 'R', '', 0, 0, '', '', true);
+        PDF::MultiCell(16, 2,"", 'R', '', 0, 0, '', '', true);
+        PDF::MultiCell(10, 2,"", 'R', '', 0, 0, '', '', true);
         PDF::MultiCell(20, 2,"", '', '', 0, 1, '', '', true);
     }
 
@@ -428,7 +433,7 @@ class PrintAlbController extends Controller
         //if ($this->albaran->tipo_id == 3 && $this->albaran->fase_id == 10){
         if ($this->albaran->fase_id == 10){
             PDF::SetFont('helvetica', 'B', 9, '', false);
-            $resto = $this->totales['importe_venta'] - $total_cobrado;
+            $resto = $this->totales['total'] - $total_cobrado;
             PDF::Ln();
             if ($this->albaran->tipo_id == 3 ){
                 PDF::MultiCell(140, 5, 'PENDIENTE COBRO '.getDecimal($resto)." €", '', 'L', 0, 1, '', '', true);
@@ -545,13 +550,18 @@ class PrintAlbController extends Controller
 
     private function impPiezaTaller(){
 
-        PDF::Ln();
-        PDF::Ln();
+        PDF::SetFont('helvetica', 'I', 9, '', false);
+        if ($this->albaran->fecha_notificacion > ''){
+            PDF::setXY(12,55);
+            PDF::MultiCell(90, 6, 'Fecha de recogida: '.getFecha($this->albaran->fecha_notificacion), '', 'L', 0, 1, '', '', true, 0, false, true, 6, 'M');
+        }
+
+        // PDF::Ln();
+        // PDF::Ln();
 
         PDF::SetFillColor(215, 235, 255);
 
         PDF::setXY(12,64);
-        PDF::SetFont('helvetica', 'I', 9, '', false);
         PDF::MultiCell(188, 16, $this->albaran->notas_ext, '', 'L', 1, 1, '', '', true, 0, false, true, 16, 'M');
         PDF::setX(12);
         PDF::MultiCell(188, 2, '', '', 'L', 1, 1, '', '', true, 0, false, true, 2, 'M');
@@ -587,7 +597,7 @@ class PrintAlbController extends Controller
 
 
             if ($this->albaran->factura == "")
-                $txt = "ALBARÁN";
+                $txt = $this->albaran->tipo_id == 5 ? "SERVICIO TALLER" : "ALBARÁN";
             else{
                 if (strlen($this->albaran->cliente->dni) == 4)
                     $txt = $this->albaran->tipo_factura <> 3 ? "FACTURA SIMPLIFICADA" : "SIMPLIFICADA RECTIFICATIVA";

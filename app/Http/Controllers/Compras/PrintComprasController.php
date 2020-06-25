@@ -221,16 +221,21 @@ class PrintComprasController extends Controller
             PDF::Ln();
             PDF::Ln();
 
-            // $pdf->SetFont('helvetica', '', 9);
-            // $pdf->Write($h=0, session()->get('empresa')->txtpie1, $link='', $fill=0, $align='C', $ln=true, $stretch=0, $firstline=false, $firstblock=false, $maxh=0);
-            // $pdf->Write($h=0, session()->get('empresa')->txtpie2, $link='', $fill=0, $align='C', $ln=true, $stretch=0, $firstline=false, $firstblock=false, $maxh=0);
 
-            // $pdf->SetFont('helvetica', 'I', 8);
+            // $pdf->SetFont('helvetica', 'RB', 12);
+            // $txt = $this->compra->tipo->nombre[0].' '.$this->compra->alb_ser.' '.getFecha($this->compra->fecha_compra);
+            // $pdf->MultiCell($w=60, $h, $txt, $border='', $align='L', $fill=0, $ln=false, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
+
+            // $pdf->SetFont('helvetica', 'R', 8);
+            // $txt =' %e '.request()->user()->huella.'/'.date('d-m-Y H:i:s');
+            // $txt = str_replace('%e', session()->get('empresa')->titulo, $txt);
+            // $pdf->MultiCell($w=100, $h, $txt, $border='', $align='L', $fill=0, $ln=false, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0,'B');
+            // ***
 
             $txt = $this->compra->tipo->nombre[0].' '.$this->compra->alb_ser.' '.getFecha($this->compra->fecha_compra).
                     ' %e '.request()->user()->huella.'/'.date('d-m-Y H:i:s');
             $txt = str_replace('%e', session()->get('empresa')->titulo, $txt);
-            $pdf->SetFont('helvetica', 'RB', 12);
+            $pdf->SetFont('helvetica', 'RB', 14);
             $pdf->MultiCell($w=160, $h, $txt, $border='', $align='L', $fill=0, $ln=false, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
             //$pdf->Write($h=0, $txt, $link='', $fill=0, $align='L', $ln=false, $stretch=0, $firstline=false, $firstblock=false, $maxh=0);
 

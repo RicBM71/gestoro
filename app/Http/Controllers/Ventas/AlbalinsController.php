@@ -45,7 +45,9 @@ class AlbalinsController extends Controller
         //     }
         // }
 
-        $data['importe_venta'] = round($data['unidades'] * $data['importe_unidad'], 2);
+
+        $data['importe_venta'] = importeLinea($data);
+
         $data['empresa_id'] =  session()->get('empresa')->id;
         $data['username'] = $request->user()->username;
 
@@ -73,7 +75,7 @@ class AlbalinsController extends Controller
         $data = $request->validated();
 
         $data['username'] = $request->user()->username;
-        $data['importe_venta'] = round($data['unidades'] * $data['importe_unidad'], 2);
+        $data['importe_venta'] = importeLinea($data);
 
         $albalin->update($data);
 

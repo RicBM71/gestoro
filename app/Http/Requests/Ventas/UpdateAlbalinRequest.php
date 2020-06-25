@@ -33,6 +33,7 @@ class UpdateAlbalinRequest extends FormRequest
             'importe_unidad'=> ['required', 'numeric', new PrecioCosteRule($this->precio_coste)],
             'iva_id'        => ['required', 'integer'],
             'iva'           => ['required', 'numeric'],
+            'descuento'     => ['required', 'numeric'],
             'notas'         => ['nullable', 'string',  'max:190'],
         ];
     }

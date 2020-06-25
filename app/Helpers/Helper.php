@@ -149,3 +149,11 @@ function totalAlbalin($data){
     return $t;
 
 }
+
+function importeLinea($data){
+
+    $importe = round($data['unidades'] * $data['importe_unidad'], 2);
+
+    return round($importe - ($importe * $data['descuento'] / 100 ), 2);
+
+}

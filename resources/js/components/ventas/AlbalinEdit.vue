@@ -95,6 +95,21 @@
                                 >
                                 </v-text-field>
                             </v-flex>
+                            <v-flex sm2 d-flex v-if="albaran.tipo_id >= 3">
+                                <v-text-field
+                                    v-model="editedItem.descuento"
+                                    v-validate="'required|decimal:2'"
+                                    :error-messages="errors.collect('descuento')"
+                                    label="% Descuento"
+                                    data-vv-name="descuento"
+                                    data-vv-as="descuento"
+                                    class="inputPrice"
+                                    type="number"
+                                    :readonly="editedItem.iva_id==2"
+                                    v-on:keyup.enter="submit"
+                                >
+                                </v-text-field>
+                            </v-flex>
                             <v-flex sm3>
                                 <v-text-field
                                     :value="computedImporte"
@@ -160,7 +175,8 @@ export default {
 
         },
         computedImporte(){
-            return this.editedItem.importe_venta = (this.editedItem.importe_unidad * this.editedItem.unidades).toFixed(2);
+            var importe = (this.editedItem.importe_unidad * this.editedItem.unidades).toFixed(2);
+            return this.editedItem.importe_venta = (importe - (importe * this.editedItem.descuento / 100)).toFixed(2);
         },
         computedCarateristicas(){
 

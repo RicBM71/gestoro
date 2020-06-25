@@ -32,6 +32,7 @@
                                 <td v-else class="text-xs-right">{{ props.item.importe_unidad | currency('', 4, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                                 <td v-if="isSupervisor"  class="text-xs-right">{{ props.item.margen | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                                 <td v-else>-</td>
+                                <td class="text-xs-right">{{ props.item.descuento | currency('%', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                                 <td class="text-xs-right">{{ props.item.importe_venta | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                                 <td class="justify-center layout px-0">
                                     <v-icon
@@ -74,6 +75,7 @@
                             <td class="text-xs-right font-weight-bold">IVA</td>
                             <td v-if="albaran.tipo_id==3" class="text-xs-right font-weight-bold">{{ totales.iva_rebu| currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                             <td v-else class="text-xs-right font-weight-bold">{{ totales.iva| currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
+                            <td></td>
                             <td class="text-xs-right font-weight-bold">TOTAL</td>
                             <td class="text-xs-right font-weight-bold">{{ totales.total| currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                             <td class="blue--text darken-1 text-xs-right font-weight-bold">RESTO: {{ computedResto | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
@@ -195,6 +197,12 @@ export default {
                     align: 'center',
                     value: 'margen',
                     width:'8%'
+                },
+                {
+                    text: 'Dto.',
+                    align: 'center',
+                    value: 'descuento',
+                    width:'%'
                 },
                 {
                     text: 'Importe',
