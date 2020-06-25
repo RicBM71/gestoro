@@ -61,6 +61,7 @@ class UpdateClientes extends FormRequest
             'fpago_id'          => ['integer'],
             'interes'           => ['numeric','required'],
             'interes_recuperacion' => ['numeric','required'],
+            'descuento'         => ['numeric','required'],
             'notificar_iban'    => ['boolean'],
         ];
         // Rule::unique('clientes')
