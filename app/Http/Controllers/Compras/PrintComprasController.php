@@ -160,10 +160,12 @@ class PrintComprasController extends Controller
 
                 $f = str_replace('storage', 'public', session()->get('empresa')->img_logo);
 
-                $file = '@'.(Storage::get($f));
-                $pdf->setJPEGQuality(75);
+                if (Storage::exists($f)){
+                    $file = '@'.(Storage::get($f));
+                    $pdf->setJPEGQuality(75);
 
-                $pdf->Image($file, $x='5', $y='4', $w=0, $h=25, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false);
+                    $pdf->Image($file, $x='5', $y='4', $w=0, $h=25, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false);
+                }
                 //$pdf->Image($file, 10, 1, 40, 18, '', null, 'M', true, 150, 'L', false, false, 0, false, false, false);
 
             }
@@ -221,21 +223,9 @@ class PrintComprasController extends Controller
             PDF::Ln();
             PDF::Ln();
 
-
-            // $pdf->SetFont('helvetica', 'RB', 12);
-            // $txt = $this->compra->tipo->nombre[0].' '.$this->compra->alb_ser.' '.getFecha($this->compra->fecha_compra);
-            // $pdf->MultiCell($w=60, $h, $txt, $border='', $align='L', $fill=0, $ln=false, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
-
-            // $pdf->SetFont('helvetica', 'R', 8);
-            // $txt =' %e '.request()->user()->huella.'/'.date('d-m-Y H:i:s');
-            // $txt = str_replace('%e', session()->get('empresa')->titulo, $txt);
-            // $pdf->MultiCell($w=100, $h, $txt, $border='', $align='L', $fill=0, $ln=false, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0,'B');
-            // ***
-
-            $txt = $this->compra->tipo->nombre[0].' '.$this->compra->alb_ser.' '.getFecha($this->compra->fecha_compra).
-                    ' %e '.request()->user()->huella.'/'.date('d-m-Y H:i:s');
+            $txt = $this->compra->tipo->nombre[0].' '.$this->compra->alb_ser.' '.getFecha($this->compra->fecha_compra).' %e '.request()->user()->huella.'/'.date('d-m-Y H:i:s');
             $txt = str_replace('%e', session()->get('empresa')->titulo, $txt);
-            $pdf->SetFont('helvetica', 'RB', 14);
+            $pdf->SetFont('helvetica', 'RB', 10);
             $pdf->MultiCell($w=160, $h, $txt, $border='', $align='L', $fill=0, $ln=false, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
             //$pdf->Write($h=0, $txt, $link='', $fill=0, $align='L', $ln=false, $stretch=0, $firstline=false, $firstblock=false, $maxh=0);
 
@@ -750,11 +740,14 @@ class PrintComprasController extends Controller
 
                   $f = str_replace('storage', 'public', session()->get('empresa')->img_logo);
 
-                  $file = '@'.(Storage::get($f));
-                  //$pdf->setJPEGQuality(75);
+                  if (Storage::exists($f)){
 
-                  $pdf->Image($file, $x='10', $y='4', $w=0, $h=25, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false);
-                  //$pdf->Image($file, 10, 1, 40, 18, '', null, 'M', true, 150, 'L', false, false, 0, false, false, false);
+                    $file = '@'.(Storage::get($f));
+                    //$pdf->setJPEGQuality(75);
+
+                    $pdf->Image($file, $x='10', $y='4', $w=0, $h=25, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false);
+                    //$pdf->Image($file, 10, 1, 40, 18, '', null, 'M', true, 150, 'L', false, false, 0, false, false, false);
+                  }
 
               }
 
@@ -820,15 +813,24 @@ class PrintComprasController extends Controller
 
               // $pdf->SetFont('helvetica', 'I', 8);
 
-              $txt = $this->compra->tipo->nombre[0].' '.$this->compra->alb_ser.' '.getFecha($this->compra->fecha_compra).
-                      ' %e '.request()->user()->huella.' '.date('d-m-Y H:i:s');
-              $txt = str_replace('%e', session()->get('empresa')->titulo, $txt);
-              $pdf->SetFont('helvetica', 'I', 9);
-              $pdf->MultiCell($w=160, $h, $txt, $border='', $align='L', $fill=0, $ln=false, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
-              //$pdf->Write($h=0, $txt, $link='', $fill=0, $align='L', $ln=false, $stretch=0, $firstline=false, $firstblock=false, $maxh=0);
+            //   $txt = $this->compra->tipo->nombre[0].' '.$this->compra->alb_ser.' '.getFecha($this->compra->fecha_compra).
+            //           ' %e '.request()->user()->huella.' '.date('d-m-Y H:i:s');
+            //   $txt = str_replace('%e', session()->get('empresa')->titulo, $txt);
+            //   $pdf->SetFont('helvetica', 'I', 9);
+            //   $pdf->MultiCell($w=160, $h, $txt, $border='', $align='L', $fill=0, $ln=false, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
 
-              $pdf->SetFont('helvetica', 'R', 8);
-              $pdf->MultiCell($w=40, $h, $pdf->getAliasNumPage().'/'.$pdf->getAliasNbPages(), $border='', $align='R', $fill=0, $ln=1, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
+            $pdf->SetFont('helvetica', 'RB', 11);
+            $txt = $this->compra->tipo->nombre[0].' '.$this->compra->alb_ser.' '.getFecha($this->compra->fecha_compra);
+            $pdf->MultiCell($w=60, $h, $txt, $border='', $align='L', $fill=0, $ln=false, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
+
+            $pdf->SetFont('helvetica', 'R', 8);
+            $txt =' %e '.request()->user()->huella.'/'.date('d-m-Y H:i:s');
+            $txt = str_replace('%e', session()->get('empresa')->titulo, $txt);
+            $pdf->MultiCell($w=100, $h, $txt, $border='', $align='L', $fill=0, $ln=false, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0,'B');
+
+
+            $pdf->SetFont('helvetica', 'R', 8);
+            $pdf->MultiCell($w=40, $h, $pdf->getAliasNumPage().'/'.$pdf->getAliasNbPages(), $border='', $align='R', $fill=0, $ln=1, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
               //$pdf->Cell(0, 10, 'Page '.$pdf->getAliasNumPage().'/'.$pdf->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
 
 
