@@ -81,7 +81,7 @@
                                     <td :class="props.item.fase.color">{{ props.item.fase.nombre }}</td>
                                     <td class="justify-center layout px-0">
                                         <v-icon
-                                            v-show="props.item.notas_int != null || props.item.clitxt != null"
+                                            v-show="showNotas(props.item)"
                                             small
                                             class="mr-2"
                                             @click="props.expanded = !props.expanded"
@@ -257,6 +257,10 @@ import {mapActions} from "vuex";
             'setPagination',
             'unsetPagination'
         ]),
+        showNotas(item){
+            console.log(item);
+            return (item.notas_int != null || item.clitxt != null)
+        },
         misNotas(item){
             var n1 = item.clitxt != null ? item.clitxt : "";
             var n2 = item.notas_int != null ? item.notas_int : "";

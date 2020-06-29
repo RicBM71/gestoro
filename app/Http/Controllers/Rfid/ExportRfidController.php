@@ -96,7 +96,7 @@ class ExportRfidController extends Controller
         $precio_coste = (int) $producto->precio_coste;
         $long = strlen($precio_coste);
 
-        if ($producto->etiqueta_id == 3)
+        if ($producto->etiqueta_id == 3 || $producto->etiqueta_id == 4)
             $pvp = getDecimal($producto->precio_venta,2);
         else
             $pvp = 0;

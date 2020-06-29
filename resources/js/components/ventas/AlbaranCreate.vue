@@ -120,6 +120,7 @@ import Loading from '@/components/shared/Loading'
                     albaran: "",
                     tipo_id: 3,
                     fecha_albaran: new Date().toISOString().substr(0, 10),
+                    clitxt: null,
                 },
                 cliente: {
                     id: 0,
