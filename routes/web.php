@@ -54,6 +54,7 @@ Route::group([
     'middleware' => ['auth','password']],
     function (){
 
+        Route::resource('fpagos', 'FPagosController', ['as' => 'root']);
         Route::resource('parametros', 'ParametrosController', ['only'=>['index','update'], 'as' => 'root']);
         Route::post('parametros/main', 'ParametrosController@main');
         Route::put('parametros/main/delete', 'ParametrosController@deletemain');
@@ -109,6 +110,7 @@ Route::group([
         Route::get('clidocs/{cliente_id}/{compra_id?}/create', 'ClidocsController@create');
 
         Route::resource('almacenes', 'AlmacenesController', ['as' => 'mto']);
+
         Route::resource('grupos', 'GruposController', ['as' => 'mto']);
         Route::resource('ivas', 'IvasController', ['as' => 'mto']);
         Route::resource('cuentas', 'CuentasController', ['as' => 'mto']);

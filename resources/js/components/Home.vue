@@ -224,6 +224,7 @@ export default {
                 { text: 'Tipos de Iva', name: 'iva.index' },
                 { text: 'Motivos Devolución', name: 'motivo.index' },
                 { text: 'Cruces Caja', name: 'cruce.index' },
+                { text: 'Formas de pago', name: 'fpago.index' },
                 { text: 'Cierre', name: 'tools.cierre' },
                 { text: 'Parámetros', name: 'parametro.edit' },
             ]
@@ -258,6 +259,7 @@ export default {
                 { text: 'Reubicar Albaranes', name: 'reubicar', icon: 'shuffle'},
                 { icon: 'fireplace', text: 'Liquidar Lotes', name:'liquidar.index' },
                 { icon: 'compare_arrows', text: 'Intercambio de Operaciones', name:'intercambio' },
+                { icon: 'check_circle_outline', text: 'Check Contadores', name:'contador.check' },
             ]
         },
 
@@ -270,7 +272,6 @@ export default {
                 { icon: 'fireplace', text: 'Liquidar Lotes', name:'liquidar.index' },
                 { icon: 'forward', text: 'Inventario', name:'exportar.inventario' },
                 { icon: 'book', text: 'Libros', name: 'libro.index' },
-                { icon: 'check_circle_outline', text: 'Check Contadores', name:'contador.check' },
             ]
         },
 

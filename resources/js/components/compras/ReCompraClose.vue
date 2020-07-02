@@ -276,7 +276,7 @@
                             <v-text-field
                                 v-if="isGestor"
                                 v-model="computedTotalPrestamo"
-                                label="Total Recuperado"
+                                label="Total Recuperado+Amp+Ac"
                                 readonly
                                 class="centered-input"
                             >

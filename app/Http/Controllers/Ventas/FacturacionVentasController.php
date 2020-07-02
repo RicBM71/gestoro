@@ -181,7 +181,7 @@ class FacturacionVentasController extends Controller
                     ->where('albaranes.empresa_id', session('empresa')->id)
                     ->where('tipo_id', $tipo_id)
                     ->where('fase_id', 11)
-                    // ->where('factura', 0)
+                    //->whereIn('fase_id', [11,12,13])
                     ->whereNull('factura')
                     ->where('facturar', true)
                     ->whereNull('albaranes.deleted_at')

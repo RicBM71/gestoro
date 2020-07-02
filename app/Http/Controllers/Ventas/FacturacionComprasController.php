@@ -50,9 +50,10 @@ class FacturacionComprasController extends Controller
 
         $data=$request->validate([
             'grupo_id'  => ['required','integer'],
-            'fecha_d'  => ['required','date', new RangoFechaFacturacionRule($request->fecha_d, $request->fecha_h)],
-            'fecha_h'  => ['required','date'],
+            'fecha_d'   => ['required','date', new RangoFechaFacturacionRule($request->fecha_d, $request->fecha_h)],
+            'fecha_h'   => ['required','date'],
             'accion'    => ['required','string'],
+            'cobro'     => ['required','string'],
         ]);
 
     //    $rango = trimestre($data['ejercicio'],$data['trimestre']);
@@ -65,10 +66,12 @@ class FacturacionComprasController extends Controller
 
             //if ($libro->ejercicio != getEjercicio())
 
-            $facturas = $this->facturarCompras($data['fecha_d'],$data['fecha_h'],$libro);
+            $facturas = $this->facturarCompras($data['fecha_d'],$data['fecha_h'],$libro, $data['cobro']);
         }
         else{       // DESFACTURAR.
-            $facturas = $this->desfacturarCompras($data['fecha_d'],$data['fecha_h']);
+
+
+            $facturas = $this->desfacturarCompras($data['fecha_d'],$data['fecha_h'], $data['grupo_id']);
         }
 
         if (request()->wantsJson())
@@ -83,7 +86,7 @@ class FacturacionComprasController extends Controller
      * @param [date] $h
      * @return integer $reg
      */
-    private function desfacturarCompras($d, $h){
+    private function desfacturarCompras($d, $h, $grupo_id){
 
         $data=[
             'fecha_factura'=>null,
@@ -96,6 +99,7 @@ class FacturacionComprasController extends Controller
         $reg = Compra::where('empresa_id',session('empresa')->id)
                 ->whereDate('fecha_factura','>=', $d)
                 ->whereDate('fecha_factura','<=', $h)
+                ->where('grupo_id', $grupo_id)
                 ->where('fase_id', 5)
                 ->update($data);
 
@@ -110,11 +114,11 @@ class FacturacionComprasController extends Controller
      * @param $libro Object Libro
      *
      */
-    private function facturarCompras($d,$h,$libro){
+    private function facturarCompras($d,$h,$libro, $cobro){
 
         $i=0;
 
-        $compras = $this->comprasRecuperadasSinFacturar($d, $h, $libro->grupo_id);
+        $compras = $this->comprasRecuperadasSinFacturar($d, $h, $libro->grupo_id, $cobro);
 
 
 
@@ -166,7 +170,15 @@ class FacturacionComprasController extends Controller
      * @param date $h
      *
      */
-    private function comprasRecuperadasSinFacturar($d, $h, $grupo_id){
+    private function comprasRecuperadasSinFacturar($d, $h, $grupo_id, $cobro){
+
+
+        if ($cobro == 'T')
+            $conceptos = array(10,11,12);
+        elseif($cobro == "B")
+            $conceptos = array(11,12);
+        else
+            $conceptos = array(10);
 
 
         return DB::table('compras')
@@ -179,7 +191,7 @@ class FacturacionComprasController extends Controller
                 ->whereDate('fecha','<=', $h)
                 ->where('fecha_factura',null)
                 ->where('fase_id', 5)
-                ->whereIn('concepto_id',[10,11,12])
+                ->whereIn('concepto_id', $conceptos)
             ->orderBy(('fecha'))
             ->get();
 

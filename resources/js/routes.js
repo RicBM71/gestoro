@@ -111,6 +111,11 @@ import CruceIndex from './components/cruce/CruceIndex.vue';
 import CruceEdit from './components/cruce/CruceEdit.vue';
 import CruceCreate from './components/cruce/CruceCreate.vue';
 
+import FpagoIndex from './components/fpago/FpagoIndex.vue';
+import FpagoEdit from './components/fpago/FpagoEdit.vue';
+import FpagoCreate from './components/fpago/FpagoCreate.vue';
+
+
 
 import Mod347 from './components/exportar/Mod347.vue';
 import Balance from './components/exportar/Balance.vue';
@@ -556,6 +561,21 @@ export default [
                 path: '/cruces/:id/edit',
                 name: 'cruce.edit',
                 component: CruceEdit,
+            },
+            {
+                path: '/fpagos',
+                name: 'fpago.index',
+                component: FpagoIndex,
+            },
+            {
+                path: '/fpagos/create',
+                name: 'fpago.create',
+                component: FpagoCreate,
+            },
+            {
+                path: '/fpagos/:id/edit',
+                name: 'fpago.edit',
+                component: FpagoEdit,
             },
             {
                 path: '/exportar/mod347',

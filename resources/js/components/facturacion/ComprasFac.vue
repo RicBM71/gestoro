@@ -98,6 +98,13 @@
                                 label="Acción"
                                 ></v-select>
                         </v-flex>
+                        <v-flex sm2 v-if="accion!='D'">
+                            <v-select
+                                v-model="cobro"
+                                :items="cobros"
+                                label="Cobros"
+                                ></v-select>
+                        </v-flex>
                         <v-flex sm1></v-flex>
                         <v-flex sm1>
                             <div class="text-xs-center">
@@ -132,6 +139,13 @@ import Loading from '@/components/shared/Loading'
                 menu1: false,
                 url: "/ventas/facturacion/compras",
                 ruta: "compra",
+
+                cobros:[
+                    {value: 'T', text:"Todos"},
+                    {value: 'E', text:"En efectivo"},
+                    {value: 'B', text:"Por Banco"},
+                ],
+                cobro: "T",
 
 
                 acciones:[
@@ -198,7 +212,8 @@ import Loading from '@/components/shared/Loading'
                                 accion: this.accion,
                                 grupo_id: this.grupo_id,
                                 fecha_d: this.fecha_d,
-                                fecha_h: this.fecha_h
+                                fecha_h: this.fecha_h,
+                                cobro: this.cobro,
                             })
                                 .then(res => {
 
