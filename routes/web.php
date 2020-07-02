@@ -93,6 +93,8 @@ Route::group([
 
         Route::resource('ipusers', 'IpUsersController', ['only'=>['store','destroy'], 'as' => 'admin']);
 
+        Route::resource('social', 'SocialmediasController', ['as' => 'root']);
+
     }
 );
 

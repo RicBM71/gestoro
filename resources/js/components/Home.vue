@@ -225,6 +225,7 @@ export default {
                 { text: 'Motivos Devolución', name: 'motivo.index' },
                 { text: 'Cruces Caja', name: 'cruce.index' },
                 { text: 'Formas de pago', name: 'fpago.index' },
+                { text: 'RRSS', name: 'social.index' },
                 { text: 'Cierre', name: 'tools.cierre' },
                 { text: 'Parámetros', name: 'parametro.edit' },
             ]

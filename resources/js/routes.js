@@ -115,6 +115,10 @@ import FpagoIndex from './components/fpago/FpagoIndex.vue';
 import FpagoEdit from './components/fpago/FpagoEdit.vue';
 import FpagoCreate from './components/fpago/FpagoCreate.vue';
 
+import SocialIndex from './components/admin/social/SocialIndex.vue';
+import SocialEdit from './components/admin/social/SocialEdit.vue';
+import SocialCreate from './components/admin/social/SocialCreate.vue';
+
 
 
 import Mod347 from './components/exportar/Mod347.vue';
@@ -576,6 +580,21 @@ export default [
                 path: '/fpagos/:id/edit',
                 name: 'fpago.edit',
                 component: FpagoEdit,
+            },
+            {
+                path: '/social',
+                name: 'social.index',
+                component: SocialIndex,
+            },
+            {
+                path: '/social/create',
+                name: 'social.create',
+                component: SocialCreate,
+            },
+            {
+                path: '/social/:id/edit',
+                name: 'social.edit',
+                component: SocialEdit,
             },
             {
                 path: '/exportar/mod347',

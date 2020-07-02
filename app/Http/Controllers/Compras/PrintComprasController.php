@@ -9,6 +9,7 @@ use App\Compra;
 use App\Cuenta;
 use App\Comline;
 use App\Deposito;
+use App\Socialmedia;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
@@ -1055,19 +1056,25 @@ class PrintComprasController extends Controller
 
     private function rrss(){
 
-        return;
+       try {
+           $social = Socialmedia::firstOrFail();
 
-        $f = 'public/assets/insta.jpg';
+           if ($social->logo != null){
+               $f = 'public/logos/'.$social->logo;
+               $file = '@'.(Storage::get($f));
 
-        $file = '@'.(Storage::get($f));
-       // $pdf->setJPEGQuality(75);
+               PDF::setJPEGQuality(75);
+               PDF::Image($file, $x='15', $y='255', $w=0, $h=5, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false);
 
-        PDF::Image($file, $x='15', $y='255', $w=0, $h=5, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false);
+           }
 
-        PDF::SetFont('helvetica', 'IB', 8);
-        PDF::setXY(22,255);
-        PDF::MultiCell(60, 5, "prestige_joyeros", '0', 'L', 0, 1, '', '', true,0,false,true,5,'M',false);
-        //PDF::Write($h=0, "prestige_joyeros", '', 0, 'J', true, 0, false, true, 0);
+           PDF::SetFont('helvetica', 'IB', 7);
+           PDF::setXY(22,255);
+           PDF::MultiCell(110, 5, $social->texto, '0', 'L', 0, 1, '', '', true,0,false,true,5,'M',false);
+
+       } catch (\Exception $e) {
+       }
+
     }
 
 

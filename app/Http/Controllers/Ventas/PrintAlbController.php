@@ -14,6 +14,7 @@ use App\Albalin;
 use App\Albaran;
 use App\Garantia;
 use Carbon\Carbon;
+use App\Socialmedia;
 use App\Jobs\SendFactura;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Request;
@@ -160,6 +161,9 @@ class PrintAlbController extends Controller
 
         if ($this->albaran->tipo_id != 5 && $this->albaran->notas_ext > "")
             $this->impNotas();
+
+        if ($this->albaran->tipo_id != 4)
+            $this->rrss();
 
     }
 
@@ -716,5 +720,30 @@ class PrintAlbController extends Controller
     }
 
 
+    private function rrss(){
 
+        try {
+
+            $social = Socialmedia::firstOrFail();
+
+           // \Log::info($social->texto);
+
+
+            if ($social->logo != null){
+                $f = 'public/logos/'.$social->logo;
+                $file = '@'.(Storage::get($f));
+
+                PDF::setJPEGQuality(75);
+                PDF::Image($file, $x='15', $y='255', $w=0, $h=5, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false);
+
+            }
+
+            PDF::SetFont('helvetica', 'IB', 7);
+            PDF::setXY(22,255);
+            PDF::MultiCell(110, 5, $social->texto, '0', 'L', 0, 1, '', '', true,0,false,true,5,'M',false);
+
+        } catch (\Exception $e) {
+        }
+
+     }
 }
