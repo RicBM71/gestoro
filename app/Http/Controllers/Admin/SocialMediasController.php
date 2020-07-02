@@ -6,7 +6,7 @@ use App\Socialmedia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class SocialMediasController extends Controller
+class SocialmediasController extends Controller
 {
  /**
      * Display a listing of the resource.
