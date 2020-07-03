@@ -25,17 +25,33 @@
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm2>
-                            <v-text-field
-                                v-model="social.logo"
-                                v-validate="'required'"
-                                :error-messages="errors.collect('logo')"
-                                label="Path logo"
-                                data-vv-name="logo"
-                                data-vv-as="logo"
-                                v-on:keyup.enter="submit"
-                            >
-                            </v-text-field>
+                        <v-flex sm1>
+                            <div class="text-xs-center">
+                                        <v-btn @click="submit"  round  :loading="loading" flat small  color="primary">
+                                Guardar
+                                </v-btn>
+                            </div>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row wrap>
+                        <v-flex sm1></v-flex>
+                        <v-flex sm2 v-if="social.logo==null">
+                            <vue-dropzone
+                                    ref="myVueDropzone"
+                                    id="dropzone"
+                                    :options="dropzoneOptions"
+                                    v-on:vdropzone-success="uploadLogo"
+                            ></vue-dropzone>
+                        </v-flex>
+                        <v-flex sm3 v-if="social.logo!=null">
+                            <v-img
+                                max-height="25"
+                                contain
+                                class="img-fluid" :src="social.logo">
+                            </v-img>
+                        </v-flex>
+                        <v-flex sm3 v-if="social.logo!=null">
+                            <v-btn @click="borraLogo" flat round><v-icon color="red darken-4">clear</v-icon></v-btn>
                         </v-flex>
                     </v-layout>
                     <v-layout row wrap>
@@ -64,15 +80,6 @@
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm2>
-                        </v-flex>
-                        <v-flex sm2>
-                            <div class="text-xs-center">
-                                        <v-btn @click="submit"  round  :loading="loading" block  color="primary">
-                                Guardar
-                                </v-btn>
-                            </div>
-                        </v-flex>
                     </v-layout>
                 </v-container>
             </v-form>
@@ -82,6 +89,8 @@
 <script>
 import moment from 'moment'
 import MenuOpe from './MenuOpe'
+import vue2Dropzone from 'vue2-dropzone'
+import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 
 	export default {
 		$_veeValidate: {
@@ -89,6 +98,7 @@ import MenuOpe from './MenuOpe'
         },
         components: {
             'menu-ope': MenuOpe,
+            'vueDropzone': vue2Dropzone,
 		},
     	data () {
       		return {
@@ -101,6 +111,19 @@ import MenuOpe from './MenuOpe'
                 loading: false,
 
                 show: false,
+
+                dropzoneOptions: {
+                    url: '/admin/social/'+this.$route.params.id+'/logo',
+                    paramName: 'logo',
+                    acceptedFiles: '.jpg,jpeg,.png',
+                    thumbnailWidth: 150,
+                    maxFiles: 1,
+                    maxFilesize: 2,
+                    headers: {
+		    		    'X-CSRF-TOKEN':  window.axios.defaults.headers.common['X-CSRF-TOKEN']
+                    },
+                    dictDefaultMessage: 'Arrastra la imagen LOGOTIPO aquí'
+                },
 
       		}
         },
@@ -131,6 +154,17 @@ import MenuOpe from './MenuOpe'
 
         },
     	methods:{
+            uploadLogo(file, response){
+                console.log(response);
+                this.social = response.social;
+            },
+            borraLogo(){
+                axios.put('/admin/social/'+this.social.id+'/logo/delete')
+                    .then(response => {
+                        this.social = response.data.social;
+                        this.loading = false;
+                    })
+            },
             submit() {
 
                 if (this.loading === false){

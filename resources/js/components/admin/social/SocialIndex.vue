@@ -18,7 +18,7 @@
                         rows-per-page-text="Registros por página"
                         >
                             <template slot="items" slot-scope="props">
-                                <td>{{ props.item.nombre }}</td>
+                                <td>{{ props.item.texto }}</td>
                                 <td class="justify-center layout px-0">
                                     <v-icon
                                         small
@@ -59,7 +59,7 @@ import MenuOpe from './MenuOpe'
           {
             text: 'Nombre',
             align: 'left',
-            value: 'name'
+            value: 'texto'
           },
           {
             text: 'Acciones',

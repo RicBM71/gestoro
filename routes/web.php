@@ -95,6 +95,12 @@ Route::group([
 
         Route::resource('social', 'SocialmediasController', ['as' => 'root']);
 
+
+        Route::middleware('role:Root')->group(function () {
+            Route::post('social/{social}/logo', 'SocialmediasController@logo');
+            Route::put('social/{social}/logo/delete', 'SocialmediasController@deletelogo');
+        });
+
     }
 );
 
@@ -150,10 +156,7 @@ Route::group([
         Route::post('recuentos/excel', 'RecuentosController@excel');
         Route::post('recuentos/estados', 'RecuentosController@estados');
 
-        // Route::middleware('role:Root|Admin')->group(function () {
-        //     Route::resource('transferencias', 'TransferenciasController', ['as' => 'mto']);
-        //     Route::post('transferencias/filtrar', 'TransferenciasController@filtrar');
-        // });
+
     }
 );
 

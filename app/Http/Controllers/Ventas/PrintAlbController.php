@@ -730,7 +730,10 @@ class PrintAlbController extends Controller
 
 
             if ($social->logo != null){
-                $f = 'public/logos/'.$social->logo;
+                //$f = 'public/logos/'.$social->logo;
+
+                $f = str_replace('storage', 'public', $social->logo);
+
                 $file = '@'.(Storage::get($f));
 
                 PDF::setJPEGQuality(75);

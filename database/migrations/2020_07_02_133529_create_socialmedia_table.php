@@ -17,7 +17,7 @@ class CreateSocialmediaTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('empresa_id');
             $table->string('texto');
-            $table->string('logo', 50)->nullable();
+            $table->string('logo')->nullable();
             $table->string('username',30)->nullable();
             $table->timestamps();
         });

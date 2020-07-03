@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Socialmedia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class SocialmediasController extends Controller
 {
@@ -120,5 +121,44 @@ class SocialmediasController extends Controller
         if (request()->wantsJson()){
             return response()->json(Socialmedia::all());
         }
+    }
+
+    public function logo(Request $request, Socialmedia $social){
+
+        \Log::info($social);
+
+        $this->validate(request(),[
+    		'logo' => 'required|image|max:256'	//jpeg png, gif, svg
+        ]);
+
+        $img = request()->file('logo')->store('logos','public');
+        //$img = request()->file('logo')->storeAs('/public/logos','logokk');
+
+    	$fotoUrl = Storage::url($img);
+
+    	// 	//insert en la tabla photos
+    	$social->update([
+    	 	'logo'	=> $fotoUrl,
+        ]);
+
+        return ['social'=>$social];
+
+
+    }
+
+    public function deletelogo(Request $request, Socialmedia $social){
+
+        $fotoPath = str_replace('storage', 'public', $social->img_logo);
+
+        Storage::delete($fotoPath);
+
+        $social->update([
+            'logo'	=> null,
+       ]);
+
+
+
+       return ['social'=>$social];
+
     }
 }
