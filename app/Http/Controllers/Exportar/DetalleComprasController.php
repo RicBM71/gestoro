@@ -87,6 +87,7 @@ class DetalleComprasController extends Controller
                     ->join('comlines','compras.id','=','comlines.compra_id')
                     ->join('clases','clase_id','=','clases.id')
                     ->whereIn('compras.empresa_id', session('empresas_usuario'))
+                    ->where('tipo_id', $data['tipo_id'])
                     ->whereRaw($where)
                     ->where('comlines.concepto', 'like', '%'.$data['concepto'].'%')
                     //->whereRaw($where)
