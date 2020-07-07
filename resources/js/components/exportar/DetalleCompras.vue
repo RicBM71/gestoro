@@ -157,6 +157,19 @@
                             </v-btn>
                         </v-flex>
                     </v-layout>
+                    <v-layout row wrap>
+                        <v-flex sm3>
+                            <v-text-field
+                                v-model="concepto"
+                                v-validate="'max:190'"
+                                label="Concepto"
+                                :error-messages="errors.collect('concepto')"
+                                data-vv-name="concepto"
+                                v-on:keyup.enter="submit"
+                                hint="Todas las empresa, sin restricción de fecha"
+                            ></v-text-field>
+                        </v-flex>
+                    </v-layout>
                 </v-container>
             </v-form>
         </v-card>
@@ -188,7 +201,7 @@
                             rows-per-page-text="Registros por página"
                         >
                             <template slot="items" slot-scope="props">
-                                <td>{{alb_ser(props.item)}}</td>
+                                <td>{{ alb_ser(props.item)}}</td>
                                 <td>{{ formatDate(props.item.fecha_compra) }}</td>
                                 <td>{{ props.item.concepto }}</td>
                                 <td>{{ props.item.grabaciones }}</td>
@@ -332,7 +345,8 @@ export default {
             menu_d: false,
             menu_h: false,
             quilate: null,
-            quilates: []
+            quilates: [],
+            concepto: null,
       }
     },
     beforeMount(){
@@ -445,7 +459,8 @@ export default {
                                 clase_id: this.clase_id,
                                 tipo_id: this.tipo_id,
                                 operacion: this.operacion,
-                                quilates: this.quilate
+                                quilates: this.quilate,
+                                concepto: this.concepto
                             }
                             })
                         .then(res => {

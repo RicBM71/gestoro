@@ -49,6 +49,7 @@ class DetalleComprasController extends Controller
             'clase_id'  => ['required','integer'],
             'operacion' => ['required','string'],
             'quilates'  => ['nullable','integer'],
+            'concepto'  => ['nullable'],
         ]);
 
         session(['frm_detacom' => $data]);
@@ -70,23 +71,46 @@ class DetalleComprasController extends Controller
             $where_k =  DB::getTablePrefix().'comlines.quilates = '.$data['quilates'];
         else
             $where_k = DB::getTablePrefix().'compras.id > 0';
-          //  ->whereRaw($where)
 
-        $union0 = Compra::withOutGlobalScope(EmpresaScope::class)
-            ->select('compras.id','comlines.id AS comline_id','tipo_id','serie_com','albaran','fecha_compra','concepto','grabaciones','clases.nombre AS clase','comlines.quilates AS quilates','peso_gr','comlines.importe','fecha_liquidado')
-                ->with(['productos'])
-                ->join('comlines','compras.id','=','comlines.compra_id')
-                ->join('clases','clase_id','=','clases.id')
-                ->where('compras.empresa_id', session('empresa')->id)
-                ->whereDate('fecha_compra','>=', $data['fecha_d'])
-                ->whereDate('fecha_compra','<=', $data['fecha_h'])
-                ->where('tipo_id', $data['tipo_id'])
-                ->where('clase_id', $data['clase_id'])
-                // ->where('comlines.concepto', 'like', '%sello%')
-                ->whereRaw($where)
-                ->whereRaw($where_k)
-                ->get();
+        if ($data['concepto'] != null){
 
+            // \Log::info(Compra::withOutGlobalScope(EmpresaScope::class)
+            // ->select('compras.id','comlines.id AS comline_id','tipo_id','serie_com','albaran','fecha_compra','concepto','grabaciones','clases.nombre AS clase','comlines.quilates AS quilates','peso_gr','comlines.importe','fecha_liquidado')
+            //     ->with(['productos'])
+            //     ->join('comlines','compras.id','=','comlines.compra_id')
+            //     ->join('clases','clase_id','=','clases.id')
+            //     ->where('comlines.concepto', 'like', '%rolex%')->toSql());
+
+            $union0 = Compra::withOutGlobalScope(EmpresaScope::class)
+                ->select('compras.id','comlines.id AS comline_id','tipo_id','serie_com','albaran','fecha_compra','concepto','grabaciones','clases.nombre AS clase','comlines.quilates AS quilates','peso_gr','comlines.importe','fecha_liquidado','compras.empresa_id')
+                    ->with(['productos'])
+                    ->join('comlines','compras.id','=','comlines.compra_id')
+                    ->join('clases','clase_id','=','clases.id')
+                    ->whereIn('compras.empresa_id', session('empresas_usuario'))
+                    ->whereRaw($where)
+                    ->where('comlines.concepto', 'like', '%'.$data['concepto'].'%')
+                    //->whereRaw($where)
+                    ->get();
+
+        }
+        else{
+
+            $union0 = Compra::withOutGlobalScope(EmpresaScope::class)
+                ->select('compras.id','comlines.id AS comline_id','tipo_id','serie_com','albaran','fecha_compra','concepto','grabaciones','clases.nombre AS clase','comlines.quilates AS quilates','peso_gr','comlines.importe','fecha_liquidado')
+                    ->with(['productos'])
+                    ->join('comlines','compras.id','=','comlines.compra_id')
+                    ->join('clases','clase_id','=','clases.id')
+                    ->where('compras.empresa_id', session('empresa')->id)
+                    ->whereDate('fecha_compra','>=', $data['fecha_d'])
+                    ->whereDate('fecha_compra','<=', $data['fecha_h'])
+                    ->where('tipo_id', $data['tipo_id'])
+                    ->where('clase_id', $data['clase_id'])
+                    // ->where('comlines.concepto', 'like', '%sello%')
+                    ->whereRaw($where)
+                    ->whereRaw($where_k)
+                    ->get();
+
+        }
 
         return $union0;
     }

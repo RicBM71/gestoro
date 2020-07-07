@@ -164,7 +164,7 @@ class Compra extends Model
 
     public function getRestoCustodiaAttribute(){
 
-        if ($this->tipo_id == 2) return 0;
+        if ($this->tipo_id == 2 || $this->fecha_renovacion == null) return 0;
 
         $hoy = Carbon::today();
         $fecha_renovacion = Carbon::createFromFormat('Y-m-d h:i:s', $this->fecha_renovacion);
@@ -182,7 +182,7 @@ class Compra extends Model
 
     public function getRetrasoAttribute(){
 
-        if ($this->tipo_id == 2 || $this->fase_id >=5) return "";
+        if ($this->tipo_id == 2 || $this->fase_id >=5  || $this->fecha_renovacion == null) return "";
 
         $hoy = Carbon::today();
         $fecha_renovacion = Carbon::createFromFormat('Y-m-d h:i:s', $this->fecha_renovacion);
