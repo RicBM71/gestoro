@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Compra;
 use App\Albaran;
 use App\Empresa;
 use App\Traspaso;
@@ -87,23 +88,10 @@ class HomeController extends Controller
                         ->update(['activa' => true]);
         }
 
+
         $empresa = Empresa::findOrFail($empresa_id);
 
-        $user = [
-            'id'            => $authUser->id,
-            'name'          => $authUser->name,
-            'username'      => $authUser->username,
-            'avatar'        => $authUser->avatar,
-            'empresa_id'    => $empresa_id,
-            'empresa_nombre'=>$empresa->titulo,
-            'roles'         => $role_user,
-            'permisos'      => $permisos_user,
-            'empresas'      => $empresas,
-            'parametros'    => $parametros,
-            'img_fondo'     => $empresa->img_fondo,
-            'flex_cortesia' => $empresa->getFlag(8),
-            'aislar_empresas'  => $parametros->aislar_empresas,
-        ];
+
 
         // envio mail de modificación de productos
         $this->productosOnline($parametros->email_productos_online, $empresa->razon);
@@ -122,6 +110,28 @@ class HomeController extends Controller
             'parametros'       => $parametros,
             'aislar_empresas'  => $parametros->aislar_empresas
             ]);
+
+
+        $lotes_abiertos = Compra::where('fase_id','<=',3)
+                                ->where('username', $authUser->username)
+                                ->count();
+
+        $user = [
+            'id'            => $authUser->id,
+            'name'          => $authUser->name,
+            'username'      => $authUser->username,
+            'avatar'        => $authUser->avatar,
+            'empresa_id'    => $empresa_id,
+            'empresa_nombre'=>$empresa->titulo,
+            'roles'         => $role_user,
+            'permisos'      => $permisos_user,
+            'empresas'      => $empresas,
+            'parametros'    => $parametros,
+            'img_fondo'     => $empresa->img_fondo,
+            'flex_cortesia' => $empresa->getFlag(8),
+            'aislar_empresas'  => $parametros->aislar_empresas,
+            'lotes_abiertos' => $lotes_abiertos
+        ];
 
         if (request()->wantsJson())
             return [

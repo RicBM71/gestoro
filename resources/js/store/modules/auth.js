@@ -25,6 +25,7 @@ const initialState = {
     stock: null,
     aislar: null,
     flex_cortesia: null,
+    lotes_abiertos: 0,
 };
 
 /*
@@ -46,6 +47,7 @@ const mutations = {
         state.img_fondo = payload.user.img_fondo;
         state.aislar = payload.user.aislar_empresas;
         state.flex_cortesia= payload.user.flex_cortesia;
+        state.lotes_abiertos= payload.user.lotes_abiertos;
 	},
 	[UNSET_USER](state, payload) {
         state.id = null;
@@ -60,6 +62,7 @@ const mutations = {
         state.img_fondo=null;
         state.aislar=null;
         state.flex_cortesia=null;
+        state.lotes_abiertos=0;
 	}
 };
 
@@ -163,6 +166,9 @@ const getters = {
     },
     flexCortesia: (state) =>{
         return state.flex_cortesia;
+    },
+    lotes: (state) =>{
+        return state.lotes_abiertos;
     },
 };
 

@@ -9,9 +9,13 @@
             </v-flex>
 
             <v-flex sm3 xs12>
-                 <v-btn round block large color="grey" class="blue-grey lighten-3" @click="goCompra()">
+                 <v-btn v-if="lotes==0" round block large color="grey" class="blue-grey lighten-3" @click="goCompra()">
                      Nueva Compra
                      <v-icon right dark>add_shopping_cart</v-icon>
+                </v-btn>
+                <v-btn v-else round block large color="grey" class="blue-grey lighten-3" disabled>
+                     Hay lotes abiertos ({{lotes}})
+                    <v-icon right dark>add_shopping_cart</v-icon>
                 </v-btn>
             </v-flex>
 
@@ -113,7 +117,8 @@ export default {
             'isRoot',
             'isAdmin',
             'empresaActiva',
-            'imgFondo'
+            'imgFondo',
+            'lotes'
 		]),
     },
     data: () => ({

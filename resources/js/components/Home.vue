@@ -130,7 +130,14 @@
                     </template>
                     <span>({{jobs}}) Mails pendientes de envio.</span>
                 </v-tooltip>
-
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                        <v-btn v-on="on" @click="goCompras()" icon v-show="computedLotes">
+                            <v-icon color="warning">touch_app</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>Tienes lotes ({{lotes}}) pendientes de cierre.</span>
+                </v-tooltip>
                 <v-btn v-if="traspasos>0" icon v-on:click="goTraspasos()">
                     <v-icon color="warning">notifications</v-icon>
                 </v-btn>
@@ -185,8 +192,17 @@ export default {
             'isGestor',
             'isSupervisor',
             'empresaActiva',
-            'hasLiquidar'
-		]),
+            'hasLiquidar',
+            'lotes'
+        ]),
+        computedLotes(){
+
+            if (this.$route.name == "dash"){
+                return this.lotes > 0;
+            }
+            else
+                return 0;
+        }
     },
     data: () => ({
         menu: true,
@@ -431,6 +447,9 @@ export default {
         },
         goTraspasos(){
             this.$router.push({name: 'traspaso.index'});
+        },
+        goCompras(){
+            this.$router.push({name: 'compra.index'});
         },
         home(){
             axios.get('/dash')
