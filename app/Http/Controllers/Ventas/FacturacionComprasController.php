@@ -10,6 +10,7 @@ use App\Comline;
 use App\Deposito;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Rules\RangoFechaRule;
 use App\Exports\FacturasExport;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -51,7 +52,7 @@ class FacturacionComprasController extends Controller
         $data=$request->validate([
             'grupo_id'  => ['required','integer'],
             'fecha_d'   => ['required','date', new RangoFechaFacturacionRule($request->fecha_d, $request->fecha_h)],
-            'fecha_h'   => ['required','date'],
+            'fecha_h'   => ['required','date', new RangoFechaRule($request->fecha_d, $request->fecha_h)],
             'accion'    => ['required','string'],
             'cobro'     => ['required','string'],
         ]);
@@ -70,8 +71,21 @@ class FacturacionComprasController extends Controller
         }
         else{       // DESFACTURAR.
 
+            $libro = Libro::where('ejercicio', getEjercicio($data['fecha_d']))
+                            ->where('grupo_id', $data['grupo_id'])
+                            ->firstOrFail();
 
             $facturas = $this->desfacturarCompras($data['fecha_d'],$data['fecha_h'], $data['grupo_id']);
+
+            $ult_factura = $libro->ult_factura - $facturas;
+
+            $arr = [
+                'ult_factura' => $ult_factura,
+                'username'    => session()->get('username')
+            ];
+
+            $libro->update($arr);
+
         }
 
         if (request()->wantsJson())
