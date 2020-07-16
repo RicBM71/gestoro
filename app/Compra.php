@@ -202,17 +202,23 @@ class Compra extends Model
     */
     public static function Bloqueo($fecha, $semdia){
 
-        $s = explode("/", $semdia);
-        // $fecha = date('Y-m-d', strtotime($fecha));
-        //$f = Carbon::createFromFormat('Y-m-d h:i:s', $fecha);
         $f = Carbon::parse($fecha);
 
-        // if ($s[0]==0)   // no hay bloqueo, para complementos.
-        //     return $fecha;
+        if (strpos($semdia, "/")===false){  // bloqueo solo en días
 
-        $f->addWeek($s[0]);
+            $f->addDays($semdia);
 
-        return $f->subDays($f->dayOfWeek - $s[1]);
+            if ($f->dayOfWeek == 0)
+                $f->addDay();
+
+            return $f;
+        }
+        else{   // bloqueo por semana y día.
+            $s = explode("/", $semdia);
+            $f->addWeek($s[0]);
+            return $f->subDays($f->dayOfWeek - $s[1]);
+        }
+
 
     }
 

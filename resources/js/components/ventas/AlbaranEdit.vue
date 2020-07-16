@@ -651,8 +651,8 @@ import {mapState} from 'vuex'
             computedFacturar(){
 
                 /// esto dejarlo temporalmente
-                if (this.isRoot && this.albaran.fase_id >= 12 )
-                    return true;
+                // if (this.isRoot && this.albaran.fase_id >= 12 )
+                //     return true;
                 //
 
                 if (this.albaran.id == 0  || !this.hasAddVen) return false;

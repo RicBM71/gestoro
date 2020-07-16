@@ -121,6 +121,7 @@ class RecuentosController extends Controller
             return [
                 'rfids'    => Rfid::selRfid(),
                 'clases'   => Clase::selGrupoClase(),
+                'recuentos' => Recuento::with(['producto','rfid','estado'])->get(),
             ];
 
     }
@@ -154,7 +155,9 @@ class RecuentosController extends Controller
                 $producto = Producto::withOutGlobalScope(EmpresaProductoScope::class)
                                 ->withTrashed()
                                 ->findOrFail($data['referencia']);
-            } catch (\Exception $th) {
+                \Log::info($producto);
+            } catch (\Exception $e) {
+                \Log::info($e);
                 return abort(404, 'Producto/id no existe');
             }
         }
@@ -290,7 +293,17 @@ class RecuentosController extends Controller
 
         DB::table('recuentos')->insert($insert);
 
-        return Recuento::with(['producto','rfid','estado'])->get();
+        $data = Recuento::withOutGlobalScope(EmpresaProductoScope::class)
+                    ->select('referencia','producto_id','productos.nombre AS nombre','precio_coste','rfids.nombre AS rfid','estados.nombre AS estado',
+                            'productos.deleted_at', 'productos.notas', 'rfid_id', 'recuentos.id AS recuento_id', 'productos.empresa_id AS origen',
+                            'productos.destino_empresa_id AS destino')
+                    ->join('productos','productos.id','=','producto_id')
+                    ->join('rfids','rfids.id','=','rfid_id')
+                    ->join('estados','estados.id','=','productos.estado_id')
+                    ->where('recuentos.empresa_id', session('empresa_id'))
+                    ->get();
+
+        //return Recuento::with(['producto','rfid','estado'])->get();
 
 
     }

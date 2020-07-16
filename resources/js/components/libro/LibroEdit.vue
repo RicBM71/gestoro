@@ -141,12 +141,12 @@
                         <v-flex sm2>
                             <v-text-field
                                 v-model="libro.semdia_bloqueo"
-                                v-validate="{ required: true, regex:/^[0-9]\/[1-7]$/ }"
+                                v-validate="'required|max:3'"
                                 :error-messages="errors.collect('semdia_bloqueo')"
                                 label="Bloqueo Lotes"
                                 data-vv-name="semdia_bloqueo"
                                 data-vv-as="Bloqueo Lote"
-                                hint="Semanas/Nº de día"
+                                hint="Semanas/Nº de día o Nº días"
                                 required
                                 v-on:keyup.enter="submit"
                             >

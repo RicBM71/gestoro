@@ -141,10 +141,14 @@
                                     rows-per-page-text="Registros por página"
                                 >
                                     <template slot="items" slot-scope="props">
-                                        <td>{{props.item.referencia }}</td>
-                                        <td>{{ props.item.nombre }}</td>
-                                        <td>{{ props.item.estado }}</td>
-                                        <td>{{ props.item.rfid }}</td>
+                                        <td v-if="props.item.producto != null">{{ props.item.producto.referencia }}</td>
+                                        <td v-else>{{props.item.producto_id}}</td>
+                                        <td v-if="props.item.producto != null">{{ props.item.producto.nombre }}</td>
+                                        <td v-else>¿?</td>
+                                        <td v-if="props.item.producto != null">{{ props.item.estado.nombre }}</td>
+                                        <td v-else>¿?</td>
+                                        <td v-if="props.item.producto != null">{{ props.item.rfid.nombre }}</td>
+                                        <td v-else>¿?</td>
                                         <td class="justify-center layout px-0">
                                             <v-icon
                                                 small
@@ -253,9 +257,10 @@ import MyDialog from '@/components/shared/MyDialog'
         },
         mounted(){
 
-            axios.get('/mto/recuentos')
+            axios.get('/mto/recuentos/create')
                 .then(res => {
-                    this.items = res.data;
+                    this.items = res.data.recuentos;
+                    console.log(this.items);
                 })
                 .catch(err =>{
                     this.$toast.error(err.response.data.message);
@@ -290,7 +295,7 @@ import MyDialog from '@/components/shared/MyDialog'
                                 referencia: this.referencia
                             })
                                 .then(res => {
-                                    console.log(res);
+                                    console.log(res.data.recuento);
                                     this.items.push(res.data.recuento);
                                     this.referencia = null;
                                     this.$validator.reset();

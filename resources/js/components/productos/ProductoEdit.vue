@@ -499,10 +499,14 @@ import {mapState} from 'vuex'
         computed: {
             ...mapGetters([
                     'isAdmin',
+                    'isRoot',
                     'hasEditPro',
                     'userName'
                 ]),
             computedEditEstado(){
+
+               if (this.isRoot) return false;
+               //console.log((this.producto.estado_id == 3 || this.producto.estado_id == 4));
 
                 return (this.producto.estado_id == 3 || this.producto.estado_id == 4);
             },

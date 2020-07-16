@@ -3,7 +3,7 @@
     <tr>
         <th>CODIGO TIENDA</th>
         <th>REGISTRO</th>
-        <th>N. ORDEN</th>
+        <th>F. COMPRA</th>
         <th>APELLIDOS, NOMBRE</th>
         <th>DNI/PASAPORTE</th>
         <th>DIRECCION</th>
