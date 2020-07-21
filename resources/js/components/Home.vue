@@ -262,6 +262,7 @@ export default {
                 { icon: 'account_balance', text: 'Cuentas IBAN', name: 'cuenta.index' },
                 { icon: 'sentiment_satisfied_alt', text: 'Garantías', name: 'garantia.index' },
                 { icon: 'build', text: 'Talleres', name: 'taller.index' },
+                { icon: 'tour', text: 'Existencias', name: 'existencia.index' },
             ]
         },
 

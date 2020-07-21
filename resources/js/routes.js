@@ -119,6 +119,9 @@ import SocialIndex from './components/admin/social/SocialIndex.vue';
 import SocialEdit from './components/admin/social/SocialEdit.vue';
 import SocialCreate from './components/admin/social/SocialCreate.vue';
 
+import ExistenciaIndex from './components/existencia/ExistenciaIndex.vue';
+import ExistenciaEdit from './components/existencia/ExistenciaEdit.vue';
+import ExistenciaCreate from './components/existencia/ExistenciaCreate.vue';
 
 
 import Mod347 from './components/exportar/Mod347.vue';
@@ -705,6 +708,21 @@ export default [
                 path: '/recuentos/:id/edit',
                 name: 'recuento.edit',
                 component: RecuentoEdit,
+            },
+            {
+                path: '/existencias',
+                name: 'existencia.index',
+                component: ExistenciaIndex,
+            },
+            {
+                path: '/existencias/create',
+                name: 'existencia.create',
+                component: ExistenciaCreate,
+            },
+            {
+                path: '/existencias/:id/edit',
+                name: 'existencia.edit',
+                component: ExistenciaEdit,
             },
             {
                 path: '/intercambio',

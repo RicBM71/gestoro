@@ -156,6 +156,8 @@ Route::group([
         Route::post('recuentos/excel', 'RecuentosController@excel');
         Route::post('recuentos/estados', 'RecuentosController@estados');
 
+        Route::resource('existencias', 'ExistenciasController', ['as' => 'mto']);
+
 
     }
 );
