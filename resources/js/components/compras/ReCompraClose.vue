@@ -389,6 +389,7 @@
                     <v-layout row wrap>
                         <v-flex sm8>
                             <v-text-field
+                                :error="computedError"
                                 v-model="compra.notas"
                                 append-icon="save"
                                 label="Observaciones Compra"
@@ -420,6 +421,7 @@
                     <v-layout row wrap v-if="compra.cliente.notas!=null">
                         <v-flex sm12>
                             <v-text-field
+                                error
                                 v-model="compra.cliente.notas"
                                 append-icon="save"
                                 label="Observaciones Cliente"
@@ -635,6 +637,9 @@ import {mapState} from 'vuex'
                 'flexCortesia',
                 'parametros'
             ]),
+            computedError(){
+                return this.compra.notas != null ? 'error' : null;
+            },
             computedTotalPrestamo(){
 
                 return this.getDecimalFormat(this.totales_concepto[1] + this.totales_concepto[2] + this.totales_concepto[3]);

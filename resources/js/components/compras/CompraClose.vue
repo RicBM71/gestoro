@@ -140,6 +140,7 @@
                             <v-flex sm8>
                                 <v-text-field
                                     v-model="compra.notas"
+                                    :error="computedError"
                                     append-icon="save"
                                     label="Observaciones Compra"
                                     @click:append="updateNota"
@@ -170,6 +171,7 @@
                             <v-flex sm12>
                                 <v-text-field
                                     v-model="compra.cliente.notas"
+                                    error
                                     append-icon="save"
                                     label="Observaciones Cliente"
                                     @click:append="updateNotaCli"
@@ -327,6 +329,9 @@ import {mapState} from 'vuex'
                 'userName',
                 'hasAddCom'
             ]),
+            computedError(){
+                return this.compra.notas != null ? 'error' : null;
+            },
            computedAuthLiquidar(){
 
                 if (this.compra.fase_id !=5){ // no está recuperado
