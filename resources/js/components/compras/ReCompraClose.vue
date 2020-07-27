@@ -712,11 +712,23 @@ import {mapState} from 'vuex'
             computedDisabledRecuperar(){
 
                 // con esto un administrador, tiene que hacer una ampliación con importe a cero, así queda constancia
-                if (this.isSupervisor) return false; // lo dejo para poder recupear aún bloqueado.
+                if (this.isAdmin) return false; // lo dejo para poder recupear aún bloqueado.
 
-                // cambio a <= por conversación rosa
-                if (new Date() <= new Date(this.compra.fecha_bloqueo))
+                var date = new Date();
+                var hoy = moment(date).format('YYYY-MM-DD');
+
+                // var hoy = new Date();
+                // hoy.toISOString().substring(0, 10);
+
+                // // cambio a <= por conversación rosa
+                // console.log(formattedDate);
+
+                if (hoy <= this.compra.fecha_bloqueo){
+                //if (new Date() <= new Date(this.compra.fecha_bloqueo)){
+
+                    console.log(this.compra.fecha_bloqueo);
                     return true; // está bloqueado por fecha
+                }
                 else{
 
                     if (this.flexCortesia)
