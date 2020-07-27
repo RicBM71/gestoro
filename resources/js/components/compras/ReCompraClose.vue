@@ -714,7 +714,8 @@ import {mapState} from 'vuex'
                 // con esto un administrador, tiene que hacer una ampliación con importe a cero, así queda constancia
                 if (this.isSupervisor) return false; // lo dejo para poder recupear aún bloqueado.
 
-                if (new Date() < new Date(this.compra.fecha_bloqueo))
+                // cambio a <= por conversación rosa
+                if (new Date() <= new Date(this.compra.fecha_bloqueo))
                     return true; // está bloqueado por fecha
                 else{
 
