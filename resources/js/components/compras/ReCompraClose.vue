@@ -707,6 +707,10 @@ import {mapState} from 'vuex'
             },
             computedShowUbicacion(){
 
+                // var date = new Date();
+                // var hoy = moment(date).format('YYYY-MM-DD');
+                // return (hoy > this.compra.fecha_bloqueo && this.compra.factura == null && this.compra.fase_id <= 4);
+
                 return (new Date() >= new Date(this.compra.fecha_bloqueo) && this.compra.factura == null && this.compra.fase_id <= 4);
             },
             computedDisabledRecuperar(){
@@ -725,8 +729,6 @@ import {mapState} from 'vuex'
 
                 if (hoy <= this.compra.fecha_bloqueo){
                 //if (new Date() <= new Date(this.compra.fecha_bloqueo)){
-
-                    console.log(this.compra.fecha_bloqueo);
                     return true; // está bloqueado por fecha
                 }
                 else{
