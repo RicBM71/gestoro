@@ -188,7 +188,7 @@ import {mapActions} from "vuex";
             descending: false,
             page: 1,
             rowsPerPage: 10,
-            sortBy: "id",
+            sortBy: "fecha",
         },
         search:"",
         headers: [

@@ -278,6 +278,7 @@ export default {
                 { icon: 'fireplace', text: 'Liquidar Lotes', name:'liquidar.index' },
                 { icon: 'compare_arrows', text: 'Intercambio de Operaciones', name:'intercambio' },
                 { icon: 'check_circle_outline', text: 'Check Contadores', name:'contador.check' },
+                { icon: 'auto_delete', text: 'Borrar Cajas', name:'tools.delcaj' },
             ]
         },
 

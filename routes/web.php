@@ -302,6 +302,9 @@ Route::group([
         Route::post('amplimasivo', 'AmpliarMasivoController@submit');
         Route::post('cambiointeres', 'CambioInteresController@submit');
 
+        Route::get('borrarcaja', 'BorrarCajaController@index');
+        Route::post('borrarcaja/', 'BorrarCajaController@submit');
+
      //   Route::get('helpbanco', 'HelpBancosController@index');
     }
 );
