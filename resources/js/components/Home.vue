@@ -193,7 +193,8 @@ export default {
             'isSupervisor',
             'empresaActiva',
             'hasLiquidar',
-            'lotes'
+            'lotes',
+            'parametros'
         ]),
         computedLotes(){
 
@@ -297,10 +298,12 @@ export default {
         mn_items: [
             { icon: 'people', text: 'Clientes', name:'cliente.index' },
             { icon: 'local_offer', text: 'Productos', name:'producto.index' },
-
         ],
 
+        mn_fixing: {
 
+             icon: 'insights', text: 'Fixing', name:'fixing.index' ,
+        },
 
          mn_consultas:{
             icon: 'keyboard_arrow_up',
@@ -363,12 +366,16 @@ export default {
         },
         expired: false,
     }),
+
     mounted(){
 
         axios.get('/dash')
                 .then(res => {
 
                     this.setAuthUser(res.data.user);
+
+                    if (this.parametros.fixing == true)
+                        this.mn_items.push(this.mn_fixing);
 
                     this.mn_items.push(this.mn_etiquetas);
 

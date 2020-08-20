@@ -124,6 +124,10 @@ import ExistenciaEdit from './components/existencia/ExistenciaEdit.vue';
 import ExistenciaCreate from './components/existencia/ExistenciaCreate.vue';
 
 
+import FixingIndex from './components/fixing/FixingIndex.vue';
+import FixingEdit from './components/fixing/FixingEdit.vue';
+import FixingCreate from './components/fixing/FixingCreate.vue';
+
 import Mod347 from './components/exportar/Mod347.vue';
 import Balance from './components/exportar/Balance.vue';
 import Operaciones from './components/exportar/Operaciones.vue';
@@ -784,6 +788,21 @@ export default [
                 path: '/tools/cierre',
                 name: 'tools.cierre',
                 component: Cierre,
+            },
+            {
+                path: '/fixings',
+                name: 'fixing.index',
+                component: FixingIndex,
+            },
+            {
+                path: '/fixings/create',
+                name: 'fixing.create',
+                component: FixingCreate,
+            },
+            {
+                path: '/fixings/:id/edit',
+                name: 'fixing.edit',
+                component: FixingEdit,
             },
             // {
             //     path: '*',

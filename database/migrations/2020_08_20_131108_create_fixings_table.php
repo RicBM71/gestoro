@@ -20,6 +20,8 @@ class CreateFixingsTable extends Migration
             $table->decimal('importe', 10, 2)->default(0);
             $table->string('username', 30)->nullable();
             $table->timestamps();
+            
+            $table->unique(['clase_id', 'fecha']);
         });
     }
 

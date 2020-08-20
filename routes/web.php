@@ -157,7 +157,7 @@ Route::group([
         Route::post('recuentos/estados', 'RecuentosController@estados');
 
         Route::resource('existencias', 'ExistenciasController', ['as' => 'mto']);
-
+        Route::resource('fixings', 'FixingsController', ['as' => 'mto']);
 
     }
 );

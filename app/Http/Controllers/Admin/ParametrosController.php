@@ -46,6 +46,7 @@ class ParametrosController extends Controller
             'doble_interes'  => ['required','boolean'],
             'tag_renovar'    => ['required','string'],
             'notificar_iban' => ['required','boolean'],
+            'fixing'         => ['required','boolean'],
 
         ]);
 
