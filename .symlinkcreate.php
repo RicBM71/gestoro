@@ -1,1 +1,1 @@
-<?php symlink('/home/evaoro/laraquil/storage/app/public','/home/evaoro/www/storage');
+<?php symlink('/home/platamania/laraquil/storage/app/public','/home/platamania/www/storage');

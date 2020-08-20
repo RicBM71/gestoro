@@ -9,7 +9,7 @@ use App\Rules\Compras\ImporteRecuperacion;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\Compras\ImporteMinRecuperacionRule;
 use App\Rules\Compras\LimiteEfectivoRecuperarRule;
-use App\Rules\compras\AmpliacionAntesDeRecuperacion;
+use App\Rules\compras\AmpliacionAntesRecu;
 
 class StoreRecuperar extends FormRequest
 {
@@ -37,7 +37,7 @@ class StoreRecuperar extends FormRequest
             'concepto_id'   => ['required','integer','between:10,12'],
             'cliente_id'    => ['required','integer'],
             'compra_id'     => ['required','integer'],
-            'fecha'         => ['required','date', new FechaRecuperacion($compra), new RetrasoRule($compra), new AmpliacionAntesDeRecuperacion($compra)],
+            'fecha'         => ['required','date', new FechaRecuperacion($compra), new RetrasoRule($compra), new AmpliacionAntesRecu($compra)],
             'importe1'      => ['numeric',  new LimiteEfectivoRecuperarRule($this->fecha, $compra, $this->concepto_id, $this->importe)],
             'importe2'      => ['numeric', new ImporteRecuperacion($compra, $this->importe), new ImporteMinRecuperacionRule($compra, $this->importe)],
             'importe'       => ['required','numeric',new LimiteEfectivoRecuperarRule($this->fecha, $compra, $this->concepto_id, $this->importe),new ImporteRecuperacion($compra, $this->importe), new ImporteMinRecuperacionRule($compra, $this->importe)],

@@ -5,7 +5,7 @@ namespace App\Rules\compras;
 use App\Deposito;
 use Illuminate\Contracts\Validation\Rule;
 
-class AmpliacionAntesDeRecuperacion implements Rule
+class AmpliacionAntesRecu implements Rule
 {
     protected $compra;
     /**
