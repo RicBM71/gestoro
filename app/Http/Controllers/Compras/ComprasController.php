@@ -46,13 +46,18 @@ class ComprasController extends Controller
         if (request()->session()->has('filtro_com')){
             $data = $this->miFiltro();
         }else{
-            $data = Compra::with(['cliente','grupo','tipo','fase'])
-                ->where('fecha_compra','=',Carbon::today())
-                ->get();
 
+            $lotes_abiertos = Compra::where('fase_id','<=',3)
+                                    ->where('username', session('username'));
+            if ($lotes_abiertos->count() > 0)
+                $data = $lotes_abiertos->get()->load(['cliente','grupo','tipo','fase']);
+            else
+                $data = Compra::with(['cliente','grupo','tipo','fase'])
+                   ->where('fecha_compra','=',Carbon::today())
+                   ->get();
         }
-
-        if (request()->wantsJson())
+                                \Log::info($lotes_abiertos->get());
+       if (request()->wantsJson())
             return $data;
     }
 
