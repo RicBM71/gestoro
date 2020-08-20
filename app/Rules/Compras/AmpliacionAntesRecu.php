@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Rules\compras;
+namespace App\Rules\Compras;
 
 use App\Deposito;
 use Illuminate\Contracts\Validation\Rule;
