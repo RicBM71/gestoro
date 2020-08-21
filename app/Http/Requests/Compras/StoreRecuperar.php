@@ -9,7 +9,7 @@ use App\Rules\Compras\ImporteRecuperacion;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\Compras\ImporteMinRecuperacionRule;
 use App\Rules\Compras\LimiteEfectivoRecuperarRule;
-use App\Rules\compras\AmpliacionAntesRecu;
+use App\Rules\Compras\AmpliacionAntesRecu;
 
 class StoreRecuperar extends FormRequest
 {
