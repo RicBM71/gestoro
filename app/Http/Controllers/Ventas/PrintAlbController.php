@@ -9,6 +9,7 @@ use App\Cobro;
 
 use App\Fpago;
 use App\Cuenta;
+use App\Fixing;
 use App\Motivo;
 use App\Albalin;
 use App\Albaran;
@@ -26,6 +27,8 @@ class PrintAlbController extends Controller
     protected $albaran;
     protected $totales;
     protected $hay_productos_con_garantia = false;
+    protected $hay_oro = false;
+    protected $ultimo_cobro;
 
     public function mail(Request $request, Albaran $albarane){
 
@@ -145,8 +148,10 @@ class PrintAlbController extends Controller
             }
             if ($this->albaran->motivo_id > 0)
                 $this->impMotivo();
-            else
+            else{
                 $this->pieRebu();
+                $this->pieFixing();
+            }
         }else{
             // if ($this->albaran->factura != null)
             $this->PagosCliente();
@@ -238,6 +243,9 @@ class PrintAlbController extends Controller
 
         $this->hay_productos_con_garantia=collect([]);
 		foreach ($lineas as $row) {
+
+            if ($row->producto->clase_id == 1 && $this->hay_oro == false)
+                $this->hay_oro = true;
 
             $txt_garantia = $leyenda = null;
             if ($row->producto->garantia_id > 0){
@@ -409,7 +417,7 @@ class PrintAlbController extends Controller
 
     private function pagosCliente(){
 
-        $data = Cobro::with('fpago')->albaranId($this->albaran->id)->get();
+        $data = Cobro::with('fpago')->where('albaran_id', $this->albaran->id)->orderBy('fecha','asc')->get();
 
         if ($data->count() == 0){
             return;
@@ -431,6 +439,8 @@ class PrintAlbController extends Controller
             PDF::MultiCell(40, 5, $cobro->fpago->nombre, 'R', 'L', 0, 0, '', '', true);
             PDF::MultiCell(20, 5, getDecimal($cobro->importe), '', 'R', 0, 1, '', '', true);
             $total_cobrado+= $cobro->importe;
+
+            $this->ultimo_cobro = $cobro->fecha;
         }
 
 
@@ -488,6 +498,30 @@ class PrintAlbController extends Controller
                    "empresa podrá disponer de pleno derecho de los objetos reseñados y supondrá la pérdida de la señal abonada.";
             PDF::MultiCell(188, 6, $txt, '', 'L', 0, 1, '', '', true);
         }
+    }
+
+    private function pieFixing(){
+
+        if (session('parametros')->fixing == false || $this->albaran->fase_id > 10 || $this->hay_oro == false) return;
+
+        if ($this->ultimo_cobro == false)
+            $this->ultimo_cobro = $this->albaran->fecha;
+
+        $imp_fix = Fixing::getFixDia(1,$this->ultimo_cobro);
+
+        if ($imp_fix == 0) return;
+
+        PDF::MultiCell(188, 1, "", '', 'L', 0, 1, '', '', true);
+        //PDF::Ln();
+
+        PDF::SetFont('helvetica', 'RI', 9, '', false);
+
+        $txt = 'En el caso de que se produzca una subida en el precio del oro, fijado según el fixing, en el periodo comprendido entre la fecha en que se realiza la presente reserva y '.
+                'la fecha en que se efectúe efectivamente la compra, el vendedor podrá elevar el importe de esta según dicha variación. En caso de que el vendedor eleve el precio derivado de '.
+                'la subida del oro, el comprador podrá desistir de la compra, reintegrándole íntegramente el importe de la reserva. A estos efectos, el precio establecido según el fixing '.
+                'a fecha de la reserva es de '.getDecimal($imp_fix, 2).' €.'."\n";
+
+        PDF::MultiCell(188, 6, $txt, '', 'J', 0, 1, '', '', true);
     }
 
     private function formaDePago(){

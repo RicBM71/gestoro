@@ -1,5 +1,8 @@
 <?php
 
+use App\Cobro;
+use App\Fixing;
+
 // use App\Compra;
 // use App\Scopes\EmpresaScope;
 
@@ -11,25 +14,16 @@ Route::post('/profile/avatar', 'HomeController@avatar');
 Route::put('/profile/destroy', 'HomeController@destroy');
 
 // Route::get('/test', 'HomeController@test');
-// Route::get('test', function () {
+Route::get('test', function () {
 
-//     $where = DB::getTablePrefix().'compras.id > 0';
+    echo Fixing::getFixDia(1,'2020-08-05');
 
-//     $data = Compra::withOutGlobalScope(EmpresaScope::class)->select('comlines.id','compra_id','tipo_id','serie_com','albaran','fecha_compra','concepto','grabaciones','clases.nombre AS clase','comlines.quilates AS quilates','peso_gr','comlines.importe')
-//     ->with(['productos'])
-//     ->join('comlines','compras.id','=','comlines.compra_id')
-//     ->join('clases','clase_id','=','clases.id')
-//     ->where('compras.empresa_id', session('empresa')->id)
-//     ->whereYear('fecha_compra','=', 2020)
-//     ->where('tipo_id', 2)
-//     ->where('clase_id', 1)
-//     ->whereRaw($where)
-//     ->get()->take(10);
+    $data = Cobro::albaranId(264073)->get();
 
-//     return $data;
+    
 
-//     return 'Hello World';
-// });
+    return 'Hello World';
+});
 
 Route::get('/expired', 'HomeController@expired')->name('expired');
 

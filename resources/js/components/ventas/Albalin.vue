@@ -30,8 +30,7 @@
                                 <td class="text-xs-right">{{ props.item.iva | currency('%', 0, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                                 <td v-if="albaran.tipo_id==3" class="text-xs-right">{{ props.item.importe_unidad | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                                 <td v-else class="text-xs-right">{{ props.item.importe_unidad | currency('', 4, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
-                                <td v-if="isSupervisor"  class="text-xs-right">{{ props.item.margen | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
-                                <td v-else>-</td>
+                                <td class="text-xs-right">{{margen_fix(props.item)}}<span v-if="icon_fix(props.item)"><v-icon small color="red darken-4">south</v-icon></span></td>
                                 <td class="text-xs-right">{{ props.item.descuento | currency('%', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                                 <td class="text-xs-right">{{ props.item.importe_venta | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                                 <td class="justify-center layout px-0">
@@ -124,7 +123,7 @@ import MyDialog from '@/components/shared/MyDialog'
 import AlbalinCreate from './AlbalinCreate'
 import AlbalinEdit from './AlbalinEdit'
 export default {
-    props:['albaran','totales','acuenta'],
+    props:['albaran','totales','acuenta','fixing','low_fix'],
     // props:{
     //     albaran: Object,
     //     totales: Object,
@@ -196,7 +195,7 @@ export default {
                     text: 'Margen',
                     align: 'center',
                     value: 'margen',
-                    width:'8%'
+                    width:'10%'
                 },
                 {
                     text: 'Dto.',
@@ -230,7 +229,8 @@ export default {
             'hasEdtFac',
             'hasAddVen',
             'userName',
-            'isAdmin'
+            'isAdmin',
+            'parametros'
         ]),
         computedResto(){
             return (this.totales.total - this.acuenta).toFixed(2);
@@ -289,11 +289,47 @@ export default {
             else
                 return item.producto.nombre;
         },
+        icon_fix(item){
+
+            if (this.albaran.tipo_id != 3 || this.parametros.fixing == false) return false;
+
+            return parseFloat(this.fixing) > parseFloat(this.fix_producto(item));
+        },
+        margen_fix(item){
+            // oro y reservado
+            if (this.albaran.tipo_id == 3 && this.parametros.fixing == true && item.producto.clase_id == 1 && item.producto.estado_id == 3){
+
+                var imp_fix = this.fix_producto(item);
+                if (parseFloat(this.fixing) > parseFloat(this.fix_producto(item))){
+                    if (this.low_fix == false)
+                        this.$emit('update:low_fix', true);
+
+                    return this.getDecimalFormat(this.fixing) + " / " + this.getDecimalFormat(imp_fix);
+                }
+            }
+
+            if (!this.isSupervisor) return '-';
+
+            if (item.margen != null)
+                return this.getDecimalFormat(item.margen, 2);
+            else
+                return "";
+
+        },
+        fix_producto(item){
+
+            var imp_fix = 0;
+            var imp_uni = parseFloat(item.importe_unidad);
+            var peso = parseFloat(item.producto.peso_gr);
+
+            return (imp_uni / peso).toFixed(0);
+
+        },
         conCaracteristicas(item){
 
             const quilates = item.producto.quilates > 0 ? item.producto.quilates+"KT" : "";
 
-            const peso = (item.producto.peso_gr && item.producto.univen == "G") > 0 ? item.producto.peso_gr+" gr." : "";
+            const peso = (item.producto.peso_gr && item.producto.univen == "U") > 0 ? item.producto.peso_gr+" gr." : "";
 
             const caracteristicas = item.producto.caracteristicas != null ? item.producto.caracteristicas : "";
             const garantia = item.producto.garantia_id != null ?
@@ -355,7 +391,9 @@ export default {
             moment.locale('es');
             return newValue ? moment(newValue).format('DD/MM/YYYY') : '';
         },
-
+        getDecimalFormat(value, dec=0){
+            return new Intl.NumberFormat("de-DE",{style: "decimal",minimumFractionDigits:dec}).format(parseFloat(value))
+        },
     }
 
 }

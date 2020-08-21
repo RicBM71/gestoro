@@ -41,6 +41,7 @@
                     <template v-slot:activator="{ on }">
                         <v-btn
                             v-show="computedShowGoCobros"
+                            :disabled="computedDisabledCobros"
                             v-on="on"
                             color="white"
                             icon
@@ -450,6 +451,8 @@
                     :totales.sync="totales"
                     :acuenta="acuenta"
                     :albaran.sync="albaran"
+                    :fixing="fixing"
+                    :low_fix.sync="low_fix"
                 ></alba-lin>
                 <cobro-lin
                     v-show="show_lincob"
@@ -538,7 +541,8 @@ import {mapState} from 'vuex'
                 empresas:[],
                 tipo_abono:"",
                 notas_cliente:"",
-
+                fixing: 0,
+                low_fix: false,
       		}
         },
         beforeMount(){
@@ -568,6 +572,7 @@ import {mapState} from 'vuex'
 
                         this.empresas.push({value: null, text: '-'});
 
+                        this.fixing = res.data.fixing;
 
                         this.reLoadCobros();
 
@@ -587,7 +592,8 @@ import {mapState} from 'vuex'
                 'isAdmin',
                 'isRoot',
                 'hasFactura',
-                'hasAddVen'
+                'hasAddVen',
+                'parametros'
             ]),
             computedTaller(){
                 return (this.factura > 0);
@@ -611,6 +617,15 @@ import {mapState} from 'vuex'
                 if (this.albaran.fase_id == 10 && this.computedResto != 0)
                     return true;
                 return false;
+            },
+            computedDisabledCobros(){
+
+                if (this.albaran.tipo_id != 3 || this.parametros.fixing == false) return false;
+
+                if (this.isAdmin) return false;
+
+                return this.low_fix;
+
             },
             computedLabelAlbaran(){
                 return (this.albaran.factura == null) ? 'Nº Albarán' : 'Albarán '+ this.computedFechaAlbaran;
@@ -717,7 +732,14 @@ import {mapState} from 'vuex'
                     this.reLoadCobros();
                 }
 
+            },
+            low_fix: function () {
+
+            if (this.low_fix == true){
+                this.$toast.warning('Productos por debajo de fixing. ¡REVISAR PRECIOS!');
             }
+
+        },
         },
     	methods:{
             ...mapActions([

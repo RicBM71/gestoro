@@ -13,4 +13,15 @@ class Fixing extends Model
     protected $casts = [
         'fecha' => 'date:Y-m-d',
     ];
+
+    public static function getFixDia($clase_id, $fecha){
+
+        $data = Fixing::where('clase_id',$clase_id)
+                      ->where('fecha', '<=', $fecha)
+                      ->orderBy('fecha', 'desc')
+                      ->first();
+
+        return ($data == false) ? 0 : $data->importe;
+
+    }
 }
