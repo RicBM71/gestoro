@@ -28,7 +28,7 @@ class PrintAlbController extends Controller
     protected $totales;
     protected $hay_productos_con_garantia = false;
     protected $hay_oro = false;
-    protected $ultimo_cobro;
+    protected $ultimo_cobro = false;
 
     public function mail(Request $request, Albaran $albarane){
 
@@ -505,7 +505,7 @@ class PrintAlbController extends Controller
         if (session('parametros')->fixing == false || $this->albaran->fase_id > 10 || $this->hay_oro == false) return;
 
         if ($this->ultimo_cobro == false)
-            $this->ultimo_cobro = $this->albaran->fecha;
+            $this->ultimo_cobro = $this->albaran->fecha_albaran;
 
         $imp_fix = Fixing::getFixDia(1,$this->ultimo_cobro);
 

@@ -16,6 +16,11 @@ class Fixing extends Model
 
     public static function getFixDia($clase_id, $fecha){
 
+
+
+        if ($fecha == null) return 0;
+
+
         $data = Fixing::where('clase_id',$clase_id)
                       ->where('fecha', '<=', $fecha)
                       ->orderBy('fecha', 'desc')
