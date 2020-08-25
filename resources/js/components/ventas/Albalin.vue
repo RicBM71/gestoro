@@ -291,7 +291,7 @@ export default {
         },
         icon_fix(item){
 
-            if (this.albaran.tipo_id != 3 || this.parametros.fixing == false) return false;
+            if (this.albaran.tipo_id != 3 || this.parametros.fixing == false || item.producto.clase_id != 1) return false;
 
             return parseFloat(this.fixing) > parseFloat(this.fix_producto(item));
         },
