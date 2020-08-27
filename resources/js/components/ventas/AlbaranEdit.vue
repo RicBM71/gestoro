@@ -620,6 +620,8 @@ import {mapState} from 'vuex'
             },
             computedDisabledCobros(){
 
+                return false; // de momento no controlar 27.08.20 David
+
                 if (this.albaran.tipo_id != 3 || this.parametros.fixing == false) return false;
 
                 if (this.isAdmin) return false;
