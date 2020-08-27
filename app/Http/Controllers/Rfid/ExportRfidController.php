@@ -103,7 +103,9 @@ class ExportRfidController extends Controller
 
         $precio_coste = str_repeat("0", 4-$long).$precio_coste;
 
-        $pos = strpos(strtoupper($producto->clase->nombre), "BRI");
+        //$pos = strpos(strtoupper($producto->clase->nombre), "BRI");
+        $pos = strpos(strtoupper($producto->nombre), "BRI");
+
         if ($pos === FALSE)
             $costecod="-";
         else
