@@ -30,7 +30,7 @@ class Fixing extends Model
                       ->orderBy('fecha', 'desc')
                       ->first();
 
-        if ($fecha_albaran === false)
+        if ($fecha_albaran === false || $data == false)
             return ($data == false) ? 0 : $data->importe;
         else{
             if ($fecha_albaran < $data->fecha)
