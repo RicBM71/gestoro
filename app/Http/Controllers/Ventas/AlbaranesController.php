@@ -180,7 +180,7 @@ class AlbaranesController extends Controller
                 'fpagos'  => Fpago::selFpagos(),
                 'talleres'=> Taller::selTalleres(),
                 'empresas'=> Empresa::selEmpresas()->Venta()->get(),
-                'fixing'  => Fixing::getFixDia(1, date('Y-m-d'))
+                'fixing'  => Fixing::getFixDia(1, date('Y-m-d'), $albarane->fecha_albaran)
             ];
 
     }

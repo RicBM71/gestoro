@@ -14,16 +14,16 @@ Route::post('/profile/avatar', 'HomeController@avatar');
 Route::put('/profile/destroy', 'HomeController@destroy');
 
 // Route::get('/test', 'HomeController@test');
-Route::get('test', function () {
+// Route::get('test', function () {
 
-    echo Fixing::getFixDia(1,'2020-08-05');
+//     echo Fixing::getFixDia(1,'2020-08-05');
 
-    $data = Cobro::albaranId(264073)->get();
+//     $data = Cobro::albaranId(264073)->get();
 
-    
 
-    return 'Hello World';
-});
+
+//     return 'Hello World';
+// });
 
 Route::get('/expired', 'HomeController@expired')->name('expired');
 

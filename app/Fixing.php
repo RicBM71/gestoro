@@ -14,9 +14,13 @@ class Fixing extends Model
         'fecha' => 'date:Y-m-d',
     ];
 
-    public static function getFixDia($clase_id, $fecha){
+    /**
+     * Si fecha albarán != false comprobamos que el albarán esté dentro del rango de comprobación
+     * desde la primera fecha del fixing, de esta forma no controlamos albaranes antiguos para no liar.
+     * 03/09/2020
+     */
 
-
+    public static function getFixDia($clase_id, $fecha, $fecha_albaran = false){
 
         if ($fecha == null) return 0;
 
@@ -26,7 +30,15 @@ class Fixing extends Model
                       ->orderBy('fecha', 'desc')
                       ->first();
 
-        return ($data == false) ? 0 : $data->importe;
+        if ($fecha_albaran === false)
+            return ($data == false) ? 0 : $data->importe;
+        else{
+            if ($fecha_albaran < $data->fecha)
+                return false;
+            else
+                return ($data == false) ? 0 : $data->importe;
+
+        }
 
     }
 }
