@@ -103,6 +103,9 @@ class LibrosController extends Controller
             $data['serie_com'] =  "U";
             $data['serie_fac'] =  "RU";
         }
+
+        $data['ult_compra'] = 0;
+        $data['ult_factura'] = 0;
         $data['empresa_id'] =  session()->get('empresa')->id;
         $data['username'] = $request->user()->username;
 

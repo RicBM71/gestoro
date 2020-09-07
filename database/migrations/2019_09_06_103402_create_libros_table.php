@@ -19,8 +19,8 @@ class CreateLibrosTable extends Migration
             $table->unsignedInteger('empresa_id');
             $table->unsignedInteger('grupo_id');
             $table->Integer('ejercicio')->default(0);
-            $table->Integer('ult_compra')->default(1);
-            $table->Integer('ult_factura')->default(1);
+            $table->Integer('ult_compra')->default(0);
+            $table->Integer('ult_factura')->default(0);
             $table->string('serie_com', 1)->nullable();
             $table->string('serie_fac', 5)->nullable();
             $table->smallInteger('dias_custodia')->default(30);

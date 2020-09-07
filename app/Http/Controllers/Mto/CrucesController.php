@@ -88,7 +88,7 @@ class CrucesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Grupo $cruce)
+    public function update(Request $request, Cruce $cruce)
     {
         $this->authorize('update', $cruce);
 
