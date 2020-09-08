@@ -56,7 +56,7 @@ class ComprasController extends Controller
                    ->where('fecha_compra','=',Carbon::today())
                    ->get();
         }
-                                \Log::info($lotes_abiertos->get());
+                             
        if (request()->wantsJson())
             return $data;
     }
