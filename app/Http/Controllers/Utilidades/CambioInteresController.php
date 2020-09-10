@@ -21,14 +21,14 @@ class CambioInteresController extends Controller
 
         $compras = Compra::where('tipo_id',1)
                             ->where('fase_id', 4)
-                            ->where('interes', 10)
+                            ->where('interes', 5)
                             ->get();
 
         $i=0;
         foreach ($compras as $compra)                            {
 
-            if ($compra->interes < $data['interes'])
-                continue;
+            // if ($compra->interes < $data['interes'])
+            //     continue;
 
             $data_com['username'] = "Gerencia";
             $data_com['importe_renovacion']   = round(($compra->importe - $compra->importe_acuenta)  *  $data['interes'] / 100, 0);
