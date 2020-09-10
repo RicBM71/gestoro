@@ -89,9 +89,9 @@ class KlRjImportaComprasSeeder extends Seeder
 
             $compra_kilates = DB::connection('db2')->select('select * from klt_compras WHERE empresa_id = 1 AND year(fecha_compra) = ? AND albaran = ?',[$ejercicio, $albaran]);
 
-            \Log::info(collect($compra_kilates[0]));
+            //\Log::info(collect($compra_kilates[0]));
 
-            break;
+            //break;
 
 
             try {
