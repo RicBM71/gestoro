@@ -29,4 +29,10 @@ mix.browserSync({
 	open:false
 });
 
+mix.options({
+    terser: {
+      extractComments: false,
+    }
+  });
+
 mix.disableNotifications();
