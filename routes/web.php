@@ -171,6 +171,8 @@ Route::group([
         Route::post('compras/filtrar', 'ComprasController@filtrar');
         Route::post('compras/excel', 'ComprasController@excel');
 
+        Route::resource('hcompras', 'HcomprasController', ['only'=>['index','show']]);
+
         Route::get('trasladar', 'TrasladarController@index');
         Route::put('trasladar/{compra}', 'TrasladarController@update');
         Route::get('trasladar/{empresa_id}/grupo', 'TrasladarController@grupo');

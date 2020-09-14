@@ -128,6 +128,9 @@ import FixingIndex from './components/fixing/FixingIndex.vue';
 import FixingEdit from './components/fixing/FixingEdit.vue';
 import FixingCreate from './components/fixing/FixingCreate.vue';
 
+import HcompraIndex from './components/hcompras/HcompraIndex.vue';
+import HcompraShow from './components/hcompras/HcompraShow.vue';
+
 import Mod347 from './components/exportar/Mod347.vue';
 import Balance from './components/exportar/Balance.vue';
 import Operaciones from './components/exportar/Operaciones.vue';
@@ -803,6 +806,16 @@ export default [
                 path: '/fixings/:id/edit',
                 name: 'fixing.edit',
                 component: FixingEdit,
+            },
+            {
+                path: '/hcompras',
+                name: 'hcompras.index',
+                component: HcompraIndex,
+            },
+            {
+                path: '/hcompras/:id',
+                name: 'hcompras.show',
+                component: HcompraShow,
             },
             // {
             //     path: '*',

@@ -15,4 +15,43 @@ class Hcompra extends Model
         'id', 'operacion', 'username_his', 'created_his', 'compra_id'
      ];
 
+    protected $appends = ['alb_ser'];
+
+    public function getAlbSerAttribute(){
+
+        return $this->serie_com." ".$this->albaran.'-'.substr($this->ejercicio,-2);
+        
+    }
+
+
+    public function grupo()
+    {
+    	return ($this->belongsTo(Grupo::class));
+    }
+
+    public function cliente()
+    {
+    	return ($this->belongsTo(Cliente::class));
+    }
+
+    public function tipo()
+    {
+    	return ($this->belongsTo(Tipo::class));
+    }
+
+    public function fase()
+    {
+    	return ($this->belongsTo(Fase::class));
+    }
+
+    public function hcomlines()
+    {
+        return $this->hasMany(Hcomline::class,'compra_id','compra_id');
+    }
+
+    public function hdepositos()
+    {
+        return $this->hasMany(Hdeposito::class);
+    }
+
 }

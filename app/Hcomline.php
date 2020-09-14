@@ -11,4 +11,10 @@ class Hcomline extends Model
         'importe_venta','iva',
         'importe_gr','quilates','fecha_liquidado','username','operacion','created_his','username_his'
     ];
+
+    public function clase()
+    {
+    	return $this->belongsTo(Clase::class);
+    }
+
 }
