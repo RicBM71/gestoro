@@ -10,6 +10,14 @@
         <v-card>
             <v-form>
                  <v-container>
+                     <v-layout row wrap>
+                        <v-alert
+                            :value="true"
+                            type="warning"
+                            >
+                            Este proceso es irreversible, no podrán recuperarse de nuevo los registros borrados
+                        </v-alert>
+                    </v-layout>
                     <v-layout row wrap>
                         <v-flex sm4></v-flex>
                         <v-flex sm2>
@@ -76,23 +84,30 @@
                                     ></v-date-picker>
                             </v-menu>
                         </v-flex>
+                    </v-layout>
+                    <v-layout row wrap>
+                        <v-flex sm4></v-flex>
+                        <v-flex sm4>
+                            <v-radio-group v-model="radioGroup">
+                                <v-radio
+                                    v-for="n in 2"
+                                    :key="n"
+                                    :label="radio[n-1]"
+                                    :value="n"
+                                    color="red darken-4"
+                                ></v-radio>
+                            </v-radio-group>
+                        </v-flex>
                         <v-flex sm1></v-flex>
                         <v-flex sm1>
                             <div class="text-xs-center">
-                                <v-btn @click="submit" round small :loading="loading"  block  color="primary">
+                                <v-btn @click="submit" round small :loading="loading"  block  color="red darken-4">
                                     Borrar
                                 </v-btn>
                             </div>
                         </v-flex>
                     </v-layout>
-                    <v-layout>
-                        <v-alert
-                            :value="true"
-                            type="warning"
-                            >
-                            Este proceso es irreversible, no podrán recuperarse de nuevo los apuntes borrados
-                        </v-alert>
-                    </v-layout>
+
                 </v-container>
             </v-form>
         </v-card>
@@ -115,9 +130,9 @@ import Loading from '@/components/shared/Loading'
     	data () {
       		return {
 
+                radioGroup: 1,
                 menu1: false,
-                url: "/utilidades/borrarcaja",
-                ruta: "venta",
+                url: "/utilidades/borrar",
 
                 max_fecha: "",
                 menu_h: false,
@@ -127,15 +142,24 @@ import Loading from '@/components/shared/Loading'
 
         		status: false,
                 loading: false,
+                caja: true,
+                ampliaciones: true,
+                compras: false,
+
+                radio:[
+                    'BORRAR Apuntes de caja, SOLO empresa ACTIVA',
+                    'PURGAR Histórico de compras y caja',
+                    'n+1 BORRAR Ampliaciones recuperados (TODAS las empresas)'
+                ],
 
                 show: false,
                 show_loading: false,
-                titulo:'Borrar apuntes de caja'
+                titulo:'Borrar registros antiguos'
       		}
         },
         mounted(){
 
-                axios.get('/utilidades/borrarcaja')
+                axios.get(this.url)
                     .then(res => {
                         this.max_fecha = res.data.fecha_h;
                         this.fecha_d = res.data.fecha_d;
@@ -167,48 +191,97 @@ import Loading from '@/components/shared/Loading'
         },
     	methods:{
             submit() {
-                if (this.loading === false){
-
-                    this.loading = true;
-                    this.show_loading = true;
-
-                    this.$validator.validateAll().then((result) => {
-                        if (result){
-                            axios.post(this.url, {
-                                fecha_d: this.fecha_d,
-                                fecha_h: this.fecha_h,
-                            })
-                                .then(res => {
-                                    if (res.data.registros > 0)
-                                        this.$toast.success("Se han borrado "+res.data.registros+" registros.");
-                                    else
-                                        this.$toast.warning("No hay registros.");
-
-
-                                })
-                                .catch(err => {
-
-                                    if (err.request.status == 422){ // fallo de validated.
-                                        const msg_valid = err.response.data.errors;
-                                        for (const prop in msg_valid) {
-                                            this.errors.add({
-                                                field: prop,
-                                                msg: `${msg_valid[prop]}`
-                                            })
-                                        }
-                                    }else{
-                                        this.$toast.error(err.response.data.message);
-                                    }
-                                })
-                                .finally(()=> {
-                                    this.loading = this.show_loading = false;
-                                });
-                            }
-                        else{
-                            this.loading = this.show_loading = false;
+                this.$validator.validateAll().then((result) => {
+                    if (result){
+                        this.loading = this.show_loading = true;
+                        if (this.radioGroup == 1){
+                            this.borrarCaja();
+                        }else if (this.radioGroup == 2){
+                            this.purgarHistorico()
                         }
+                        }else if (this.radioGroup == 3){
+                            this.borrarAmpliaciones()
+                    }
+                    else{
+                        this.loading = this.show_loading = false;
+                    }
+                });
+
+
+            },
+            borrarCaja() {
+                axios.post(this.url+'/caja', {
+                    fecha_d: this.fecha_d,
+                    fecha_h: this.fecha_h,
+                })
+                    .then(res => {
+                        if (res.data.registros > 0)
+                            this.$toast.success("Se han borrado "+res.data.registros+" registros.");
+                        else
+                            this.$toast.warning("No hay registros.");
+                    })
+                    .catch(err => {
+
+                        if (err.request.status == 422){ // fallo de validated.
+                            const msg_valid = err.response.data.errors;
+                            for (const prop in msg_valid) {
+                                this.errors.add({
+                                    field: prop,
+                                    msg: `${msg_valid[prop]}`
+                                })
+                            }
+                        }else{
+                            this.$toast.error(err.response.data.message);
+                        }
+                    })
+                    .finally(()=> {
+                        this.loading = this.show_loading = false;
                     });
-                }
+
+            },
+            borrarAmpliaciones() {
+                axios.post(this.url+'/ampliaciones', {
+                    fecha_d: this.fecha_d,
+                    fecha_h: this.fecha_h,
+                })
+                    .then(res => {
+                        if (res.data.registros > 0)
+                            this.$toast.success("Se han borrado "+res.data.registros+" registros.");
+                        else
+                            this.$toast.warning("No hay registros.");
+                    })
+                    .catch(err => {
+
+                        if (err.request.status == 422){ // fallo de validated.
+                            const msg_valid = err.response.data.errors;
+                            for (const prop in msg_valid) {
+                                this.errors.add({
+                                    field: prop,
+                                    msg: `${msg_valid[prop]}`
+                                })
+                            }
+                        }else{
+                            this.$toast.error(err.response.data.message);
+                        }
+                    })
+                    .finally(()=> {
+                        this.loading = this.show_loading = false;
+                    });
+
+            },
+            purgarHistorico() {
+                axios.post(this.url+'/purgar', {
+                })
+                    .then(res => {
+                        this.$toast.success("Se han purgado las tablas de histórico.");
+                    })
+                    .catch(err => {
+
+                        this.$toast.error(err.response.data.message);
+                    })
+                    .finally(()=> {
+                        this.loading = this.show_loading = false;
+                    });
 
             },
 

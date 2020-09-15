@@ -298,8 +298,10 @@ Route::group([
         Route::post('amplimasivo', 'AmpliarMasivoController@submit');
         Route::post('cambiointeres', 'CambioInteresController@submit');
 
-        Route::get('borrarcaja', 'BorrarCajaController@index');
-        Route::post('borrarcaja/', 'BorrarCajaController@submit');
+        Route::get('borrar', 'BorradoMasivoController@index');
+        Route::post('borrar/caja', 'BorradoMasivoController@caja');
+        Route::post('borrar/purgar', 'BorradoMasivoController@purgar');
+        Route::post('borrar/ampliaciones', 'BorradoMasivoController@ampliaciones');
 
      //   Route::get('helpbanco', 'HelpBancosController@index');
     }

@@ -164,7 +164,7 @@ import EstadosRfid from './components/rfid/EstadosRfid.vue';
 import FindProducto from './components/tools/FindProducto.vue';
 import AmpliarMasivo from './components/tools/AmpliarMasivo.vue';
 import CambioInteres from './components/tools/CambioInteres.vue';
-import BorrarCaja from './components/tools/BorrarCaja.vue';
+import BorradoMasivo from './components/tools/BorradoMasivo.vue';
 
 import ImportarProducto from './components/tools/ImportarProducto.vue';
 import Cierre from './components/tools/Cierre.vue';
@@ -783,9 +783,9 @@ export default [
                 component: CambioInteres,
             },
             {
-                path: '/tools/borrar/caja',
-                name: 'tools.delcaj',
-                component: BorrarCaja,
+                path: '/tools/delete',
+                name: 'tools.delete',
+                component: BorradoMasivo,
             },
             {
                 path: '/tools/cierre',
