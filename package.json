@@ -19,13 +19,13 @@
         "resolve-url-loader": "^3.1.1",
         "sass": "^1.26.10",
         "sass-loader": "^7.3.1",
-        "vue": "^2.6.11",
+        "vue": "^2.6.12",
         "vue-router": "^3.4.3",
-        "vue-template-compiler": "^2.6.11"
+        "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
         "minimist": ">=1.2.3",
-        "moment": "^2.27.0",
+        "moment": "^2.28.0",
         "v-currency-field": "^1.0.8",
         "vee-validate": "^2.1.17",
         "vue-toastr": "^2.1.2",

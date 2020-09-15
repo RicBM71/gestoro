@@ -41,14 +41,16 @@ class ExportRfidController extends Controller
     private function etiquetas($data){
 
 
-        $productos = Producto::with(['clase'])->whereIn('etiqueta_id', [2,3,4])->orderBy('referencia')->get()->take($data['tag']);
+        $productos = Producto::with(['clase'])
+                        ->where('estado_id', 2)
+                        ->whereIn('etiqueta_id', [2,3,4])->orderBy('referencia')->get()->take($data['tag']);
 
         $load = array();
         foreach ($productos as $row) {
 
             $load[]=$this->formatearLinea($row);
 
-            $row->update(['etiqueta_id' =>5,
+            $row->update(['etiqueta_id' => 5,
                           'username'    => session('username')]);
 
         }
@@ -101,7 +103,8 @@ class ExportRfidController extends Controller
         else
             $pvp = 0;
 
-        $precio_coste = str_repeat("0", 4-$long).$precio_coste;
+        //if ($long <= 4)
+            $precio_coste = str_repeat("0", 5-$long).$precio_coste;
 
         //$pos = strpos(strtoupper($producto->clase->nombre), "BRI");
         $pos = strpos(strtoupper($producto->nombre), "BRI");
