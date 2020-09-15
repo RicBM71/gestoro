@@ -35,9 +35,7 @@ class BorradoMasivoController extends Controller
 
     public function ampliaciones(Request $request)
     {
-
         return abort(403, ' DESHABILITADO!! ');
-
 
         if (!esAdmin()){
             return abort(403, ' NO tiene permiso de acceso - admin');
@@ -47,9 +45,9 @@ class BorradoMasivoController extends Controller
         $data=$request->validate([
             'fecha_d'     => ['required','date', new RangoFechaRule($request->fecha_d, $request->fecha_h)],
             'fecha_h'     => ['required','date'],
-        ]);
+            ]);
 
-        $compras = Compra::withOutGlobalScope(EmpresaScope::class)
+            $compras = Compra::withOutGlobalScope(EmpresaScope::class)
                             ->where('updated_at','>=',$data['fecha_d'])
                             ->where('updated_at','<=',$data['fecha_h'])
                             ->where('tipo_id', 1)

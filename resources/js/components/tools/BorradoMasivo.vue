@@ -90,7 +90,7 @@
                         <v-flex sm4>
                             <v-radio-group v-model="radioGroup">
                                 <v-radio
-                                    v-for="n in 2"
+                                    v-for="n in 3"
                                     :key="n"
                                     :label="radio[n-1]"
                                     :value="n"
@@ -191,6 +191,7 @@ import Loading from '@/components/shared/Loading'
         },
     	methods:{
             submit() {
+                console.log(this.radioGroup);
                 this.$validator.validateAll().then((result) => {
                     if (result){
                         this.loading = this.show_loading = true;
@@ -198,9 +199,9 @@ import Loading from '@/components/shared/Loading'
                             this.borrarCaja();
                         }else if (this.radioGroup == 2){
                             this.purgarHistorico()
-                        }
-                        }else if (this.radioGroup == 3){
+                        }else if(this.radioGroup == 3){
                             this.borrarAmpliaciones()
+                        }
                     }
                     else{
                         this.loading = this.show_loading = false;
@@ -240,17 +241,21 @@ import Loading from '@/components/shared/Loading'
 
             },
             borrarAmpliaciones() {
+
                 axios.post(this.url+'/ampliaciones', {
                     fecha_d: this.fecha_d,
                     fecha_h: this.fecha_h,
                 })
                     .then(res => {
+                        console.log(res);
                         if (res.data.registros > 0)
                             this.$toast.success("Se han borrado "+res.data.registros+" registros.");
                         else
                             this.$toast.warning("No hay registros.");
                     })
                     .catch(err => {
+
+                        console.log(err);
 
                         if (err.request.status == 422){ // fallo de validated.
                             const msg_valid = err.response.data.errors;
