@@ -260,7 +260,7 @@ import MyDialog from '@/components/shared/MyDialog'
             axios.get('/mto/recuentos/create')
                 .then(res => {
                     this.items = res.data.recuentos;
-                    console.log(this.items);
+
                 })
                 .catch(err =>{
                     this.$toast.error(err.response.data.message);
@@ -295,7 +295,7 @@ import MyDialog from '@/components/shared/MyDialog'
                                 referencia: this.referencia
                             })
                                 .then(res => {
-                                    console.log(res.data.recuento);
+
                                     this.items.push(res.data.recuento);
                                     this.referencia = null;
                                     this.$validator.reset();

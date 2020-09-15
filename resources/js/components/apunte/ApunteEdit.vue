@@ -114,7 +114,7 @@ import MenuOpe from './MenuOpe'
                 axios.get('/mto/apuntes/'+id+'/edit')
                     .then(res => {
                         this.colores = res.data.colores;
-                        console.log(this.colores);
+                        
                         this.apunte = res.data.apunte;
                         this.show = true;
                         this.show_loading = false;

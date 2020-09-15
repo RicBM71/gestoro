@@ -233,7 +233,7 @@ import {mapActions} from "vuex";
 
         axios.get(this.url)
             .then(res => {
-                console.log(res);
+
                 this.items = res.data;
                 this.registros = true;
                 this.show_loading = false;

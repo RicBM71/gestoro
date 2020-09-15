@@ -64,6 +64,11 @@ class BorradoMasivoController extends Controller
                     ->where('compra_id', $compra->id)
                     ->where('concepto_id', 4)
                     ->delete();
+
+            DB::table('hdepositos')
+                    ->where('compra_id', $compra->id)
+                    ->where('concepto_id', 4)
+                    ->delete();
         }
 
         if (request()->wantsJson())

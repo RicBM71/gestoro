@@ -358,7 +358,7 @@ export default {
 
          axios.get('/exportar/detacom')
             .then(res => {
-                //console.log(res.data.param_frm);
+
                 if (res.data.param_frm != false){
                     this.fecha_d = res.data.param_frm.fecha_d;
                     this.fecha_h = res.data.param_frm.fecha_h;

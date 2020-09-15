@@ -148,7 +148,7 @@ import Loading from '@/components/shared/Loading'
 
                 radio:[
                     'BORRAR Apuntes de caja, SOLO empresa ACTIVA',
-                    'PURGAR Histórico de compras y caja',
+                    'PURGAR Histórico de compras y caja (TODAS las empresas)',
                     'n+1 BORRAR Ampliaciones recuperados (TODAS las empresas)'
                 ],
 

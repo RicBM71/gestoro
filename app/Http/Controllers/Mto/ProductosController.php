@@ -422,6 +422,10 @@ class ProductosController extends Controller
             $producto = Producto::findOrFail($id);
         }
 
+        if (!esRoot() && $producto->estado_id > 2){
+            abort(411, 'No se puede borrar el producto');
+        }
+
        // \Log::info($producto);
 
         if ($producto->trashed()) {

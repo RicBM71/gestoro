@@ -276,7 +276,7 @@ import FiltroRec from './FiltroRec'
         axios.get(this.url)
             .then(res => {
                 this.items = res.data;
-                //console.log(res.data);
+
             })
             .catch(err =>{
                 this.$toast.error(err.response.data.message);
@@ -336,7 +336,7 @@ import FiltroRec from './FiltroRec'
                     axios.put(this.url+"/"+item.recuento_id, {rfid_id : item.rfid_id})
                         .then(res => {
 
-                            // console.log(res);
+
                             item.rfid = res.data.rfid;
                             item.rfid_id = res.data.rfid_id;
                             Object.assign(this.items[this.editedIndex], item)
@@ -403,7 +403,7 @@ import FiltroRec from './FiltroRec'
 
             axios.post(this.url+'/estados')
                 .then(res => {
-                    console.log(res);
+
                     this.estados_recuento = res.estados;
                 })
             .catch(err => {

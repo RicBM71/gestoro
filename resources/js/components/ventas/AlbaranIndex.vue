@@ -258,7 +258,7 @@ import {mapActions} from "vuex";
             'unsetPagination'
         ]),
         showNotas(item){
-            //console.log(item);
+
             return (item.notas_int != null || item.clitxt != null)
         },
         misNotas(item){

@@ -21,7 +21,7 @@
                     v-on="on"
                     color="white"
                     icon
-                    :disabled="!isAdmin"
+                    :disabled="computedDisabledBorrar"
                     @click="openDialog"
                 >
                     <v-icon color="primary">delete</v-icon>
@@ -77,7 +77,8 @@ import {mapGetters} from 'vuex';
 export default {
     props:{
         id: Number,
-        cliente_id: Number
+        cliente_id: Number,
+        estado_id: Number
     },
     components: {
         'my-dialog': MyDialog
@@ -94,6 +95,12 @@ export default {
             'isAdmin',
             'isSupervisor',
         ]),
+        computedDisabledBorrar(){
+
+            if (this.estado_id > 2) return true;
+
+            return this.isAdmin;
+        }
     },
     methods:{
         goBack(){

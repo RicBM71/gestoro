@@ -103,25 +103,25 @@
                                             edit
                                         </v-icon>
                                         <v-icon
-                                            v-if="props.item.deleted_at==null && isAdmin"
+                                            v-if="props.item.deleted_at==null && isAdmin &&  props.item.estado_id <= 2"
                                             small
                                             @click="openDialog(props.item)"
                                         >
-                                        delete
+                                            delete
                                         </v-icon>
                                         <v-icon
                                             v-if="props.item.deleted_at!=null && isAdmin"
                                             small
                                             @click="openDialog(props.item)"
                                         >
-                                        restore
+                                            restore
                                         </v-icon>
                                         <v-icon
                                             v-if="showExpand(props.item)"
                                             small
                                             @click="props.expanded = !props.expanded"
                                         >
-                                        visibility
+                                            visibility
                                         </v-icon>
                                     </td>
                                 </template>
@@ -246,6 +246,7 @@ import {mapActions} from "vuex";
         axios.get(this.url)
             .then(res => {
                 this.arr_reg = res.data;
+
                 this.registros = true;
                 this.show_loading = false;
             })

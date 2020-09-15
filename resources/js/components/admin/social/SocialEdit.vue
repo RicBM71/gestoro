@@ -155,7 +155,7 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
         },
     	methods:{
             uploadLogo(file, response){
-                console.log(response);
+
                 this.social = response.social;
             },
             borraLogo(){

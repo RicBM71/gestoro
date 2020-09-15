@@ -725,7 +725,7 @@ import {mapState} from 'vuex'
                 // hoy.toISOString().substring(0, 10);
 
                 // // cambio a <= por conversación rosa
-                // console.log(formattedDate);
+
 
                 if (hoy <= this.compra.fecha_bloqueo){
                 //if (new Date() <= new Date(this.compra.fecha_bloqueo)){

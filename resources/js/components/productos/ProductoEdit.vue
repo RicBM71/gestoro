@@ -18,7 +18,7 @@
                     </template>
                         <span>Ir a compra</span>
                 </v-tooltip>
-                <menu-ope :id="producto.id" :cliente_id="producto.cliente_id"></menu-ope>
+                <menu-ope :id="producto.id" :cliente_id="producto.cliente_id" :estado_id="producto.estado_id"></menu-ope>
 
             </v-card-title>
         </v-card>
@@ -424,6 +424,7 @@ import {mapState} from 'vuex'
                 titulo:"Productos",
                 producto: {
                     id:0,
+                    estado_id: 0
                 },
                 url: "/mto/productos",
                 ruta: "producto",
@@ -506,7 +507,6 @@ import {mapState} from 'vuex'
             computedEditEstado(){
 
                if (this.isRoot) return false;
-               //console.log((this.producto.estado_id == 3 || this.producto.estado_id == 4));
 
                 return (this.producto.estado_id == 3 || this.producto.estado_id == 4);
             },
@@ -527,6 +527,7 @@ import {mapState} from 'vuex'
 
                 if (this.producto.estado_id == 3 || this.producto.estado_id == 4)
                     return false;
+
                 //     return this.isAdmin;
 
                 const hoy = new Date().toISOString().substr(0, 10);
