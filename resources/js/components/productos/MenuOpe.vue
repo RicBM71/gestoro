@@ -99,7 +99,7 @@ export default {
 
             if (this.estado_id > 2) return true;
 
-            return this.isAdmin;
+            return !this.isAdmin;
         }
     },
     methods:{
