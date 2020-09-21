@@ -115,7 +115,7 @@
                         <v-flex sm2>
                             <v-text-field
                                 v-model="precio_coste"
-                                v-validate="'required|decimal:2|min_value:1'"
+                                v-validate="'required|decimal:2|min_value:0.01'"
                                 :error-messages="errors.collect('precio_coste')"
                                 label="Precio Coste"
                                 data-vv-name="precio_coste"
@@ -310,7 +310,7 @@
                                     this.$router.push({ name: 'producto.edit', params: { id: res.data.producto.id } })
                                 else{
                                     //this.$forceUpdate()
-                                    
+
                                     this.$emit('update:itemCreate', res.data.producto)
                                     this.$emit('update:ir_a_edit', true)
                                 }
