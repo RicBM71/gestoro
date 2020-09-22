@@ -305,13 +305,13 @@ import Loading from '@/components/shared/Loading'
                     if (result){
                         axios.post('/utilidades/helpcli', {dni:this.dni,tipodoc:this.tipodoc})
                             .then(res => {
-                                
+
                                 this.cliente = res.data.cliente;
                                 if (res.data.documentos.status == -2){
 
                                     axios.post('/mto/clidocs/'+res.data.documentos.id+'/renove')
                                         .then(response => {
-                                            this.$toast.success('Documentación eliminada!');
+                                            this.$toast.warning('Documentación caducada eliminada!');
                                         })
                                         .catch(err => {
                                             console.log(err);
