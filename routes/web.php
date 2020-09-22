@@ -110,6 +110,7 @@ Route::group([
         Route::post('clientes/filtrar', 'ClientesController@filtrar');
         Route::resource('clidocs', 'ClidocsController', ['only'=>['store','destroy'],'as' => 'mto']);
         Route::get('clidocs/{cliente_id}/{compra_id?}/create', 'ClidocsController@create');
+        Route::post('clidocs/{clidoc}/renove', 'ClidocsController@renove');
 
         Route::resource('almacenes', 'AlmacenesController', ['as' => 'mto']);
 

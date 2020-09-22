@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Utilidades;
 
+use App\Clidoc;
 use App\Compra;
 use App\Albaran;
 use App\Cliente;
@@ -22,9 +23,12 @@ class HelpCliController extends Controller
 
         $cliente = Cliente::where('dni', '=', $data['dni'])->firstOrFail();
 
+        $docu = Clidoc::getDocumentos($cliente->id,$cliente->fecha_dni);
+
         if (request()->wantsJson())
             return [
-                'cliente'=> $cliente
+                'cliente'=> $cliente,
+                'documentos'=> $docu,
             ];
 
     }

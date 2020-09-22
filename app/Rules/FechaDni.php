@@ -26,6 +26,7 @@ class FechaDni implements Rule
      */
     public function passes($attribute, $value)
     {
+        //return true;
 
         if (Empty($value))
             return true;
