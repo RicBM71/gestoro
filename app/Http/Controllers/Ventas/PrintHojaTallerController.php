@@ -153,6 +153,8 @@ class PrintHojaTallerController extends Controller
         PDF::MultiCell(16, 5,'','', 'L', 0, 0, '', '', true,0,false,true,5,'M',false);
         PDF::MultiCell(132, 5,'Descripción de la pieza ','LTR', 'L', 0, 1, '', '', true,0,false,true,5,'M',false);
 
+        if ($this->albaran->notas_ext == null)
+            $this->albaran->notas_ext = 'Sin especificar!';
         PDF::SetFont('helvetica', 'R', 10, '', false);
         PDF::MultiCell(132, 30, $this->albaran->notas_ext, $border='LRB', $align='L', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
         PDF::MultiCell(16, 5,'','', 'L', 0, 0, '', '', true,0,false,true,5,'M',false);
