@@ -43,8 +43,9 @@ class RecuentosController extends Controller
     {
 
         $data = $request->validate([
-            'rfid_id' => ['nullable','integer'],
+            'rfid_id'  => ['nullable','integer'],
             'clase_id' => ['nullable','integer'],
+            'alta'     => ['boolean'],
         ]);
 
         session(['filtro_rec' => $data]);
@@ -70,7 +71,7 @@ class RecuentosController extends Controller
             $op_clase = '=';
         }
 
-        return Recuento::withOutGlobalScope(EmpresaProductoScope::class)
+        $collection = Recuento::withOutGlobalScope(EmpresaProductoScope::class)
                     ->select('referencia','producto_id','productos.nombre AS nombre','precio_coste','rfids.nombre AS rfid','estados.nombre AS estado',
                              'productos.deleted_at','productos.notas','rfid_id', 'recuentos.id AS recuento_id', 'productos.empresa_id AS origen',
                              'productos.destino_empresa_id AS destino')
@@ -81,6 +82,17 @@ class RecuentosController extends Controller
                     ->rfid($data['rfid_id'])
                     ->where('clase_id', $op_clase, $data['clase_id'])
                     ->get();
+
+        if ($data['alta'] == true){
+            $filtered = $collection->where('deleted_at', null);
+
+            foreach ($filtered as $row){
+                $a[]=$row;
+            }
+            return $a;
+        }
+
+        return $collection;
 
         // $recuento = Recuento::with(['producto','rfid','estado'])
         //                     ->rfid($data['rfid_id'])

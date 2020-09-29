@@ -25,6 +25,11 @@
                         label="Estado RFID"
                         ></v-select>
                 </v-flex>
+                <v-switch
+                    label="Activos"
+                    v-model="find.alta"
+                    color="primary">
+                ></v-switch>
                 <v-flex sm4></v-flex>
                 <v-flex sm1>
                     <v-btn @click="submit"  :loading="loading" round small block  color="info">
@@ -55,7 +60,8 @@ export default {
             rfids: [],
             find: {
                 rfid_id: 3,
-                clase_id: null
+                clase_id: null,
+                alta: false
             },
 
       }
@@ -88,6 +94,7 @@ export default {
                         this.loading = true;
                         axios.post('/mto/recuentos/filtrar',this.find)
                         .then(res => {
+
 
                             this.$emit('update:items', res.data);
 

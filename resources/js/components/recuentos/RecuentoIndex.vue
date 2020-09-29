@@ -123,10 +123,11 @@
                                                         icon
                                                         @click="update(props.item)"
                                                     >
-                                                        <v-icon color="green">location_on</v-icon>
+
+                                                        <v-icon color="red">location_off</v-icon>
                                                     </v-btn>
                                                 </template>
-                                                <span>Producto Encontrado</span>
+                                                <span>Producto Perdido</span>
                                             </v-tooltip>
                                             <v-tooltip bottom v-else>
                                                 <template v-slot:activator="{ on }">
@@ -137,10 +138,10 @@
                                                         icon
                                                         @click="update(props.item)"
                                                     >
-                                                        <v-icon color="red">location_off</v-icon>
+                                                        <v-icon color="green">location_on</v-icon>
                                                     </v-btn>
                                                 </template>
-                                                <span>Producto NO encontrado</span>
+                                                <span>Producto localizado</span>
                                             </v-tooltip>
                                             <v-tooltip bottom>
                                                 <template v-slot:activator="{ on }">
@@ -264,7 +265,6 @@ import FiltroRec from './FiltroRec'
     },
     mounted()
     {
-        console.log(this.empresaActiva);
 
         this.pagination.model="recuentos"+this.empresaActiva;
 
@@ -276,6 +276,7 @@ import FiltroRec from './FiltroRec'
         axios.get(this.url)
             .then(res => {
                 this.items = res.data;
+                
 
             })
             .catch(err =>{
