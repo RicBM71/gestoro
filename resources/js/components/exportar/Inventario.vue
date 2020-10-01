@@ -306,7 +306,6 @@ export default {
                             })
                         .then(res => {
 
-                            console.log(res);
                             this.items = res.data.inventario;
                             this.valor_inventario = res.data.valor_inventario;
 

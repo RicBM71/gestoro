@@ -148,11 +148,13 @@ class Albalin extends Model
 
     }
 
-    public static function stock($producto_id, $id = 0){
+    public static function validarStock($producto_id, $id = 0){
 
         $producto = DB::table('productos')->find($producto_id);
 
-        //if ($producto->estado_id == 1 )
+        if ($producto->estado_id >= 5 )
+            return false;
+
     //    \Log::info(DB::table('albalins')->sum('unidades')
     //                             ->where('producto_id', $producto_id)->toSql());
 

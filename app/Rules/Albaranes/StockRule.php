@@ -31,7 +31,13 @@ class StockRule implements Rule
     public function passes($attribute, $unidades)
     {
 
-        $stock = Albalin::stock($this->producto_id, $this->albalin_id) - $unidades;
+        $validar = Albalin::validarStock($this->producto_id, $this->albalin_id);
+
+        if ($validar === false){
+            return true;
+        }
+
+        $stock = $validar - $unidades;
 
         return  $stock >= 0;
     }
