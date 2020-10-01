@@ -385,9 +385,9 @@ class ProductosController extends Controller
 
         $data = $request->validated();
 
-        // if ($data['univen'] == 'U'){
-        //     $data['peso_gr'] = 1;
-        // }
+        if ($data['clase_id'] == 1){
+            $data['stock'] = 1;
+        }
 
         $data['username'] = $request->user()->username;
 

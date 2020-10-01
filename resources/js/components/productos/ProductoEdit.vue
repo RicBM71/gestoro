@@ -281,7 +281,7 @@
                                         data-vv-name="stock"
                                         data-vv-as="Stock"
                                         type="number"
-                                        :disabled="!computedEditPro"
+                                        :disabled="!computedEditStock"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -532,6 +532,11 @@ import {mapState} from 'vuex'
 
                 return this.producto.estado_id > 3;
 
+            },
+            computedEditStock(){
+                if (this.producto.clase_id != 1 && this.isAdmin)
+                    return true;
+                return false;
             },
             computedEditPro(){
 
