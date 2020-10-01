@@ -1,7 +1,7 @@
 <table>
     <thead>
         <tr>
-            <th colspan="8">{{$titulo}}</th>
+            <th colspan="9">{{$titulo}}</th>
         </tr>
         <tr>
             <th>REFERENCIA</th>
@@ -9,7 +9,8 @@
             <th>CLASE</th>
             <th>PESO</th>
             <th>P. VENTA</th>
-            <th>P. COSTE</th>
+            <th>Stock</th>
+            <th>Coste Total</th>
             <th>REF. POL</th>
             <th>Estado</th>
             <th>PROVEEDOR</th>
@@ -31,7 +32,8 @@
             @endif
             <td>{{ $item['peso_gr']}}</td>
             <td>{{ $item['precio_venta']}}</td>
-            <td>{{ $item['precio_coste']}}</td>
+            <td>{{ $item['mi_stock']}}</td>
+            <td>{{ round($item['mi_stock']*$item['precio_coste'],2)}}</td>
             <td>{{ $item['ref_pol']}}</td>
             <td>{{ $item['estado']['nombre']}}</td>
             @if($item['cliente_id'] > 0)

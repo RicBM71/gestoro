@@ -146,5 +146,34 @@ class Albalin extends Model
 
         return $data;
 
-	}
+    }
+
+    public static function stock($producto_id, $id = 0){
+
+        $producto = DB::table('productos')->find($producto_id);
+
+        //if ($producto->estado_id == 1 )
+    //    \Log::info(DB::table('albalins')->sum('unidades')
+    //                             ->where('producto_id', $producto_id)->toSql());
+
+        if ($id != 0){
+            $unidades = DB::table('albalins')
+                                ->where('producto_id', $producto_id)
+                                ->where('id', '<>', $id)
+                                ->whereNull('deleted_at')
+                                ->sum('unidades');
+
+        }else
+            $unidades = DB::table('albalins')
+                                ->where('producto_id', $producto_id)
+                                ->whereNull('deleted_at')
+                                ->sum('unidades');
+
+    //    if ($unidades != false){
+            return $producto->stock - $unidades;
+    //    }
+
+      //  return $producto->stock;
+
+    }
 }

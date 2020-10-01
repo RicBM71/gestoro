@@ -52,7 +52,7 @@
                                     data-vv-as="Unidades/Peso"
                                     class="inputPrice"
                                     type="number"
-                                    :disabled="albaran.tipo_id==3"
+                                    :disabled="albaran.tipo_id==3 && editedItem.producto.stock == 1"
                                     v-on:keyup.enter="submit"
                                 >
                                 </v-text-field>

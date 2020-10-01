@@ -144,6 +144,7 @@
                                     <td class="text-xs-right">{{ props.item.peso_gr | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                     <td class="text-xs-right">{{ props.item.precio_coste | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                     <td class="text-xs-right">{{ props.item.precio_venta | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                    <td class="text-xs-right">{{ props.item.mi_stock | currency('', 0, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                     <td>{{ props.item.estado.nombre }}</td>
                                     <td>{{ props.item.ref_pol }}</td>
                                 </template>
@@ -205,6 +206,11 @@ export default {
                 text: 'P. Venta',
                 align: 'right',
                 value: 'precio_venta'
+            },
+            {
+                text: 'Stock',
+                align: 'right',
+                value: 'mi_stock'
             },
             {
                 text: 'Estado',
@@ -300,6 +306,7 @@ export default {
                             })
                         .then(res => {
 
+                            console.log(res);
                             this.items = res.data.inventario;
                             this.valor_inventario = res.data.valor_inventario;
 

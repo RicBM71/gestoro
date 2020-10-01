@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Exportar;
 use App\Producto;
 use Illuminate\Http\Request;
 use App\Exports\InventarioExport;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Scopes\EmpresaProductoScope;
 use Maatwebsite\Excel\Facades\Excel;
@@ -37,7 +38,8 @@ class InventarioController extends Controller
         //  por esto quito globalScope
         if ($data['tipoinv_id'] == 'C')
             $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','iva','estado','garantia','cliente','etiqueta'])
-                        ->select('productos.*')
+                        //->select('productos.*',)
+                        ->select(DB::raw(DB::getTablePrefix().'productos.*, (stock - (IFNULL((SELECT SUM(unidades) FROM '.DB::getTablePrefix().'albalins,'.DB::getTablePrefix().'albaranes WHERE producto_id = '.DB::getTablePrefix().'productos.id and '.DB::getTablePrefix().'albalins.deleted_at is null AND albaran_id = '.DB::getTablePrefix().'albaranes.id AND fase_id = 3), 0))) AS mi_stock'))
                         ->join('clases','clase_id','=','clases.id')
                         ->where('empresa_id', session('empresa_id'))
                         ->asociado($data['cliente_id'])
@@ -48,7 +50,7 @@ class InventarioController extends Controller
                         ->get();
         else
             $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','iva','estado','garantia','cliente','etiqueta'])
-                        ->select('productos.*')
+                        ->select(DB::raw(DB::getTablePrefix().'productos.*, (stock - (IFNULL((SELECT SUM(unidades) FROM '.DB::getTablePrefix().'albalins,'.DB::getTablePrefix().'albaranes WHERE producto_id = '.DB::getTablePrefix().'productos.id and '.DB::getTablePrefix().'albalins.deleted_at is null AND albaran_id = '.DB::getTablePrefix().'albaranes.id AND fase_id = 3), 0))) AS mi_stock'))
                         ->join('clases','clase_id','=','clases.id')
                         ->where('destino_empresa_id', session('empresa_id'))
                         ->asociado($data['cliente_id'])
@@ -58,11 +60,16 @@ class InventarioController extends Controller
                         ->grupo($data['grupo_id'])
                         ->get();
 
+        $valor_inventario = 0;
+        foreach ($data as $row){
+            $valor_inventario += round($row->mi_stock * $row->precio_coste, 2);
+        }
+
 
         if (request()->wantsJson())
             return [
                 'inventario' => $data,
-                'valor_inventario' => $data->sum('precio_coste')
+                'valor_inventario' => $valor_inventario
             ];
 
 

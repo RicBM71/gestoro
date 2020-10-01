@@ -18,20 +18,22 @@ class AlbalinObserver
     public function created(Albalin $albalin)
     {
 
-        $data=[
-            'estado_id'=> 3,
-            'username' => session('username')
-        ];
+        // $data=[
+        //     'estado_id'=> 3,
+        //     'username' => session('username')
+        // ];
 
-        Producto::where('id', $albalin->producto_id)
-                    ->where('estado_id','<>', 5) // no tocamos los genéricos
-                    ->update($data);
+
+        // Producto::where('id', $albalin->producto_id)
+        // ->where('estado_id','<>', 5) // no tocamos los genéricos
+        //             ->where('stock', 1)
+        //             ->update($data);
+
+        Producto::setEstadoProducto($albalin->producto_id, 3);
 
         $this->updateFaseAlbaran($albalin->albaran_id);
 
     }
-
-
 
     /**
      * Handle the albalin "updated" event.
@@ -53,15 +55,19 @@ class AlbalinObserver
     public function deleted(Albalin $albalin)
     {
 
-        $data=[
-            'estado_id'=> 2,
-            'username' => session('username')
-        ];
+
+        Producto::setEstadoProducto($albalin->producto_id, 2);
+
+        // $data=[
+        //     'estado_id'=> 2,
+        //     'username' => session('username')
+        // ];
 
 
-        Producto::where('id', $albalin->producto_id)
-                ->where('estado_id','<>', 5) // no tocamos los genéricos
-                ->update($data);
+        // Producto::where('id', $albalin->producto_id)
+        //         ->where('estado_id','<>', 5) // no tocamos los genéricos
+        //         ->where('stock', 1)
+        //         ->update($data);
 
         $this->updateFaseAlbaran($albalin->albaran_id);
     }

@@ -272,7 +272,20 @@
                                     >
                                     </v-text-field>
                                 </v-flex>
-                                <v-flex sm1></v-flex>
+                                <v-flex sm1>
+                                    <v-text-field
+                                        v-model="producto.stock"
+                                        v-validate="'required|min:1'"
+                                        :error-messages="errors.collect('stock')"
+                                        label="Stock"
+                                        data-vv-name="stock"
+                                        data-vv-as="Stock"
+                                        type="number"
+                                        :disabled="!computedEditPro"
+                                        v-on:keyup.enter="submit"
+                                    >
+                                    </v-text-field>
+                                </v-flex>
                                 <v-flex sm1>
                                     <v-switch
                                         v-show="producto.estado_id != 5"

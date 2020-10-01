@@ -53,7 +53,7 @@
                                 data-vv-as="Unidades/Peso"
                                 class="inputPrice"
                                 type="number"
-                                :readonly="editedItem.iva_id==2"
+                                :readonly="editedItem.iva_id==2 && editedItem.stock == 1"
                                 v-on:keyup.enter="submit"
                             >
                             </v-text-field>
@@ -180,6 +180,7 @@
             descuento: 0,
             importe_venta: "",
             notas: "",
+            stock:1,
         },
     }),
     beforeMount(){
@@ -285,6 +286,7 @@
                         this.editedItem.iva = this.producto.iva.importe;
                         this.editedItem.importe_unidad = this.producto.precio_venta;
                         this.editedItem.descuento = this.albaran.cliente.descuento;
+                        this.editedItem.stock = this.producto.stock;
 
                         if (this.producto.univen == 'U'){
                             this.editedItem.unidades = 1;
@@ -359,6 +361,7 @@
             this.editedItem.importe_unidad = 0;
             this.editedItem.precio_coste = 0;
             this.editedItem.importe_venta = 0;
+            this.editedItem.stock = 1;
             this.items = [];
 
         }

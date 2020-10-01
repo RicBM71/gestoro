@@ -375,28 +375,15 @@ Class Producto extends Model
             $nombre = null;
         }
 
-        if (session('empresa')->getFlag(5))
-                return Producto::select(DB::raw('id AS value, CONCAT(referencia, " " , nombre) AS text'))
-                        ->referencia($referencia)
-                        ->nombre($nombre)
-                        ->where('iva_id', 2)
-                        ->where('estado_id', 2)
-                        ->orWhere('estado_id', 6)
-                        //->orWhere('stock', '>', 1)
-                        // ->whereNull('deleted_at')
-                        ->orderBy('referencia', 'asc')
-                        ->get();
-            else
-                return Producto::select(DB::raw('id AS value, CONCAT(referencia, " " , nombre) AS text'))
-                    ->referencia($referencia)
-                    ->nombre($nombre)
-                    ->where('iva_id', 2)
-                    ->where('estado_id', 2)
-                    ->orWhere('estado_id', 6)
-                    ->orderBy('referencia', 'asc')
-                    ->get();
-
-
+        //select id AS value, CONCAT(referencia, " " , nombre) AS text, IFNULL((select SUM(unidades) from `klt_albalins` where `producto_id` = klt_productos.id and `deleted_at` is null), 0) from `klt_productos` where `referencia` like '%GD30050%' and `iva_id` = 2 and `estado_id` in (2, 5, 6) and `klt_productos`.`deleted_at` is null and (`empresa_id` = 1 or `destino_empresa_id` = 1 or `estado_id` = 5) order by `referencia` asc
+        return Producto::select(DB::raw('id AS value, CONCAT(referencia, " " , nombre) AS text, (stock - (IFNULL((SELECT SUM(unidades) FROM '.DB::getTablePrefix().'albalins WHERE producto_id = '.DB::getTablePrefix().'productos.id and deleted_at is null), 0))) AS mi_stock'))
+                ->referencia($referencia)
+                ->nombre($nombre)
+                ->where('iva_id', 2)
+                ->whereIn('estado_id', [2,5,6])
+                ->havingRaw('mi_stock >= 1')
+                ->orderBy('referencia', 'asc')
+                ->get();
     }
 
     public static function productosGenericos($referencia)
@@ -418,6 +405,40 @@ Class Producto extends Model
                     ->get();
 
     }
+
+    public static function setEstadoProducto($producto_id, $estado_id){
+
+        $data=[
+            'estado_id'=> $estado_id,
+            'username' => session('username')
+        ];
+
+        $producto = Producto::withoutGlobalScope(EmpresaProductoScope::class)->findOrFail($producto_id);
+
+        if ($producto->estado_id >= 5) return;
+
+        if ($producto->stock > 1){
+
+            $vendidos = DB::table('albalins')
+                            ->where('producto_id', $producto_id)
+                            ->whereNull('deleted_at')
+                            ->sum('unidades');
+
+            if ($estado_id == 3){   // ya no hay stock, pasamos a estado vendido, en caso contrario no hago nada
+                if ($vendidos == $producto->stock){
+                    $producto->update($data);
+                }
+            }else{
+                $producto->update($data);    // actualizamos si pasa de vendido a reservado
+            }
+
+        }else{
+            $producto->update($data);
+        }
+
+    }
+
+
 
 
 }
