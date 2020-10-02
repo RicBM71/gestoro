@@ -4,7 +4,7 @@
             <v-card-title color="indigo">
                 <h2 color="indigo">{{titulo}}</h2>
                 <v-spacer></v-spacer>
-                <menu-ope :id="motivo.id"></menu-ope>
+                <menu-ope :id="marca.id"></menu-ope>
             </v-card-title>
         </v-card>
         <v-card>
@@ -14,7 +14,7 @@
                         <v-flex sm1></v-flex>
                         <v-flex sm4>
                             <v-text-field
-                                v-model="motivo.nombre"
+                                v-model="marca.nombre"
                                 v-validate="'required'"
                                 :error-messages="errors.collect('nombre')"
                                 label="Nombre"
@@ -69,8 +69,8 @@ import MenuOpe from './MenuOpe'
 		},
     	data () {
       		return {
-                titulo:"Motivos",
-                motivo: {
+                titulo:"Marcas",
+                marca: {
                     id:       0,
                     nombre:  "",
                     updated_at:"",
@@ -88,25 +88,25 @@ import MenuOpe from './MenuOpe'
             var id = this.$route.params.id;
 
             if (id > 0)
-                axios.get('/mto/motivos/'+id+'/edit')
+                axios.get('/mto/marcas/'+id+'/edit')
                     .then(res => {
 
-                        this.motivo = res.data.motivo;
+                        this.marca = res.data.marca;
                         this.show = true;
                     })
                     .catch(err => {
                         this.$toast.error(err.response.data.message);
-                        this.$router.push({ name: 'motivo.index'})
+                        this.$router.push({ name: 'marca.index'})
                     })
         },
         computed: {
             computedFModFormat() {
                 moment.locale('es');
-                return this.motivo.updated_at ? moment(this.motivo.updated_at).format('D/MM/YYYY H:mm') : '';
+                return this.marca.updated_at ? moment(this.marca.updated_at).format('D/MM/YYYY H:mm') : '';
             },
             computedFCreFormat() {
                 moment.locale('es');
-                return this.motivo.created_at ? moment(this.motivo.created_at).format('D/MM/YYYY H:mm') : '';
+                return this.marca.created_at ? moment(this.marca.created_at).format('D/MM/YYYY H:mm') : '';
             }
 
         },
@@ -116,7 +116,7 @@ import MenuOpe from './MenuOpe'
                 if (this.loading === false){
                     this.loading = true;
 
-                    var url = "/mto/motivos/"+this.motivo.id;
+                    var url = "/mto/marcas/"+this.marca.id;
                     var metodo = "put";
                     this.$validator.validateAll().then((result) => {
                         if (result){
@@ -125,13 +125,13 @@ import MenuOpe from './MenuOpe'
                                 url: url,
                                 data:
                                     {
-                                        nombre: this.motivo.nombre,
+                                        nombre: this.marca.nombre,
 
                                     }
                                 })
                                 .then(response => {
                                     this.$toast.success(response.data.message);
-                                    this.motivo = response.data.motivo;
+                                    this.marca = response.data.marca;
                                     this.loading = false;
                                 })
                                 .catch(err => {

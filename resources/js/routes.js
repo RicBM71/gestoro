@@ -128,6 +128,15 @@ import FixingIndex from './components/fixing/FixingIndex.vue';
 import FixingEdit from './components/fixing/FixingEdit.vue';
 import FixingCreate from './components/fixing/FixingCreate.vue';
 
+import CategoriaIndex from './components/categorias/CategoriaIndex.vue';
+import CategoriaEdit from './components/categorias/CategoriaEdit.vue';
+import CategoriaCreate from './components/categorias/CategoriaCreate.vue';
+
+import MarcaIndex from './components/marcas/MarcaIndex.vue';
+import MarcaEdit from './components/marcas/MarcaEdit.vue';
+import MarcaCreate from './components/marcas/MarcaCreate.vue';
+
+
 import HcompraIndex from './components/hcompras/HcompraIndex.vue';
 import HcompraShow from './components/hcompras/HcompraShow.vue';
 
@@ -817,6 +826,37 @@ export default [
                 name: 'hcompras.show',
                 component: HcompraShow,
             },
+            {
+                path: '/marcas',
+                name: 'marca.index',
+                component: MarcaIndex,
+            },
+            {
+                path: '/marcas/create',
+                name: 'marca.create',
+                component: MarcaCreate,
+            },
+            {
+                path: '/marcas/:id/edit',
+                name: 'marca.edit',
+                component: MarcaEdit,
+            },
+            {
+                path: '/categorias',
+                name: 'categoria.index',
+                component: CategoriaIndex,
+            },
+            {
+                path: '/categorias/create',
+                name: 'categoria.create',
+                component: CategoriaCreate,
+            },
+            {
+                path: '/categorias/:id/edit',
+                name: 'categoria.edit',
+                component: CategoriaEdit,
+            },
+
             // {
             //     path: '*',
             //     redirect: {

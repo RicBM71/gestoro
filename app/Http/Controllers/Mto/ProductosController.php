@@ -368,7 +368,8 @@ class ProductosController extends Controller
                 'etiquetas'=> Etiqueta::selEstados(),
                 'asociados'=> Cliente::selAsociados(),
                 'garantias'=> Garantia::selGarantias(),
-                'quilates'   => Quilate::selQuilates()
+                'quilates'   => Quilate::selQuilates(),
+                'stock_real'=> Producto::getStockReal($producto->id)
             ];
     }
 

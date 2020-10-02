@@ -272,17 +272,25 @@
                                     >
                                     </v-text-field>
                                 </v-flex>
-                                <v-flex sm1>
+                                <v-flex sm1 v-show="producto.estado_id <= 4">
                                     <v-text-field
+                                        v-if="computedStock"
                                         v-model="producto.stock"
                                         v-validate="'required|min:1'"
                                         :error-messages="errors.collect('stock')"
-                                        label="Stock"
+                                        label="Stock Ini"
                                         data-vv-name="stock"
                                         data-vv-as="Stock"
                                         type="number"
                                         :disabled="!computedEditStock"
                                         v-on:keyup.enter="submit"
+                                    >
+                                    </v-text-field>
+                                    <v-text-field
+                                        v-else
+                                        v-model="this.stock_real"
+                                        label="Stock Real"
+                                        readonly
                                     >
                                     </v-text-field>
                                 </v-flex>
@@ -463,6 +471,7 @@ import {mapState} from 'vuex'
 
                 show: false,
                 show_loading: true,
+                stock_real: 0
       		}
         },
         mounted(){
@@ -500,6 +509,10 @@ import {mapState} from 'vuex'
 
                         this.show_quilates = this.producto.clase.quilates;
 
+                        this.stock_real = res.data.stock_real;
+
+                        console.log(res.data.stock_real);
+
                     })
                     .catch(err => {
                         this.$toast.error(err.response.data.message);
@@ -531,6 +544,14 @@ import {mapState} from 'vuex'
                 if (this.hasEditPro == true) return false;
 
                 return this.producto.estado_id > 3;
+
+            },
+            computedStock(){
+                if (this.producto.stock > 1 && this.producto.stock != this.stock_real){
+                    return false;
+                }
+
+                return true;
 
             },
             computedEditStock(){

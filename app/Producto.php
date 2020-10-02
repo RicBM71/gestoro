@@ -424,7 +424,7 @@ Class Producto extends Model
                             ->whereNull('deleted_at')
                             ->sum('unidades');
 
-            if ($estado_id == 3){   // ya no hay stock, pasamos a estado vendido, en caso contrario no hago nada
+            if ($estado_id == 4){   // ya no hay stock, pasamos a estado vendido, en caso contrario no hago nada
                 if ($vendidos == $producto->stock){
                     $producto->update($data);
                 }
@@ -436,6 +436,21 @@ Class Producto extends Model
             $producto->update($data);
         }
 
+    }
+
+    public static function getStockReal($producto_id){
+
+
+        $q = Producto::withOutGlobalScope(EmpresaProductoScope::class)
+                        ->select(DB::raw(' (stock - (IFNULL((SELECT SUM(unidades) FROM '.DB::getTablePrefix().'albalins,'.DB::getTablePrefix().'albaranes WHERE producto_id = '.DB::getTablePrefix().'productos.id and '.DB::getTablePrefix().'albalins.deleted_at is null AND albaran_id = '.DB::getTablePrefix().'albaranes.id AND fase_id >= 10), 0))) AS mi_stock'))
+                        ->where('id', $producto_id)
+                        ->first();
+
+        if ($q != null){
+            return $q->mi_stock;
+        }
+
+        return 0;
     }
 
 

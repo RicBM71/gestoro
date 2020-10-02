@@ -4,7 +4,7 @@
             <v-card-title color="indigo">
                 <h2 color="indigo">{{titulo}}</h2>
                 <v-spacer></v-spacer>
-                <menu-ope :id="motivo.id"></menu-ope>
+                <menu-ope :id="marca.id"></menu-ope>
             </v-card-title>
         </v-card>
         <v-card>
@@ -14,7 +14,7 @@
                         <v-flex sm1></v-flex>
                         <v-flex sm4>
                             <v-text-field
-                                v-model="motivo.nombre"
+                                v-model="marca.nombre"
                                 v-validate="'required'"
                                 :error-messages="errors.collect('nombre')"
                                 label="Nombre"
@@ -25,19 +25,9 @@
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm3>
+                        <v-flex sm1 v-show="show">
                             <v-text-field
-                                v-model="computedFModFormat"
-                                label="Modificado"
-                                readonly
-                            >
-                            </v-text-field>
-                        </v-flex>
-                        <v-flex sm3>
-                            <v-text-field
-                                v-model="computedFCreFormat"
-                                label="Creado"
-                                readonly
+                                value=""
                             >
                             </v-text-field>
                         </v-flex>
@@ -69,44 +59,40 @@ import MenuOpe from './MenuOpe'
 		},
     	data () {
       		return {
-                titulo:"Motivos",
-                motivo: {
+                titulo:"Marcas",
+                marca: {
                     id:       0,
                     nombre:  "",
                     updated_at:"",
                     created_at:"",
                 },
+                marca_id: "",
 
         		status: false,
                 loading: false,
 
                 show: false,
-
       		}
         },
         mounted(){
-            var id = this.$route.params.id;
-
-            if (id > 0)
-                axios.get('/mto/motivos/'+id+'/edit')
-                    .then(res => {
-
-                        this.motivo = res.data.motivo;
-                        this.show = true;
-                    })
-                    .catch(err => {
-                        this.$toast.error(err.response.data.message);
-                        this.$router.push({ name: 'motivo.index'})
-                    })
+            axios.get('/mto/marcas/create')
+                .then(res => {
+                    this.show = true;
+                })
+                .catch(err => {
+                    this.$toast.error(err.response.data.message);
+                    this.$router.push({ name: 'marca.index'})
+                })
         },
+
         computed: {
             computedFModFormat() {
                 moment.locale('es');
-                return this.motivo.updated_at ? moment(this.motivo.updated_at).format('D/MM/YYYY H:mm') : '';
+                return this.marca.updated_at ? moment(this.marca.updated_at).format('D/MM/YYYY H:mm') : '';
             },
             computedFCreFormat() {
                 moment.locale('es');
-                return this.motivo.created_at ? moment(this.motivo.created_at).format('D/MM/YYYY H:mm') : '';
+                return this.marca.created_at ? moment(this.marca.created_at).format('D/MM/YYYY H:mm') : '';
             }
 
         },
@@ -116,8 +102,9 @@ import MenuOpe from './MenuOpe'
                 if (this.loading === false){
                     this.loading = true;
 
-                    var url = "/mto/motivos/"+this.motivo.id;
-                    var metodo = "put";
+                    var url = "/mto/marcas";
+                    var metodo = "post";
+
                     this.$validator.validateAll().then((result) => {
                         if (result){
                             axios({
@@ -125,14 +112,16 @@ import MenuOpe from './MenuOpe'
                                 url: url,
                                 data:
                                     {
-                                        nombre: this.motivo.nombre,
+                                        nombre: this.marca.nombre,
 
                                     }
                                 })
                                 .then(response => {
+
                                     this.$toast.success(response.data.message);
-                                    this.motivo = response.data.motivo;
+
                                     this.loading = false;
+                                    this.$router.push({ name: 'marca.edit', params: { id: response.data.marca.id } })
                                 })
                                 .catch(err => {
 
@@ -161,3 +150,17 @@ import MenuOpe from './MenuOpe'
     }
   }
 </script>
+<style>
+.inputPrice >>> input {
+  text-align: center;
+  -moz-appearance:textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+</style>
