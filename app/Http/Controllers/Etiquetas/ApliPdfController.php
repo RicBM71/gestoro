@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Etiquetas;
 
 use PDF;
 use App\Clase;
+use App\Albalin;
 use App\Etiqueta;
 use App\Producto;
 use Illuminate\Http\Request;
@@ -62,7 +63,9 @@ class ApliPdfController extends Controller
 
         $result = Producto::with('clase')
             ->clase($data['clase_id'])
+            ->whereIn('estado_id',[1,2,3])
             ->where('etiqueta_id', $data['etiqueta_id'])
+            ->whereNull('deleted_at')
             ->orderBy('referencia')
             ->get();
 
@@ -86,80 +89,100 @@ class ApliPdfController extends Controller
 
         $i=$data['columna']-1;
 
-			$fila_pag = $data['fila'] - 1;
+        $fila_pag = $data['fila'] - 1;
 
-			$arr_nom=array("","","","");
+        $arr_nom=array("","","","");
 
-			foreach ($result as $row){
-				$i++;
-				$text1 = ($row->referencia);
+        foreach ($result as $row){
 
-				($row->quilates > 0) ? $metal = $row->quilates."K" : $metal=null;
 
-				$arr_nom[$i-1]= strlen($row->nombre > 30) ? substr($row->nombre,0,30) : $row->nombre;
+            if ($row->stock == 1)
+                $total_copias = 1;
+            else{
+                $stock = Albalin::validarStock($row->id);
+                if ($stock == false)
+                    continue;
+                $total_copias = $stock;
+            }
 
-				if ($row->precio_venta > 0)
-					$text2 = (getDecimal($row->precio_venta,0)."€");
+            for ($copias=0; $copias < $total_copias; $copias++) {
+
+                $i++;
+                $text1 = ($row->referencia);
+
+                ($row->quilates > 0) ? $metal = $row->quilates."K" : $metal=null;
+
+                $arr_nom[$i-1]= strlen($row->nombre > 30) ? substr($row->nombre,0,30) : $row->nombre;
+
+                if ($row->precio_venta > 0)
+                    $text2 = (getDecimal($row->precio_venta,0)."€");
                 elseif ($metal > '')
                         $text2 = ($metal);
                 else
                     $text2 = $row->referencia;
 
-				$hay_cuarta = false;
+                $hay_cuarta = false;
 
-				if ($i%4!=0){
-					PDF::SetFont('helvetica', '', 8, '', false);
-					PDF::MultiCell(20, 8,  $text1, "0", 'L', 0, 0, '', '', true,0,false,true,8,'M',false);
-					PDF::MultiCell(5, 8,  "", "0", 'L', 0, 0, '', '', true,0,false,true,8,'M',false);
-					//PDF::SetFont('helvetica', 'B', 8, '', false);
-					PDF::MultiCell(20, 8,  $text2, "0", 'C', 0, 0, '', '', true,0,false,true,8,'M',false);
-					PDF::MultiCell(5, 8,  "", "0", 'L', 0, 0, '', '', true,0,false,true,8,'M',false);
-				}
-				else{ // ultima de la derecha
-					PDF::SetFont('helvetica', '', 8, '', false);
-					PDF::MultiCell(20, 8,  $text1, "0", 'L', 0, 0, '', '', true,0,false,true,8,'M',false);
-					PDF::MultiCell(5, 8,  "", "0", 'L', 0, 0, '', '', true,0,false,true,8,'M',false);
-					//PDF::SetFont('helvetica', 'B', 8, '', false);
-					PDF::MultiCell(20, 8,  $text2, "0", 'C', 0, 1, '', '', true,0,false,true,8,'M',false);
+                if ($i%4!=0){
+                    PDF::SetFont('helvetica', '', 8, '', false);
+                    PDF::MultiCell(20, 8,  $text1, "0", 'L', 0, 0, '', '', true,0,false,true,8,'M',false);
+                    PDF::MultiCell(5, 8,  "", "0", 'L', 0, 0, '', '', true,0,false,true,8,'M',false);
+                    //PDF::SetFont('helvetica', 'B', 8, '', false);
+                    PDF::MultiCell(20, 8,  $text2, "0", 'C', 0, 0, '', '', true,0,false,true,8,'M',false);
+                    PDF::MultiCell(5, 8,  "", "0", 'L', 0, 0, '', '', true,0,false,true,8,'M',false);
+                }
+                else{ // ultima de la derecha
+                    PDF::SetFont('helvetica', '', 8, '', false);
+                    PDF::MultiCell(20, 8,  $text1, "0", 'L', 0, 0, '', '', true,0,false,true,8,'M',false);
+                    PDF::MultiCell(5, 8,  "", "0", 'L', 0, 0, '', '', true,0,false,true,8,'M',false);
+                    //PDF::SetFont('helvetica', 'B', 8, '', false);
+                    PDF::MultiCell(20, 8,  $text2, "0", 'C', 0, 1, '', '', true,0,false,true,8,'M',false);
 
-					// medianil horizontal
+                    // medianil horizontal
 
-					//PDF::MultiCell(85, 4.5,  "", "", 'L', 0, 1, '', '', true,0,false,true,4.5,'M',false);
+                    //PDF::MultiCell(85, 4.5,  "", "", 'L', 0, 1, '', '', true,0,false,true,4.5,'M',false);
 
-					PDF::SetFont('helvetica', '', 6, '', false);
-					for ($i=0;$i<=3;$i++){
-						($i==3) ? $ret = 1 : $ret = 0; // cambio linea
-						PDF::MultiCell(50, 4.5,  $arr_nom[$i], "", 'L', 0, $ret, '', '', true,0,false,true,4.5,'M',false);
-					}
-					$arr_nom=array("","","","");
+                    PDF::SetFont('helvetica', '', 6, '', false);
+                    for ($i=0;$i<=3;$i++){
+                        ($i==3) ? $ret = 1 : $ret = 0; // cambio linea
+                        PDF::MultiCell(50, 4.5,  $arr_nom[$i], "", 'L', 0, $ret, '', '', true,0,false,true,4.5,'M',false);
+                    }
+                    $arr_nom=array("","","","");
 
-					$hay_cuarta = true;
+                    $hay_cuarta = true;
 
-					$i=0;
-					$fila_pag++;
-				}
+                    $i=0;
+                    $fila_pag++;
+                }
 
-                Producto::where('id', $row->id)->update(['etiqueta_id' => 5]);
+                if($fila_pag >= 22){
+                    PDF::AddPage();
+                    $fila_pag=0;
+                }
+            }
 
-				if($fila_pag >= 22){
-					PDF::AddPage();
-					$fila_pag=0;
-				}
 
-			}
 
-			if ($hay_cuarta == false){
-				//fin linea
-				PDF::MultiCell(20, 8,  "", "0", 'C', 0, 1, '', '', true,0,false,true,8,'M',false);
+        }
 
-				PDF::SetFont('helvetica', '', 6, '', false);
-				for ($i=0;$i<=3;$i++){
-					($i==3) ? $ret = 1 : $ret = 0; // cambio linea
-					PDF::MultiCell(50, 4.5,  $arr_nom[$i], "", 'L', 0, $ret, '', '', true,0,false,true,4.5,'M',false);
-				}
-				$arr_nom=array("","","","");
+        if ($hay_cuarta == false){
+            //fin linea
+            PDF::MultiCell(20, 8,  "", "0", 'C', 0, 1, '', '', true,0,false,true,8,'M',false);
 
-			}
+            PDF::SetFont('helvetica', '', 6, '', false);
+            for ($i=0;$i<=3;$i++){
+                ($i==3) ? $ret = 1 : $ret = 0; // cambio linea
+                PDF::MultiCell(50, 4.5,  $arr_nom[$i], "", 'L', 0, $ret, '', '', true,0,false,true,4.5,'M',false);
+            }
+            $arr_nom=array("","","","");
+
+        }
+
+        Producto::where('clase_id',$data['clase_id'])
+            ->whereIn('estado_id',[1,2,3])
+            ->where('etiqueta_id', $data['etiqueta_id'])
+            ->whereNull('deleted_at')
+            ->update(['etiqueta_id' => 5]);
 
     }
 
