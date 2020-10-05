@@ -218,7 +218,8 @@
                                         label="IVA"
                                         ></v-select>
                                 </v-flex>
-                                <v-flex sm2>
+                                <v-flex sm1></v-flex>
+                                <v-flex sm1>
                                     <v-text-field
                                         v-model="producto.peso_gr"
                                         v-validate="'required|decimal:2'"
@@ -233,7 +234,7 @@
                                     >
                                     </v-text-field>
                                 </v-flex>
-                                <v-flex sm2>
+                                <v-flex sm1>
                                     <v-text-field
                                         v-model="producto.precio_coste"
                                         v-validate="'required|decimal:2'"
@@ -248,7 +249,7 @@
                                     >
                                     </v-text-field>
                                 </v-flex>
-                                <v-flex sm2>
+                                <v-flex sm1>
                                     <v-text-field
                                         v-model="producto.precio_venta"
                                         v-validate="'required|decimal:2|min:1'"
@@ -263,7 +264,7 @@
                                     >
                                     </v-text-field>
                                 </v-flex>
-                                <v-flex sm2>
+                                <v-flex sm1>
                                     <v-text-field
                                         :value="computedMargen"
                                         label="Márgen"
@@ -272,9 +273,9 @@
                                     >
                                     </v-text-field>
                                 </v-flex>
-                                <v-flex sm1 v-show="producto.estado_id <= 4">
+                                <v-flex sm1></v-flex>
+                                <v-flex sm1 v-if="computedStock">
                                     <v-text-field
-                                        v-if="computedStock"
                                         v-model="producto.stock"
                                         v-validate="'required|min:1'"
                                         :error-messages="errors.collect('stock')"
@@ -286,14 +287,16 @@
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
+                                </v-flex>
+                                <v-flex sm1 v-if="computedStock">
                                     <v-text-field
-                                        v-else
                                         v-model="this.stock_real"
                                         label="Stock Real"
                                         readonly
                                     >
                                     </v-text-field>
                                 </v-flex>
+                                <v-flex sm1></v-flex>
                                 <v-flex sm1>
                                     <v-switch
                                         v-show="producto.estado_id != 5"
@@ -511,8 +514,6 @@ import {mapState} from 'vuex'
 
                         this.stock_real = res.data.stock_real;
 
-                        console.log(res.data.stock_real);
-
                     })
                     .catch(err => {
                         this.$toast.error(err.response.data.message);
@@ -547,11 +548,8 @@ import {mapState} from 'vuex'
 
             },
             computedStock(){
-                if (this.producto.stock > 1 && this.producto.stock != this.stock_real){
-                    return false;
-                }
 
-                return true;
+                return (this.producto.estado_id <= 3 && this.producto.stock > 1);
 
             },
             computedEditStock(){
