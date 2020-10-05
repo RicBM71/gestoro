@@ -200,7 +200,7 @@ export default {
             return f==null ? true : false;
         },
         openDialog(item){
-
+            
             this.itemCreate.nombre = item.concepto;
             this.itemCreate.nombre_interno = '';
             this.itemCreate.precio_coste = item.importe;

@@ -109,6 +109,7 @@ class ClasesController extends Controller
             'peso' => ['boolean'],
             'grabaciones' => ['boolean'],
             'quilates' => ['boolean'],
+            'stockable' => ['boolean'],
         ]);
 
         $data['username'] = $request->user()->username;

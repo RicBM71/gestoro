@@ -1,6 +1,6 @@
 <template>
   <v-layout row justify-center>
-    <v-dialog v-model="dialog_pro" persistent max-width="800px">
+    <v-dialog v-model="dialog_pro" persistent max-width="900px">
 
       <v-card>
         <v-card-title>
@@ -16,7 +16,7 @@
                                 v-validate="'required'"
                                 ref="nombre"
                                 outline
-                                height="100"
+                                height="90"
                                 :error-messages="errors.collect('nombre')"
                                 label="Indicar nombre"
                                 data-vv-name="nombre"
@@ -34,7 +34,6 @@
                         </v-flex>
                     </v-layout>
                     <v-layout wrap>
-                        <v-flex sm1></v-flex>
                         <v-flex sm4 d-flex>
                                 <v-select
                                 v-model="clase_id"
@@ -90,7 +89,6 @@
                         </v-flex>
                     </v-layout>
                     <v-layout wrap>
-                        <v-flex sm1></v-flex>
                         <v-flex sm4 d-flex>
                                 <v-select
                                 v-model="destino_empresa_id"
@@ -142,7 +140,44 @@
                             >
                             </v-text-field>
                         </v-flex>
-
+                         <v-flex sm2 v-if="computedStock">
+                            <v-text-field
+                                v-model="stock"
+                                v-validate="'required|numeric'"
+                                :error-messages="errors.collect('stock')"
+                                label="Stock"
+                                data-vv-name="stock"
+                                data-vv-as="márgen"
+                                type="number"
+                                required
+                                v-on:keyup.enter="submit"
+                            >
+                            </v-text-field>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout wrap>
+                        <v-flex sm4 d-flex>
+                            <v-select
+                                v-model="categoria_id"
+                                v-validate="'numeric'"
+                                data-vv-name="categoria_id"
+                                data-vv-as="categoria"
+                                :error-messages="errors.collect('categoria_id')"
+                                :items="categorias"
+                                label="Categoría"
+                            ></v-select>
+                        </v-flex>
+                        <v-flex sm4 d-flex>
+                            <v-select
+                                v-model="marca_id"
+                                v-validate="'numeric'"
+                                data-vv-name="marca_id"
+                                data-vv-as="marca"
+                                :error-messages="errors.collect('marca_id')"
+                                :items="marcas"
+                                label="Marca"
+                            ></v-select>
+                        </v-flex>
                     </v-layout>
                 </v-container>
             </v-form>
@@ -177,16 +212,23 @@
         destino_empresa_id:"",
         quilates:"",
         clase_id:0,
+        categoria_id: null,
+        marca_id: null,
         imp_gr: 0,
         margen: 0,
         peso_gr: 0,
         precio_coste: 0,
         precio_venta:0,
+        stock:1,
         precio_gr: 0,
         clases:[],
         empresas:[],
+        marcas:[],
+        categorias:[],
+        show_stock: false
     }),
     beforeMount(){
+
         if (this.compra.grupo_id > 0){
 
             axios.get('/utilidades/helpgrupos/'+this.compra.grupo_id+'/clases')
@@ -195,7 +237,15 @@
                     this.clases = res.data.clases;
                     this.empresas = res.data.empresas;
                     this.itemCreate.clase_id = this.clases[0].value;
+
                     this.selClase(this.itemCreate.clase_id);
+
+                    this.marcas = res.data.marcas;
+                    this.categorias = res.data.categorias;
+
+                    this.marcas.push({value: null, text: '-'});
+                    this.categorias.push({value: null, text: '-'});
+
 
                 })
                 .catch(err => {
@@ -241,12 +291,21 @@
             this.peso_gr = this.itemCreate.peso_gr;
             this.precio_coste = this.itemCreate.precio_coste;
             this.precio_venta = Math.round(this.precio_coste * (1 +(this.margen / 100)));
+
+            this.selClase(this.itemCreate.clase_id);
+
         },
         compra: function () {
             axios.get('/utilidades/helpgrupos/'+this.compra.grupo_id+'/clases')
                 .then(res => {
                     this.clases = res.data.clases;
-                    this.itemCreate.clase_id = this.clases[0].value;
+                    //this.itemCreate.clase_id = this.clases[0].value;
+                    this.marcas = res.data.marcas;
+                    this.categorias = res.data.categorias;
+
+                    this.marcas.push({value: null, text: '-'});
+                    this.categorias.push({value: null, text: '-'});
+
                     this.selClase(this.itemCreate.clase_id);
 
                 })
@@ -258,6 +317,11 @@
         },
 
     },
+    computed:{
+        computedStock(){
+            return this.show_stock;
+        }
+    },
     methods:{
         closeDialog (){
 
@@ -265,16 +329,20 @@
         },
         selClase(id){
 
-            let index = this.clases.findIndex((item) => item.value === id);
+            let index = this.clases.findIndex((item) => item.value == id);
 
-            this.show_peso = this.clases[index].peso;
-            this.show_quil = this.clases[index].quilates;
+            if (index >= 0){
 
-            if (!this.show_peso)
-                this.itemCreate.peso_gr = 0;
+                this.show_peso = this.clases[index].peso;
+                this.show_quil = this.clases[index].quilates;
+                this.show_stock = this.clases[index].stockable;
 
-            if (!this.show_quil)
-                this.itemCreate.quilates = "";
+                if (!this.show_peso)
+                    this.itemCreate.peso_gr = 0;
+
+                if (!this.show_quil)
+                    this.itemCreate.quilates = "";
+            }
 
         },
         submit() {
@@ -301,7 +369,10 @@
                                 etiqueta_id: 3,
                                 univen: 'U',
                                 destino_empresa_id: this.destino_empresa_id,
-                                nombre_interno: this.nombre_interno
+                                nombre_interno: this.nombre_interno,
+                                stock: this.stock,
+                                marca_id: this.marca_id,
+                                categoria_id: this.categoria_id
                             })
                             .then(res => {
                                 this.$emit('update:dialog_pro', false)
@@ -344,6 +415,7 @@
             this.itemCreate.nombre =  null;
             this.itemCreate.colores = null;
             this.itemCreate.peso = 0;
+            this.itemCreate.stock = 1;
             this.itemCreate.precio_venta = 0;
             this.itemCreate.quilates = null;
 

@@ -49,6 +49,13 @@
                                 label="Quilates"
                             ></v-switch>
                         </v-flex>
+                        <v-flex sm2>
+                            <v-switch
+                                v-model="clase.stockable"
+                                color="primary"
+                                label="Stockable"
+                            ></v-switch>
+                        </v-flex>
 
                         <v-flex sm2>
                             <v-text-field

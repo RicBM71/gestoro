@@ -7,9 +7,11 @@ use App\Tipo;
 use App\Clase;
 use App\Grupo;
 use App\Libro;
+use App\Marca;
 use App\Estado;
 use App\Almacen;
 use App\Empresa;
+use App\Categoria;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -23,7 +25,7 @@ class HelpGruposController extends Controller
                 'fases' => Fase::selFases('C'),
                 'tipos' => Tipo::selTiposCom(),
                 'libro_def' =>  Libro::distinct()->first(),
-                'almacenes' => Almacen::selAlmacenes()
+                'almacenes' => Almacen::selAlmacenes(),
             ];
 
     }
@@ -34,6 +36,8 @@ class HelpGruposController extends Controller
             return [
                 'clases'=> Clase::selClases($grupo_id),
                 'empresas' => Empresa::selEmpresas()->Venta()->get(),
+                'marcas'    => Marca::selMarcas(),
+                'categorias'=> Categoria::selCategorias(),
             ];
 
     }

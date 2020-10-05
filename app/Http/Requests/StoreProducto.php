@@ -49,6 +49,9 @@ class StoreProducto extends FormRequest
             'etiqueta_id'        => ['nullable','integer'],
             'nombre_interno'     => ['nullable'],
             'destino_empresa_id' => ['nullable','integer'],
+            'stock'              => ['nullable','integer'],
+            'marca_id'           => ['nullable','integer'],
+            'categoria_id'       => ['nullable','integer'],
 
         ];
 

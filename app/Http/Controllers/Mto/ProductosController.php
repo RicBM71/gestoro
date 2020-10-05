@@ -279,6 +279,9 @@ class ProductosController extends Controller
 
         if ($data['precio_venta'] == 0)
             $data['precio_venta'] = $data['precio_coste'] + round($data['precio_coste'] * 30 / 100, 0);
+        if ($data['clase_id'] != 1)
+            $data['quilates'] = null;
+
         $data['username'] = $request->user()->username;
 
 
@@ -396,7 +399,9 @@ class ProductosController extends Controller
 
         $data = $request->validated();
 
-        if ($data['clase_id'] == 1){
+        $clase = Clase::findOrfail($data['clase_id']);
+
+        if ($clase->stockable == false){
             $data['stock'] = 1;
         }
 
@@ -407,6 +412,7 @@ class ProductosController extends Controller
         if (request()->wantsJson())
             return [
                 'producto'=> $producto->load('clase','empresa'),
+                'stock_real'=> Producto::getStockReal($producto->id),
                 'message' => 'EL producto ha sido modificado'
                 ];
     }

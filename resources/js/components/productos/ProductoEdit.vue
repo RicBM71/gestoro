@@ -279,7 +279,7 @@
                                         v-model="producto.stock"
                                         v-validate="'required|min:1'"
                                         :error-messages="errors.collect('stock')"
-                                        label="Stock Ini"
+                                        label="Stock Inicial"
                                         data-vv-name="stock"
                                         data-vv-as="Stock"
                                         type="number"
@@ -499,7 +499,8 @@ import {mapState} from 'vuex'
 
                 show: false,
                 show_loading: true,
-                stock_real: 0
+                stock_real: 0,
+                show_stock: false,
       		}
         },
         mounted(){
@@ -542,6 +543,7 @@ import {mapState} from 'vuex'
                         this.show_quilates = this.producto.clase.quilates;
 
                         this.stock_real = res.data.stock_real;
+                        this.clase();
 
                     })
                     .catch(err => {
@@ -578,7 +580,9 @@ import {mapState} from 'vuex'
             },
             computedStock(){
 
-                return (this.producto.estado_id <= 3 && this.producto.stock > 1);
+                return this.show_stock;
+
+                //return (this.producto.estado_id <= 3 && this.producto.stock > 1);
 
             },
             computedEditStock(){
@@ -638,7 +642,9 @@ import {mapState} from 'vuex'
 			]),
             clase(){
                 var idx = this.clases.map(x => x.value).indexOf(this.producto.clase_id);
+
                 this.show_quilates = this.clases[idx].quilates;
+                this.show_stock = this.clases[idx].stockable;
             },
             goCompra() {
                 this.$router.push({ name: 'compra.close', params: { id: this.producto.compra_id } })
@@ -662,6 +668,8 @@ import {mapState} from 'vuex'
 
                                     this.$toast.success(res.data.message);
                                     this.producto = res.data.producto;
+
+                                    this.stock_real = res.data.stock_real;
 
                                     this.loading = false;
 
