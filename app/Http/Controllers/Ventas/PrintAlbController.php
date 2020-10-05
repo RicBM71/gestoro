@@ -261,7 +261,7 @@ class PrintAlbController extends Controller
 				$txt.= ' ('.strtoupper($row->producto->clase->nombre).' '.$row->producto->quilates.'KT)';
             }
             // pide peso kilates.
-            if ($this->albaran->tipo_id == 3 && $row->producto->peso_gr <> 0)
+            if ($this->albaran->tipo_id == 3 && $row->producto->peso_gr <> 0 && $row->producto->stock == 1)
                 $txt.= ' '.getDecimal($row->producto->peso_gr).' gr.';
 
             $txt.=$leyenda;
