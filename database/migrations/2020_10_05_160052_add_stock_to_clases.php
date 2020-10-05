@@ -26,7 +26,7 @@ class AddStockToClases extends Migration
     public function down()
     {
         Schema::table('clases', function (Blueprint $table) {
-            //
+            $table->dropColumn('stockable');
         });
     }
 }
