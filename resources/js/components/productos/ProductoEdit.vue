@@ -549,7 +549,7 @@ import {mapState} from 'vuex'
             },
             computedStock(){
 
-                return (this.producto.estado_id <= 3 && this.producto.stock > 1);
+                return (this.producto.estado_id <= 3);
 
             },
             computedEditStock(){
