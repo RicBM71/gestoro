@@ -95,6 +95,28 @@
                         </v-flex>
                     </v-layout>
                     <v-layout row wrap v-show="show_filtro">
+                        <v-flex sm2>
+                            <v-select
+                                v-model="categoria_id"
+                                v-validate="'numeric'"
+                                data-vv-name="categoria_id"
+                                data-vv-as="categoría"
+                                :error-messages="errors.collect('categoria_id')"
+                                :items="categorias"
+                                label="Categoría"
+                                ></v-select>
+                        </v-flex>
+                        <v-flex sm2>
+                            <v-select
+                                v-model="marca_id"
+                                v-validate="'numeric'"
+                                data-vv-name="marca_id"
+                                data-vv-as="marca"
+                                :error-messages="errors.collect('marca_id')"
+                                :items="marcas"
+                                label="Marca"
+                                ></v-select>
+                        </v-flex>
                         <v-flex sm3>
                             <v-select
                                 v-model="tipoinv_id"
@@ -235,6 +257,8 @@ export default {
             clases: [],
             asociados: [],
             grupos:[],
+            marcas:[],
+            categorias:[],
             tipoinv_id: 'C',
             tiposinv:[
                 {value: 'C', text: 'Contable - origen pieza'},
@@ -244,6 +268,8 @@ export default {
             clase_id: null,
             cliente_id: null,
             estado_id: null,
+            marca_id: null,
+            categoria_id: null,
             show_loading: false,
             ejercicio:new Date().toISOString().substr(0, 4),
             show_filtro: true,
@@ -261,9 +287,13 @@ export default {
                 this.clases = res.data.clases;
                 this.asociados = res.data.asociados;
                 this.grupo_id = this.grupos[0].value;
+                this.marcas = res.data.marcas;
+                this.categorias = res.data.categorias;
 
                 this.clases.push({value:null,text:"---"});
                 this.asociados.push({value:null,text:"---"});
+                this.marcas.push({value: null, text: '-'});
+                this.categorias.push({value: null, text: '-'});
             })
             .catch(err => {
                 this.$toast.error('Error al montar <inventario>');
@@ -301,7 +331,9 @@ export default {
                                 clase_id: this.clase_id,
                                 grupo_id:  this.grupo_id,
                                 estado_id: this.estado_id,
-                                tipoinv_id: this.tipoinv_id
+                                tipoinv_id: this.tipoinv_id,
+                                marca_id: this.marca_id,
+                                categoria_id: this.categoria_id
                             }
                             })
                         .then(res => {

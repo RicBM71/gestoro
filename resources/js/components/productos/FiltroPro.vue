@@ -174,22 +174,45 @@
                         label="Activos"
                         ></v-select>
                 </v-flex>
-                <!-- <v-flex sm2>
-                    <v-switch
-                        label="Solo Activos"
-                        v-model="reg.alta"
-                        color="primary">
-                    ></v-switch>
-                </v-flex> -->
-                <v-flex sm2>
+                <v-flex sm1>
                     <v-switch
                         label="Online"
                         v-model="reg.online"
                         color="primary">
                     ></v-switch>
                 </v-flex>
+                <v-flex sm1>
+                    <v-switch
+                        v-if="showEmp"
+                        label="Deslocalizar"
+                        v-model="reg.sinscope"
+                        color="primary">
+                    ></v-switch>
+                </v-flex>
             </v-layout>
             <v-layout row wrap>
+                <v-flex sm2>
+                    <v-select
+                        v-model="reg.categoria_id"
+                        v-validate="'numeric'"
+                        data-vv-name="categoria_id"
+                        data-vv-as="categoría"
+                        :error-messages="errors.collect('categoria_id')"
+                        :items="categorias"
+                        label="Categoría"
+                        ></v-select>
+                </v-flex>
+                <v-flex sm2>
+                    <v-select
+                        v-model="reg.marca_id"
+                        v-validate="'numeric'"
+                        data-vv-name="marca_id"
+                        data-vv-as="marca"
+                        :error-messages="errors.collect('marca_id')"
+                        :items="marcas"
+                        label="Marca"
+                        ></v-select>
+                </v-flex>
                  <v-flex sm2 d-flex>
                     <v-select
                         v-show="showEmp"
@@ -202,6 +225,7 @@
                         label="Origen Pieza"
                     ></v-select>
                 </v-flex>
+
                  <v-flex sm2 d-flex>
                     <v-select
                         v-show="showEmp"
@@ -214,7 +238,7 @@
                         label="Destino Venta"
                     ></v-select>
                 </v-flex>
-                <v-flex sm2>
+                <v-flex sm1>
                     <v-select
                         v-model="reg.interno"
                         v-validate="'required'"
@@ -226,7 +250,7 @@
                         required
                         ></v-select>
                 </v-flex>
-                <v-flex sm3>
+                <v-flex sm2>
                     <v-select
                         v-model="reg.cliente_id"
                         v-validate="'alpha_dash'"
@@ -239,14 +263,7 @@
                 </v-flex>
 
 
-                <v-flex sm2>
-                    <v-switch
-                        v-if="showEmp"
-                        label="Deslocalizar"
-                        v-model="reg.sinscope"
-                        color="primary">
-                    ></v-switch>
-                </v-flex>
+
                 <v-flex sm1>
                     <v-btn @click="submit"  :loading="loading" round small block  color="info">
                         Filtrar
@@ -294,6 +311,8 @@ export default {
                 destino_empresa_id:"",
                 sinscope: false,
                 interno: 'T',
+                marca_id: null,
+                categoria_id: null
             },
             internos:[
                 {value: 'I', text: 'Internos'},
@@ -313,6 +332,8 @@ export default {
             menu_h: false,
             quilates:[],
             empresas:[],
+            marcas:[],
+            categorias:[],
             showEmp: true
 
       }
@@ -325,6 +346,8 @@ export default {
             .then(res => {
 
                 this.clases = res.data.clases;
+                this.marcas = res.data.marcas;
+                this.categorias = res.data.categorias;
                 this.asociados = res.data.asociados;
                 this.asociados.push({value:null,text:"---"});
                 this.asociados.push({value:-1,text:"Sin Proveedor Asignado"});
@@ -339,8 +362,10 @@ export default {
 
                 this.quilates = res.data.quilates;
                 this.quilates.push({value:null,text:"---"});
+                this.marcas.push({value: null, text: '-'});
+                this.categorias.push({value: null, text: '-'});
 
-                this.showEmp = res.data.empresas.length > 1;
+                //this.showEmp = res.data.empresas.length > 1;
 
                 this.empresas = res.data.empresas;
                 this.empresas.push({value:null,text:"---"});

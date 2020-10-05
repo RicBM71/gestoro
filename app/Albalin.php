@@ -152,7 +152,7 @@ class Albalin extends Model
 
         $producto = DB::table('productos')->find($producto_id);
 
-        if ($producto->estado_id >= 5 )
+        if ($producto->estado_id >= 5 || $producto->stock == 1)
             return false;
 
     //    \Log::info(DB::table('albalins')->sum('unidades')

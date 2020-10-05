@@ -31,7 +31,7 @@
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm5>
+                        <v-flex sm3>
                         </v-flex>
                         <v-flex sm2>
                             <div class="text-xs-center">

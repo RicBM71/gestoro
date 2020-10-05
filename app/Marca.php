@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Marca extends Model
 {
     protected $fillable = [
-        'nombre', ,'username'
+        'nombre', 'username'
     ];
 
     public static function selMarcas()

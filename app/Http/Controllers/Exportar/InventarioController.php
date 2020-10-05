@@ -20,11 +20,13 @@ class InventarioController extends Controller
         }
 
         $data = $request->validate([
-            'cliente_id'  => ['nullable','integer'],
-            'clase_id'    => ['nullable','integer'],
-            'estado_id'   => ['nullable','integer'],
-            'grupo_id'    => ['required','integer'],
-            'tipoinv_id'  => ['required','max:1'],
+            'cliente_id'   => ['nullable','integer'],
+            'clase_id'     => ['nullable','integer'],
+            'estado_id'    => ['nullable','integer'],
+            'marca_id'     => ['nullable','integer'],
+            'categoria_id' => ['nullable','integer'],
+            'grupo_id'     => ['required','integer'],
+            'tipoinv_id'   => ['required','max:1'],
         ]);
 
         return $this->detalle($data);
@@ -42,6 +44,8 @@ class InventarioController extends Controller
                         ->select(DB::raw(DB::getTablePrefix().'productos.*, (stock - (IFNULL((SELECT SUM(unidades) FROM '.DB::getTablePrefix().'albalins,'.DB::getTablePrefix().'albaranes WHERE producto_id = '.DB::getTablePrefix().'productos.id and '.DB::getTablePrefix().'albalins.deleted_at is null AND albaran_id = '.DB::getTablePrefix().'albaranes.id AND fase_id >= 10), 0))) AS mi_stock'))
                         ->join('clases','clase_id','=','clases.id')
                         ->where('empresa_id', session('empresa_id'))
+                        ->categoria($data['categoria_id'])
+                        ->marca($data['marca_id'])
                         ->asociado($data['cliente_id'])
                         ->estado($data['estado_id'])
                         ->clase($data['clase_id'])
@@ -53,6 +57,8 @@ class InventarioController extends Controller
                         ->select(DB::raw(DB::getTablePrefix().'productos.*, (stock - (IFNULL((SELECT SUM(unidades) FROM '.DB::getTablePrefix().'albalins,'.DB::getTablePrefix().'albaranes WHERE producto_id = '.DB::getTablePrefix().'productos.id and '.DB::getTablePrefix().'albalins.deleted_at is null AND albaran_id = '.DB::getTablePrefix().'albaranes.id AND fase_id >= 10), 0))) AS mi_stock'))
                         ->join('clases','clase_id','=','clases.id')
                         ->where('destino_empresa_id', session('empresa_id'))
+                        ->categoria($data['categoria_id'])
+                        ->marca($data['marca_id'])
                         ->asociado($data['cliente_id'])
                         ->estado($data['estado_id'])
                         ->clase($data['clase_id'])

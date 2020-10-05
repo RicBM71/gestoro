@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Mto;
 
 use App\Iva;
 use App\Clase;
+use App\Marca;
 use App\Estado;
 use App\Almacen;
 use App\Cliente;
@@ -12,6 +13,7 @@ use App\Quilate;
 use App\Etiqueta;
 use App\Garantia;
 use App\Producto;
+use App\Categoria;
 use Carbon\Carbon;
 use App\Traits\SessionTrait;
 use Illuminate\Http\Request;
@@ -67,6 +69,8 @@ class ProductosController extends Controller
             'fecha_h'       =>['date','nullable'],
             'clase_id'      =>['integer','nullable'],
             'estado_id'     =>['integer','nullable'],
+            'marca_id'      =>['integer','nullable'],
+            'categoria_id'  =>['integer','nullable'],
             'referencia'    =>['string','nullable'],
             'ref_pol'       =>['string','nullable'],
             'precio'        =>['string','nullable'],
@@ -114,6 +118,8 @@ class ProductosController extends Controller
                         ->online($data['online'])
                         ->internos($data['interno'])
                         ->asociado($data['cliente_id'])
+                        ->categoria($data['categoria_id'])
+                        ->marca($data['marca_id'])
                         ->orderBy('id','desc')
                         ->get()
                         ->take(1999);
@@ -133,6 +139,8 @@ class ProductosController extends Controller
                         ->online($data['online'])
                         ->internos($data['interno'])
                         ->asociado($data['cliente_id'])
+                        ->categoria($data['categoria_id'])
+                        ->marca($data['marca_id'])
                         ->orderBy('id','desc')
                         ->get()
                         ->take(1999);
@@ -367,8 +375,10 @@ class ProductosController extends Controller
                 'almacenes'=> Almacen::selAlmacenes(),
                 'etiquetas'=> Etiqueta::selEstados(),
                 'asociados'=> Cliente::selAsociados(),
+                'quilates' => Quilate::selQuilates(),
                 'garantias'=> Garantia::selGarantias(),
-                'quilates'   => Quilate::selQuilates(),
+                'marcas'   => Marca::selMarcas(),
+                'categorias'=> Categoria::selCategorias(),
                 'stock_real'=> Producto::getStockReal($producto->id)
             ];
     }

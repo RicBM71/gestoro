@@ -46,6 +46,8 @@ class UpdateProducto extends FormRequest
             'notas'             => ['string','nullable'],
             'cliente_id'        => ['nullable', 'integer', Rule::requiredIf($this->iva_id==2 && $this->empresa_id <> $this->destino_empresa_id && $this->compra_id == null)],
             'almacen_id'        => ['nullable', 'integer'],
+            'marca_id'          => ['nullable', 'integer'],
+            'categoria_id'      => ['nullable', 'integer'],
             'etiqueta_id'       => ['required', 'integer'],
             'stock'             => ['required', 'integer'],
             'destino_empresa_id'=> ['required', 'integer'],

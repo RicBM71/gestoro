@@ -60,13 +60,11 @@ import MenuOpe from './MenuOpe'
     	data () {
       		return {
                 titulo:"Categorias",
-                marca: {
+                categoria: {
                     id:       0,
                     nombre:  "",
-                    updated_at:"",
-                    created_at:"",
                 },
-                marca_id: "",
+                categoria_id: "",
 
         		status: false,
                 loading: false,

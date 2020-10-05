@@ -367,36 +367,32 @@
                                         ></v-date-picker>
                                     </v-menu>
                                 </v-flex>
-                                <v-flex sm2>
-                                    <v-text-field
-                                        v-model="producto.username"
-                                        :error-messages="errors.collect('username')"
-                                        label="Usuario"
-                                        data-vv-name="username"
-                                        readonly
-                                        v-on:keyup.enter="submit"
-                                    >
-                                    </v-text-field>
+                                <v-flex sm3 d-flex>
+                                    <v-select
+                                        v-model="producto.categoria_id"
+                                        v-validate="'numeric'"
+                                        data-vv-name="categoria_id"
+                                        data-vv-as="categoria"
+                                        :error-messages="errors.collect('categoria_id')"
+                                        :items="categorias"
+                                        label="Categoría"
+                                    ></v-select>
                                 </v-flex>
-                                <v-flex sm2>
-                                    <v-text-field
-                                        v-model="computedFModFormat"
-                                        label="Modificado"
-                                        readonly
-                                    >
-                                    </v-text-field>
+                                <v-flex sm3 d-flex>
+                                    <v-select
+                                        v-model="producto.marca_id"
+                                        v-validate="'numeric'"
+                                        data-vv-name="marca_id"
+                                        data-vv-as="marca"
+                                        :error-messages="errors.collect('marca_id')"
+                                        :items="marcas"
+                                        label="Marca"
+                                    ></v-select>
                                 </v-flex>
-                                <v-flex sm2>
-                                    <v-text-field
-                                        v-model="computedFCreFormat"
-                                        label="Creado"
-                                        readonly
-                                    >
-                                    </v-text-field>
-                                </v-flex>
+
                             </v-layout>
                             <v-layout row wrap>
-                                <v-flex sm10>
+                                <v-flex sm8>
                                     <v-textarea
                                         v-model="producto.notas"
                                         v-validate="'max:300'"
@@ -408,7 +404,34 @@
                                     >
                                     </v-textarea>
                                 </v-flex>
-                                <v-flex sm2>
+                                <v-flex sm1>
+                                    <v-text-field
+                                        v-model="producto.username"
+                                        :error-messages="errors.collect('username')"
+                                        label="Usuario"
+                                        data-vv-name="username"
+                                        readonly
+                                        v-on:keyup.enter="submit"
+                                    >
+                                    </v-text-field>
+                                </v-flex>
+                                <v-flex sm1>
+                                    <v-text-field
+                                        v-model="computedFModFormat"
+                                        label="Modificado"
+                                        readonly
+                                    >
+                                    </v-text-field>
+                                </v-flex>
+                                <v-flex sm1>
+                                    <v-text-field
+                                        v-model="computedFCreFormat"
+                                        label="Creado"
+                                        readonly
+                                    >
+                                    </v-text-field>
+                                </v-flex>
+                                <v-flex sm1>
                                     <div class="text-xs-center">
                                                 <v-btn @click="submit"  round  :loading="loading" block  color="primary">
                                         Guardar
@@ -459,6 +482,8 @@ import {mapState} from 'vuex'
                 asociados: [],
                 garantias:[],
                 quilates:[],
+                marcas:[],
+                categorias:[],
                 ivas:[],
                 empresas:[],
 
@@ -505,10 +530,14 @@ import {mapState} from 'vuex'
                         this.asociados = res.data.asociados;
                         this.garantias = res.data.garantias;
                         this.quilates  = res.data.quilates;
+                        this.marcas = res.data.marcas;
+                        this.categorias = res.data.categorias;
 
                         this.asociados.push({value: null, text: '-'});
                         this.garantias.push({value: null, text: '-'});
                         this.almacenes.push({value: null, text: '-'});
+                        this.marcas.push({value: null, text: '-'});
+                        this.categorias.push({value: null, text: '-'});
 
                         this.show_quilates = this.producto.clase.quilates;
 
@@ -549,7 +578,7 @@ import {mapState} from 'vuex'
             },
             computedStock(){
 
-                return (this.producto.estado_id <= 3);
+                return (this.producto.estado_id <= 3 && this.producto.stock > 1);
 
             },
             computedEditStock(){

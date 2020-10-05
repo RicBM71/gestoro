@@ -16,7 +16,8 @@ Class Producto extends Model
         'quilates','caracteristicas','peso_gr','precio_coste', 'precio_venta',
         'compra_id', 'ref_pol','estado_id','etiqueta_id','referencia', 'univen',
         'destino_empresa_id','iva_id','cliente_id','online','deleted_at','notas','username',
-        'garantia_id','meses_garantia','fecha_ultima_revision','stock','descuento'
+        'garantia_id','meses_garantia','fecha_ultima_revision','stock','descuento',
+        'marca_id', 'categoria_id'
     ];
 
     protected $casts = [
@@ -122,6 +123,15 @@ Class Producto extends Model
     	return ($this->belongsTo(Etiqueta::class));
     }
 
+    public function marca()
+    {
+    	return ($this->belongsTo(Marca::class));
+    }
+
+    public function categoria()
+    {
+    	return ($this->belongsTo(Categoria::class));
+    }
 
     public function albalins(){
         return ($this->hasMany(Albalins::class));
@@ -365,6 +375,25 @@ Class Producto extends Model
         return $query;
 
     }
+
+    public static function scopeCategoria($query, $categoria_id){
+
+        if ($categoria_id != null)
+            return $query->where('categoria_id','=', $categoria_id);
+
+        return $query;
+
+    }
+
+    public static function scopeMarca($query, $marca_id){
+
+        if ($marca_id != null)
+            return $query->where('marca_id','=', $marca_id);
+
+        return $query;
+
+    }
+
 
     public static function productosREBU($referencia)
     {

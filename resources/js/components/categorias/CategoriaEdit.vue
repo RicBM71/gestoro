@@ -25,7 +25,16 @@
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm3>
+                        <v-flex sm2>
+                            <v-text-field
+                                v-model="categoria.username"
+                                label="Usuario"
+                                readonly
+                                v-on:keyup.enter="submit"
+                            >
+                            </v-text-field>
+                        </v-flex>
+                        <v-flex sm2>
                             <v-text-field
                                 v-model="computedFModFormat"
                                 label="Modificado"
@@ -33,7 +42,7 @@
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm3>
+                        <v-flex sm2>
                             <v-text-field
                                 v-model="computedFCreFormat"
                                 label="Creado"

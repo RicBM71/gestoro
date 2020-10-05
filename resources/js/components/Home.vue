@@ -261,6 +261,8 @@ export default {
                 { icon: 'event_seat', text: 'Ubicaciones', name: 'almacen.index' },
                 { icon: 'book', text: 'Libros', name: 'libro.index' },
                 { icon: 'alarm', text: 'Contadores', name: 'contador.index' },
+                { icon: 'tour', text: 'Categorías', name: 'categoria.index' },
+                { icon: 'storage', text: 'Marcas', name: 'marca.index' },
                 { icon: 'account_balance', text: 'Cuentas IBAN', name: 'cuenta.index' },
                 { icon: 'sentiment_satisfied_alt', text: 'Garantías', name: 'garantia.index' },
                 { icon: 'build', text: 'Talleres', name: 'taller.index' },

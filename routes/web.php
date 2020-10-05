@@ -154,6 +154,9 @@ Route::group([
         Route::resource('existencias', 'ExistenciasController', ['as' => 'mto']);
         Route::resource('fixings', 'FixingsController', ['as' => 'mto']);
 
+        Route::resource('marcas', 'MarcasController', ['as' => 'mto']);
+        Route::resource('categorias', 'CategoriasController', ['as' => 'mto']);
+
     }
 );
 

@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Utilidades;
 
 use App\Clase;
 use App\Grupo;
+use App\Marca;
 use App\Estado;
 use App\Albalin;
 use App\Cliente;
 use App\Empresa;
 use App\Quilate;
 use App\Producto;
+use App\Categoria;
 use App\Scopes\EmpresaScope;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -63,6 +65,8 @@ class HelpProductoController extends Controller
                 'estados'   => Estado::selEstados(),
                 'asociados' => Cliente::selAsociados(),
                 'quilates'  => Quilate::selQuilates(),
+                'marcas'    => Marca::selMarcas(),
+                'categorias'=> Categoria::selCategorias(),
                 'empresas'  => Empresa::selEmpresas()->Venta()->whereIn('id',session('empresas_usuario'))->get(),
             ];
 
