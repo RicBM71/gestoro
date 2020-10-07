@@ -16,6 +16,7 @@ class LibroPolExport implements FromView, WithCustomCsvSettings
     public function __construct(array $data)
     {
         $this->data = $data;
+        $this->plantilla_excel = $data['plantilla_excel'];
     }
 
     public function getCsvSettings(): array
@@ -29,9 +30,10 @@ class LibroPolExport implements FromView, WithCustomCsvSettings
     public function view(): View
     {
 
-        return view('exports.libropol', [
+        return view('exports.'.$this->plantilla_excel, [
             'compras' => Compra::getLibroPolExcel($this->data),
-            'codigo_pol' => $this->data['codigo_pol']
+            'codigo_pol' => $this->data['codigo_pol'],
+            'establecimiento' => $this->data['establecimiento']
         ]);
 
     }

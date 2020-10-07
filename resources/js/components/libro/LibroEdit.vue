@@ -25,7 +25,7 @@
                             ></v-select>
                         </v-flex>
 
-                        <v-flex sm3>
+                        <v-flex sm2>
                             <v-text-field
                                 v-model="libro.nombre"
                                 v-validate="'required'"
@@ -51,6 +51,30 @@
                             >
                             </v-text-field>
                         </v-flex>
+                        <v-flex sm1></v-flex>
+                        <v-flex sm2>
+                            <v-switch
+                                v-model="libro.peso_frm"
+                                color="primary"
+                                label="Peso en Frm"
+                            ></v-switch>
+                        </v-flex>
+                        <v-flex sm2>
+                            <v-switch
+                                v-model="libro.recompras"
+                                color="primary"
+                                label="Cambio a Recompras"
+                            ></v-switch>
+                        </v-flex>
+                         <v-flex sm2>
+                            <v-switch
+                                label="Cerrado"
+                                v-model="libro.cerrado"
+                                color="primary">
+                            ></v-switch>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row wrap>
                         <v-flex sm2>
                             <v-text-field
                                 v-model="libro.codigo_pol"
@@ -75,70 +99,32 @@
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm2>
-                            <v-switch
-                                label="Cerrado"
-                                v-model="libro.cerrado"
-                                color="primary">
-                            ></v-switch>
-                        </v-flex>
-                    </v-layout>
-                    <v-layout row wrap>
-                        <v-flex sm2>
+                        <v-flex sm1>
                             <v-text-field
-                                v-model="libro.serie_com"
-                                v-validate="{ required: true, regex:/^[A-Za-z]$/ }"
-                                :error-messages="errors.collect('serie_com')"
-                                label="Serie Compra"
-                                hint="Formato: A-Z"
-                                data-vv-name="serie_com"
-                                data-vv-as="serie"
-                                required
+                                v-model="libro.plantilla_excel"
+                                v-validate="'alpha_num'"
+                                :error-messages="errors.collect('plantilla_excel')"
+                                label="Libro Excel"
+                                data-vv-name="plantilla_excel"
+                                data-vv-as="plantilla_excel"
+                                :readonly="!isRoot"
                                 v-on:keyup.enter="submit"
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm2>
+                        <v-flex sm3>
                             <v-text-field
-                                v-model="libro.ult_compra"
-                                v-validate="'required|integer'"
-                                :error-messages="errors.collect('ult_compra')"
-                                label="Ult. Compra"
-                                data-vv-name="ult_compra"
-                                data-vv-as="Compra"
-                                required
+                                v-model="libro.establecimiento"
+                                v-validate="'alpha_dash'"
+                                :error-messages="errors.collect('establecimiento')"
+                                label="Establecimiento"
+                                data-vv-name="establecimiento"
+                                data-vv-as="establecimiento"
                                 v-on:keyup.enter="submit"
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm2>
-                            <v-text-field
-                                v-model="libro.interes"
-                                v-validate="'required|decimal'"
-                                :error-messages="errors.collect('interes')"
-                                label="Interés Renovación"
-                                data-vv-name="interes"
-                                data-vv-as="interés"
-                                required
-                                v-on:keyup.enter="submit"
-                            >
-                            </v-text-field>
-                        </v-flex>
-                        <v-flex sm2 v-if="parametros.doble_interes">
-                            <v-text-field
-                                v-model="libro.interes_recuperacion"
-                                v-validate="'required|decimal'"
-                                :error-messages="errors.collect('interes_recuperacion')"
-                                label="Interés Recuperación"
-                                data-vv-name="interes_recuperacion"
-                                data-vv-as="interés"
-                                required
-                                v-on:keyup.enter="submit"
-                            >
-                            </v-text-field>
-                        </v-flex>
-
-                        <v-flex sm2>
+                        <v-flex sm1>
                             <v-text-field
                                 v-model="libro.semdia_bloqueo"
                                 v-validate="'required|max:3'"
@@ -152,6 +138,99 @@
                             >
                             </v-text-field>
                         </v-flex>
+                        <v-flex sm1></v-flex>
+                        <v-flex sm2>
+                            <v-switch
+                                v-model="libro.grabaciones"
+                                color="primary"
+                                label="Grabaciones"
+                            ></v-switch>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row wrap>
+                        <v-flex sm1>
+                            <v-text-field
+                                v-model="libro.serie_com"
+                                v-validate="{ required: true, regex:/^[A-Za-z]$/ }"
+                                :error-messages="errors.collect('serie_com')"
+                                label="Serie Compra"
+                                hint="Formato: A-Z"
+                                data-vv-name="serie_com"
+                                data-vv-as="serie"
+                                required
+                                v-on:keyup.enter="submit"
+                            >
+                            </v-text-field>
+                        </v-flex>
+                        <v-flex sm1>
+                            <v-text-field
+                                v-model="libro.ult_compra"
+                                v-validate="'required|integer'"
+                                :error-messages="errors.collect('ult_compra')"
+                                label="Ult. Compra"
+                                data-vv-name="ult_compra"
+                                data-vv-as="Compra"
+                                required
+                                v-on:keyup.enter="submit"
+                            >
+                            </v-text-field>
+                        </v-flex>
+                        <v-flex sm1>
+                            <v-text-field
+                                v-model="libro.serie_fac"
+                                v-validate="'required|max:5'"
+                                :error-messages="errors.collect('serie_fac')"
+                                label="Serie Fac. Compra"
+                                data-vv-name="serie_fac"
+                                data-vv-as="serie"
+                                required
+                                v-on:keyup.enter="submit"
+                            >
+                            </v-text-field>
+                        </v-flex>
+                        <v-flex sm1>
+                            <v-text-field
+                                v-model="libro.ult_factura"
+                                v-validate="'required|integer'"
+                                :error-messages="errors.collect('ult_factura')"
+                                label="Ult. F. Compra"
+                                data-vv-name="ult_factura"
+                                data-vv-as="Factura"
+                                required
+                                v-on:keyup.enter="submit"
+                            >
+                            </v-text-field>
+                        </v-flex>
+                        <v-flex sm1>
+                            <v-text-field
+                                v-model="libro.interes"
+                                v-validate="'required|decimal'"
+                                :error-messages="errors.collect('interes')"
+                                label="Interés Renovación"
+                                data-vv-name="interes"
+                                data-vv-as="interés"
+                                required
+                                v-on:keyup.enter="submit"
+                            >
+                            </v-text-field>
+                        </v-flex>
+                        <v-flex sm1 v-if="parametros.doble_interes">
+                            <v-text-field
+                                v-model="libro.interes_recuperacion"
+                                v-validate="'required|decimal'"
+                                :error-messages="errors.collect('interes_recuperacion')"
+                                label="Interés Recuperación"
+                                data-vv-name="interes_recuperacion"
+                                data-vv-as="interés"
+                                required
+                                v-on:keyup.enter="submit"
+                            >
+                            </v-text-field>
+                        </v-flex>
+                        <v-flex sm1 v-else>
+                        </v-flex>
+
+
                         <v-flex sm1>
                             <v-text-field
                                 v-model="libro.dias_custodia"
@@ -180,53 +259,8 @@
                         </v-flex>
                     </v-layout>
                     <v-layout row wrap>
-                        <v-flex sm2>
-                            <v-text-field
-                                v-model="libro.serie_fac"
-                                v-validate="'required|max:5'"
-                                :error-messages="errors.collect('serie_fac')"
-                                label="Serie Fac. Compra"
-                                data-vv-name="serie_fac"
-                                data-vv-as="serie"
-                                required
-                                v-on:keyup.enter="submit"
-                            >
-                            </v-text-field>
-                        </v-flex>
-                        <v-flex sm2>
-                            <v-text-field
-                                v-model="libro.ult_factura"
-                                v-validate="'required|integer'"
-                                :error-messages="errors.collect('ult_factura')"
-                                label="Ult. F. Compra"
-                                data-vv-name="ult_factura"
-                                data-vv-as="Factura"
-                                required
-                                v-on:keyup.enter="submit"
-                            >
-                            </v-text-field>
-                        </v-flex>
-                        <v-flex sm2>
-                            <v-switch
-                                v-model="libro.grabaciones"
-                                color="primary"
-                                label="Grabaciones"
-                            ></v-switch>
-                        </v-flex>
-                        <v-flex sm2>
-                            <v-switch
-                                v-model="libro.peso_frm"
-                                color="primary"
-                                label="Peso en Frm"
-                            ></v-switch>
-                        </v-flex>
-                        <v-flex sm3>
-                            <v-switch
-                                v-model="libro.recompras"
-                                color="primary"
-                                label="Cambio a Recompras"
-                            ></v-switch>
-                        </v-flex>
+
+
                     </v-layout>
                     <v-layout row wrap>
                          <v-flex sm2>
@@ -240,7 +274,7 @@
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm3>
+                        <v-flex sm2>
                             <v-text-field
                                 v-model="computedFModFormat"
                                 label="Modificado"
@@ -248,7 +282,7 @@
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm3>
+                        <v-flex sm2>
                             <v-text-field
                                 v-model="computedFCreFormat"
                                 label="Creado"
@@ -256,8 +290,8 @@
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm1></v-flex>
-                        <v-flex sm2>
+                        <v-flex sm4></v-flex>
+                        <v-flex sm1>
                             <div class="text-xs-center">
                                         <v-btn @click="submit"  round  :loading="loading" block  color="primary">
                                 Guardar
@@ -317,7 +351,8 @@ import {mapGetters} from 'vuex';
         },
         computed: {
             ...mapGetters([
-                'parametros'
+                'parametros',
+                'isRoot'
             ]),
             computedFModFormat() {
                 moment.locale('es');

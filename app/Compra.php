@@ -323,7 +323,7 @@ class Compra extends Model
             ->join('comlines','compras.id','=','comlines.compra_id')
             ->join('clases','comlines.clase_id','=','clases.id')
             ->select('compras.fecha_compra','compras.albaran','papeleta','clientes.dni','clientes.nombre','apellidos','direccion','poblacion','provincia','nacpro',
-                    'concepto','peso_gr','comlines.importe','clases.nombre AS clase','comlines.quilates','grabaciones','colores')
+                    'concepto','peso_gr','comlines.importe','clases.nombre AS clase','comlines.quilates','grabaciones','colores','fecha_nacimiento')
             ->where('compras.empresa_id', session('empresa')->id)
             ->where('compras.grupo_id', $data['grupo_id'])
             ->whereDate('fecha_compra','>=',$data['fecha_d'])

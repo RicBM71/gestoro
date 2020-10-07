@@ -45,6 +45,12 @@ class PrintLibroController extends Controller
 
         $data['codigo_pol']=$libro->codigo_pol;
         $data['grupo_id']=$libro->grupo_id;
+        $data['establecimiento']=$libro->establecimiento;
+
+        if ($libro->plantilla_excel == null)
+            $data['plantilla_excel'] = 'libropol';
+        else
+            $data['plantilla_excel'] = 'libropol_'.$libro->plantilla_excel;
 
         return Excel::download(new LibroPolExport($data), 'libro.csv');
 

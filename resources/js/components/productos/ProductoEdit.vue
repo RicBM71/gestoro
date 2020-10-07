@@ -586,7 +586,7 @@ import {mapState} from 'vuex'
 
             },
             computedEditStock(){
-                if (this.producto.clase_id != 1 && this.isAdmin)
+                if (this.show_stock && this.isAdmin)
                     return true;
                 return false;
             },

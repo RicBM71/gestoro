@@ -11,7 +11,7 @@ class Libro extends Model
     protected $fillable = [
         'id','nombre', 'empresa_id', 'grupo_id', 'ejercicio', 'ult_compra', 'ult_factura', 'serie_fac','serie_com', 'semdia_bloqueo',
         'dias_custodia','dias_cortesia','interes','codigo_pol','nombre_csv','cerrado','grabaciones','peso_frm','username', 'recompras',
-        'interes_recuperacion'
+        'interes_recuperacion','plantilla_excel','establecimiento'
     ];
 
     /**
