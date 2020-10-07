@@ -43,8 +43,8 @@ class UpdateLibroRequest extends FormRequest
             'interes_recuperacion'=> ['required', 'numeric'],
             'codigo_pol'    => ['string','nullable'],
             'nombre_csv'    => ['string','nullable'],
-            'plantilla_excel'   => ['string','nullable'],
-            'establecimiento'   => ['string','nullable'],
+            'plantilla_excel'   => ['string','nullable', 'max:30'],
+            'establecimiento'   => ['string','nullable', 'max:50'],
 
         ];
     }

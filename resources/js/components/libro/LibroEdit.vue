@@ -115,7 +115,7 @@
                         <v-flex sm3>
                             <v-text-field
                                 v-model="libro.establecimiento"
-                                v-validate="'alpha_dash'"
+                                v-validate="'max:50'"
                                 :error-messages="errors.collect('establecimiento')"
                                 label="Establecimiento"
                                 data-vv-name="establecimiento"
