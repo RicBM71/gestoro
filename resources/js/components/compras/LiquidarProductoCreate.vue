@@ -263,7 +263,7 @@
         },
         peso_gr: function () {
             if (this.peso_gr > 0){
-               // this.precio_coste = Math.round(this.peso_gr * this.imp_gr);
+                this.precio_coste = Math.round(this.peso_gr * this.imp_gr);
 
                 if (this.precio_coste < 100){
                     this.precio_coste = (this.peso_gr * this.imp_gr).toFixed(2);
