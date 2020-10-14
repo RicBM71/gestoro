@@ -50,7 +50,7 @@
                                             v-model="parametro.retencion"
                                             v-validate="'required'"
                                             :error-messages="errors.collect('retencion')"
-                                            label="Retencíon ITP"
+                                            label="Retención ITP"
                                             data-vv-name="retencion"
                                             required
                                             v-on:keyup.enter="submit"
@@ -107,6 +107,7 @@
                                             v-model="parametro.frm_compras"
                                             v-validate="'required|max:2'"
                                             :error-messages="errors.collect('frm_compras')"
+                                            hint="GE/KL"
                                             label="Formulario Compras"
                                             data-vv-name="frm_compras"
                                             v-on:keyup.enter="submit"
@@ -133,7 +134,7 @@
                                     </v-flex>
                                     <v-flex sm2>
                                         <v-switch
-                                            label="Notificar IBAN"
+                                            label="Notificar IBAN x def"
                                             v-model="parametro.notificar_iban"
                                             color="primary">
                                         ></v-switch>

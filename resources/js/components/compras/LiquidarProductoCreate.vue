@@ -263,10 +263,14 @@
         },
         peso_gr: function () {
             if (this.peso_gr > 0){
-                this.precio_coste = Math.round(this.peso_gr * this.imp_gr);
+               // this.precio_coste = Math.round(this.peso_gr * this.imp_gr);
+
+                if (this.precio_coste < 100){
+                    this.precio_coste = (this.peso_gr * this.imp_gr).toFixed(2);
+                }
             }
 
-                this.precio_venta = Math.round(this.peso_gr * this.precio_gr);
+            this.precio_venta = Math.round(this.peso_gr * this.precio_gr);
         },
         precio_gr: function () {
             this.precio_venta = Math.round(this.peso_gr * this.precio_gr);

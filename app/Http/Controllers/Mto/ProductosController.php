@@ -277,8 +277,9 @@ class ProductosController extends Controller
 
         //$data['etiqueta_id']  = $data['clase_id'] == 3 ? 3 : 1;
 
-        if ($data['precio_venta'] == 0)
-            $data['precio_venta'] = $data['precio_coste'] + round($data['precio_coste'] * 30 / 100, 0);
+        //if ($data['precio_venta'] == 0)
+        //    $data['precio_venta'] = $data['precio_coste'] + round($data['precio_coste'] * 30 / 100, 0);
+
         if ($data['clase_id'] != 1)
             $data['quilates'] = null;
 
