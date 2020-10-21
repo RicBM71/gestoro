@@ -276,7 +276,7 @@ import FiltroRec from './FiltroRec'
         axios.get(this.url)
             .then(res => {
                 this.items = res.data;
-                
+
 
             })
             .catch(err =>{

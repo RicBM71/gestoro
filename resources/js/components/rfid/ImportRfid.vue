@@ -26,6 +26,17 @@
                                             label="Operación"
                                         ></v-select>
                                     </v-flex>
+                                    <v-flex sm3 d-flex>
+                                        <v-select
+                                            v-validate="'numeric'"
+                                            v-model="omitir_empresa_id"
+                                            :error-messages="errors.collect('omitir_empresa_id')"
+                                            data-vv-name="omitir_empresa_id"
+                                            data-vv-as="empresa"
+                                            :items="empresas"
+                                            label="Omitir"
+                                        ></v-select>
+                                    </v-flex>
                                 </v-layout>
                                 <v-layout row wrap>
                                     <v-flex sm3></v-flex>
@@ -35,6 +46,7 @@
                                                 ref="myVueDropzone"
                                                 id="dropzone"
                                                 :options="dropzoneOptions"
+                                                v-on:vdropzone-sending="sendingEvent"
                                                 v-on:vdropzone-error="vderror"
                                                 v-on:vdropzone-success="upload"
                                         ></vue-dropzone>
@@ -154,12 +166,14 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
                 ],
 
                 items:[],
+                empresas: [],
 
                 operacion: 'R',
 
                 status: false,
                 loading: false,
                 show_loading: true,
+                omitir_empresa_id: null
       		}
         },
         mounted(){
@@ -167,6 +181,14 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
                 this.$toast.error('Permiso Administrador requerido');
                 this.$router.push({ name: 'dash'})
             }
+            axios.get('/rfid/recuento')
+            .then(res => {
+                this.empresas = res.data.empresas;
+                this.empresas.push({value:null,text:"---"});
+            })
+            .catch(err => {
+                this.$toast.error('Error al montar export-rfid');
+            })
         },
         computed: {
             ...mapGetters([
@@ -185,6 +207,10 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
                 this.$toast.error(message.message);
                 this.$refs.myVueDropzone2.removeAllFiles()
 
+            },
+            sendingEvent (file, xhr, formData) {
+
+                formData.append('omitir_empresa_id', this.omitir_empresa_id);
             },
             upload(file, response){
                 this.load = false;

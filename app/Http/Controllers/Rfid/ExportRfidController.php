@@ -8,6 +8,7 @@ use App\Recuento;
 use App\Exports\RfidExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Scopes\EmpresaProductoScope;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ExportRfidController extends Controller
@@ -71,13 +72,28 @@ class ExportRfidController extends Controller
         $i=0;
         foreach ($perdidas as $row) {
 
-            $load[]=$this->formatearLinea($row->producto);
+
+            if ($row->producto == null){
+
+                try {
+                    //code...
+                    $producto = Producto::withoutGlobalScope(EmpresaProductoScope::class)->withTrashed()->findOrfail($row->producto_id);
+                } catch (\Exception $e) {
+                    \Log::info($row);
+                }
+
+                $load[]=$this->formatearLinea($producto);
+            }else{
+                $load[]=$this->formatearLinea($row->producto);
+            }
+
+
 
             $i++;
 
         }
 
-        if (count($perdidas) > 0)
+        if ($i > 0)
             return Excel::download(new RfidExport($load), 'eti.csv');
         else
             return abort(404, 'No hay registros');

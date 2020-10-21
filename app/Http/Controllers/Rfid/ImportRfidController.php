@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Rfid;
 
+use App\Empresa;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -20,12 +21,19 @@ class ImportRfidController extends Controller
         //     return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Gestor');
         // }
 
+        if (request()->wantsJson())
+            return [
+                'empresas'=>Empresa::selAllEmpresas()
+            ];
+
+
     }
 
     public function recuento(Request $request){
 
         $data = $this->validate(request(),[
-    		'file' => 'required|mimetypes:text/plain|max:256'
+            'file' => 'required|mimetypes:text/plain|max:256',
+            'omitir_empresa_id' => 'nullable|integer'
         ]);
 
 
@@ -54,6 +62,9 @@ class ImportRfidController extends Controller
         // RESERVADAS, las separo
         DB::update(DB::RAW('UPDATE '.DB::getTablePrefix().'recuentos SET rfid_id = 6 WHERE producto_id IN (SELECT id FROM '.DB::getTablePrefix().'productos WHERE destino_empresa_id='.session('empresa_id').' AND estado_id = 3)'));
 
+        if ($data['omitir_empresa_id'] > 0){
+            DB::table('recuentos')->where('destino_empresa_id', $data['omitir_empresa_id'])->delete();
+        }
 
             // cargo productos que están en tienda en pc, pero no aparecen en recuento, o sea que debería de estar o aparecer en el recuento
 

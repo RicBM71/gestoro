@@ -407,6 +407,7 @@ Route::group([
     function (){
 
 
+        Route::get('/recuento', 'ImportRfidController@index');
         Route::post('/recuento', 'ImportRfidController@recuento');
         Route::post('/localizar', 'ImportRfidController@localizar');
 
