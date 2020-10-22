@@ -58,10 +58,10 @@ class ImportRfidController extends Controller
 
             // Mal ubicadas
 
-        if ($data['agregar_empresa_id'] == null)
-            DB::update(DB::RAW('UPDATE '.DB::getTablePrefix().'recuentos SET rfid_id = 2 WHERE empresa_id='.session('empresa_id')).' AND empresa_id <> destino_empresa_id');
-        else
+        if ($data['agregar_empresa_id'] > 0)
             DB::update(DB::RAW('UPDATE '.DB::getTablePrefix().'recuentos SET rfid_id = 2 WHERE empresa_id='.session('empresa_id')).' AND empresa_id <> destino_empresa_id AND destino_empresa_id <>'.$data['agregar_empresa_id']);
+        else
+            DB::update(DB::RAW('UPDATE '.DB::getTablePrefix().'recuentos SET rfid_id = 2 WHERE empresa_id='.session('empresa_id')).' AND empresa_id <> destino_empresa_id');
 
             // borradas y en recuento
         DB::update(DB::RAW('UPDATE '.DB::getTablePrefix().'recuentos SET rfid_id = 4 WHERE producto_id IN (SELECT id FROM '.DB::getTablePrefix().'productos WHERE destino_empresa_id IN ('.$empresas_str.') AND deleted_at IS NOT NULL)'));
@@ -119,7 +119,7 @@ class ImportRfidController extends Controller
         //                        ->delete();
 
 
-        return $this->load();
+        return $this->status();
 
 
     }
@@ -133,16 +133,16 @@ class ImportRfidController extends Controller
 
         Excel::import(new LocalizarRfidImport, request()->file('file'));
 
-        return $this->load();
+        return $this->status();
 
     }
 
-    private function load(){
+    public function status(){
 
         return DB::table('recuentos')->select(DB::raw(DB::getTablePrefix().'rfids.nombre AS nombre, COUNT(*) AS registros'))
                     ->join('rfids', 'rfids.id', '=', 'recuentos.rfid_id')
                     ->where('empresa_id', session('empresa_id'))
-                    ->where('fecha', date('Y-m-d'))
+                //    ->where('fecha', date('Y-m-d'))
                     ->groupBy('nombre')
                     ->get();
     }

@@ -27,6 +27,7 @@ class InventarioController extends Controller
             'categoria_id' => ['nullable','integer'],
             'grupo_id'     => ['required','integer'],
             'tipoinv_id'   => ['required','max:1'],
+            'created_at'   => ['nullable','date'],
         ]);
 
         return $this->detalle($data);
@@ -35,6 +36,24 @@ class InventarioController extends Controller
 
     private function detalle($data)
     {
+
+        $created_at = $data['created_at'];
+
+        // \Log::info(Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','iva','estado','garantia','cliente','etiqueta'])
+        //                 //->select('productos.*',)
+        //                 ->select(DB::raw(DB::getTablePrefix().'productos.*, (stock - (IFNULL((SELECT SUM(unidades) FROM '.DB::getTablePrefix().'albalins,'.DB::getTablePrefix().'albaranes WHERE producto_id = '.DB::getTablePrefix().'productos.id and '.DB::getTablePrefix().'albalins.deleted_at is null AND albaran_id = '.DB::getTablePrefix().'albaranes.id AND fase_id >= 10), 0))) AS mi_stock'))
+        //                 ->join('clases','clase_id','=','clases.id')
+        //                 ->where('empresa_id', session('empresa_id'))
+        //                 ->categoria($data['categoria_id'])
+        //                 ->marca($data['marca_id'])
+        //                 ->asociado($data['cliente_id'])
+        //                 ->estado($data['estado_id'])
+        //                 ->clase($data['clase_id'])
+        //                 ->whereIn('estado_id',[1,2,3])
+        //                 ->grupo($data['grupo_id'])
+        //                 ->when($created_at <> null, function ($query) use ($created_at) {
+        //                     return $query->where('productos.created_at', '<=', $created_at);
+        //                 })->toSql());
 
         // solo lístamos los productos de empresa origen porque este es el inventario real
         //  por esto quito globalScope
@@ -51,6 +70,9 @@ class InventarioController extends Controller
                         ->clase($data['clase_id'])
                         ->whereIn('estado_id',[1,2,3])
                         ->grupo($data['grupo_id'])
+                        ->when($created_at <> null, function ($query) use ($created_at) {
+                            return $query->where('productos.created_at', '<=', $created_at);
+                        })
                         ->get();
         else
             $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','iva','estado','garantia','cliente','etiqueta'])
@@ -64,6 +86,9 @@ class InventarioController extends Controller
                         ->clase($data['clase_id'])
                         ->whereIn('estado_id',[1,2,3])
                         ->grupo($data['grupo_id'])
+                        ->when($created_at <> null, function ($query) use ($created_at) {
+                            return $query->where('productos.created_at', '<=', $created_at);
+                        })
                         ->get();
 
         $valor_inventario = 0;

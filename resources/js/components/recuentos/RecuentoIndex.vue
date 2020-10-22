@@ -1,13 +1,13 @@
 <template>
     <div>
         <loading :show_loading="show_loading"></loading>
-            <div v-if="registros">
+           <div v-if="registros && status == false">
                 <my-dialog :dialog.sync="dialog" registro="registro" @destroyReg="destroyReg"></my-dialog>
                 <v-card>
                     <v-card-title>
                         <h2>{{titulo}}</h2>
                         <v-spacer></v-spacer>
-                        <!-- <v-tooltip bottom>
+                        <v-tooltip bottom>
                             <template v-slot:activator="{ on }">
                                 <v-btn
                                     v-on="on"
@@ -15,11 +15,11 @@
                                     icon
                                     @click="goEstados"
                                 >
-                                    <v-icon color="primary">push_pin</v-icon>
+                                    <v-icon color="primary">dvr</v-icon>
                                 </v-btn>
                             </template>
                                 <span>Estados recuento</span>
-                        </v-tooltip> -->
+                        </v-tooltip>
                         <v-tooltip bottom>
                             <template v-slot:activator="{ on }">
                                 <v-btn
@@ -188,7 +188,43 @@
                         </v-layout> -->
                     </v-container>
                 </v-card>
-            </div>
+           </div>
+        <div v-if="status==true">
+            <v-card>
+                        <v-layout row wrap>
+                            <v-flex sm4></v-flex>
+                            <v-flex sm4>
+                                <table class="v-datatable v-table theme--light">
+                                    <thead>
+                                        <tr>
+                                            <th>Concepto</th>
+                                            <th>Registros</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(item, index) in estados_recuento" :key="index">
+                                            <td class="text-xs-left">{{item.nombre}}</td>
+                                            <td class="text-xs-center">{{ item.registros | currency('', 0, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </v-flex>
+                        </v-layout>
+                        <v-layout row wrap>
+                            <v-flex sm4></v-flex>
+                            <v-flex sm3>
+                            </v-flex>
+                            <v-flex sm1></v-flex>
+                            <v-flex sm3>
+                                <div class="text-xs-center">
+                                    <v-btn @click="detalle"  round flat  block  color="primary">
+                                        Detalle Recuento
+                                    </v-btn>
+                                </div>
+                            </v-flex>
+                        </v-layout>
+                    </v-card>
+        </div>
     </div>
 </template>
 <script>
@@ -260,7 +296,8 @@ import FiltroRec from './FiltroRec'
         show_loading: true,
         editedIndex: 0,
         url:"/mto/recuentos",
-        estados_recuento:[]
+        estados_recuento:[],
+        status: false
       }
     },
     beforeMount(){
@@ -337,9 +374,9 @@ import FiltroRec from './FiltroRec'
             this.setPagination(this.paginaActual);
             this.setResult(this.items);
 
-            // if (item.deleted_at == null)
-            //     this.$router.push({ name: 'producto.edit', params: { id: item.producto_id } })
-            // else
+            if (item.deleted_at == null && item.emprea_id == item.destino_empresa_id)
+                this.$router.push({ name: 'producto.edit', params: { id: item.producto_id } })
+            else
                 this.$router.push({ name: 'producto.show', params: { id: item.producto_id } })
         },
         update(item) {
@@ -356,7 +393,7 @@ import FiltroRec from './FiltroRec'
                             Object.assign(this.items[this.editedIndex], item)
 
                             this.$toast.success(res.data.message);
-                            this.loading = false;
+                            //this.loading = false;
 
                         })
                         .catch(err => {
@@ -415,10 +452,16 @@ import FiltroRec from './FiltroRec'
         },
         goEstados(){
 
-            axios.post(this.url+'/estados')
-                .then(res => {
+            if (this.estados_recuento.length > 0){
+                this.status = false;
+                this.estados_recuento = [];
+            }
 
-                    this.estados_recuento = res.estados;
+            this.show_loading = true;
+
+            axios.get('/rfid/status')
+                .then(res => {
+                    this.estados_recuento = res.data;
                 })
             .catch(err => {
                 this.status = true;
@@ -427,10 +470,14 @@ import FiltroRec from './FiltroRec'
 
             })
             .finally(()=> {
-
-
+                if (this.estados_recuento.length > 0)
+                    this.status = true;
+                this.show_loading = false;
             });
 
+        },
+        detalle(){
+            this.status = false;
         },
         goExcel(){
 

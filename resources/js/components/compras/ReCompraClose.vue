@@ -690,7 +690,7 @@ import {mapState} from 'vuex'
                  // lo dejo para poder hacer ampliaciones en negativo, es decir, aumenta préstamo.
 
                 if (new Date() < new Date(this.compra.fecha_bloqueo))
-                    return true; // está bloqueado por fecha
+                    return this.totales_concepto[1] > 0 ? false : true; // está bloqueado por fecha, pero si hay alguna ampliación dejo dar a cuenta
                 else{
 
                     if (this.isSupervisor) return false;

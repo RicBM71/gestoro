@@ -128,6 +128,37 @@
                                 label="Tipo"
                                 ></v-select>
                         </v-flex>
+                        <v-flex sm2>
+                            <v-menu
+                                v-model="menu1"
+                                :close-on-content-click="false"
+                                :nudge-right="40"
+                                lazy
+                                transition="scale-transition"
+                                offset-y
+                                full-width
+                                min-width="290px"
+                            >
+                                <v-text-field
+                                    slot="activator"
+                                    :value="computedFechaH"
+                                    label="Fecha"
+                                    v-validate="'required'"
+                                    data-vv-name="fecha_h"
+                                    append-icon="event"
+                                    readonly
+                                    data-vv-as="Fecha"
+                                    :error-messages="errors.collect('fecha_h')"
+                                    ></v-text-field>
+                                <v-date-picker
+                                    v-model="fecha_h"
+                                    no-title
+                                    locale="es"
+                                    first-day-of-week=1
+                                    @input="menu1 = false"
+                                ></v-date-picker>
+                            </v-menu>
+                        </v-flex>
                     </v-layout>
                     <v-layout row wrap v-if="items.length>0">
                         <v-flex xs3>
@@ -278,6 +309,7 @@ export default {
             fecha_h: new Date().toISOString().substr(0, 10),
             menu_d: false,
             menu_h: false,
+
       }
     },
     mounted(){
@@ -301,11 +333,7 @@ export default {
     },
     computed: {
         ...mapGetters([
-        ]),
-        computedFechaD() {
-            moment.locale('es');
-            return this.fecha_d ? moment(this.fecha_d).format('L') : '';
-        },
+        ]),       
         computedFechaH() {
             moment.locale('es');
             return this.fecha_h ? moment(this.fecha_h).format('L') : '';
@@ -333,7 +361,8 @@ export default {
                                 estado_id: this.estado_id,
                                 tipoinv_id: this.tipoinv_id,
                                 marca_id: this.marca_id,
-                                categoria_id: this.categoria_id
+                                categoria_id: this.categoria_id,
+                                created_at: this.fecha_h
                             }
                             })
                         .then(res => {

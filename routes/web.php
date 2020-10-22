@@ -406,7 +406,7 @@ Route::group([
     'middleware' => ['auth','password']],
     function (){
 
-
+        Route::get('/status', 'ImportRfidController@status');
         Route::get('/recuento', 'ImportRfidController@index');
         Route::post('/recuento', 'ImportRfidController@recuento');
         Route::post('/localizar', 'ImportRfidController@localizar');
