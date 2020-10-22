@@ -1,3 +1,5 @@
 delete FROM `klt_comlines` WHERE empresa_id = 5;
 delete FROM `klt_depositos` WHERE empresa_id = 5;
 delete FROM `klt_compras` WHERE empresa_id = 5;
+
+UPDATE klt_productos SET destino_empresa_id = 1 where destino_empresa_id = 14 and empresa_id = 1 and date(updated_at) = "2020-10-21"

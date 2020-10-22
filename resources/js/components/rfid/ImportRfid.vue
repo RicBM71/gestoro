@@ -29,12 +29,12 @@
                                     <v-flex sm3 d-flex>
                                         <v-select
                                             v-validate="'numeric'"
-                                            v-model="omitir_empresa_id"
-                                            :error-messages="errors.collect('omitir_empresa_id')"
-                                            data-vv-name="omitir_empresa_id"
+                                            v-model="agregar_empresa_id"
+                                            :error-messages="errors.collect('agregar_empresa_id')"
+                                            data-vv-name="agregar_empresa_id"
                                             data-vv-as="empresa"
                                             :items="empresas"
-                                            label="Omitir"
+                                            label="Incorporar"
                                         ></v-select>
                                     </v-flex>
                                 </v-layout>
@@ -173,7 +173,7 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
                 status: false,
                 loading: false,
                 show_loading: true,
-                omitir_empresa_id: null
+                agregar_empresa_id: null
       		}
         },
         mounted(){
@@ -210,7 +210,7 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
             },
             sendingEvent (file, xhr, formData) {
 
-                formData.append('omitir_empresa_id', this.omitir_empresa_id);
+                formData.append('agregar_empresa_id', this.agregar_empresa_id);
             },
             upload(file, response){
                 this.load = false;

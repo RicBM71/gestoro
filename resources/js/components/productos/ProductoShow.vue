@@ -155,6 +155,14 @@
                         </v-flex>
                     </v-layout>
                     <v-layout row wrap>
+                        <v-flex sm2 d-flex>
+                            <v-text-field
+                                :value="producto.destino.nombre"
+                                label="Destino Venta"
+                                disabled
+                            >
+                            </v-text-field>
+                        </v-flex>
                         <v-flex sm2>
                             <v-text-field
                                 v-model="producto.username"

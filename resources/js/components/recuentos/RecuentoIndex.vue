@@ -263,6 +263,12 @@ import FiltroRec from './FiltroRec'
         estados_recuento:[]
       }
     },
+    beforeMount(){
+
+        if (this.getLineasIndex.length > 0)
+            if (this.getPagination.model == (this.pagination.model+this.empresaActiva))
+                this.items = this.getLineasIndex;
+    },
     mounted()
     {
 
@@ -273,21 +279,26 @@ import FiltroRec from './FiltroRec'
         else
             this.unsetPagination();
 
-        axios.get(this.url)
-            .then(res => {
-                this.items = res.data;
+        if (this.getLineasIndex.length == 0)
+            axios.get(this.url)
+                .then(res => {
+                    this.items = res.data;
 
 
-            })
-            .catch(err =>{
-                this.$toast.error(err.response.data.message);
-                this.$router.push({ name: 'dash' })
-            })
-            .finally(()=> {
+                })
+                .catch(err =>{
+                    this.$toast.error(err.response.data.message);
+                    this.$router.push({ name: 'dash' })
+                })
+                .finally(()=> {
 
-                this.show_loading = false;
-                this.registros = true;
-            });
+                    this.show_loading = false;
+                    this.registros = true;
+                });
+        else{
+            this.registros = true;
+            this.show_loading = false;
+        }
 
 
     },
@@ -305,7 +316,8 @@ import FiltroRec from './FiltroRec'
     methods:{
         ...mapActions([
             'setPagination',
-            'unsetPagination'
+            'unsetPagination',
+            'setResult'
         ]),
         updateEventPagina(obj){
 
@@ -323,10 +335,11 @@ import FiltroRec from './FiltroRec'
         goProducto(item) {
 
             this.setPagination(this.paginaActual);
+            this.setResult(this.items);
 
-            if (item.deleted_at == null)
-                this.$router.push({ name: 'producto.edit', params: { id: item.producto_id } })
-            else
+            // if (item.deleted_at == null)
+            //     this.$router.push({ name: 'producto.edit', params: { id: item.producto_id } })
+            // else
                 this.$router.push({ name: 'producto.show', params: { id: item.producto_id } })
         },
         update(item) {

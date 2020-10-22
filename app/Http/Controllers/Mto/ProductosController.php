@@ -314,7 +314,7 @@ class ProductosController extends Controller
     public function show($id)
     {
         $producto = Producto::withOutGlobalScope(EmpresaProductoScope::class)->withTrashed()
-                        ->with(['estado','clase','iva'])
+                        ->with(['estado','clase','iva','destino'])
                         ->where('id',$id)
                         ->whereIn('empresa_id',session('empresas_usuario'))
                         ->firstOrFail();

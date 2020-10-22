@@ -7,6 +7,7 @@ use App\Producto;
 use App\Recuento;
 use App\Exports\RfidExport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Scopes\EmpresaProductoScope;
 use Maatwebsite\Excel\Facades\Excel;
@@ -66,28 +67,35 @@ class ExportRfidController extends Controller
     private function perdidas($data){
 
 
-        $perdidas = Recuento::with(['producto.clase'])->where('rfid_id', 3)->orderBy('producto_id')->get();//->take($data['tag']);
+        //$perdidas = Recuento::with(['producto.clase'])->where('rfid_id', 3)->orderBy('producto_id')->get();//->take($data['tag']);
+
+        $perdidas = DB::table('recuentos')->join('productos','productos.id','=','producto_id')
+                            ->where('recuentos.empresa_id', session('empresa_id'))
+                            ->where('rfid_id', 3)
+                            ->orderBy('producto_id')
+                            ->get();
 
         $load = array();
         $i=0;
         foreach ($perdidas as $row) {
 
 
-            if ($row->producto == null){
+            // if ($row->producto == null){
 
-                try {
-                    //code...
-                    $producto = Producto::withoutGlobalScope(EmpresaProductoScope::class)->withTrashed()->findOrfail($row->producto_id);
-                } catch (\Exception $e) {
-                    \Log::info($row);
-                }
+            //     try {
+            //         //code...
+            //         $producto = Producto::withoutGlobalScope(EmpresaProductoScope::class)->withTrashed()->findOrfail($row->producto_id);
+            //     } catch (\Exception $e) {
+            //         \Log::info($row);
+            //     }
 
-                $load[]=$this->formatearLinea($producto);
-            }else{
-                $load[]=$this->formatearLinea($row->producto);
-            }
+            //     $load[]=$this->formatearLinea($producto);
+            // }else{
+            //     $load[]=$this->formatearLinea($row->producto);
+            // }
 
 
+            $load[]=$this->formatearLinea($row);
 
             $i++;
 

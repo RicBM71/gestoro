@@ -33,8 +33,14 @@ class ImportRfidController extends Controller
 
         $data = $this->validate(request(),[
             'file' => 'required|mimetypes:text/plain|max:256',
-            'omitir_empresa_id' => 'nullable|integer'
+            'agregar_empresa_id' => 'nullable'
         ]);
+
+        $empresas[] = session('empresa_id');
+        if ($data['agregar_empresa_id'] != null)
+            $empresas[]=$data['agregar_empresa_id'];
+
+        $empresas_str = implode(',',$empresas);
 
 
             // importa el fichero
@@ -51,25 +57,29 @@ class ImportRfidController extends Controller
         DB::update(DB::RAW('UPDATE '.DB::getTablePrefix().'recuentos SET estado_id = (SELECT estado_id FROM '.DB::getTablePrefix().'productos WHERE '.DB::getTablePrefix().'productos.id = rfid_producto_id) WHERE empresa_id='.session('empresa_id')));
 
             // Mal ubicadas
-        DB::update(DB::RAW('UPDATE '.DB::getTablePrefix().'recuentos SET rfid_id = 2 WHERE empresa_id='.session('empresa_id')).' AND empresa_id <> destino_empresa_id');
+
+        if ($data['agregar_empresa_id'] == null)
+            DB::update(DB::RAW('UPDATE '.DB::getTablePrefix().'recuentos SET rfid_id = 2 WHERE empresa_id='.session('empresa_id')).' AND empresa_id <> destino_empresa_id');
+        else
+            DB::update(DB::RAW('UPDATE '.DB::getTablePrefix().'recuentos SET rfid_id = 2 WHERE empresa_id='.session('empresa_id')).' AND empresa_id <> destino_empresa_id AND destino_empresa_id <>'.$data['agregar_empresa_id']);
 
             // borradas y en recuento
-        DB::update(DB::RAW('UPDATE '.DB::getTablePrefix().'recuentos SET rfid_id = 4 WHERE producto_id IN (SELECT id FROM '.DB::getTablePrefix().'productos WHERE destino_empresa_id='.session('empresa_id').' AND deleted_at IS NOT NULL)'));
+        DB::update(DB::RAW('UPDATE '.DB::getTablePrefix().'recuentos SET rfid_id = 4 WHERE producto_id IN (SELECT id FROM '.DB::getTablePrefix().'productos WHERE destino_empresa_id IN ('.$empresas_str.') AND deleted_at IS NOT NULL)'));
 
         // vendidas y en recuento
-        DB::update(DB::RAW('UPDATE '.DB::getTablePrefix().'recuentos SET rfid_id = 5 WHERE producto_id IN (SELECT id FROM '.DB::getTablePrefix().'productos WHERE destino_empresa_id='.session('empresa_id').' AND estado_id = 4)'));
+        DB::update(DB::RAW('UPDATE '.DB::getTablePrefix().'recuentos SET rfid_id = 5 WHERE producto_id IN (SELECT id FROM '.DB::getTablePrefix().'productos WHERE destino_empresa_id IN ('.$empresas_str.') AND estado_id = 4)'));
 
         // RESERVADAS, las separo
-        DB::update(DB::RAW('UPDATE '.DB::getTablePrefix().'recuentos SET rfid_id = 6 WHERE producto_id IN (SELECT id FROM '.DB::getTablePrefix().'productos WHERE destino_empresa_id='.session('empresa_id').' AND estado_id = 3)'));
+        DB::update(DB::RAW('UPDATE '.DB::getTablePrefix().'recuentos SET rfid_id = 6 WHERE producto_id IN (SELECT id FROM '.DB::getTablePrefix().'productos WHERE destino_empresa_id IN ('.$empresas_str.') AND estado_id = 3)'));
 
-        if ($data['omitir_empresa_id'] > 0){
-            DB::table('recuentos')->where('destino_empresa_id', $data['omitir_empresa_id'])->delete();
-        }
+        // if ($data['agregar_empresa_id'] > 0){
+        //     DB::table('recuentos')->where('destino_empresa_id', $data['agregar_empresa_id'])->delete();
+        // }
 
             // cargo productos que están en tienda en pc, pero no aparecen en recuento, o sea que debería de estar o aparecer en el recuento
 
         $perdidas = DB::table('productos')->select('productos.*')
-                        ->where('destino_empresa_id', session('empresa_id'))
+                        ->whereIn('destino_empresa_id', $empresas)
                         ->where('etiqueta_id', '>=', 4)
                         ->whereIn('estado_id', [1,2,3])
                         ->whereNull('deleted_at')
