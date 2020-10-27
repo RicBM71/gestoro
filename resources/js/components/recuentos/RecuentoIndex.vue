@@ -13,6 +13,19 @@
                                     v-on="on"
                                     color="white"
                                     icon
+                                    @click="goBajaPerdidas"
+                                >
+                                    <v-icon color="primary">gavel</v-icon>
+                                </v-btn>
+                            </template>
+                                <span>Dar de baja perdidas</span>
+                        </v-tooltip>
+                        <v-tooltip bottom>
+                            <template v-slot:activator="{ on }">
+                                <v-btn
+                                    v-on="on"
+                                    color="white"
+                                    icon
                                     @click="goEstados"
                                 >
                                     <v-icon color="primary">dvr</v-icon>
@@ -92,7 +105,6 @@
                                         <td class="justify-center layout px-0">
 
                                                     <v-btn
-                                                        :disabled="props.item.rfid_id == 2"
                                                         small
                                                         icon
                                                         @click="goProducto(props.item)"
@@ -370,11 +382,11 @@ import FiltroRec from './FiltroRec'
 
         },
         goProducto(item) {
-
+            
             this.setPagination(this.paginaActual);
             this.setResult(this.items);
 
-            if (item.deleted_at == null && item.emprea_id == item.destino_empresa_id)
+            if (item.deleted_at == null && item.empresa_id == item.origen && item.rfid_id != 2)
                 this.$router.push({ name: 'producto.edit', params: { id: item.producto_id } })
             else
                 this.$router.push({ name: 'producto.show', params: { id: item.producto_id } })
@@ -475,6 +487,27 @@ import FiltroRec from './FiltroRec'
                 this.show_loading = false;
             });
 
+        },
+        goBajaPerdidas(){
+
+            if (confirm('¿Dar de baja productos con estado referencias perdidas?')){
+                this.show_loading = true;
+
+                axios.post('/rfid/baja')
+                    .then(res => {
+                        this.estados_recuento = res.data;
+                    })
+                .catch(err => {
+                    this.status = true;
+                    var msg = err.response.data.message;
+                    this.$toast.error(msg);
+
+                })
+                .finally(()=> {
+                    this.status = false;
+                    this.show_loading = false;
+                });
+            }
         },
         detalle(){
             this.status = false;

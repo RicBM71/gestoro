@@ -357,14 +357,14 @@ export default {
         mn_etiquetas:{
             icon: 'keyboard_arrow_up',
             'icon-alt': 'keyboard_arrow_down',
-            text: 'Etiquetas',
+            text: 'Recuentos/Etiquetas',
             model: false,
             children: [
                 { icon: 'forward', text: 'Recuentos', name:'recuento.index' },
-                { icon: 'forward', text: 'Importar fichero RFID', name:'rfid.import' },
-                { icon: 'forward', text: 'Exportar fichero RFID', name:'rfid.export' },
+                { icon: 'forward', text: 'Importar Recuento', name:'rfid.import' },
+                { icon: 'forward', text: 'Exportar Etiquetas', name:'rfid.export' },
                 { icon: 'forward', text: 'Estados RFID', name:'rfid.estados' },
-                { icon: 'forward', text: 'Generar Etiquetas Apli', name:'etiquetas.aplipdf' },
+                { icon: 'forward', text: 'Imprimir Etiquetas Apli', name:'etiquetas.aplipdf' },
             ],
         },
         expired: false,

@@ -35,6 +35,18 @@
                                 label="Grupos de"
                             ></v-select>
                        </v-flex>
+                       <v-flex sm1>
+                            <v-select
+                                v-model="formato"
+                                v-validate="'required'"
+                                data-vv-name="formato"
+                                data-vv-as="formato"
+                                :error-messages="errors.collect('formato')"
+                                :items="formatos"
+                                label="Formato"
+                                @change="setTags"
+                            ></v-select>
+                       </v-flex>
                        <v-flex sm2>
                             <v-switch
                                 label="Exportar Perdidas"
@@ -76,6 +88,11 @@ export default {
                 {value: 100, text: 100},
                 {value: 500, text: 500},
             ],
+            formato: 1,
+            formatos:[
+                {value: 1, text: 'RFID'},
+                {value: 2, text: 'Simple'},
+            ],
             tag: 10,
             perdidas: false,
             show_loading: false,
@@ -96,6 +113,10 @@ export default {
         ]),
     },
     methods:{
+        setTags(){
+            if (this.formato == 2)
+                this.tag = 500;
+        },
         submit(){
 
 
@@ -112,18 +133,21 @@ export default {
                                 etiqueta_id: this.etiqueta_id,
                                 tag:    this.tag,
                                 perdidas: this.perdidas,
+                                formato: this.formato
                             }
                             })
                         .then(res => {
+
+                            var extension = this.formato == 1 ? '.rf' : '.csv';
 
                             let blob = new Blob([res.data])
                             let link = document.createElement('a')
                             link.href = window.URL.createObjectURL(blob)
 
                             if (this.perdidas)
-                                link.download = "Ref. Perdidas."+new Date().getFullYear()+(new Date().getMonth()+1)+(new Date().getDate())+'.rf';
+                                link.download = "Ref. Perdidas."+new Date().getFullYear()+(new Date().getMonth()+1)+(new Date().getDate())+extension;
                             else
-                                link.download = "Etiquetas."+new Date().getFullYear()+(new Date().getMonth()+1)+(new Date().getDate())+'.rf';
+                                link.download = "Etiquetas."+new Date().getFullYear()+(new Date().getMonth()+1)+(new Date().getDate())+extension;
 
                             document.body.appendChild(link);
                             link.click()

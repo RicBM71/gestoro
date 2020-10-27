@@ -7,6 +7,7 @@ use App\Producto;
 use App\Recuento;
 use App\Exports\RfidExport;
 use Illuminate\Http\Request;
+use App\Exports\Etiqueta2Export;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Scopes\EmpresaProductoScope;
@@ -29,7 +30,8 @@ class ExportRfidController extends Controller
         $data = $this->validate(request(),[
             'etiqueta_id' => 'required|integer',
             'tag'         => 'required|integer',
-            'perdidas'    => 'required|boolean'
+            'perdidas'    => 'required|boolean',
+            'formato'     => 'required|integer',
         ]);
 
         if ($data['perdidas'])
@@ -58,7 +60,7 @@ class ExportRfidController extends Controller
         }
 
         if (count($productos) > 0)
-            return Excel::download(new RfidExport($load), 'eti.csv');
+            return $data['formato'] == 1 ? Excel::download(new RfidExport($load), 'eti.csv') : Excel::download(new Etiqueta2Export($load), 'eti.xlsx');
         else
             return abort(404, 'No hay registros');
 
@@ -102,7 +104,8 @@ class ExportRfidController extends Controller
         }
 
         if ($i > 0)
-            return Excel::download(new RfidExport($load), 'eti.csv');
+            //return Excel::download(new RfidExport($load), 'eti.csv');
+            return $data['formato'] == 1 ? Excel::download(new RfidExport($load), 'eti.csv') : Excel::download(new Etiqueta2Export($load), 'eti.xlsx');
         else
             return abort(404, 'No hay registros');
 

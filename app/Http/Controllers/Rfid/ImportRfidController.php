@@ -78,13 +78,15 @@ class ImportRfidController extends Controller
 
             // cargo productos que están en tienda en pc, pero no aparecen en recuento, o sea que debería de estar o aparecer en el recuento
 
+
+
         $perdidas = DB::table('productos')->select('productos.*')
                         ->whereIn('destino_empresa_id', $empresas)
                         ->where('etiqueta_id', '>=', 4)
                         ->whereIn('estado_id', [1,2,3])
                         ->whereNull('deleted_at')
                         ->whereNotIn('id',function($query){
-                            $query->select('producto_id')->from('recuentos');})
+                            $query->select('producto_id')->from('recuentos')->where('empresa_id', session('empresa_id'));})
                     //    ->toSql();
                         ->get();
         //\Log::info($perdidas);

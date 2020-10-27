@@ -28,7 +28,7 @@ class RecuentosController extends Controller
         $data = Recuento::withOutGlobalScope(EmpresaProductoScope::class)
                     ->select('referencia','producto_id','productos.nombre AS nombre','precio_coste','rfids.nombre AS rfid','estados.nombre AS estado',
                              'productos.deleted_at', 'productos.notas', 'rfid_id', 'recuentos.id AS recuento_id', 'productos.empresa_id AS origen',
-                             'productos.destino_empresa_id AS destino')
+                             'productos.destino_empresa_id AS destino','recuentos.empresa_id')
                     ->join('productos','productos.id','=','producto_id')
                     ->join('rfids','rfids.id','=','rfid_id')
                     ->join('estados','estados.id','=','productos.estado_id')
@@ -74,7 +74,7 @@ class RecuentosController extends Controller
         $collection = Recuento::withOutGlobalScope(EmpresaProductoScope::class)
                     ->select('referencia','producto_id','productos.nombre AS nombre','precio_coste','rfids.nombre AS rfid','estados.nombre AS estado',
                              'productos.deleted_at','productos.notas','rfid_id', 'recuentos.id AS recuento_id', 'productos.empresa_id AS origen',
-                             'productos.destino_empresa_id AS destino')
+                             'productos.destino_empresa_id AS destino','recuentos.empresa_id')
                     ->join('productos','productos.id','=','producto_id')
                     ->join('rfids','rfids.id','=','rfid_id')
                     ->join('estados','estados.id','=','productos.estado_id')
