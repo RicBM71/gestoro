@@ -13,9 +13,22 @@
                                     v-on="on"
                                     color="white"
                                     icon
+                                    @click="goRestaurar"
+                                >
+                                    <v-icon color="orange darken-4">add_task</v-icon>
+                                </v-btn>
+                            </template>
+                                <span>Restaurar bajas y en recuento</span>
+                        </v-tooltip>
+                        <v-tooltip bottom>
+                            <template v-slot:activator="{ on }">
+                                <v-btn
+                                    v-on="on"
+                                    color="white"
+                                    icon
                                     @click="goBajaPerdidas"
                                 >
-                                    <v-icon color="primary">gavel</v-icon>
+                                    <v-icon color="red darken-4">gavel</v-icon>
                                 </v-btn>
                             </template>
                                 <span>Dar de baja perdidas</span>
@@ -382,7 +395,7 @@ import FiltroRec from './FiltroRec'
 
         },
         goProducto(item) {
-            
+
             this.setPagination(this.paginaActual);
             this.setResult(this.items);
 
@@ -495,7 +508,30 @@ import FiltroRec from './FiltroRec'
 
                 axios.post('/rfid/baja')
                     .then(res => {
-                        this.estados_recuento = res.data;
+                        this.$toast.success('Dadas de baja!');
+                       // this.estados_recuento = res.data;
+                    })
+                .catch(err => {
+                    this.status = true;
+                    var msg = err.response.data.message;
+                    this.$toast.error(msg);
+
+                })
+                .finally(()=> {
+                    this.status = false;
+                    this.show_loading = false;
+                });
+            }
+        },
+        goRestaurar(){
+
+            if (confirm('¿Restaurar productos de baja y en recuento?')){
+                this.show_loading = true;
+
+                axios.post('/rfid/restaurar')
+                    .then(res => {
+                        this.$toast.success('Restauradas!');
+                      //  this.estados_recuento = res.data;
                     })
                 .catch(err => {
                     this.status = true;

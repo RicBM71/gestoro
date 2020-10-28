@@ -26,7 +26,7 @@
                                             label="Operación"
                                         ></v-select>
                                     </v-flex>
-                                    <v-flex sm3 d-flex>
+                                    <v-flex sm3 d-flex v-if="operacion=='R'">
                                         <v-select
                                             v-validate="'numeric'"
                                             v-model="agregar_empresa_id"

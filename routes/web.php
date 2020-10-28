@@ -418,6 +418,7 @@ Route::group([
 
         Route::get('/estadosr', 'EstadosRfidController@index');
         Route::post('/baja', 'EstadosRfidController@baja');
+        Route::post('/restaurar', 'EstadosRfidController@restaurar');
 
 
 
