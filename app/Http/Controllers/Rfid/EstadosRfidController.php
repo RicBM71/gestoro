@@ -59,7 +59,7 @@ class EstadosRfidController extends Controller
                       'username' => session('username')]);
 
 
-        $data = Recuento::withOutGlobalScope(EmpresaProductoScope::class)
+        $data = Recuento::withOutGlobalScope(EmpresaScope::class)
                     ->select('referencia','producto_id','productos.nombre AS nombre','precio_coste','rfids.nombre AS rfid','estados.nombre AS estado',
                                 'productos.deleted_at', 'productos.notas', 'rfid_id', 'recuentos.id AS recuento_id', 'productos.empresa_id AS origen',
                                 'productos.destino_empresa_id AS destino')

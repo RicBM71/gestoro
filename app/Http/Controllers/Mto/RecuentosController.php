@@ -71,7 +71,7 @@ class RecuentosController extends Controller
             $op_clase = '=';
         }
 
-        $collection = Recuento::withOutGlobalScope(EmpresaProductoScope::class)
+        $collection = Recuento::withOutGlobalScope(EmpresaScope::class)
                     ->select('referencia','producto_id','productos.nombre AS nombre','precio_coste','rfids.nombre AS rfid','estados.nombre AS estado',
                              'productos.deleted_at','productos.notas','rfid_id', 'recuentos.id AS recuento_id', 'productos.empresa_id AS origen',
                              'productos.destino_empresa_id AS destino','recuentos.empresa_id')
@@ -167,7 +167,7 @@ class RecuentosController extends Controller
                 $producto = Producto::withOutGlobalScope(EmpresaProductoScope::class)
                                 ->withTrashed()
                                 ->findOrFail($data['referencia']);
-                \Log::info($producto);
+              //  \Log::info($producto);
             } catch (\Exception $e) {
                 \Log::info($e);
                 return abort(404, 'Producto/id no existe');
@@ -305,7 +305,7 @@ class RecuentosController extends Controller
 
         DB::table('recuentos')->insert($insert);
 
-        $data = Recuento::withOutGlobalScope(EmpresaProductoScope::class)
+        $data = Recuento::withOutGlobalScope(EmpresaScope::class)
                     ->select('referencia','producto_id','productos.nombre AS nombre','precio_coste','rfids.nombre AS rfid','estados.nombre AS estado',
                             'productos.deleted_at', 'productos.notas', 'rfid_id', 'recuentos.id AS recuento_id', 'productos.empresa_id AS origen',
                             'productos.destino_empresa_id AS destino')
