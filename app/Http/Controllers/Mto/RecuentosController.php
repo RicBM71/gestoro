@@ -6,12 +6,12 @@ use App\Rfid;
 use App\Clase;
 use App\Producto;
 use App\Recuento;
+use App\Scopes\EmpresaScope;
 use Illuminate\Http\Request;
 use App\Exports\RecuentoExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Scopes\EmpresaProductoScope;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\StoreRecuentoRequest;
 
@@ -25,7 +25,7 @@ class RecuentosController extends Controller
     public function index()
     {
         //$data = Recuento::with(['producto','rfid','estado'])->get();
-        $data = Recuento::withOutGlobalScope(EmpresaProductoScope::class)
+        $data = Recuento::withOutGlobalScope(EmpresaScope::class)
                     ->select('referencia','producto_id','productos.nombre AS nombre','precio_coste','rfids.nombre AS rfid','estados.nombre AS estado',
                              'productos.deleted_at', 'productos.notas', 'rfid_id', 'recuentos.id AS recuento_id', 'productos.empresa_id AS origen',
                              'productos.destino_empresa_id AS destino','recuentos.empresa_id')
