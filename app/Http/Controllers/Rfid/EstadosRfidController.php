@@ -70,6 +70,6 @@ class EstadosRfidController extends Controller
                     ->get();
 
         if (request()->wantsJson())
-            return $data;
+                return $data;
             }
 }

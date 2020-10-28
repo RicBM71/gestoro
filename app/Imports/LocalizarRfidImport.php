@@ -17,6 +17,7 @@ class LocalizarRfidImport implements ToCollection, WithCustomCsvSettings
     public function collection(Collection $collection)
     {
         $i=0;
+        $localizadas = 0;
 
         $data=array();
         $nuevas = array();
@@ -38,14 +39,24 @@ class LocalizarRfidImport implements ToCollection, WithCustomCsvSettings
             $id = (int) str_replace('#!','',$row[1]);
 
             try {
+
+
                 $recuento = Recuento::where('producto_id',$id)->firstOrFail();
 
+                 if ($id == 64713){
+                    \Log::info( $recuento->rfid_id);
+                }
+                \Log::info( $recuento->rfid_id);
+
+                $rfid_id = (int) $recuento->rfid_id + 10;
+
                 $data=[
-                    'rfid_id'           => $recuento->rfid_id + 10,
+                    'rfid_id'           => $rfid_id,
                     'username'          => session('username'),
                 ];
 
                 $recuento->update($data);
+                ++$localizadas;
 
 
             } catch (\Exception $e) {
@@ -66,6 +77,8 @@ class LocalizarRfidImport implements ToCollection, WithCustomCsvSettings
             $i++;
 
         }
+
+        \Log::info($localizadas);
 
         DB::table('recuentos')->insert($nuevas);
 

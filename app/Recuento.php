@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Scopes\EmpresaScope;
 use App\Scopes\EmpresaProductoScope;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,7 +16,8 @@ class Recuento extends Model
     {
         parent::boot();
 
-        static::addGlobalScope(new EmpresaProductoScope);
+        //static::addGlobalScope(new EmpresaProductoScope);
+        static::addGlobalScope(new EmpresaScope);
     }
 
     public function producto()
@@ -38,7 +40,7 @@ class Recuento extends Model
 
         if ($rfid_id == null)
             return $query;
-            
+
         return $query->where('rfid_id', '=', $rfid_id);
 
     }
