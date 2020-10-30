@@ -18,7 +18,7 @@ use Carbon\Carbon;
 use App\Traits\SessionTrait;
 use Illuminate\Http\Request;
 use App\Rules\RangoFechaRule;
-use App\Exports\InventarioExport;
+use App\Exports\ProductosExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -486,7 +486,7 @@ class ProductosController extends Controller
         if (!esGestor())
             return abort(403, 'No autorizado a exportar');
 
-        return Excel::download(new InventarioExport($request->data, 'Productos '.session('empresa')->razon), 'inventario.xlsx');
+        return Excel::download(new ProductosExport($request->data, 'Productos '.session('empresa')->razon), 'inventario.xlsx');
 
 
     }

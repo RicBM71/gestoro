@@ -92,6 +92,10 @@ class EstadosRfidController extends Controller
 
         $now = Carbon::now();
 
+        DB::table('recuentos')
+                ->where('empresa_id', session('empresa_id'))
+                ->where('rfid_id', 4)
+                ->increment('rfid_id', 10);
 
         DB::table('productos')
             ->whereIn('id', $productos)
