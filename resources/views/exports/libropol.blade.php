@@ -7,7 +7,7 @@
         <th>APELLIDOS, NOMBRE</th>
         <th>DNI/PASAPORTE</th>
         <th>DIRECCION</th>
-        <th>PROVINCIA</th>
+        <th>PAIS</th>
         <th>CLASE OBJETO</th>
         <th>PESO TOTAL</th>
         <th>METAL</th>
@@ -27,7 +27,7 @@
             <td>{{ $item->apellidos.', '.$item->nombre }}</td>
             <td>{{ $item->dni }}</td>
             <td>{{ $item->direccion }}</td>
-            <td>{{ $item->provincia }}</td>
+            <td>{{ $item->nacpais }}</td>
             <td>{{ $item->concepto }}</td>
             <td>{{ getDecimal($item->peso_gr) }}</td>
             <td>{{ $item->clase }}</td>

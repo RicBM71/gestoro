@@ -192,10 +192,10 @@ class PrintLibroController extends Controller
 			$lineas = $row->comlines;
 
 			$direccion = $row->cliente->direccion;
-			if (trim($row->provincia) != trim($row->cliente->poblacion))
-				$provincia = $row->cliente->poblacion." (".$row->cliente->provincia.")";
+			if (trim($row->nacpais) != trim($row->cliente->poblacion))
+				$provincia = $row->cliente->poblacion." (".$row->cliente->nacpais.")";
 			else
-				$provincia = $row->cliente->provincia;
+				$provincia = $row->cliente->nacpais;
 
 			$altofil = $this->altoFilaOk($nomape,10,28,false);
 			$altofil = $this->altoFilaOk($direccion,$altofil,19,false);
