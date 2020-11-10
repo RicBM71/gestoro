@@ -191,7 +191,7 @@ class PrintLibroController extends Controller
 
 			$lineas = $row->comlines;
 
-            $direccion = $row->cliente->direccion.' '.$row->cliente->poblacion;
+            $direccion = $row->cliente->direccion.' - '.$row->cliente->poblacion;
 
 			// if (trim($row->nacpais) != trim($row->cliente->poblacion))
 			// 	$provincia = $row->cliente->poblacion." (".$row->cliente->nacpais.")";
