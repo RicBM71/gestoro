@@ -7,7 +7,7 @@
         <th>APELLIDOS, NOMBRE</th>
         <th>DNI/PASAPORTE</th>
         <th>DIRECCION</th>
-        <th>PAIS</th>
+        <th>PROVINCIA/PAIS</th>
         <th>CLASE OBJETO</th>
         <th>PESO TOTAL</th>
         <th>METAL</th>
@@ -26,8 +26,8 @@
             <td>{{ getFecha($item->fecha_compra) }}</td>
             <td>{{ $item->apellidos.', '.$item->nombre }}</td>
             <td>{{ $item->dni }}</td>
-            <td>{{ $item->direccion }}</td>
-            <td>{{ $item->provincia }}</td>
+            <td>{{ $item->direccion }} - {{$item->poblacion}}</td>
+            <td>{{ $item->nacpro }}</td>
             <td>{{ $item->concepto }}</td>
             <td>{{ getDecimal($item->peso_gr) }}</td>
             <td>{{ $item->clase }}</td>
