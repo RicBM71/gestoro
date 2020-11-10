@@ -27,7 +27,7 @@
             <td>{{ $item->apellidos.', '.$item->nombre }}</td>
             <td>{{ $item->dni }}</td>
             <td>{{ $item->direccion }}</td>
-            <td>{{ $item->nacpais }}</td>
+            <td>{{ $item->provincia }}</td>
             <td>{{ $item->concepto }}</td>
             <td>{{ getDecimal($item->peso_gr) }}</td>
             <td>{{ $item->clase }}</td>
