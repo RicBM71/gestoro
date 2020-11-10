@@ -290,8 +290,10 @@ export default {
                     let link = document.createElement('a')
                     link.href = window.URL.createObjectURL(blob)
 
-                    if (this.filename == 'csv')
-                        link.download = this.libros[idx].codigo_pol+"."+this.libros[idx].nombre_csv+"."+new Date().getFullYear()+(new Date().getMonth()+1)+(new Date().getDate())+'.csv';
+                    if (this.filename == 'csv'){
+                        link.download = this.libros[idx].codigo_pol+"."+this.libros[idx].nombre_csv+"."+moment(this.fecha_h).format('YYYYMMDD')+'.csv';
+                        //link.download = this.libros[idx].codigo_pol+"."+this.libros[idx].nombre_csv+"."+new Date().getFullYear()+(new Date().getMonth()+1)+(new Date().getDate())+'.csv';
+                    }
                     else
                         link.download = this.filename;
 
