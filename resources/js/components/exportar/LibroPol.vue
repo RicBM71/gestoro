@@ -318,7 +318,11 @@ export default {
                         })
                     }
                 }else{
-                    this.$toast.error(err.response.data.message);
+                    
+                    if (err.request.status == 403)
+                        this.$toast.error('Hay lotes abiertos, NO se puede enviar el libro.');
+                    else
+                        this.$toast.error(err.response.data.message);
                 }
                 this.loading = false;
             });

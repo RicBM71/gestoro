@@ -43,6 +43,10 @@ class PrintLibroController extends Controller
 
         $libro = Libro::findOrfail($data['libro_id']);
 
+        if ($this->hayLotesAbiertos($libro->grupo_id, $data['fecha_d'], $data['fecha_h']) > 0){
+            return abort(403, 'Hay Lotes abiertos! NO se puede enviar el libro.');
+        }
+
         $data['codigo_pol']=$libro->codigo_pol;
         $data['grupo_id']=$libro->grupo_id;
         $data['establecimiento']=$libro->establecimiento;
@@ -162,6 +166,12 @@ class PrintLibroController extends Controller
         $this->page = $pagina;
 
         $libro = Libro::findOrfail($libro_id);
+
+
+        if ($this->hayLotesAbiertos($libro->grupo_id, $d, $h) > 0){
+            return abort(403, 'Hay Lotes abiertos! NO se puede enviar el libro.');
+        }
+
 
         $compras = Compra::with(['cliente','comlines','comlines.clase'])
             ->where('grupo_id', $libro->grupo_id)
@@ -546,6 +556,23 @@ class PrintLibroController extends Controller
 
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param [type] $grupo_id
+     * @param date $d
+     * @param date $h
+     * @return void
+     */
+    private function hayLotesAbiertos($grupo_id, $d, $h){
+
+        return Compra::where('grupo_id', $grupo_id)
+                        ->whereDate('fecha_compra','>=',$d)
+                        ->whereDate('fecha_compra','<=',$h)
+                        ->where('fase_id','<=',3)
+                        ->get()
+                        ->count();
+    }
 
 
 }
