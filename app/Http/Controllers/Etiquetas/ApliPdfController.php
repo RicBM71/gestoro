@@ -178,12 +178,14 @@ class ApliPdfController extends Controller
 
         }
 
-        Producto::where('clase_id',$data['clase_id'])
-            ->whereIn('estado_id',[1,2,3])
-            ->where('etiqueta_id', $data['etiqueta_id'])
-            ->whereNull('deleted_at')
-            ->update(['etiqueta_id' => 5]);
+        $clase_id = $data['clase_id'];
 
+        Producto::whereIn('estado_id',[1,2,3])
+                    ->when($clase_id > 0, function ($query) use ($clase_id) {
+                        return $query->where('clase_id', $clase_id);})
+                    ->where('etiqueta_id', $data['etiqueta_id'])
+                    ->whereNull('deleted_at')
+                    ->update(['etiqueta_id' => 5]);
     }
 
     private function setPrepararPdf(){

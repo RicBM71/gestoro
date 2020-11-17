@@ -387,6 +387,9 @@ Route::group([
         Route::get('/aplipdf', 'ApliPdfController@index');
         Route::post('/aplipdf', 'ApliPdfController@submit');
 
+        Route::get('/index', 'EtiquetasController@index');
+        Route::post('/rollo', 'EtiquetasController@submit');
+
 
         Route::middleware('role:Admin|Gestor')->group(function () {
 

@@ -365,6 +365,7 @@ export default {
                 { icon: 'forward', text: 'Exportar Etiquetas', name:'rfid.export' },
                 { icon: 'forward', text: 'Estados RFID', name:'rfid.estados' },
                 { icon: 'forward', text: 'Imprimir Etiquetas Apli', name:'etiquetas.aplipdf' },
+                { icon: 'forward', text: 'Generar Excel Etiquetas', name:'etiquetas.rollo' },
             ],
         },
         expired: false,
