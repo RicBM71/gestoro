@@ -84,8 +84,9 @@ class ProductosController extends Controller
             'fecha_h'       =>['nullable','date',new MaxDiasRangoFechaRule($request->fecha_d, $request->fecha_h)],
             'empresa_id'    =>['nullable','integer'],
             'destino_empresa_id'=>['nullable','integer'],
-            'sinscope'      =>['boolean'],
-            'interno'       =>['string','required'],
+            'sinscope'        =>['boolean'],
+            'interno'         =>['string','required'],
+            'caracteristicas' =>['nullable','string']
         ]);
 
         session(['filtro_pro' => $data]);
@@ -120,6 +121,7 @@ class ProductosController extends Controller
                         ->asociado($data['cliente_id'])
                         ->categoria($data['categoria_id'])
                         ->marca($data['marca_id'])
+                        ->caracteristicas($data['caracteristicas'])
                         ->orderBy('id','desc')
                         ->get()
                         ->take(1999);

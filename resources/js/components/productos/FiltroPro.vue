@@ -89,7 +89,20 @@
                     >
                     </v-text-field>
                 </v-flex>
-               <v-flex sm2>
+                <v-flex sm2>
+                    <v-text-field
+                        v-model="reg.caracteristicas"
+                        v-validate="'max:20'"
+                        :error-messages="errors.collect('caracteristicas')"
+                        label="Ccaracterísticas"
+                        data-vv-name="caracteristicas"
+                        data-vv-as="caracteristicas"
+                        hint="Talla, color, pureza, quilates - Relojes: S/N"
+                        v-on:keyup.enter="submit"
+                    >
+                    </v-text-field>
+                </v-flex>
+               <v-flex sm1>
                     <v-menu
                         v-model="menu_d"
                         :close-on-content-click="false"
@@ -120,7 +133,7 @@
                             ></v-date-picker>
                     </v-menu>
                 </v-flex>
-                <v-flex sm2>
+                <v-flex sm1>
                     <v-menu
                         v-model="menu_h"
                         :close-on-content-click="false"
@@ -312,7 +325,8 @@ export default {
                 sinscope: false,
                 interno: 'T',
                 marca_id: null,
-                categoria_id: null
+                categoria_id: null,
+                caracteristicas: null
             },
             internos:[
                 {value: 'I', text: 'Internos'},

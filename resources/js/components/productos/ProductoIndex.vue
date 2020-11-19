@@ -84,8 +84,8 @@
                             >
                                 <template slot="items" slot-scope="props">
                                     <td>{{ props.item.referencia }}</td>
-                                    <td v-if="props.item.deleted_at==null">{{ props.item.nombre }}</td>
-                                    <td v-else class="tachado">{{ props.item.nombre }}</td>
+                                    <td v-if="props.item.deleted_at==null">{{ props.item.nomcar }}</td>
+                                    <td v-else class="tachado">{{ props.item.nomcar }}</td>
                                     <td>{{ props.item.clase.nombre }} <span v-if="props.item.quilates != 0">{{props.item.quilates}}</span></td>
                                     <td class="text-xs-right">{{ props.item.peso_gr | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                     <td class="text-xs-right">{{ props.item.precio_coste | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
@@ -181,7 +181,7 @@ import {mapActions} from "vuex";
             {
                 text: 'Nombre',
                 align: 'left',
-                value: 'nombre'
+                value: 'nomcar'
             },
             {
                 text: 'Clase',

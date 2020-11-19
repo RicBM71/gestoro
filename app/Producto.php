@@ -25,7 +25,7 @@ Class Producto extends Model
     ];
 
     protected $appends = [
-        'margen'
+        'margen', 'nomcar'
     ];
 
     /**
@@ -80,6 +80,12 @@ Class Producto extends Model
     public function getMargenAttribute(){
 
         return $this->precio_venta - $this->precio_coste;
+
+    }
+
+    public function getNomcarAttribute(){
+
+        return $this->nombre.' '. $this->caracteristicas;
 
     }
 
@@ -325,6 +331,17 @@ Class Producto extends Model
         return $query;
 
     }
+
+    public static function scopeCaracteristicas($query, $caracteristicas){
+
+        if ($caracteristicas != null){
+            return $query->where('caracteristicas','like', '%'.$caracteristicas.'%');
+        }
+
+        return $query;
+
+    }
+
 
 
 
