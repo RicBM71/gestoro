@@ -47,12 +47,12 @@ class EtiquetasController extends Controller
 
         $clase_id = $data['clase_id'];
 
-        Producto::whereIn('estado_id',[1,2,3])
-                    ->when($clase_id > 0, function ($query) use ($clase_id) {
-                        return $query->where('clase_id', $clase_id);})
-                    ->whereIn('etiqueta_id', [2,3,4])
-                    ->whereNull('deleted_at')
-                    ->update(['etiqueta_id' => 5]);
+        // Producto::whereIn('estado_id',[1,2,3])
+        //             ->when($clase_id > 0, function ($query) use ($clase_id) {
+        //                 return $query->where('clase_id', $clase_id);})
+        //             ->whereIn('etiqueta_id', [2,3,4])
+        //             ->whereNull('deleted_at')
+        //             ->update(['etiqueta_id' => 5]);
 
         return Excel::download(new EtiquetasRolloExport($etiquetas), 'Etiquetas.xlsx');
 
