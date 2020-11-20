@@ -242,34 +242,64 @@
         }
     },
     watch: {
-        referencia: function () {
+        // referencia: function () {
 
-            this.isLoading = true
-            if (this.referencia.length > 2){
+        //     this.isLoading = true
+        //     if (this.referencia.length > 2){
 
-                axios.post('/utilidades/helppro/vendibles',{
-                        tipo_id: this.albaran.tipo_id,
-                        referencia: this.referencia,
-                    })
-                    .then(res => {
-                        this.items = res.data;
-                        if (this.items.length > 0){
-                            this.editedItem.producto_id=this.items[0].value;
-                        }else{
-                            this.reset();
-                        }
+        //         axios.post('/utilidades/helppro/vendibles',{
+        //                 tipo_id: this.albaran.tipo_id,
+        //                 referencia: this.referencia,
+        //             })
+        //             .then(res => {
+        //                 this.items = res.data;
+        //                 if (this.items.length > 0){
+        //                     this.editedItem.producto_id=this.items[0].value;
+        //                 }else{
+        //                     this.reset();
+        //                 }
 
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
-                    .finally(() => (this.selRef()))
+        //             })
+        //             .catch(err => {
+        //                 console.log(err)
+        //             })
+        //             .finally(() => (this.selRef()))
+        //     }
+        //},
+        referencia: function (newQuestion, oldQuestion) {
+            this.answer = 'Waiting for you to stop typing...'
+            this.debouncedGetAnswer()
             }
-        },
 
 
     },
+    created: function () {
+
+        this.debouncedGetAnswer = _.debounce(this.getReferencia, 500)
+
+    },
     methods:{
+        getReferencia() {
+
+                axios.post('/utilidades/helppro/vendibles',{
+                    tipo_id: this.albaran.tipo_id,
+                    referencia: this.referencia,
+                })
+                .then(res => {
+                    this.items = res.data;
+                    if (this.items.length > 0){
+                        this.editedItem.producto_id=this.items[0].value;
+                    }else{
+                        this.reset();
+                    }
+
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+                .finally(() => (this.selRef()))
+
+        },
         closeDialog (){
 
             this.$emit('update:dialog_lin', false)
