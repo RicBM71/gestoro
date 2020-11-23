@@ -267,7 +267,7 @@
         //     }
         //},
         referencia: function (newQuestion, oldQuestion) {
-            this.answer = 'Waiting for you to stop typing...'
+
             this.debouncedGetAnswer()
             }
 
