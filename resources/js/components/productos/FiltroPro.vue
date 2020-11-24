@@ -362,6 +362,7 @@ export default {
             empresas:[],
             marcas:[],
             categorias:[],
+            etiquetas:[],
             showEmp: true
 
       }
