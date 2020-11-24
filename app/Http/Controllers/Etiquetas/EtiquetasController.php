@@ -59,7 +59,7 @@ class EtiquetasController extends Controller
 
             $collection->push($producto);
 
-         //   $producto->update(['etiqueta_id' => 5]);
+            $producto->update(['etiqueta_id' => 5]);
 
         }
 
