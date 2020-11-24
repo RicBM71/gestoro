@@ -402,6 +402,16 @@ Class Producto extends Model
 
     }
 
+    public static function scopeEtiqueta($query, $etiqueta_id){
+
+        if ($etiqueta_id != null)
+            return $query->where('etiqueta_id','=', $etiqueta_id);
+
+        return $query;
+
+    }
+
+
     public static function scopeMarca($query, $marca_id){
 
         if ($marca_id != null)

@@ -11,8 +11,8 @@
             <v-form>
                 <v-container>
                     <v-layout row wrap>
-                        <v-flex sm3></v-flex>
-                        <v-flex sm3>
+                        <v-flex sm1></v-flex>
+                        <v-flex sm2>
                             <v-select
                                 v-model="form.clase_id"
                                 v-validate="'numeric'"
@@ -21,6 +21,80 @@
                                 :error-messages="errors.collect('clase_id')"
                                 :items="clases"
                                 label="Clase"
+                                required
+                                ></v-select>
+                        </v-flex>
+                        <v-flex sm2>
+                            <v-menu
+                                v-model="menu_d"
+                                :close-on-content-click="false"
+                                :nudge-right="40"
+                                lazy
+                                transition="scale-transition"
+                                offset-y
+                                full-width
+                                min-width="290px"
+                            >
+                                <v-text-field
+                                    slot="activator"
+                                    :value="computedFechaD"
+                                    label="Desde"
+                                    append-icon="event"
+                                    v-validate="'date_format:dd/MM/yyyy'"
+                                    data-vv-name="fecha_d"
+                                    :error-messages="errors.collect('fecha_d')"
+                                    data-vv-as="Desde"
+                                    readonly
+                                    ></v-text-field>
+                                <v-date-picker
+                                    v-model="form.fecha_d"
+                                    no-title
+                                    locale="es"
+                                    first-day-of-week=1
+                                    @input="menu_d = false"
+                                    ></v-date-picker>
+                            </v-menu>
+                        </v-flex>
+                        <v-flex sm2>
+                            <v-menu
+                                v-model="menu_h"
+                                :close-on-content-click="false"
+                                :nudge-right="40"
+                                lazy
+                                transition="scale-transition"
+                                offset-y
+                                full-width
+                                min-width="290px"
+                            >
+                                <v-text-field
+                                    slot="activator"
+                                    :value="computedFechaH"
+                                    label="Hasta"
+                                    append-icon="event"
+                                    v-validate="'date_format:dd/MM/yyyy'"
+                                    data-vv-name="fecha_h"
+                                    :error-messages="errors.collect('fecha_h')"
+                                    data-vv-as="Hasta"
+                                    readonly
+                                    ></v-text-field>
+                                <v-date-picker
+                                    v-model="form.fecha_h"
+                                    no-title
+                                    locale="es"
+                                    first-day-of-week=1
+                                    @input="menu_h = false"
+                                    ></v-date-picker>
+                            </v-menu>
+                        </v-flex>
+                        <v-flex sm1>
+                            <v-select
+                                v-model="form.tipo_fecha"
+                                v-validate="'required'"
+                                data-vv-name="tipo_fecha"
+                                data-vv-as="fecha"
+                                :error-messages="errors.collect('tipo_fecha')"
+                                :items="fechas"
+                                label="Tipo Fecha"
                                 required
                                 ></v-select>
                         </v-flex>
@@ -53,11 +127,20 @@ export default {
         form:{
             etiqueta_id: "",
             clase_id: null,
-            limite: 0
+            limite: 0,
+            fecha_d: "", //new Date().toISOString().substr(0, 10),
+            fecha_h: "",
+            tipo_fecha: 'C',
         },
         etiquetas: [],
         clases:[],
-        show_loading: true
+        show_loading: true,
+        menu_d: false,
+        menu_h: false,
+        fechas:[
+                {value: 'C', text: 'Creación'},
+                {value: 'M', text: 'Modificación'}
+            ],
       }
     },
     mounted(){
@@ -79,6 +162,14 @@ export default {
     computed: {
         ...mapGetters([
         ]),
+        computedFechaD() {
+            moment.locale('es');
+            return this.form.fecha_d ? moment(this.form.fecha_d).format('L') : '';
+        },
+        computedFechaH() {
+            moment.locale('es');
+            return this.form.fecha_h ? moment(this.form.fecha_h).format('L') : '';
+        }
     },
     methods:{
         submit(){

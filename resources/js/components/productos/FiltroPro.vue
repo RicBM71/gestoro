@@ -283,6 +283,19 @@
                     </v-btn>
                 </v-flex>
             </v-layout>
+            <v-layout row wrap>
+                <v-flex sm2>
+                    <v-select
+                        v-model="reg.etiqueta_id"
+                        v-validate="'numeric'"
+                        data-vv-name="etiqueta_id"
+                        data-vv-as="categoría"
+                        :error-messages="errors.collect('etiqueta_id')"
+                        :items="etiquetas"
+                        label="Etiqueta"
+                        ></v-select>
+                </v-flex>
+            </v-layout>
         </v-container>
     </v-form>
 </template>
@@ -326,7 +339,8 @@ export default {
                 interno: 'T',
                 marca_id: null,
                 categoria_id: null,
-                caracteristicas: null
+                caracteristicas: null,
+                etiqueta_id: null,
             },
             internos:[
                 {value: 'I', text: 'Internos'},
@@ -362,6 +376,7 @@ export default {
                 this.clases = res.data.clases;
                 this.marcas = res.data.marcas;
                 this.categorias = res.data.categorias;
+                this.etiquetas = res.data.etiquetas;
                 this.asociados = res.data.asociados;
                 this.asociados.push({value:null,text:"---"});
                 this.asociados.push({value:-1,text:"Sin Proveedor Asignado"});
@@ -378,6 +393,7 @@ export default {
                 this.quilates.push({value:null,text:"---"});
                 this.marcas.push({value: null, text: '-'});
                 this.categorias.push({value: null, text: '-'});
+                this.etiquetas.push({value: null, text: '-'});
 
                 //this.showEmp = res.data.empresas.length > 1;
 

@@ -24,4 +24,13 @@ class Etiqueta extends Model
             ->get();
 
     }
+
+    public static function selEtiquetas()
+    {
+
+        return Etiqueta::select('id AS value', 'nombre AS text')
+            ->orderBy('nombre', 'asc')
+            ->get();
+
+    }
 }

@@ -10,6 +10,7 @@ use App\Albalin;
 use App\Cliente;
 use App\Empresa;
 use App\Quilate;
+use App\Etiqueta;
 use App\Producto;
 use App\Categoria;
 use App\Scopes\EmpresaScope;
@@ -68,6 +69,7 @@ class HelpProductoController extends Controller
                 'marcas'    => Marca::selMarcas(),
                 'categorias'=> Categoria::selCategorias(),
                 'empresas'  => Empresa::selEmpresas()->Venta()->whereIn('id',session('empresas_usuario'))->get(),
+                'etiquetas' => Etiqueta::selEtiquetas(),
             ];
 
     }

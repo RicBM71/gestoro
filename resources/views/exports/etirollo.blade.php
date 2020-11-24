@@ -10,11 +10,11 @@
                 <td>{{ $item->referencia}}</td>
                 <td>{{ $item->nombre}}</td>
                 @if ($item->clase_id == 1)
-                    <td>{{ getDecimalExcel($item->peso_gr, 2)}}</td>
+                    <td>{{ getDecimalExcel($item->peso_gr, 2)}} g</td>
                     <td>{{ $item->quilates.' KT'}}</td>
                 @else
                     <td>{{ $item->caracteristicas}}</td>
-                    <td>{{ getDecimalExcel($item->precio_venta, 0)}}</td>
+                    <td>{{ getDecimalExcel($item->precio_venta, 0)}} €</td>
                 @endif
             </tr>
         @endforeach
