@@ -480,12 +480,11 @@ Class Producto extends Model
                             ->whereNull('deleted_at')
                             ->sum('unidades');
 
-            if ($estado_id == 4){   // ya no hay stock, pasamos a estado vendido, en caso contrario no hago nada
-                if ($vendidos == $producto->stock){
+            if ($vendidos >= $producto->stock){
+                if ($estado_id == 4)        // no actualizamos para que no se quede en reservado, así no se podría volver a vender.
                     $producto->update($data);
-                }
-            }else{
-                $producto->update($data);    // actualizamos si pasa de vendido a reservado
+            }else if ($estado_id == 2) {
+                $producto->update($data);    // actualizamos para dejarlo en venta.
             }
 
         }else{
