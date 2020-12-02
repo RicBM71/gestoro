@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Rfid;
 
 use App\Empresa;
+use App\Recuento;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -85,14 +86,19 @@ class ImportRfidController extends Controller
                         ->where('etiqueta_id', '>=', 4)
                         ->whereIn('estado_id', [1,2,3])
                         ->whereNull('deleted_at')
-                        ->whereNotIn('id',function($query){
-                            $query->select('producto_id')->from('recuentos')->where('empresa_id', session('empresa_id'));})
+                        //->whereRaw('id NOT IN (SELECT producto_id FROM '.DB::getTablePrefix().'recuentos WHERE empresa_id ='. session('empresa_id').')')
+                        // ->whereNotIn('id',function($query){
+                        //     $query->select('producto_id')->from('recuentos')->where('empresa_id', session('empresa_id'));})
                     //    ->toSql();
                         ->get();
         //\Log::info($perdidas);
 
         $data = array();
         foreach ($perdidas as $producto) {
+
+            $r = Recuento::where('producto_id', $producto->id)->get();
+            if ($r->count() > 0)
+                continue;
 
             $data[]=array(
                 'empresa_id'        => session('empresa_id'),

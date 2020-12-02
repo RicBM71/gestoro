@@ -216,7 +216,7 @@ export default {
                 width: '10%'
             }],
             pagination:{
-                rowsPerPage: 10,
+                rowsPerPage: -1,
             },
             operaciones:[
                     {value: 'C', text:"Compras"},
