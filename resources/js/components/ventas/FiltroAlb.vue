@@ -104,6 +104,19 @@
             </v-layout>
             <v-layout row wrap>
                 <v-flex sm2>
+                    <v-text-field
+                        v-model="clitxt"
+                        v-validate="'max:20'"
+                        :error-messages="errors.collect('clitxt')"
+                        label="Cliente/notas"
+                        data-vv-name="clitxt"
+                        data-vv-as="clitxt"
+                        hint="nombre cliente, :notas"
+                        v-on:keyup.enter="submit"
+                    >
+                    </v-text-field>
+                </v-flex>
+                <v-flex sm2>
                     <v-select
                         v-model="facturado"
                         :items="facturados"
@@ -169,6 +182,7 @@ export default {
             tipo_id: 0,
             fpago_id: 0,
             fase_id:  0,
+            clitxt: null,
 
             reservas: false,
             depositos: false,
@@ -240,7 +254,8 @@ export default {
                                 asociado_id: this.asociado_id,
                                 facturado: this.facturado,
                                 reservas: this.reservas,
-                                depositos: this.depositos
+                                depositos: this.depositos,
+                                clitxt: this.clitxt
                             }
                         )
                         .then(res => {

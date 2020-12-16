@@ -272,6 +272,22 @@ class Albaran extends Model
 
     }
 
+    public static function scopeClitxt($query, $clitxt){
+
+        if ($clitxt != null || $clitxt > ''){
+
+            if ($clitxt[0] ==':'){
+                $clitxt = str_replace(':','',$clitxt);
+                return $query->orWhere('notas_int','like', '%'.$clitxt.'%');
+            }else{
+                return $query->orWhere('clitxt','like', '%'.$clitxt.'%');
+            }
+
+        }
+
+        return $query;
+    }
+
 
 
     // public static function pendientesDeFacturar($d, $h, $tipo_id, $cobro){
