@@ -18,6 +18,8 @@
                                 label="Referencia "
                                 data-vv-name="referencia"
                                 data-vv-as="referencia"
+                                hint="pulsa enter para buscar"
+                                v-on:keyup.enter="getReferencia"
                             >
                             </v-text-field>
                         </v-flex>
@@ -266,18 +268,18 @@
         //             .finally(() => (this.selRef()))
         //     }
         //},
-        referencia: function (newQuestion, oldQuestion) {
+        // referencia: function (newQuestion, oldQuestion) {
 
-            this.debouncedGetAnswer()
-            }
+        //     this.debouncedGetAnswer()
+        //     }
 
-
-    },
-    created: function () {
-
-        this.debouncedGetAnswer = _.debounce(this.getReferencia, 500)
 
     },
+    // created: function () {
+
+    //     this.debouncedGetAnswer = _.debounce(this.getReferencia, 500)
+
+    // },
     methods:{
         getReferencia() {
 
