@@ -98,7 +98,7 @@ export default {
                 .then(response => {
 
                     this.$router.push({ name: 'existencia.index' })
-                    this.$toast.success(response.data.msg);
+                    this.$toast.success('Registro eliminado!');
             })
             .catch(err => {
                 this.status = true;

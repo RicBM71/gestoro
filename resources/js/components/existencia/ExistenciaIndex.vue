@@ -63,6 +63,7 @@
 
                                     <td class="justify-center layout px-0">
                                         <v-icon
+                                            v-if="isRoot"
                                             small
                                             class="mr-2"
                                             @click="editItem(props.item.id)"
@@ -70,6 +71,7 @@
                                             edit
                                         </v-icon>
                                        <v-icon
+                                            v-if="isRoot"
                                             small
                                             @click="openDialog(props.item.id)"
                                         >
@@ -171,6 +173,7 @@ import {mapActions} from "vuex";
     computed: {
         ...mapGetters([
             'isAdmin',
+            'isRoot',
             'isGestor'
         ])
     },

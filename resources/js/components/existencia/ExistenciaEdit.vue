@@ -44,9 +44,6 @@
                                 ></v-date-picker>
                             </v-menu>
                         </v-flex>
-                     </v-layout>
-                    <v-layout row wrap>
-                        <v-flex sm1></v-flex>
                         <v-flex sm2>
                             <v-text-field
                                 v-model="existencia.importe"

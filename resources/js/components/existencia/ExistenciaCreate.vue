@@ -43,9 +43,6 @@
                                 ></v-date-picker>
                             </v-menu>
                         </v-flex>
-                     </v-layout>
-                    <v-layout row wrap>
-                        <v-flex sm1></v-flex>
                         <v-flex sm2>
                             <v-text-field
                                 v-model="existencia.importe"
@@ -62,35 +59,7 @@
                         </v-flex>
                     </v-layout>
                     <v-layout row wrap>
-                        <v-flex sm1></v-flex>
-                         <v-flex sm2>
-                            <v-text-field
-                                v-model="existencia.username"
-                                :error-messages="errors.collect('username')"
-                                label="Usuario"
-                                data-vv-name="username"
-                                readonly
-                                v-on:keyup.enter="submit"
-                            >
-                            </v-text-field>
-                        </v-flex>
-                        <v-flex sm2>
-                            <v-text-field
-                                v-model="computedFModFormat"
-                                label="Modificado"
-                                readonly
-                            >
-                            </v-text-field>
-                        </v-flex>
-                        <v-flex sm2>
-                            <v-text-field
-                                v-model="computedFCreFormat"
-                                label="Creado"
-                                readonly
-                            >
-                            </v-text-field>
-                        </v-flex>
-                        <v-flex sm1></v-flex>
+                        <v-flex sm6></v-flex>
                         <v-flex sm2>
                             <div class="text-xs-center">
                                 <v-btn @click="submit"  round  :loading="loading" block  color="primary">

@@ -46,7 +46,7 @@ class ExistenciasController extends Controller
             'importe' => ['required', 'numeric'],
         ]);
 
-        $data['empresa_id'] = session()->get('empresa')->comun_empresa_id;
+        $data['empresa_id'] = session()->get('empresa')->id;
         $data['username'] = $request->user()->username;
 
         $reg = Existencia::create($data);
@@ -91,6 +91,8 @@ class ExistenciasController extends Controller
     public function update(Request $request, Existencia $existencia)
     {
 
+        $this->authorize('update', $existencia);
+
         $data = $request->validate([
             'fecha' => ['required', 'date'],
             'importe' => ['required', 'numeric'],
@@ -102,7 +104,7 @@ class ExistenciasController extends Controller
         $existencia->update($data);
 
         if (request()->wantsJson())
-            return ['exisencia'=>$existencia, 'message' => 'EL registro ha sido modificado'];
+            return ['existencia'=>$existencia, 'message' => 'EL registro ha sido modificado'];
     }
 
     /**
@@ -113,6 +115,8 @@ class ExistenciasController extends Controller
      */
     public function destroy(Existencia $existencia)
     {
+
+        $this->authorize('delete', $existencia);
 
         $existencia->delete();
 
