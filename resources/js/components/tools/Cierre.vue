@@ -25,18 +25,25 @@
                                 color="primary">
                             ></v-switch>
                         </v-flex>
-                         <v-flex sm2>
+                        <v-flex sm2>
                             <v-switch
                                 label="Saldos"
                                 v-model="saldos"
                                 color="primary">
                             ></v-switch>
                         </v-flex>
+                        <v-flex sm2>
+                            <v-switch
+                                label="Stocks"
+                                v-model="stocks"
+                                color="primary">
+                            ></v-switch>
+                        </v-flex>
                         <v-flex xs2>
                             <v-text-field
+                                label="Ejericicio a cerrar"
                                 v-model="ejercicio"
-                                label="Ejercicio"
-                                single-line
+                                required
                             ></v-text-field>
                         </v-flex>
                         <v-flex sm1></v-flex>
@@ -75,8 +82,9 @@ import Loading from '@/components/shared/Loading'
                 contadores: true,
                 libros: true,
                 saldos: false,
+                stocks: true,
 
-                ejercicio: new Date().toISOString().substr(0, 4),
+                ejercicio: new Date().toISOString().substr(0, 4) - 1,
 
         		status: false,
                 loading: false,
@@ -110,7 +118,8 @@ import Loading from '@/components/shared/Loading'
                                 ejercicio: this.ejercicio,
                                 libros: this.libros,
                                 contadores: this.contadores,
-                                saldos: this.saldos
+                                saldos: this.saldos,
+                                stocks: this.stocks
                             })
                                 .then(res => {
 

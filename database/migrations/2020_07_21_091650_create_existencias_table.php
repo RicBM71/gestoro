@@ -20,6 +20,7 @@ class CreateExistenciasTable extends Migration
             $table->decimal('importe', 12, 2)->default(0);
             $table->string('username',30)->nullable();
             $table->timestamps();
+            $table->unique(['empresa_id','fecha']);
         });
     }
 

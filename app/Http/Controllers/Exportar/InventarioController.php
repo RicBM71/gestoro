@@ -93,7 +93,11 @@ class InventarioController extends Controller
 
         $valor_inventario = 0;
         foreach ($data as $row){
-            $valor_inventario += round($row->mi_stock * $row->precio_coste, 2);
+            if ($row->stock > 1)
+                $valor_inventario += round($row->mi_stock * $row->precio_coste, 2);
+            else
+                $valor_inventario += $row->precio_coste;
+
         }
 
 
