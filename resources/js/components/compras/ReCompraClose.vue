@@ -68,7 +68,7 @@
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            v-show="compra.factura > 0 "
+                            v-show="!computedDisabledDesfacturar"
                             v-on="on"
                             color="white"
                             icon
@@ -635,7 +635,8 @@ import {mapState} from 'vuex'
                 'userName',
                 'hasAddCom',
                 'flexCortesia',
-                'parametros'
+                'parametros',
+                'hasEdtFac'
             ]),
             computedError(){
                 return this.compra.notas != null ? 'error' : null;
@@ -657,7 +658,7 @@ import {mapState} from 'vuex'
             },
             computedDisabledDesfacturar(){
 
-                if (this.hasReaCompras )
+                if (this.compra.factura > 0 && this.hasReaCompras &&  this.hasEdtFac)
                     return false;
                 else
                     return true;

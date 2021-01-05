@@ -63,8 +63,13 @@ class ReubicarAlbaranesController extends Controller
             return abort(403,'Solo administradores pueden reubicar albaranes!');
 
 
-        $albaran = Albaran::with(['cliente','albalins.producto'])->findOrFail($id);
-       // dd($albaran);
+        $albaran = Albaran::with(['cliente','albalins.producto', 'cobros'])->findOrFail($id);
+
+        $fecha_ultimo_cobro = ($albaran->cobros->max('fecha'));
+        if ($fecha_ultimo_cobro->format('Y-m-d') > $this->nueva_fecha_albaran)
+            return;
+
+        //dd($albaran);
 
         if ($albaran->tipo_id != 3 || $albaran->factura > 0 || $albaran->fase_id != 11)
             return abort(404,'El albarán no se puede reubicar');
