@@ -56,7 +56,7 @@ class ComprasController extends Controller
                    ->where('fecha_compra','=',Carbon::today())
                    ->get();
         }
-                             
+
        if (request()->wantsJson())
             return $data;
     }
@@ -533,6 +533,15 @@ class ComprasController extends Controller
     public function excel(Request $request){
 
         return Excel::download(new ComprasExport($request->data), 'compras.xlsx');
+
+    }
+
+    public function whatsApp(Compra $compra){
+
+        if (esAdmin())
+            return getWhatsAppRenova($compra->load('cliente'));
+        else
+            return response(404,'No autorizado!');
 
     }
 

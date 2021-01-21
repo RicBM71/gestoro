@@ -207,6 +207,8 @@ Route::group([
         Route::resource('acuenta', 'AcuentaController', ['only'=>['index','show','store','destroy']]);
         Route::resource('capital', 'AmpliarCapitalController', ['only'=>['index','show','store','destroy']]);
 
+        Route::get('whatsapp/{compra}', 'ComprasController@whatsApp');
+
     }
 );
 

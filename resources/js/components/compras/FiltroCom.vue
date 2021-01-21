@@ -160,6 +160,7 @@ export default {
                     {value: 'C', text:"Compra"},
                     {value: 'R', text:"Recogida"},
                     {value: 'M', text:"Modificación"},
+                    {value: 'N', text:"Renovación"},
                 ],
             quefecha: 'C',
             loading: false,

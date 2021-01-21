@@ -101,11 +101,22 @@
 
 
                                         <v-icon v-if="hasBorraCompras"
-                                        small
-                                        @click="openDialog(props.item)"
+                                            small
+                                            @click="openDialog(props.item)"
                                         >
                                         delete
                                         </v-icon>
+                                         <v-btn
+                                            icon
+                                            v-if="isRoot && props.item.cliente.tfmovil > ''"
+                                            @click="sendWhatsApp(props.item)"
+                                            color="white"
+                                            flat
+                                        >
+                                            <v-avatar size="18px">
+                                                <img class="img-fluid" src="/assets/ws.png">
+                                            </v-avatar>
+                                        </v-btn>
                                     </td>
                                 </template>
                                 <template v-slot:expand="props">
@@ -250,6 +261,7 @@ import {mapActions} from "vuex";
             'getPagination',
             'isSupervisor',
             'isGestor',
+            'isRoot',
             'parametros'
         ])
     },
@@ -322,6 +334,16 @@ import {mapActions} from "vuex";
 
             });
 
+        },
+        sendWhatsApp(item){
+             axios.get('/compras/whatsapp/'+item.id)
+                .then(res => {
+                    console.log(res);
+                    window.open(res.data,'Enviar WhatsApp','toolbar=no,resizable=no, width=400, height=500, scrollbar=no, status=no');
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         },
         goExcel(){
 

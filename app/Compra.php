@@ -262,6 +262,9 @@ class Compra extends Model
         elseif ($tipo == "F")
             return $query->whereDate('fecha_factura','>=', $d)
                          ->whereDate('fecha_factura','<=', $h);
+        elseif ($tipo == "N")
+            return $query->whereDate('fecha_renovacion','>=', $d)
+                        ->whereDate('fecha_renovacion','<=', $h);
         else
             return $query->whereDate('updated_at','>=', $d)
                          ->whereDate('updated_at','<=', $h);
