@@ -7,6 +7,7 @@
                         v-model="quefecha"
                         :items="fechas"
                         label="Fecha"
+                        @change="setValores"
                     ></v-select>
                 </v-flex>
                 <v-flex sm2>
@@ -220,6 +221,12 @@ export default {
         }
     },
     methods:{
+        setValores(){
+            if (this.quefecha == 'N'){
+                this.tipo_id = 1;
+                this.fase_id = 4;
+            }
+        },
         // setFecha(){
         //     var fecha = new Date(this.fecha);
 

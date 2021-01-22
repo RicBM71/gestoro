@@ -157,6 +157,8 @@ Route::group([
         Route::resource('marcas', 'MarcasController', ['as' => 'mto']);
         Route::resource('categorias', 'CategoriasController', ['as' => 'mto']);
 
+        Route::resource('whatsapps', 'WhatsappsController', ['as' => 'mto']);
+
     }
 );
 

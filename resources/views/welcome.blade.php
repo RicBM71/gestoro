@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="author" content="Sanaval Tecnología">
+        <meta name="author" content="Sanaval Tecnología - dash">
         <meta name="description" content="">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -11,6 +11,7 @@
 
         <!-- Fonts -->
         <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
 
         <!-- Styles -->
         {{-- <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet"> --}}

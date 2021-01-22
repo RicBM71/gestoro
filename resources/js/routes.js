@@ -38,6 +38,9 @@ import CuentaIndex from './components/cuenta/CuentaIndex.vue';
 import CuentaCreate from './components/cuenta/CuentaCreate.vue';
 import CuentaEdit from './components/cuenta/CuentaEdit.vue';
 
+import WhatsappIndex from './components/whatsapp/WhatsappIndex.vue';
+import WhatsappCreate from './components/whatsapp/WhatsappCreate.vue';
+import WhatsappEdit from './components/whatsapp/WhatsappEdit.vue';
 
 import ClaseIndex from './components/clase/ClaseIndex.vue';
 import ClaseCreate from './components/clase/ClaseCreate.vue';
@@ -861,6 +864,21 @@ export default [
                 path: '/categorias/:id/edit',
                 name: 'categoria.edit',
                 component: CategoriaEdit,
+            },
+            {
+                path: '/whatsapps',
+                name: 'whatsapp.index',
+                component: WhatsappIndex,
+            },
+            {
+                path: '/whatsapps/create',
+                name: 'whatsapp.create',
+                component: WhatsappCreate,
+            },
+            {
+                path: '/whatsapps/:id/edit',
+                name: 'whatsapp.edit',
+                component: WhatsappEdit,
             },
 
             // {

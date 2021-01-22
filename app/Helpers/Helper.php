@@ -1,5 +1,6 @@
 <?php
 
+use App\Whatsapp;
 use Carbon\Carbon;
 
 function getDecimal($valor, $dec=2){
@@ -163,24 +164,39 @@ function getWhatsAppRenova($compra){
 
     if (strlen($compra->cliente->tfmovil) != 9) return false;
 
+    $plantilla = Whatsapp::firstOrFail();
+
     $dt = Carbon::parse($compra->fecha_renovacion);
 
     $fecha = $dt->isoFormat('DD/MM/YYYY');
 
     //$fecha = $dt->format('l j \\de F \\a \\las H:i');
-    $fecha = '*'.str_replace(' ', '%20', $fecha).'*';
+    $fecha = str_replace(' ', '%20', $fecha);
 
     if (session('empresa')->telefono1 > '' && session('empresa')->telefono2 > '')
         $tfs = "de los teléfonos ".session('empresa')->telefono1."-".session('empresa')->telefono2;
     else
         $tfs = "del teléfono ".session('empresa')->telefono1;
 
+        // nombre
+    $plantilla = str_replace('%n',mb_convert_case(trim($compra->cliente->nombre),MB_CASE_TITLE, "UTF-8"), $plantilla->texto);
+        // fecha
+    $plantilla = str_replace('%f',$fecha, $plantilla);
+        // lote
+    $plantilla = str_replace('%l',$compra->alb_ser, $plantilla);
+        //teléfonos
+    $plantilla = str_replace('%t',$tfs, $plantilla);
 
-    $texto_inicial = " le recordamos que a partir de hoy ".$fecha." dispone de *10 días* para la renovación de su contrato número *".$compra->alb_ser."*. Si no desea renovar o recuperar, por favor responda _*NO RENOVAR*_ en este WhatsApp. Si necesita alguna aclaración puede contactar a través ".$tfs." o través de este mismo WhatsApp.";
-    $texto = "&text=Hola%20".mb_convert_case(trim($compra->cliente->nombre),MB_CASE_TITLE, "UTF-8").",".str_replace(' ', '%20', $texto_inicial);
+    $texto = str_replace(' ', '%20', $plantilla);
 
 
-    $ws="https://api.whatsapp.com/send?phone=34".$compra->cliente->tfmovil.$texto;
+    $ws="https://api.whatsapp.com/send?phone=34".$compra->cliente->tfmovil."&text=".$texto;
+
+    //$texto_inicial = " le recordamos que a partir de hoy ".$fecha." dispone de *10 días* para la renovación de su contrato número *".$compra->alb_ser."*. Si no desea renovar o recuperar, por favor responda _*NO RENOVAR*_ en este WhatsApp. Si necesita alguna aclaración puede contactar a través ".$tfs." o través de este mismo WhatsApp.";
+    //$texto = "&text=Hola%20".mb_convert_case(trim($compra->cliente->nombre),MB_CASE_TITLE, "UTF-8").",".str_replace(' ', '%20', $texto_inicial);
+
+
+    //$ws="https://api.whatsapp.com/send?phone=34".$compra->cliente->tfmovil.$texto;
 
     return $ws;
 

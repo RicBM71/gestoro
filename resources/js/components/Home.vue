@@ -244,6 +244,7 @@ export default {
                 { text: 'Cruces Caja', name: 'cruce.index' },
                 { text: 'Formas de pago', name: 'fpago.index' },
                 { text: 'RRSS', name: 'social.index' },
+                { icon: 'mdi-whatsapp', text: 'Plantilla Whatsapps', name: 'whatsapp.index' },
                 { text: 'Cierre', name: 'tools.cierre' },
                 { text: 'Parámetros', name: 'parametro.edit' },
             ]
