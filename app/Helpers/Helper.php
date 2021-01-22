@@ -164,6 +164,24 @@ function getWhatsAppRenova($compra){
 
     if (strlen($compra->cliente->tfmovil) != 9) return false;
 
+    if ($compra->tipo_id == 1){
+        $ws = formatMsg($compra);
+    }else{
+        $ws="https://api.whatsapp.com/send?phone=34".$compra->cliente->tfmovil."&text=Hola%20".mb_convert_case(trim($compra->cliente->nombre),MB_CASE_TITLE, "UTF-8");
+    }
+
+    //$texto_inicial = " le recordamos que a partir de hoy ".$fecha." dispone de *10 días* para la renovación de su contrato número *".$compra->alb_ser."*. Si no desea renovar o recuperar, por favor responda _*NO RENOVAR*_ en este WhatsApp. Si necesita alguna aclaración puede contactar a través ".$tfs." o través de este mismo WhatsApp.";
+    //$texto = "&text=Hola%20".mb_convert_case(trim($compra->cliente->nombre),MB_CASE_TITLE, "UTF-8").",".str_replace(' ', '%20', $texto_inicial);
+
+
+    //$ws="https://api.whatsapp.com/send?phone=34".$compra->cliente->tfmovil.$texto;
+
+    return $ws;
+
+}
+
+function formatMsg($compra){
+
     $plantilla = Whatsapp::firstOrFail();
 
     $dt = Carbon::parse($compra->fecha_renovacion);
@@ -192,12 +210,5 @@ function getWhatsAppRenova($compra){
 
     $ws="https://api.whatsapp.com/send?phone=34".$compra->cliente->tfmovil."&text=".$texto;
 
-    //$texto_inicial = " le recordamos que a partir de hoy ".$fecha." dispone de *10 días* para la renovación de su contrato número *".$compra->alb_ser."*. Si no desea renovar o recuperar, por favor responda _*NO RENOVAR*_ en este WhatsApp. Si necesita alguna aclaración puede contactar a través ".$tfs." o través de este mismo WhatsApp.";
-    //$texto = "&text=Hola%20".mb_convert_case(trim($compra->cliente->nombre),MB_CASE_TITLE, "UTF-8").",".str_replace(' ', '%20', $texto_inicial);
-
-
-    //$ws="https://api.whatsapp.com/send?phone=34".$compra->cliente->tfmovil.$texto;
-
     return $ws;
-
 }
