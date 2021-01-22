@@ -538,10 +538,10 @@ class ComprasController extends Controller
 
     public function whatsApp(Compra $compra){
 
-        if (esAdmin())
+        if (esSupervisor())
             return getWhatsAppRenova($compra->load('cliente'));
         else
-            return response(404,'No autorizado!');
+            return response(411,'No autorizado!');
 
     }
 

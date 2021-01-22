@@ -232,7 +232,7 @@ export default {
             children: [
                 // { text: 'Ampliación COVID', name: 'tools.ampliar' },
                 // { text: 'Cambio Masivo Interés', name: 'tools.interes' },
-                { text: 'Find Producto', name: 'tools.find.producto' },
+                {text: 'Find Producto', name: 'tools.find.producto' },
                 // { text: 'Importar Producto', name: 'tools.importar.producto' },
                 { text: 'Histórico compras', name: 'hcompras.index' },
                 { text: 'Usuarios', name: 'users.index' },
@@ -244,7 +244,7 @@ export default {
                 { text: 'Cruces Caja', name: 'cruce.index' },
                 { text: 'Formas de pago', name: 'fpago.index' },
                 { text: 'RRSS', name: 'social.index' },
-                { icon: 'mdi-whatsapp', text: 'Plantilla Whatsapps', name: 'whatsapp.index' },
+                { text: 'Plantilla Whatsapps', name: 'whatsapp.index' },
                 { text: 'Cierre', name: 'tools.cierre' },
                 { text: 'Parámetros', name: 'parametro.edit' },
             ]
