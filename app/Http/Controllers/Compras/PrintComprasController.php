@@ -391,57 +391,6 @@ class PrintComprasController extends Controller
      */
     private function setLineasComfrmCompra1($lineas){
 
-
-        // $txt = "CONCEPTO";
-		// $imp = "IMPORTE";
-
-        // PDF::Ln();
-        // PDF::MultiCell(160, 6,"", 'LRTB', 'L', 0, 0, '', '', true);
-		// PDF::MultiCell(20, 6,"", 'RTB', 'L', 0, 0, '', '', true);
-
-		// PDF::SetFont('helvetica', 'R', 8, '', false);
-
-		// foreach ($lineas as $row) {
-
-		// 	if ($row->peso_gr < 0) continue;
-
-		// 	if ((int) $row->unidades == 0) $row->unidades = null;
-
-		// 	$txt=$row->unidades." ".$row->concepto." ".strtoupper($row->clase->nombre);
-
-
-        //     $peso_gr = (!$this->compra->libro->peso_frm) ? null : getDecimal($row->peso_gr).' gr.';
-
-		// 	if ($row->quilates != null){
-		// 		$txt.= ' '.$row->quilates;
-		// 	}
-
-		// 	if ($row->colores != null)
-		// 		$txt.= ' '.$row->colores;
-
-		// 	if ($row->grabaciones != null)
-		// 		$txt.= " (".$row->grabaciones.") ";
-
-		// 	if ($peso_gr != null)
-		// 		$txt.= ' '.$peso_gr;
-
-		// 	$imp = getDecimal($row->importe);
-
-		// 	$alto=PDF::getStringHeight(160,$txt);
-
-		// 	PDF::MultiCell(160, $alto,$txt, 'LR', 'L', 0, 0, '', '', true);
-		// 	PDF::MultiCell(20, $alto,$imp, 'R', 'R', 0, 0, '', '', true);
-
-		// 	PDF::Ln();
-		// }
-
-		// $alto=6;
-
-		// PDF::MultiCell(160, $alto,"", 'LRB', 'L', 0, 0, '', '', true);
-		// PDF::MultiCell(20, $alto,"", 'RB', 'R', 1, 0, '', '', true);
-
-		// PDF::SetFont('helvetica', 'R', 9, '', false);
-
     }
 
     /**
@@ -608,52 +557,6 @@ class PrintComprasController extends Controller
 
             //PDF::setCellHeightRatio(2);
         }
-
-
-        // PDF::SetXY(15, 140);
-
-		// PDF::SetFont('helvetica', 'R', 7, '', false);
-		// PDF::MultiCell(180, 5,"Detalle de la compra", "LRT", 'L', 0, 1, '', '', true,0,false,true,5,'T',false);
-
-		// PDF::SetFont('helvetica', 'R', 8, '', false);
-
-        // $str = null;
-		// foreach ($lineas as $row) {
-
-		// 	if ($row->peso_gr < 0) continue;
-
-		// 	($row->unidades <> 0) ? $unidad = $row->unidades." " : $unidad = null;
-
-		// 	$str.=$unidad.$row->concepto." ".$row->clase->nombre;
-
-		// 	if ($row->quilates != null){
-		// 		$str.= ' '.$row->quilates;
-		// 	}
-
-		// 	if ($row->colores != null)
-		// 		$str.= ' '.$row->colores;
-
-		// 	if ($row->grabaciones != null)
-		// 		$str.= " (".$row->grabaciones.") ";
-
-
-        //     $peso_gr = (!$this->compra->libro->peso_gr_frm) ? null : getDecimal($row->peso_gr).' gr.';
-
-
-		// 	if ($peso_gr != null){
-		// 		$str.= ' '.$peso_gr;
-		// 	}
-
-        //     PDF::MultiCell(180, 5, $str."\n", "LR", 'J', 0, 1, '', '', true, 0, false, true, 60, 'T', true);
-		// 	//PDF::MultiCell(180, 5,$str, "LR", 'L', 0, 1, '', '', true,0,false,true,25,'T',false);
-		// 	$str = null;
-
-		// }
-
-		// $str = substr($str, 0, -2);
-		// PDF::MultiCell(180, 5,"", "LRB", 'L', 0, 1, '', '', true,0,false,true,25,'T',false);
-
-
     }
 
     private function cabeLin(){
@@ -1026,7 +929,6 @@ class PrintComprasController extends Controller
 			PDF::MultiCell(152, 5, ("Deberá acompañar fotocopia de la documentación de la persona que autoriza y ORIGINAL del autorizado."), '', 'L', 0, 1, '', '', true,0,false,true,5,'M',false);
 
 			PDF::SetFont('helvetica', 'R', 7, '', false);
-
 
 			PDF::MultiCell(70, 7, "", '', 'C', 0, 0, '', '', true,0,false,true,5,'B',false);
 			PDF::MultiCell(36, 7, "", '', 'C', 0, 0, '', '', true,0,false,true,5,'M',false);
