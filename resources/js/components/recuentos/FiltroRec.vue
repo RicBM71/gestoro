@@ -2,7 +2,7 @@
     <v-form>
         <v-container>
             <v-layout row wrap>
-                <v-flex sm3>
+                <v-flex sm2>
                     <v-select
                         v-model="find.clase_id"
                         v-validate="'numeric'"
@@ -14,7 +14,7 @@
                         required
                     ></v-select>
                 </v-flex>
-                <v-flex sm3>
+                <v-flex sm2>
                     <v-select
                         v-model="find.rfid_id"
                         v-validate="'numeric'"
@@ -23,6 +23,17 @@
                         :error-messages="errors.collect('rfid_id')"
                         :items="rfids"
                         label="Estado RFID"
+                        ></v-select>
+                </v-flex>
+                <v-flex sm2>
+                    <v-select
+                        v-model="find.categoria_id"
+                        v-validate="'numeric'"
+                        data-vv-name="categoria_id"
+                        data-vv-as="categoría"
+                        :error-messages="errors.collect('categoria_id')"
+                        :items="categorias"
+                        label="Categoría"
                         ></v-select>
                 </v-flex>
                 <v-switch
@@ -56,11 +67,13 @@ export default {
             loading: false,
             result: false,
 
+            categorias:[],
             clases: [],
             rfids: [],
             find: {
                 rfid_id: 3,
                 clase_id: null,
+                categoria_id: null,
                 alta: false
             },
 
@@ -73,9 +86,11 @@ export default {
 
                 this.rfids = res.data.rfids;
                 this.clases = res.data.clases;
+                this.categorias = res.data.categorias;
 
                 this.clases.push({value:null,text:"---"});
                 this.rfids.push({value:null,text:"---"});
+                this.categorias.push({value:null,text:"---"});
             })
             .catch(err => {
                 console.log(err);

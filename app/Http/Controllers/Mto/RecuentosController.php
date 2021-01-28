@@ -6,6 +6,7 @@ use App\Rfid;
 use App\Clase;
 use App\Producto;
 use App\Recuento;
+use App\Categoria;
 use App\Scopes\EmpresaScope;
 use Illuminate\Http\Request;
 use App\Exports\RecuentoExport;
@@ -45,6 +46,7 @@ class RecuentosController extends Controller
         $data = $request->validate([
             'rfid_id'  => ['nullable','integer'],
             'clase_id' => ['nullable','integer'],
+            'categoria_id' => ['nullable','integer'],
             'alta'     => ['boolean'],
         ]);
 
@@ -64,12 +66,15 @@ class RecuentosController extends Controller
 
         $data = session('filtro_rec');
 
-        if ($data['clase_id'] == null){
-            $op_clase = '>=';
-            $data['clase_id'] = 0;
-        }else{
-            $op_clase = '=';
-        }
+        // if ($data['clase_id'] == null){
+        //     $op_clase = '>=';
+        //     $data['clase_id'] = 0;
+        // }else{
+        //     $op_clase = '=';
+        // }
+
+        $clase_id = $data['clase_id'];
+        $categoria_id = $data['categoria_id'];
 
         $collection = Recuento::withOutGlobalScope(EmpresaScope::class)
                     ->select('referencia','producto_id','productos.nombre AS nombre','precio_coste','rfids.nombre AS rfid','estados.nombre AS estado',
@@ -80,7 +85,12 @@ class RecuentosController extends Controller
                     ->join('estados','estados.id','=','productos.estado_id')
                     ->where('recuentos.empresa_id', session('empresa_id'))
                     ->rfid($data['rfid_id'])
-                    ->where('clase_id', $op_clase, $data['clase_id'])
+                    ->when($clase_id > 0, function ($query) use ($clase_id) {
+                        return $query->where('productos.clase_id', '=', $clase_id);
+                    })
+                    ->when($categoria_id > 0, function ($query) use ($categoria_id) {
+                        return $query->where('productos.categoria_id', '=', $categoria_id);
+                    })
                     ->get();
 
         if ($data['alta'] == true){
@@ -133,6 +143,7 @@ class RecuentosController extends Controller
             return [
                 'rfids'    => Rfid::selRfid(),
                 'clases'   => Clase::selGrupoClase(),
+                'categorias'   => Categoria::selCategorias(),
                 'recuentos' => Recuento::with(['producto','rfid','estado'])->get(),
             ];
 
