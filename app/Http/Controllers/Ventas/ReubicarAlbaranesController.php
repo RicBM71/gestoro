@@ -213,7 +213,7 @@ class ReubicarAlbaranesController extends Controller
         $contador_alb = Contador::incrementaContadorReubicar($ejercicio, $albaran->tipo_id, $nueva_empresa_id);
         $data_new['serie_albaran']    = $contador_alb['serie_albaran'];
         $data_new['albaran']      = $contador_alb['ult_albaran'];
-        $data_new['notas_int']    = $albaran->notas_int;
+        $data_new['notas_int']    = "Reubicado origen: ".$albaran->alb_ser.' '.getFecha($albaran->fecha_albaran);
         $data_new['notas_ext']    = $albaran->notas_ext;
         $data_new['created_at']   = Carbon::now();
         $data_new['updated_at']   = Carbon::now();
