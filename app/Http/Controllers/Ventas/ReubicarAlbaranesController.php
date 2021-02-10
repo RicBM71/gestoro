@@ -252,21 +252,22 @@ class ReubicarAlbaranesController extends Controller
                     ->orderBy('fecha','asc')
                     ->get();
 
-        $sw=false;
-        foreach ($cobros as $cobro){
-            $sw=true;
-            if ($cobro->fpago_id == 1)
-                DB::table('cajas')
-                    ->where('cobro_id', $cobro->id)
-                    ->update(['cobro_id'  => null,
-                              'manual'    => 'S',
-                              'username'  => session('username'),
-                              'updated_at'=>Carbon::now()
-                            ]);
-        }
+        // el apunte de caja no se va a tocar, lo quito. 10.02.2021
+        // $sw=false;
+        // foreach ($cobros as $cobro){
+        //     $sw=true;
+        //     if ($cobro->fpago_id == 1)
+        //         DB::table('cajas')
+        //             ->where('cobro_id', $cobro->id)
+        //             ->update(['cobro_id'  => null,
+        //                       'manual'    => 'S',
+        //                     //   'username'  => session('username'),
+        //                     //   'updated_at'=>Carbon::now()
+        //                     ]);
+        // }
 
-        if ($sw===false)
-            return;
+        // if ($sw===false)
+        //     return;
 
         $cobro_new['fecha']      = $cobro->fecha;
         $cobro_new['albaran_id'] = $albaran_new->id;
