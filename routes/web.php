@@ -48,7 +48,7 @@ Route::group([
     'middleware' => ['auth','password']],
     function (){
 
-        Route::resource('fpagos', 'FPagosController', ['as' => 'root']);
+        Route::resource('fpagos', 'FpagosController', ['as' => 'root']);
         Route::resource('parametros', 'ParametrosController', ['only'=>['index','update'], 'as' => 'root']);
         Route::post('parametros/main', 'ParametrosController@main');
         Route::put('parametros/main/delete', 'ParametrosController@deletemain');

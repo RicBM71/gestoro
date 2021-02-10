@@ -171,11 +171,11 @@ class ReubicarAlbaranesController extends Controller
 
         if ($nuevo_albaran !== false  || $nuevo_albaran_proveedores !== false){
             DB::table('cobros')->where('albaran_id', $albaran->id)
-                ->update(['deleted_at'  => Carbon::now(), 'username'=>'reu.'.session('username')]);
+                ->update(['deleted_at'  => Carbon::now()]);
             DB::table('albalins')->where('albaran_id', $albaran->id)
-                ->update(['deleted_at'  => Carbon::now(), 'username'=>'reu.'.session('username')]);
+                ->update(['deleted_at'  => Carbon::now()]);
             DB::table('albaranes')->where('id', $albaran->id)
-                ->update(['deleted_at'  => Carbon::now(), 'username'=>'reu.'.session('username')]);
+                ->update(['deleted_at'  => Carbon::now()]);
 
             //return $nuevo_albaran_proveedores;
         }
@@ -191,7 +191,6 @@ class ReubicarAlbaranesController extends Controller
 
     private function crearAlbaran($albaran, $nueva_empresa_id){
 
-        \Log::info($albaran->id);
 
         $data_new['empresa_id']     = $nueva_empresa_id;
 
@@ -275,7 +274,7 @@ class ReubicarAlbaranesController extends Controller
         $cobro_new['cliente_id'] = $albaran_new->cliente_id;
         $cobro_new['fpago_id']   = 2; // siempre por transferencia
         $cobro_new['importe']    = $total_albaran;
-        $cobro_new['notas']      = null;
+        $cobro_new['notas']      = 'x REUBICACIÓN';
         $cobro_new['username']   = $albaran_new->username;
         $cobro_new['created_at'] = Carbon::now();
         $cobro_new['updated_at'] = Carbon::now();

@@ -75,7 +75,7 @@ class FpagosController extends Controller
      */
     public function edit(Fpago $fpago)
     {
-        
+
 
         if (request()->wantsJson())
             return [
