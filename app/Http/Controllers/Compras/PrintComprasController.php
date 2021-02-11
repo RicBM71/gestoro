@@ -48,6 +48,8 @@ class PrintComprasController extends Controller
 
         $this->formulario = session()->get('parametros')->frm_compras;
 
+        $copia_recompra = session()->get('parametros')->copia_recompra;
+
         ob_end_clean();
 
         if ($this->formulario == "GE")
@@ -58,7 +60,9 @@ class PrintComprasController extends Controller
 
         if ($this->compra->tipo_id == 1){
             $this->frmReCompra1(true);
-            $this->frmReCompra1(false);
+
+            if ($copia_recompra || $totales_concepto[1]==0)
+                $this->frmReCompra1(false);
 
             if ($totales_concepto[1]==0) // si no hay ampliaciones imprimimos la compra.
                 $this->frmCompra1();

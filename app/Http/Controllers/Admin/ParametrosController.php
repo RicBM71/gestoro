@@ -47,6 +47,7 @@ class ParametrosController extends Controller
             'tag_renovar'    => ['required','string'],
             'notificar_iban' => ['required','boolean'],
             'fixing'         => ['required','boolean'],
+            'copia_recompra' => ['required','boolean'],
 
         ]);
 

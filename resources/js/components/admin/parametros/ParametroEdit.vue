@@ -146,6 +146,13 @@
                                             color="primary">
                                         ></v-switch>
                                     </v-flex>
+                                     <v-flex sm2>
+                                        <v-switch
+                                            label="Copia recompra"
+                                            v-model="parametro.copia_recompra"
+                                            color="primary">
+                                        ></v-switch>
+                                    </v-flex>
                                 </v-layout>
                                 <v-layout row wrap>
                                     <v-flex sm2>
