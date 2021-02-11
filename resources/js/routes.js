@@ -89,6 +89,7 @@ import AlbaranEdit from './components/ventas/AlbaranEdit.vue';
 import FindAlbaran from './components/ventas/FindAlbaran.vue';
 import AlbaranesFac from './components/facturacion/AlbaranesFac.vue';
 import ListarFacturasVenta from './components/facturacion/ListarFacturasVenta.vue';
+import AlbaranShow from './components/ventas/borrados/AlbaranShow.vue';
 
 import MotivoIndex from './components/motivo/MotivoIndex.vue';
 import MotivoEdit from './components/motivo/MotivoEdit.vue';
@@ -514,6 +515,11 @@ export default [
                 path: '/albaran/:id/edit',
                 name: 'albaran.edit',
                 component: AlbaranEdit,
+            },
+            {
+                path: '/albaran/:id',
+                name: 'albaran.show',
+                component: AlbaranShow,
             },
             {
                 path: '/find/albaran',

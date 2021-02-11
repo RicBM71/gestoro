@@ -135,6 +135,8 @@ import MenuOpe from './MenuOpe'
 
                                     if(res.data.albaran ==null)
                                         this.$toast.warning("No se ha encontrado el albarán/factura");
+                                    else if(res.data.albaran.deleted_at != null)
+                                        this.$router.push({ name: 'albaran.show', params: { id: res.data.albaran.id } })
                                     else{
 
                                         this.albaran = res.data.albaran;

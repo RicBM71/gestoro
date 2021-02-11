@@ -9,6 +9,7 @@ use App\Cuenta;
 use App\Fixing;
 use App\Motivo;
 use App\Taller;
+use App\Albalin;
 use App\Albaran;
 use App\Empresa;
 use App\Contador;
@@ -182,6 +183,59 @@ class AlbaranesController extends Controller
                 'talleres'=> Taller::selTalleres(),
                 'empresas'=> Empresa::selEmpresas()->Venta()->get(),
                 'fixing'  => Fixing::getFixDia(1, date('Y-m-d'), $albarane->fecha_albaran)
+            ];
+
+    }
+
+      /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+
+        try {
+            $albarane = Albaran::withOutGlobalScope(EmpresaScope::class)->findOrFail($id);
+        } catch (\Exception $e) {
+            try {
+                $albarane = Albaran::withTrashed()->withOutGlobalScope(EmpresaScope::class)->findOrFail($id);
+            } catch (\Exception $e) {
+                return abort(404,'El albarán no existe');
+            }
+        }
+
+        if ($albarane->tipo_id == 4 && !esGestor()){
+            return abort(404, 'No se ha podido cargar este albarán - Gestor Requerido');
+        }
+
+        // con esto cambiamos de empresa si la empresa no coincide
+        $collection = session('empresas_usuario');
+        if ($collection->search($albarane->empresa_id, true)===false){
+            return abort(404, "No se ha encontrado el registro");
+        }
+
+        if ($albarane->empresa_id != session('empresa_id')){
+            $parametros = $this->loadSession($albarane->empresa_id);
+        }else{
+            $parametros = false;
+        }
+
+        $this->authorize('update', $albarane);
+
+
+
+        if (request()->wantsJson())
+            return [
+                'parametros'   => $parametros,
+                'albaran' => $albarane->load(['cliente','tipo','fase','motivo','fpago','cuenta','procedencia']),
+                'cuentas' => Cuenta::selCuentas(),
+                'fpagos'  => Fpago::selFpagos(),
+                'talleres'=> Taller::selTalleres(),
+                'empresas'=> Empresa::selEmpresas()->Venta()->get(),
+                'albalin' => Albalin::withTrashed()->with(['producto'])->where('albaran_id',$albarane->id)->get(),
+                'cobroslin'=> Cobro::withTrashed()->with(['fpago'])->where('albaran_id',$albarane->id)->get(),
             ];
 
     }

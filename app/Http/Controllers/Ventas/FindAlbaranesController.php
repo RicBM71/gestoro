@@ -33,10 +33,16 @@ class FindAlbaranesController extends Controller
             'esfactura'=> ['boolean']
         ]);
 
+        $albaran = Albaran::withTrashed()->serieNumero($data)->get()->first();
+
+        if ($albaran->tipo_id >= 4 && !esGestor()){
+            return abort(404, 'No se ha podido cargar este albarán - Gestor Requerido');
+        }
+
 
         if (request()->wantsJson())
             return [
-                'albaran'=> Albaran::serieNumero($data)->get()->first()
+                'albaran'=> $albaran
             ];
     }
 }
