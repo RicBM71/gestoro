@@ -252,7 +252,6 @@ class ReubicarAlbaranesController extends Controller
                     ->orderBy('fecha','asc')
                     ->get();
 
-        $nuevos_cobros = array();
         $sw=false;
         foreach ($cobros as $cobro){
             $sw=true;
@@ -265,22 +264,21 @@ class ReubicarAlbaranesController extends Controller
                             //   'updated_at'=>Carbon::now()
                             ]);
 
-            $cobro_new['fecha']      = $cobro->fecha;
-            $cobro_new['albaran_id'] = $albaran_new->id;
-            $cobro_new['empresa_id'] = $albaran_new->empresa_id;
-            $cobro_new['cliente_id'] = $albaran_new->cliente_id;
-            $cobro_new['fpago_id']   = $cobro->fpago_id;
-            $cobro_new['importe']    = $total_albaran;
-            $cobro_new['notas']      = $cobro->notas;
-            $cobro_new['username']   = $albaran_new->username;
-            $cobro_new['created_at'] = Carbon::now();
-            $cobro_new['updated_at'] = Carbon::now();
-
-            $nuevos_cobros[]=$cobro_new;
         }
 
         if ($sw===false)
             return;
+
+        $cobro_new['fecha']      = $cobro->fecha;
+        $cobro_new['albaran_id'] = $albaran_new->id;
+        $cobro_new['empresa_id'] = $albaran_new->empresa_id;
+        $cobro_new['cliente_id'] = $albaran_new->cliente_id;
+        $cobro_new['fpago_id']   = 2;
+        $cobro_new['importe']    = $total_albaran;
+        $cobro_new['notas']      = 'x REUBICACIÓN';
+        $cobro_new['username']   = $albaran_new->username;
+        $cobro_new['created_at'] = Carbon::now();
+        $cobro_new['updated_at'] = Carbon::now();
 
         DB::table('cobros')->insert($nuevos_cobros);
 
