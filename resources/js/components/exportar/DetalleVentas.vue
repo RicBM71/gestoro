@@ -172,6 +172,7 @@
                                 <td class="text-xs-right">{{ props.item.precio_coste | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                 <td class="text-xs-right">{{ props.item.importe_venta| currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                 <td class="text-xs-right">{{ props.item.margen| currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                <td class="text-xs-right">{{ props.item.difrel| currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                 <td v-if="props.item.efectivo == 0 && props.item.banco == 0"></td>
                                 <td v-else class="text-xs-right">{{ props.item.efectivo| currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                 <td v-if="props.item.efectivo == 0 && props.item.banco == 0"></td>
@@ -257,6 +258,12 @@ export default {
                 text: 'Márgen',
                 align: 'right',
                 value: 'margen',
+                width: '4%'
+            },
+            {
+                text: '%',
+                align: 'right',
+                value: 'difrel',
                 width: '4%'
             },
             {

@@ -366,6 +366,7 @@ import {mapActions} from "vuex";
 
             })
             .catch(err => {
+                console.log(err.response);
                 this.$toast.error(err.response.data.message);
                 this.show_loading = false;
             });

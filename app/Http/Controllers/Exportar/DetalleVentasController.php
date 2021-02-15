@@ -97,6 +97,9 @@ class DetalleVentasController extends Controller
 
                 $row_id++;
 
+                $margen = $albalin->importe_venta - $albalin->precio_coste;
+                $dif_rel = $albalin->precio_coste <> 0 ? $margen / $albalin->precio_coste * 100 : 0;
+
                 $arr[]=[
                         'id'             => $row_id, // esto es para que no falle key de vue
                         'albaran_id'     => $albaran->id,
@@ -108,7 +111,8 @@ class DetalleVentasController extends Controller
                         'clase'          => $albalin->producto->clase->nombre,
                         'precio_coste'   => $albalin->precio_coste,
                         'importe_venta'  => $albalin->importe_venta,
-                        'margen'         => $albalin->importe_venta - $albalin->precio_coste,
+                        'margen'         => $margen,
+                        'difrel'         => $dif_rel,
                         'efectivo'       => $cobro_alb[0],
                         'banco'          => $cobro_alb[1],
                 ];
