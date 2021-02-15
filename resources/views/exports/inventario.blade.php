@@ -32,8 +32,8 @@
             @endif
             <td>{{ $item['peso_gr']}}</td>
             <td>{{ $item['precio_venta']}}</td>
-            <td>{{ $item['mi_stock']}}</td>
-            <td>{{ round($item['mi_stock']*$item['precio_coste'],2)}}</td>
+            <td>{{ $item['stock']}}</td>
+            <td>{{ round($item['stock']*$item['precio_coste'],2)}}</td>
             <td>{{ $item['ref_pol']}}</td>
             <td>{{ $item['estado']['nombre']}}</td>
             @if($item['cliente_id'] > 0)

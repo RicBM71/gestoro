@@ -42,18 +42,6 @@
                 <v-container>
                     <v-layout row wrap v-show="show_filtro">
                         <v-spacer></v-spacer>
-                         <v-flex sm2>
-                            <v-select
-                                v-model="grupo_id"
-                                v-validate="'required'"
-                                data-vv-name="grupo_id"
-                                data-vv-as="grupo"
-                                :error-messages="errors.collect('grupo_id')"
-                                :items="grupos"
-                                label="Grupo"
-                                required
-                                ></v-select>
-                        </v-flex>
                         <v-flex sm3>
                             <v-select
                                 v-model="clase_id"
@@ -95,6 +83,7 @@
                         </v-flex>
                     </v-layout>
                     <v-layout row wrap v-show="show_filtro">
+                        <v-spacer></v-spacer>
                         <v-flex sm2>
                             <v-select
                                 v-model="categoria_id"
@@ -130,7 +119,7 @@
                         </v-flex>
                         <v-flex sm2>
                             <v-menu
-                                v-model="menu1"
+                                v-model="menu_h"
                                 :close-on-content-click="false"
                                 :nudge-right="40"
                                 lazy
@@ -197,7 +186,7 @@
                                     <td class="text-xs-right">{{ props.item.peso_gr | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                     <td class="text-xs-right">{{ props.item.precio_coste | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                     <td class="text-xs-right">{{ props.item.precio_venta | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
-                                    <td class="text-xs-right">{{ props.item.mi_stock | currency('', 0, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
+                                    <td class="text-xs-right">{{ props.item.stock | currency('', 0, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                     <td>{{ props.item.estado.nombre }}</td>
                                     <td>{{ props.item.ref_pol }}</td>
                                 </template>
@@ -263,7 +252,7 @@ export default {
             {
                 text: 'Stock',
                 align: 'right',
-                value: 'mi_stock'
+                value: 'stock'
             },
             {
                 text: 'Estado',
@@ -315,10 +304,10 @@ export default {
     mounted(){
         axios.get('/utilidades/helppro/filtro')
             .then(res => {
-                this.grupos = res.data.grupos;
+
                 this.clases = res.data.clases;
                 this.asociados = res.data.asociados;
-                this.grupo_id = this.grupos[0].value;
+
                 this.marcas = res.data.marcas;
                 this.categorias = res.data.categorias;
 
@@ -333,7 +322,7 @@ export default {
     },
     computed: {
         ...mapGetters([
-        ]),       
+        ]),
         computedFechaH() {
             moment.locale('es');
             return this.fecha_h ? moment(this.fecha_h).format('L') : '';
@@ -357,7 +346,6 @@ export default {
                             data:{
                                 cliente_id: this.cliente_id,
                                 clase_id: this.clase_id,
-                                grupo_id:  this.grupo_id,
                                 estado_id: this.estado_id,
                                 tipoinv_id: this.tipoinv_id,
                                 marca_id: this.marca_id,
@@ -366,7 +354,7 @@ export default {
                             }
                             })
                         .then(res => {
-
+                            //console.log(res);
                             this.items = res.data.inventario;
                             this.valor_inventario = res.data.valor_inventario;
 

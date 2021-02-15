@@ -25,7 +25,6 @@ class InventarioController extends Controller
             'estado_id'    => ['nullable','integer'],
             'marca_id'     => ['nullable','integer'],
             'categoria_id' => ['nullable','integer'],
-            'grupo_id'     => ['required','integer'],
             'tipoinv_id'   => ['required','max:1'],
             'created_at'   => ['nullable','date'],
         ]);
@@ -57,11 +56,41 @@ class InventarioController extends Controller
 
         // solo lístamos los productos de empresa origen porque este es el inventario real
         //  por esto quito globalScope
+        // if ($data['tipoinv_id'] == 'C')
+        //     $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','iva','estado','garantia','cliente','etiqueta'])
+        //                 ->select(DB::raw(DB::getTablePrefix().'productos.*, (stock - (IFNULL((SELECT SUM(unidades) FROM '.DB::getTablePrefix().'albalins,'.DB::getTablePrefix().'albaranes WHERE producto_id = '.DB::getTablePrefix().'productos.id and '.DB::getTablePrefix().'albalins.deleted_at is null AND albaran_id = '.DB::getTablePrefix().'albaranes.id AND fase_id >= 10), 0))) AS mi_stock'))
+        //                 ->join('clases','clase_id','=','clases.id')
+        //                 ->where('empresa_id', session('empresa_id'))
+        //                 ->categoria($data['categoria_id'])
+        //                 ->marca($data['marca_id'])
+        //                 ->asociado($data['cliente_id'])
+        //                 ->estado($data['estado_id'])
+        //                 ->clase($data['clase_id'])
+        //                 ->whereIn('estado_id',[1,2,3])
+        //                 ->grupo($data['grupo_id'])
+        //                 ->when($created_at <> null, function ($query) use ($created_at) {
+        //                     return $query->where('productos.created_at', '<=', $created_at);
+        //                 })
+        //                 ->get();
+        // else
+        //     $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','iva','estado','garantia','cliente','etiqueta'])
+        //                 ->select(DB::raw(DB::getTablePrefix().'productos.*, (stock - (IFNULL((SELECT SUM(unidades) FROM '.DB::getTablePrefix().'albalins,'.DB::getTablePrefix().'albaranes WHERE producto_id = '.DB::getTablePrefix().'productos.id and '.DB::getTablePrefix().'albalins.deleted_at is null AND albaran_id = '.DB::getTablePrefix().'albaranes.id AND fase_id >= 10), 0))) AS mi_stock'))
+        //                 ->join('clases','clase_id','=','clases.id')
+        //                 ->where('destino_empresa_id', session('empresa_id'))
+        //                 ->categoria($data['categoria_id'])
+        //                 ->marca($data['marca_id'])
+        //                 ->asociado($data['cliente_id'])
+        //                 ->estado($data['estado_id'])
+        //                 ->clase($data['clase_id'])
+        //                 ->whereIn('estado_id',[1,2,3])
+        //                 ->grupo($data['grupo_id'])
+        //                 ->when($created_at <> null, function ($query) use ($created_at) {
+        //                     return $query->where('productos.created_at', '<=', $created_at);
+        //                 })
+        //                 ->get();
+
         if ($data['tipoinv_id'] == 'C')
-            $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','iva','estado','garantia','cliente','etiqueta'])
-                        //->select('productos.*',)
-                        ->select(DB::raw(DB::getTablePrefix().'productos.*, (stock - (IFNULL((SELECT SUM(unidades) FROM '.DB::getTablePrefix().'albalins,'.DB::getTablePrefix().'albaranes WHERE producto_id = '.DB::getTablePrefix().'productos.id and '.DB::getTablePrefix().'albalins.deleted_at is null AND albaran_id = '.DB::getTablePrefix().'albaranes.id AND fase_id >= 10), 0))) AS mi_stock'))
-                        ->join('clases','clase_id','=','clases.id')
+            $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','estado','cliente','etiqueta'])
                         ->where('empresa_id', session('empresa_id'))
                         ->categoria($data['categoria_id'])
                         ->marca($data['marca_id'])
@@ -69,15 +98,13 @@ class InventarioController extends Controller
                         ->estado($data['estado_id'])
                         ->clase($data['clase_id'])
                         ->whereIn('estado_id',[1,2,3])
-                        ->grupo($data['grupo_id'])
+                        //->where('stock','>',1)
                         ->when($created_at <> null, function ($query) use ($created_at) {
                             return $query->where('productos.created_at', '<=', $created_at);
                         })
                         ->get();
         else
-            $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','iva','estado','garantia','cliente','etiqueta'])
-                        ->select(DB::raw(DB::getTablePrefix().'productos.*, (stock - (IFNULL((SELECT SUM(unidades) FROM '.DB::getTablePrefix().'albalins,'.DB::getTablePrefix().'albaranes WHERE producto_id = '.DB::getTablePrefix().'productos.id and '.DB::getTablePrefix().'albalins.deleted_at is null AND albaran_id = '.DB::getTablePrefix().'albaranes.id AND fase_id >= 10), 0))) AS mi_stock'))
-                        ->join('clases','clase_id','=','clases.id')
+            $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','estado','cliente','etiqueta'])
                         ->where('destino_empresa_id', session('empresa_id'))
                         ->categoria($data['categoria_id'])
                         ->marca($data['marca_id'])
@@ -85,25 +112,46 @@ class InventarioController extends Controller
                         ->estado($data['estado_id'])
                         ->clase($data['clase_id'])
                         ->whereIn('estado_id',[1,2,3])
-                        ->grupo($data['grupo_id'])
                         ->when($created_at <> null, function ($query) use ($created_at) {
                             return $query->where('productos.created_at', '<=', $created_at);
                         })
                         ->get();
 
+        $inventario = array();
         $valor_inventario = 0;
         foreach ($data as $row){
-            if ($row->stock > 1)
-                $valor_inventario += round($row->mi_stock * $row->precio_coste, 2);
+
+
+
+            if ($row->stock > 1){
+
+                $vendidas = DB::table('albalins')
+                                    ->join('albaranes','albaran_id','=','albaranes.id')
+                                    ->where('producto_id', $row->id)
+                                    ->where('fase_id','>=',10)
+                                    ->whereNull('albalins.deleted_at')
+                                    ->get()->sum('unidades');
+
+                $stock = $row->stock - $vendidas;
+
+                if ($stock == 0)
+                    continue;
+
+                $row->stock = $stock;
+
+                $valor_inventario += round($stock * $row->precio_coste, 2);
+            }
             else
                 $valor_inventario += $row->precio_coste;
+
+            $inventario[] = $row;
 
         }
 
 
         if (request()->wantsJson())
             return [
-                'inventario' => $data,
+                'inventario' => $inventario,
                 'valor_inventario' => $valor_inventario
             ];
 
@@ -118,7 +166,9 @@ class InventarioController extends Controller
      */
     public function excel(Request $request){
 
-        return Excel::download(new InventarioExport($request->data, 'Inventario '.session('empresa')->razon), 'inventario.xlsx');
+        $items = $request->validate(['data'=>'array']);
+
+        return Excel::download(new InventarioExport($items['data'], 'Inventario '.session('empresa')->razon), 'inventario.xlsx');
 
 
     }
