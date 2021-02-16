@@ -48,6 +48,7 @@ class ParametrosController extends Controller
             'notificar_iban' => ['required','boolean'],
             'fixing'         => ['required','boolean'],
             'copia_recompra' => ['required','boolean'],
+            'facturar_al_recuperar' => ['required','boolean'],
 
         ]);
 

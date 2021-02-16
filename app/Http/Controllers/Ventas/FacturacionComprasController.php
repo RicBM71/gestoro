@@ -134,8 +134,6 @@ class FacturacionComprasController extends Controller
 
         $compras = $this->comprasRecuperadasSinFacturar($d, $h, $libro->grupo_id, $cobro);
 
-
-
         $iva = Iva::findOrFail(2); // rebu.
 
         $data['username'] = session('username');
@@ -156,6 +154,8 @@ class FacturacionComprasController extends Controller
                 $comline->update($data);
             }
 
+            $fecha_factura = session('parametros')->facturar_al_recuperar ? $h : $row->fecha;
+
 
             $libro->ult_factura = $libro->ult_factura + 1;
 
@@ -163,7 +163,7 @@ class FacturacionComprasController extends Controller
                 'username'     => session('username'),
                 'serie_fac'    => $libro->serie_fac,
                 'factura'      => $libro->ult_factura,
-                'fecha_factura'=> $row->fecha
+                'fecha_factura'=> $fecha_factura
             ];
 
             // actualiza número y fecha factura

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Compras;
 
+use App\Iva;
+use App\Libro;
 use App\Compra;
+use App\Comline;
 use App\Concepto;
 use App\Deposito;
 use App\Http\Controllers\Controller;
@@ -61,14 +64,61 @@ class RecuperarController extends Controller
 
         $this->actualizaCompra($reg->compra_id, $importe_total, $data['fecha']);
 
-        $compra = Compra::with(['cliente','grupo','tipo','fase'])->findOrFail($reg->compra_id);
+
+        $compra = Compra::findOrFail($reg->compra_id);
+
+        if (session('parametros')->facturar_al_recuperar){
+
+            $this->facturarCompra($compra, $data['fecha']);
+            $compra = Compra::findOrFail($reg->compra_id);
+            
+        }
 
         if (request()->wantsJson())
             return [
-                'compra'    => $compra,
+                'compra'    => $compra->load(['cliente','grupo','tipo','fase']),
                 'lineas'    => Deposito::CompraId($reg->compra_id)->get(),
                 'message'   => 'EL registro ha sido creado'
             ];
+    }
+
+    private function facturarCompra($compra, $fecha){
+
+        $libro = Libro::getContadorCompra(getEjercicio($fecha),$compra->grupo_id);
+
+        $iva = Iva::findOrFail(2); // rebu.
+
+        $data['username'] = session('username');
+
+        $incremento = round($compra->importe_acuenta * 100 / $compra->importe, 2) - 100;
+        $comlines = Comline::where('compra_id', $compra->id)->get();
+
+        // recalcula importe venta con importe de recuperación, lo reparte en líneas.
+        foreach ($comlines as $comline){
+            $pvp = $comline->importe + round($comline->importe * $incremento / 100, 2);
+            $data['iva']=$iva->importe;
+            $data['importe_venta']=$pvp;
+
+            $comline->update($data);
+        }
+
+
+        $libro->ult_factura = $libro->ult_factura + 1;
+
+        $data_com = [
+            'username'     => session('username'),
+            'serie_fac'    => $libro->serie_fac,
+            'factura'      => $libro->ult_factura,
+            'fecha_factura'=> $fecha
+        ];
+
+        // actualiza número y fecha factura
+        $compra->update($data_com);
+
+        // actualiza el contador de facturas de recuperaciones.
+        $libro->update(['factura'=>$libro->ult_factura]);
+
+
     }
 
 
