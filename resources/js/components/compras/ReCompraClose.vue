@@ -118,6 +118,20 @@
                     </template>
                     <span>Alternar conceptos/importes</span>
                 </v-tooltip>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                        <v-btn
+                            :disabled="!computedMail"
+                            v-on="on"
+                            color="white"
+                            icon
+                            @click="goEmail"
+                        >
+                            <v-icon color="primary">mail</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>Enviar Renovación por email</span>
+                </v-tooltip>
                  <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <v-btn
@@ -825,6 +839,12 @@ import {mapState} from 'vuex'
             computedFModFormat() {
                 moment.locale('es');
                 return this.compra.updated_at ? moment(this.compra.updated_at).format('DD/MM/YYYY H:mm:ss') : '';
+            },
+            computedMail(){
+                if (this.compra.tipo_id == 1 && this.compra.cliente.email > '')
+                    return true;
+
+                return false;
             }
         },
         watch: {
@@ -870,8 +890,22 @@ import {mapState} from 'vuex'
                 return new Intl.NumberFormat("de-DE",{style: "decimal",minimumFractionDigits:2}).format(parseFloat(value))
             },
             getMoneyFormat(value){
-                //return value;
+                
                 return new Intl.NumberFormat("de-DE",{style: "currency", currency: "EUR"}).format(parseFloat(value))
+            },
+            goEmail(){
+                this.show_loading = true;
+                axios.get('/compras/mail/'+this.compra.id)
+                    .then(res => {
+                        this.$toast.success('Renovación en cola de envío...');
+                    })
+                    .catch(err => {
+                        this.$toast.error(err.response.data);
+                    })
+                    .finally(()=> {
+                        this.show_loading = false;
+                    });
+
             },
             goComprar(){
 

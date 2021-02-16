@@ -10,6 +10,9 @@ use App\Cuenta;
 use App\Comline;
 use App\Deposito;
 use App\Socialmedia;
+use App\Jobs\SendRenovacion;
+use App\Mail\RenovacionMail;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,10 +23,55 @@ class PrintComprasController extends Controller
     protected $documentacion;
     protected $pdf_margen_footer = 35;
     protected $formulario = "GE";
+    protected $comunica_mail = false;
 
-    public function print($id){
+    public function mail(Request $request, Compra $compra){
 
-        $file = false;
+        $compra->load(['cliente']);
+
+        if ($compra->tipo_id != 1 && !esGestor()){
+            return abort(404, 'No puedes enviar renovaciones');
+        }
+
+        if ($compra->cliente->email=='')
+            return response('El cliente no tiene email configurado', 403);
+        // elseif (session('empresa')->email=='')
+        //     return response('Configurar email empresa', 403);
+
+        $from = config('mail.from.address');
+        $from = str_replace('info','noreply', $from);
+
+        //\Log::info($from);
+
+        $this->comunica_mail = true;
+
+        $this->print($compra->id, true);
+
+        $data = [
+            'razon'=> session('empresa')->razon,
+            'from'=> $from,
+            'msg' => null,
+            'compra' => $compra
+        ];
+
+        // con esto previsualizamos el mail
+        //return new RenovacionMail($data);
+
+        dispatch(new SendRenovacion($data));
+
+
+
+        if (request()->wantsJson())
+            return [
+               // 'albaran' => $albarane->load(['cliente','tipo','fase','fpago','cuenta','procedencia','motivo']),
+                'message' => 'Mail enviado'];
+
+    }
+
+
+    public function print($id, $file=false){
+
+        //$file = false;
 
         $this->compra = Compra::with(['cliente','grupo','tipo','fase'])->findOrFail($id);
 
@@ -57,19 +105,24 @@ class PrintComprasController extends Controller
         else
             $this->setPrepararComprafrmCompra_klt($empresa);
 
+        if ($this->comunica_mail == false){
+            if ($this->compra->tipo_id == 1){
+                $this->frmReCompra1(true);
 
-        if ($this->compra->tipo_id == 1){
-            $this->frmReCompra1(true);
+                if ($copia_recompra || $totales_concepto[1]==0)
+                    $this->frmReCompra1(false);
 
-            if ($copia_recompra || $totales_concepto[1]==0)
-                $this->frmReCompra1(false);
-
-            if ($totales_concepto[1]==0) // si no hay ampliaciones imprimimos la compra.
+                if ($totales_concepto[1]==0) // si no hay ampliaciones imprimimos la compra.
+                    $this->frmCompra1();
+            }
+            else{
                 $this->frmCompra1();
+            }
+        }else{
+            $this->frmReCompra1(true);
         }
-        else{
-            $this->frmCompra1();
-        }
+
+
 
         PDF::Close();
 
@@ -78,11 +131,11 @@ class PrintComprasController extends Controller
             if (file_exists(storage_path('compras'))==false)
                 mkdir(storage_path('compras'), '0755');
 
-            PDF::Output(storage_path('compras/com'.$this->compra->albaran.'.pdf'), 'F');
+            PDF::Output(storage_path('compras/R'.$this->compra->alb_ser.'.pdf'), 'F');
 
         }
         else{
-            PDF::Output('COMP'.$this->compra->albaran.'.pdf','I');
+            PDF::Output('COMP'.$this->compra->alb_ser.'.pdf','I');
         }
 
         PDF::reset();

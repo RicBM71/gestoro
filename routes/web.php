@@ -203,6 +203,7 @@ Route::group([
         Route::resource('recuperar', 'RecuperarController', ['only'=>['index','show','store','destroy']]);
 
         Route::get('print/{id}', 'PrintComprasController@print')->name('compra.print');
+        Route::get('mail/{compra}', 'PrintComprasController@mail')->name('compra.mail');
 
         Route::resource('ampliaciones', 'AmpliacionesController', ['only'=>['index','show','store','destroy']]);
         // Route::get('ampliaciones/{compra}/create', 'AmpliacionesController@create');

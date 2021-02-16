@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class PrintRecuController extends Controller
 {
+
     public function print($id){
 
         $file = false;
