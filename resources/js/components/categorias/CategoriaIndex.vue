@@ -14,9 +14,10 @@
                 <v-layout row wrap>
                     <v-flex xs12>
                         <v-data-table
-                        :headers="headers"
-                        :items="categorias"
-                        rows-per-page-text="Registros por página"
+                            :headers="headers"
+                            :items="categorias"
+                            :pagination="pagination"
+                            rows-per-page-text="Registros por página"
                         >
                             <template slot="items" slot-scope="props">
                                 <td>{{ props.item.nombre }}</td>
@@ -70,6 +71,9 @@ import MenuOpe from './MenuOpe'
             value: ''
           }
         ],
+        pagination:{
+            rowsPerPage: 10,
+        },
         categorias:[],
         status: false,
 		registros: false,

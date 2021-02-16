@@ -14,9 +14,10 @@
                 <v-layout row wrap>
                     <v-flex xs12>
                         <v-data-table
-                        :headers="headers"
-                        :items="marcas"
-                        rows-per-page-text="Registros por página"
+                            :headers="headers"
+                            :items="marcas"
+                            :pagination="pagination"
+                            rows-per-page-text="Registros por página"
                         >
                             <template slot="items" slot-scope="props">
                                 <td>{{ props.item.nombre }}</td>
@@ -76,7 +77,10 @@ import MenuOpe from './MenuOpe'
         dialog: false,
         marca_id: 0,
         show_loading: true,
-        titulo:"Marcas"
+        titulo:"Marcas",
+        pagination:{
+            rowsPerPage: 10,
+        },
       }
     },
     mounted()
