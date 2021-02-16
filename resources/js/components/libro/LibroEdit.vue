@@ -257,6 +257,34 @@
                             >
                             </v-text-field>
                         </v-flex>
+                        <v-flex sm1>
+                            <v-text-field
+                                v-model="libro.tramo"
+                                v-validate="'required|decimal'"
+                                :error-messages="errors.collect('tramo')"
+                                label="Tramo Compra - €"
+                                data-vv-name="tramo"
+                                data-vv-as="tramo"
+                                hint="Valor compra mínimo"
+                                required
+                                v-on:keyup.enter="submit"
+                            >
+                            </v-text-field>
+                        </v-flex>
+                        <v-flex sm1>
+                            <v-text-field
+                                v-model="libro.interes_min"
+                                v-validate="'required|decimal'"
+                                :error-messages="errors.collect('interes_min')"
+                                label="Interés Mínimo %"
+                                data-vv-name="interes_min"
+                                data-vv-as="interés"
+                                hint='Aplicable a tamo <= x'
+                                required
+                                v-on:keyup.enter="submit"
+                            >
+                            </v-text-field>
+                        </v-flex>
                     </v-layout>
                     <v-layout row wrap>
 

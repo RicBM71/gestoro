@@ -45,6 +45,8 @@ class UpdateLibroRequest extends FormRequest
             'nombre_csv'    => ['string','nullable'],
             'plantilla_excel'   => ['string','nullable', 'max:30'],
             'establecimiento'   => ['string','nullable', 'max:50'],
+            'tramo'             => ['required', 'numeric'],
+            'interes_min'       => ['required', 'numeric'],
 
         ];
     }

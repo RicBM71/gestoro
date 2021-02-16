@@ -51,13 +51,30 @@ class Comline extends Model
         $total = $comline->totalCompra($comline->compra_id);
 
         try {
+
             $compra = Compra::findOrfail($comline->compra_id);
+
+            $libro = Libro::where('ejercicio', getEjercicio($compra->fecha_compra))
+                            ->where('grupo_id', $compra->grupo_id)
+                            ->firstOrFail();
 
             if (is_null($total->importe)){
                 $total->importe = 0;
             }
 
-
+            // Gestiona el tramo de corte para aplicar %min de interes a partir de un valor mínimo de compra.
+            if ($libro->tramo > 0){
+                if ($total->importe <= $libro->tramo){
+                    $compra->interes = $libro->interes_min;
+                    $data['interes'] = $compra->interes;
+                    $data['interes_recuperacion'] = $compra->interes_recuperacion;
+                }else{
+                    $compra->interes = $libro->interes;
+                    $compra->interes_recuperacion = $libro->interes_recuperacion;
+                    $data['interes'] = $compra->interes;
+                    $data['interes_recuperacion'] = $compra->interes_recuperacion;
+                }
+            }
 
             $data['username'] = session('username');
             $data['importe'] = $total->importe;
