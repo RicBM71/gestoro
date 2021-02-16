@@ -52,7 +52,7 @@ class Comline extends Model
 
         try {
 
-            $compra = Compra::findOrfail($comline->compra_id);
+            $compra = Compra::with('cliente')->findOrfail($comline->compra_id);
 
             $libro = Libro::where('ejercicio', getEjercicio($compra->fecha_compra))
                             ->where('grupo_id', $compra->grupo_id)
@@ -66,11 +66,14 @@ class Comline extends Model
             if ($libro->tramo > 0){
                 if ($total->importe <= $libro->tramo){
                     $compra->interes = $libro->interes_min;
+                    $compra->interes_recuperacion = $libro->interes_min;
                     $data['interes'] = $compra->interes;
                     $data['interes_recuperacion'] = $compra->interes_recuperacion;
                 }else{
-                    $compra->interes = $libro->interes;
-                    $compra->interes_recuperacion = $libro->interes_recuperacion;
+
+                    $compra->interes = $compra->cliente->interes > 0 ? $compra->cliente->interes : $libro->interes;
+                    $compra->interes_recuperacion = $compra->cliente->interes_recuperacion > 0 ? $compra->cliente->interes : $libro->interes_recuperacion;
+                    
                     $data['interes'] = $compra->interes;
                     $data['interes_recuperacion'] = $compra->interes_recuperacion;
                 }

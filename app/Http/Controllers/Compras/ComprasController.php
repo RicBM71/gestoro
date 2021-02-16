@@ -431,6 +431,7 @@ class ComprasController extends Controller
         if ($data['tipo_id']==1){
             if ($totales_concepto[1] == 0)
                 $data['fecha_renovacion'] = $fecha_compra->addDays($compra->dias_custodia);
+                
             $data['importe_renovacion'] = round($compra->importe * $compra->interes / 100, 0);
             $data['importe_recuperacion'] = round(($compra->importe - $compra->importe_acuenta) * $compra->interes_recuperacion / 100, 0);
         }else{
