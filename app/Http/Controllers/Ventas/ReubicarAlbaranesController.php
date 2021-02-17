@@ -280,7 +280,7 @@ class ReubicarAlbaranesController extends Controller
         $cobro_new['created_at'] = Carbon::now();
         $cobro_new['updated_at'] = Carbon::now();
 
-        DB::table('cobros')->insert($nuevos_cobros);
+        DB::table('cobros')->insert($cobro_new);
 
     }
 }
