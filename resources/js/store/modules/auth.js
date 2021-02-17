@@ -26,7 +26,8 @@ const initialState = {
     aislar: null,
     flex_cortesia: null,
     lotes_abiertos: 0,
-    whatsApp: null
+    whatsApp: null,
+    mail_renova: false,
 };
 
 /*
@@ -49,6 +50,7 @@ const mutations = {
         state.aislar = payload.user.aislar_empresas;
         state.flex_cortesia= payload.user.flex_cortesia;
         state.whatsApp = payload.user.whatsApp;
+        state.mail_renova = payload.user.mail_renova;
         state.lotes_abiertos= payload.user.lotes_abiertos;
 	},
 	[UNSET_USER](state, payload) {
@@ -65,6 +67,7 @@ const mutations = {
         state.aislar=null;
         state.flex_cortesia=null;
         state.whatsApp=null;
+        state.mail_renova=false,
         state.lotes_abiertos=0;
 	}
 };
@@ -172,6 +175,9 @@ const getters = {
     },
     whatsApp: (state) =>{
         return state.whatsApp;
+    },
+    mail_renova:(state) =>{
+        return state.mail_renova;
     },
     lotes: (state) =>{
         return state.lotes_abiertos;

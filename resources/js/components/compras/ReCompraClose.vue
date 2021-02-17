@@ -118,7 +118,7 @@
                     </template>
                     <span>Alternar conceptos/importes</span>
                 </v-tooltip>
-                <v-tooltip bottom>
+                <v-tooltip bottom v-if="mail_renova==true">
                     <template v-slot:activator="{ on }">
                         <v-btn
                             :disabled="!computedMail"
@@ -632,6 +632,7 @@ import {mapState} from 'vuex'
 
                         this.show = true;
                         this.show_loading = false;
+                        console.log(this.mail_renova);
                     })
                     .catch(err => {
                         this.$toast.error(err.response.data.message);
@@ -650,7 +651,8 @@ import {mapState} from 'vuex'
                 'hasAddCom',
                 'flexCortesia',
                 'parametros',
-                'hasEdtFac'
+                'hasEdtFac',
+                'mail_renova'
             ]),
             computedError(){
                 return this.compra.notas != null ? 'error' : null;
@@ -890,7 +892,7 @@ import {mapState} from 'vuex'
                 return new Intl.NumberFormat("de-DE",{style: "decimal",minimumFractionDigits:2}).format(parseFloat(value))
             },
             getMoneyFormat(value){
-                
+
                 return new Intl.NumberFormat("de-DE",{style: "currency", currency: "EUR"}).format(parseFloat(value))
             },
             goEmail(){

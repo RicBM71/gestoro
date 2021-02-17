@@ -24,6 +24,7 @@ class Empresa extends Model
     // 10: Bloquear importe recuperación. Si se entrega a cuanta no disminuye el importe, queda como al inicio del préstamo durante toda la vida del mismo.
     // 11: IBAN Reservas
     // 12: Activar Envíos WhatsApp
+    // 13: Envío mail renovaciones
 
     use SoftDeletes;
 

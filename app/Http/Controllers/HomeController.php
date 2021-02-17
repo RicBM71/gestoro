@@ -130,6 +130,7 @@ class HomeController extends Controller
             'img_fondo'     => $empresa->img_fondo,
             'flex_cortesia' => $empresa->getFlag(8),
             'whatsApp'      => $empresa->getFlag(12),
+            'mail_renova'   => $empresa->getFlag(13),
             'aislar_empresas'  => $parametros->aislar_empresas,
             'lotes_abiertos' => $lotes_abiertos
         ];

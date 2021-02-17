@@ -126,7 +126,7 @@ class ProductosController extends Controller
                         ->caracteristicas($data['caracteristicas'])
                         ->orderBy('id','desc')
                         ->get()
-                        ->take(999);
+                        ->take(1999);
 
         }else{
 
@@ -148,7 +148,7 @@ class ProductosController extends Controller
                         ->marca($data['marca_id'])
                         ->orderBy('id','desc')
                         ->get()
-                        ->take(999);
+                        ->take(1999);
 
         }
 
