@@ -306,10 +306,7 @@ export default {
     $_veeValidate: {
         validator: 'new'
     },
-    props:{
-        filtro: Boolean,
-        arr_reg: Array
-    },
+    props:['filtro','arr_reg','mi_filtro'],
     data () {
       return {
 
@@ -435,7 +432,7 @@ export default {
                         axios.post('/mto/productos/filtrar',this.reg)
                         .then(res => {
 
-
+                            this.$emit('update:mi_filtro', this.reg);
                             this.$emit('update:arr_reg', res.data);
 
                             if (res.data.length == 0)

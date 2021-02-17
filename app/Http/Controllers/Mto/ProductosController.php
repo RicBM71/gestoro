@@ -491,7 +491,37 @@ class ProductosController extends Controller
         if (!esGestor())
             return abort(403, 'No autorizado a exportar');
 
-        return Excel::download(new ProductosExport($request->data, 'Productos '.session('empresa')->razon), 'inventario.xlsx');
+        $data = $request->validate([
+            'fecha_d'       =>['date','nullable'],
+            'fecha_h'       =>['date','nullable'],
+            'clase_id'      =>['integer','nullable'],
+            'estado_id'     =>['integer','nullable'],
+            'marca_id'      =>['integer','nullable'],
+            'categoria_id'  =>['integer','nullable'],
+            'referencia'    =>['string','nullable'],
+            'ref_pol'       =>['string','nullable'],
+            'precio'        =>['string','nullable'],
+            'notas'         =>['string','nullable'],
+            'quilates'      =>['integer','nullable'],
+            'online'        =>['boolean'],
+            'alta'          =>['string','required'],
+            'cliente_id'    =>['nullable','integer'],
+            'tipo_fecha'    =>['string','required'],
+            'fecha_d'       =>['nullable','date',new RangoFechaRule($request->fecha_d, $request->fecha_h)],
+            'fecha_h'       =>['nullable','date',new MaxDiasRangoFechaRule($request->fecha_d, $request->fecha_h)],
+            'empresa_id'    =>['nullable','integer'],
+            'destino_empresa_id'=>['nullable','integer'],
+            'etiqueta_id'   =>['nullable','integer'],
+            'sinscope'        =>['boolean'],
+            'interno'         =>['string','required'],
+            'caracteristicas' =>['nullable','string']
+        ]);
+
+        session(['filtro_pro' => $data]);
+
+        $collect =  $this->miFiltro();
+
+        return Excel::download(new ProductosExport($collect, 'Productos '.session('empresa')->razon), 'inventario.xlsx');
 
 
     }

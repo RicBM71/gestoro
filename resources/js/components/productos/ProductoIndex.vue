@@ -53,7 +53,7 @@
                 </v-card-title>
             </v-card>
              <v-card v-show="filtro">
-                <filtro-pro :filtro.sync="filtro" :arr_reg.sync="arr_reg"></filtro-pro>
+                <filtro-pro :filtro.sync="filtro" :arr_reg.sync="arr_reg" :mi_filtro.sync="mi_filtro"></filtro-pro>
             </v-card>
             <v-card  v-show="!filtro">
                 <v-container>
@@ -220,6 +220,7 @@ import {mapActions} from "vuex";
             }
         ],
         arr_reg:[],
+        mi_filtro:[],
         status: false,
 		registros: false,
         dialog: false,
@@ -340,13 +341,14 @@ import {mapActions} from "vuex";
 
         },
         goExcel(){
+            console.log(this.mi_filtro);
 
             this.show_loading = true;
             axios({
                 url: this.url+"/excel",
                 method: 'POST',
                 responseType: 'blob', // important
-                data:{ data: this.arr_reg }
+                data: this.mi_filtro
                 })
             .then(response => {
 
