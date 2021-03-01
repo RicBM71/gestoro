@@ -52,13 +52,14 @@ class FacturacionVentasController extends Controller
             'fecha_h'     => ['required','date'],
             'accion'      => ['required','string'],
             'cobro'       => ['required','string'],
+            'fecha_f'     => ['required','date'],
         ]);
 
        // $rango = trimestre($data['ejercicio'],$data['trimestre']);
 
         //      FACTURACIÓN
         if ($data['accion'] !='D'){
-            $facturas = $this->facturarAlbaranes($data['fecha_d'],$data['fecha_h'],$data['tipo_id'],$data['cobro'],$data['accion']);
+            $facturas = $this->facturarAlbaranes($data['fecha_f'], $data['fecha_d'],$data['fecha_h'],$data['tipo_id'],$data['cobro'],$data['accion']);
         }
         else{       // DESFACTURAR.
             $facturas = $this->desfacturarAlbaranes($data['fecha_d'],$data['fecha_h'],$data['tipo_id']);
@@ -73,11 +74,11 @@ class FacturacionVentasController extends Controller
     }
 
 
-    private function facturarAlbaranes($d,$h, $tipo_id, $cobro, $tipo_fecha){
+    private function facturarAlbaranes($fecha_fac, $d,$h, $tipo_id, $cobro, $tipo_fecha){
 
         $albaranes = $this->pendientesDeFacturar($d,$h, $tipo_id, $cobro);
 
-        $ejercicio = getEjercicio($d);
+        $ejercicio = getEjercicio($fecha_fac);
 
         $max_fecha_factura = Albaran::whereYear('fecha_factura',$ejercicio)
                                         ->where('tipo_id', $tipo_id)
@@ -97,6 +98,7 @@ class FacturacionVentasController extends Controller
         if ($albaranes->count() > 0){
             $contador =  Contador::where('ejercicio',$ejercicio)
                                   ->where('tipo_id', $tipo_id)
+                                  ->where('cerrado', false)
                         ->lockForUpdate()->firstOrFail();
         }else{
             return ['estado'=>'ko', 'reg'=>0, 'msg'=> 'No se han encontrado facturas'];
@@ -114,7 +116,7 @@ class FacturacionVentasController extends Controller
                     return abort(411, 'Se han encontrado albaranes sin reubicar, reubicar antes de continuar!!');
 
                 }
-            $fecha_factura = ($tipo_fecha == 'F') ? $h : $row->fecha; // fecha fija o fecha cobro.
+            $fecha_factura = ($tipo_fecha == 'F') ? $fecha_fac : $row->fecha; // fecha fija o fecha cobro.
 
             if ($fecha_factura < $max_fecha_factura)
                 return abort(411, 'Se han encontrado una factura anterior y rompe secuencia facturación. Proceso abortado! Alb: '.$row->albaran);
