@@ -237,6 +237,7 @@ export default {
                 { text: 'Histórico compras', name: 'hcompras.index' },
                 { text: 'Usuarios', name: 'users.index' },
                 { text: 'Roles', name: 'roles' },
+                { text: 'Permisos', name: 'permisos.index' },
                 { text: 'Grupos', name: 'grupo.index' },
                 { text: 'Clases', name: 'clase.index' },
                 { text: 'Tipos de Iva', name: 'iva.index' },

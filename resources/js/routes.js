@@ -9,6 +9,9 @@ import UserEdit from './components/admin/users/UserEdit.vue';
 import RolesIndex from './components/admin/roles/RolesIndex.vue';
 import RolesCreate from './components/admin/roles/RolesCreate.vue';
 import RolesEdit from './components/admin/roles/RolesEdit.vue';
+import PermisosIndex from './components/admin/permisos/PermisosIndex.vue';
+import PermisosCreate from './components/admin/permisos/PermisosCreate.vue';
+import PermisosEdit from './components/admin/permisos/PermisosEdit.vue';
 
 
 import EmpresaIndex from './components/admin/empresas/EmpresaIndex.vue';
@@ -235,6 +238,21 @@ export default [
                 path: '/roles/:id/edit',
                 name: 'roles_edit',
                 component: RolesEdit,
+            },
+            {
+                path: '/permisos',
+                name: 'permisos.index',
+                component: PermisosIndex,
+            },
+            {
+                path: '/permisos/create',
+                name: 'permisos.create',
+                component: PermisosCreate,
+            },
+            {
+                path: '/permisos/:id/edit',
+                name: 'permisos.edit',
+                component: PermisosEdit,
             },
             {
                 path: '/users/password',

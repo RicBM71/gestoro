@@ -431,6 +431,15 @@ Class Producto extends Model
             $nombre = null;
         }
 
+        $k = Producto::select(DB::raw('id AS value, CONCAT(referencia, " " , nombre) AS text, (stock - (IFNULL((SELECT SUM(unidades) FROM '.DB::getTablePrefix().'albalins WHERE producto_id = '.DB::getTablePrefix().'productos.id and deleted_at is null), 0))) AS mi_stock'))
+        ->referencia($referencia)
+        ->nombre($nombre)
+        ->where('iva_id', 2)
+        ->whereIn('estado_id', [2,5,6])
+        ->havingRaw('mi_stock >= 1')
+        ->orderBy('referencia', 'asc')
+        ->toSql();
+
         //select id AS value, CONCAT(referencia, " " , nombre) AS text, IFNULL((select SUM(unidades) from `klt_albalins` where `producto_id` = klt_productos.id and `deleted_at` is null), 0) from `klt_productos` where `referencia` like '%GD30050%' and `iva_id` = 2 and `estado_id` in (2, 5, 6) and `klt_productos`.`deleted_at` is null and (`empresa_id` = 1 or `destino_empresa_id` = 1 or `estado_id` = 5) order by `referencia` asc
         return Producto::select(DB::raw('id AS value, CONCAT(referencia, " " , nombre) AS text, (stock - (IFNULL((SELECT SUM(unidades) FROM '.DB::getTablePrefix().'albalins WHERE producto_id = '.DB::getTablePrefix().'productos.id and deleted_at is null), 0))) AS mi_stock'))
                 ->referencia($referencia)
