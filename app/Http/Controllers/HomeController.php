@@ -57,6 +57,10 @@ class HomeController extends Controller
         foreach($data as $permiso){
             $permisos_user[]=$permiso->name;
         }
+        $data = $authUser->getPermissionsViaRoles();
+        foreach($data as $permiso){
+            $permisos_user[]=$permiso->name;
+        }
 
         $empresas_usuario = collect();
         foreach ($authUser->empresas as $empresa){
