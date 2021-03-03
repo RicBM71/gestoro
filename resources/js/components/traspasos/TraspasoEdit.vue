@@ -116,7 +116,7 @@
                         <v-flex sm4></v-flex>
                         <v-flex sm2>
                             <v-text-field
-                                v-if="isGestor"
+                                v-if="isAdmin"
                                 :value="saldo"
                                 label="Saldo"
                                 class="inputPrice"
@@ -238,7 +238,6 @@ import {mapGetters} from 'vuex';
         computed: {
         ...mapGetters([
                 'isAdmin',
-                'isGestor',
                 'hasAuthTras',
                 'userName'
             ]),

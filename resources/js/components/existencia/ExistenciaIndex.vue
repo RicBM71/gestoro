@@ -24,7 +24,7 @@
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on }">
                             <v-btn
-                                v-show="items.length > 0 && isGestor"
+                                v-show="items.length > 0 && hasExcel"
                                 v-on="on"
                                 color="white"
                                 icon
@@ -172,9 +172,8 @@ import {mapActions} from "vuex";
     },
     computed: {
         ...mapGetters([
-            'isAdmin',
             'isRoot',
-            'isGestor'
+            'hasExcel'
         ])
     },
     methods:{

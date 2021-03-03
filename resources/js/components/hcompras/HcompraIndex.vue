@@ -209,7 +209,6 @@ import {mapGetters} from 'vuex'
     computed: {
         ...mapGetters([
             'isSupervisor',
-            'isGestor',
             'parametros'
         ])
     },

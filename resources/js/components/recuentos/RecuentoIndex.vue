@@ -62,7 +62,7 @@
                         <v-tooltip bottom>
                         <template v-slot:activator="{ on }">
                             <v-btn
-                                v-show="items.length > 0 && isGestor"
+                                v-show="items.length > 0 && hasExcel"
                                 v-on="on"
                                 color="white"
                                 icon
@@ -369,10 +369,7 @@ import FiltroRec from './FiltroRec'
             'empresaActiva',
             'getPagination',
             'getLineasIndex',
-            'isRoot',
-            'isAdmin',
-            'isSupervisor',
-            'isGestor'
+            'hasExcel'
         ]),
     },
     methods:{

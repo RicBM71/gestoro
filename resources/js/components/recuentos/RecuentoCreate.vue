@@ -45,22 +45,6 @@
                     </template>
                         <span>Eliminar SOLO perdidas</span>
                 </v-tooltip>
-                <!-- <v-tooltip bottom>
-                    <template v-slot:activator="{ on }">
-                        <v-btn
-                            v-show="isGestor"
-                            v-on="on"
-                            color="white"
-                            icon
-                            @click="goExcel()"
-                        >
-                            <v-avatar size="32px">
-                                <img class="img-fluid" src="/assets/excel.png">
-                            </v-avatar>
-                        </v-btn>
-                    </template>
-                    <span>Exportar a Excel</span>
-                </v-tooltip> -->
                 <menu-ope></menu-ope>
             </v-card-title>
         </v-card>
@@ -273,7 +257,7 @@ import MyDialog from '@/components/shared/MyDialog'
         },
         computed: {
         ...mapGetters([
-            'isGestor',
+            'isAdmin',
         ]),
         computedFechaD() {
                 moment.locale('es');

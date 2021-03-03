@@ -288,7 +288,7 @@
                         </v-flex>
                         <v-flex sm2 v-else>
                             <v-text-field
-                                v-if="isGestor"
+                                v-if="isAdmin"
                                 v-model="computedTotalPrestamo"
                                 label="Total Recuperado+Amp+Ac"
                                 readonly
@@ -632,7 +632,7 @@ import {mapState} from 'vuex'
 
                         this.show = true;
                         this.show_loading = false;
-                        console.log(this.mail_renova);
+
                     })
                     .catch(err => {
                         this.$toast.error(err.response.data.message);
@@ -643,7 +643,6 @@ import {mapState} from 'vuex'
             ...mapGetters([
                 'isSupervisor',
                 'isAdmin',
-                'isGestor',
                 'hasLiquidar',
                 'parametros',
                 'hasReaCompras',
