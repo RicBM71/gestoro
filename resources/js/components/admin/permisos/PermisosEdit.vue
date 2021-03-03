@@ -32,7 +32,7 @@
                                 label="Nombre"
                                 data-vv-name="nombre"
                                 data-vv-as="nombre"
-                                
+
                             >
                             </v-text-field>
                         </v-flex>
@@ -69,7 +69,7 @@
                         <v-flex sm9></v-flex>
                         <v-flex sm2>
                             <div class="text-xs-center">
-                                        <v-btn @click="submit"  round  :loading="enviando" block  color="primary">
+                                        <v-btn @click="submit"  round  :loading="loading" block  color="primary">
                                 Guardar
                                 </v-btn>
                             </div>
@@ -97,7 +97,7 @@ import MenuOpe from './MenuOpe'
                 titulo:"Permisos",
 
         		status: false,
-                enviando: false,
+                loading: false,
 
                 show: false
 
@@ -109,7 +109,7 @@ import MenuOpe from './MenuOpe'
             if (id > 0)
                 axios.get('/admin/permissions/'+id+'/edit')
                     .then(res => {
-                        console.log(res);
+
                         this.permiso = res.data;
                         this.show = true;
                     })
@@ -133,49 +133,39 @@ import MenuOpe from './MenuOpe'
     	methods:{
             submit() {
 
-                this.enviando = true;
+                if (this.loading === false){
+                    this.loading = true;
+                    var url = "/admin/permissions/"+this.permiso.id;
+                    this.$validator.validateAll().then((result) => {
+                        if (result){
+                            axios.put(url,this.permiso)
+                                .then(response => {
 
-                var url = "/admin/roles";
-                var metodo = "post";
+                                    //this.$toast.success(response.data.message);
+                                    this.permiso = response.data;
+                                    this.loading = false;
+                                })
+                                .catch(err => {
 
-                if (this.permiso.id > 0){
-                    url += '/'+this.permiso.id;
-                    metodo = "put";
-                }
-
-                this.$validator.validateAll().then((result) => {
-                    if (result){
-                        axios({
-                            method: metodo,
-                            url: url,
-                            data:
-                                {
-                                    name: this.permiso.name,
-                                    guard_name: this.permiso.guard_name,
-                                    permissions: this.permiso_role
-                                }
-                            })
-                            .then(response => {
-                                this.$toast.success(response.data);
-                                this.enviando = false;
-                            })
-                            .catch(err => {
-
-                                if (err.request.status == 422){ // fallo de validated.
-                                    const msg_valid = err.response.data.errors;
-                                    for (const prop in msg_valid) {
-                                        this.$toast.error(`${msg_valid[prop]}`);
+                                    if (err.request.status == 422){ // fallo de validated.
+                                        const msg_valid = err.response.data.errors;
+                                        for (const prop in msg_valid) {
+                                            this.errors.add({
+                                                field: prop,
+                                                msg: `${msg_valid[prop]}`
+                                            })
+                                        }
+                                    }else{
+                                        this.$toast.error(err.response.data.message);
                                     }
-                                }else{
-                                    this.$toast.error(err.response.data.message);
-                                }
-                                this.enviando = false;
-                            });
+                                    this.loading = false;
+                                });
+                            }
+                        else{
+                            this.loading = false;
                         }
-                    else{
-                        this.enviando = false;
-                    }
-                });
+                    });
+                }
 
             },
 

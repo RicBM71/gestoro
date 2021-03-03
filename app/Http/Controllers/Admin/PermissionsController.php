@@ -69,11 +69,11 @@ class PermissionsController extends Controller
     {
     	$this->authorize('view',new Permission);
 
-    	$data = $request->validate(['name'=>'required']);
+    	$data = $request->validate(['name'=>'required','nombre'=>'required']);
 
     	$permission->update($data);
 
-    	return redirect()->route('admin.permissions.edit',$permission)->withFlash('Actualizado');
+    	return $permission;
     }
 
 /**
@@ -89,7 +89,7 @@ class PermissionsController extends Controller
 
         $permission->delete();
 
-         return redirect()->route('admin.permissions.index')->withFlash('Permiso borrado!');
+         return response('ok', 200);
 
     }
 }

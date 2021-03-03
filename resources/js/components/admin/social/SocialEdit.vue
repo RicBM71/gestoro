@@ -92,116 +92,115 @@ import MenuOpe from './MenuOpe'
 import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 
-	export default {
-		$_veeValidate: {
-      		validator: 'new'
-        },
-        components: {
-            'menu-ope': MenuOpe,
-            'vueDropzone': vue2Dropzone,
-		},
-    	data () {
-      		return {
-                titulo:"Red Social",
-                social: {
-                    id:       0,
-                },
-
-        		status: false,
-                loading: false,
-
-                show: false,
-
-                dropzoneOptions: {
-                    url: '/admin/social/'+this.$route.params.id+'/logo',
-                    paramName: 'logo',
-                    acceptedFiles: '.jpg,jpeg,.png',
-                    thumbnailWidth: 150,
-                    maxFiles: 1,
-                    maxFilesize: 2,
-                    headers: {
-		    		    'X-CSRF-TOKEN':  window.axios.defaults.headers.common['X-CSRF-TOKEN']
-                    },
-                    dictDefaultMessage: 'Arrastra la imagen LOGOTIPO aquí'
-                },
-
-      		}
-        },
-        mounted(){
-            var id = this.$route.params.id;
-
-            if (id > 0)
-                axios.get('/admin/social/'+id+'/edit')
-                    .then(res => {
-
-                        this.social = res.data.registro;
-                        this.show = true;
-                    })
-                    .catch(err => {
-                        this.$toast.error(err.response.data.message);
-                        this.$router.push({ name: 'social.index'})
-                    })
-        },
-        computed: {
-            computedFModFormat() {
-                moment.locale('es');
-                return this.social.updated_at ? moment(this.social.updated_at).format('D/MM/YYYY H:mm') : '';
+export default {
+    $_veeValidate: {
+        validator: 'new'
+    },
+    components: {
+        'menu-ope': MenuOpe,
+        'vueDropzone': vue2Dropzone,
+    },
+    data () {
+        return {
+            titulo:"Red Social",
+            social: {
+                id:       0,
             },
-            computedFCreFormat() {
-                moment.locale('es');
-                return this.social.created_at ? moment(this.social.created_at).format('D/MM/YYYY H:mm') : '';
+
+            status: false,
+            loading: false,
+
+            show: false,
+
+            dropzoneOptions: {
+                url: '/admin/social/'+this.$route.params.id+'/logo',
+                paramName: 'logo',
+                acceptedFiles: '.jpg,jpeg,.png',
+                thumbnailWidth: 150,
+                maxFiles: 1,
+                maxFilesize: 2,
+                headers: {
+                    'X-CSRF-TOKEN':  window.axios.defaults.headers.common['X-CSRF-TOKEN']
+                },
+                dictDefaultMessage: 'Arrastra la imagen LOGOTIPO aquí'
+            },
+
+        }
+    },
+    mounted(){
+        var id = this.$route.params.id;
+
+        if (id > 0)
+            axios.get('/admin/social/'+id+'/edit')
+                .then(res => {
+
+                    this.social = res.data.registro;
+                    this.show = true;
+                })
+                .catch(err => {
+                    this.$toast.error(err.response.data.message);
+                    this.$router.push({ name: 'social.index'})
+                })
+    },
+    computed: {
+        computedFModFormat() {
+            moment.locale('es');
+            return this.social.updated_at ? moment(this.social.updated_at).format('D/MM/YYYY H:mm') : '';
+        },
+        computedFCreFormat() {
+            moment.locale('es');
+            return this.social.created_at ? moment(this.social.created_at).format('D/MM/YYYY H:mm') : '';
+        }
+
+    },
+    methods:{
+        uploadLogo(file, response){
+
+            this.social = response.social;
+        },
+        borraLogo(){
+            axios.put('/admin/social/'+this.social.id+'/logo/delete')
+                .then(response => {
+                    this.social = response.data.social;
+                    this.loading = false;
+                })
+        },
+        submit() {
+
+            if (this.loading === false){
+                this.loading = true;
+                var url = "/admin/social/"+this.social.id;
+                this.$validator.validateAll().then((result) => {
+                    if (result){
+                        axios.put(url,this.social)
+                            .then(response => {
+                                this.$toast.success(response.data.message);
+                                this.social = response.data.registro;
+                                this.loading = false;
+                            })
+                            .catch(err => {
+
+                                if (err.request.status == 422){ // fallo de validated.
+                                    const msg_valid = err.response.data.errors;
+                                    for (const prop in msg_valid) {
+                                        this.errors.add({
+                                            field: prop,
+                                            msg: `${msg_valid[prop]}`
+                                        })
+                                    }
+                                }else{
+                                    this.$toast.error(err.response.data.message);
+                                }
+                                this.loading = false;
+                            });
+                        }
+                    else{
+                        this.loading = false;
+                    }
+                });
             }
 
         },
-    	methods:{
-            uploadLogo(file, response){
-
-                this.social = response.social;
-            },
-            borraLogo(){
-                axios.put('/admin/social/'+this.social.id+'/logo/delete')
-                    .then(response => {
-                        this.social = response.data.social;
-                        this.loading = false;
-                    })
-            },
-            submit() {
-
-                if (this.loading === false){
-                    this.loading = true;
-                    var url = "/admin/social/"+this.social.id;
-                    this.$validator.validateAll().then((result) => {
-                        if (result){
-                            axios.put(url,this.social)
-                                .then(response => {
-                                    this.$toast.success(response.data.message);
-                                    this.social = response.data.registro;
-                                    this.loading = false;
-                                })
-                                .catch(err => {
-
-                                    if (err.request.status == 422){ // fallo de validated.
-                                        const msg_valid = err.response.data.errors;
-                                        for (const prop in msg_valid) {
-                                            this.errors.add({
-                                                field: prop,
-                                                msg: `${msg_valid[prop]}`
-                                            })
-                                        }
-                                    }else{
-                                        this.$toast.error(err.response.data.message);
-                                    }
-                                    this.loading = false;
-                                });
-                            }
-                        else{
-                            this.loading = false;
-                        }
-                    });
-                }
-
-            },
-
     }
   }
 </script>
