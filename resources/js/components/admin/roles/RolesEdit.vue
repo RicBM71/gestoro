@@ -128,6 +128,7 @@ import RolePermisos from './RolePermisos'
             if (id > 0)
                 axios.get('/admin/roles/'+id+'/edit')
                     .then(res => {
+
                         this.role = res.data.role;
                         this.permiso_role = res.data.permiso_role;
                         this.permisos = res.data.permisos;

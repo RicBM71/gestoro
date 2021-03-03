@@ -170,6 +170,9 @@ const getters = {
     hasUsers: (state) =>{
         return (state.permisos.indexOf('users') >= 0) ? true : false;
     },
+    hasConsultas: (state) =>{
+        return (state.permisos.indexOf('consultas') >= 0) ? true : false;
+    },
     flexCortesia: (state) =>{
         return state.flex_cortesia;
     },
