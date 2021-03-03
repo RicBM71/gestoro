@@ -19,7 +19,7 @@
                                         offset-y
                                         full-width
                                         min-width="290px"
-                                        :readonly="!isSupervisor"
+                                        :readonly="!hasEdtFec"
                                     >
                                         <v-text-field
                                             slot="activator"
@@ -40,7 +40,7 @@
                                             locale="es"
                                             first-day-of-week=1
                                             @input="menu1 = false"
-                                            :readonly="!isSupervisor"
+                                            :readonly="!hasEdtFec"
                                         ></v-date-picker>
                                     </v-menu>
                                 </v-flex>
@@ -79,7 +79,7 @@
                                         label="Importe"
                                         data-vv-name="importe"
                                         data-vv-as="importe"
-                                        :readonly="!isSupervisor"
+                                        :readonly="!hasEdtFec"
                                         class="inputPrice"
                                         type="number"
                                         v-on:keyup.enter="submit"
@@ -161,7 +161,7 @@ export default {
     computed: {
         ...mapGetters([
             'isAdmin',
-            'isSupervisor',
+            'hasEdtFec',
             'hasLimEfe',
             'parametros'
         ]),

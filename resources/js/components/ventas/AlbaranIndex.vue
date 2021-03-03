@@ -248,7 +248,7 @@ import {mapActions} from "vuex";
             'hasBorraCompras',
             'getPagination',
             'isAdmin',
-            'isSupervisor',
+            'hasEdtCli',
             'hasExcel'
         ])
     },
@@ -279,7 +279,7 @@ import {mapActions} from "vuex";
             return total.toFixed(2);
         },
         getDni(dni){
-            return this.isSupervisor ? dni : "******"+dni.substr(-4);
+            return this.hasEdtCli ? dni : "******"+dni.substr(-4);
         },
         updateEventPagina(obj){
 

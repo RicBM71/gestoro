@@ -41,7 +41,7 @@ class CajaPolicy
         }
 
 
-        if ($authUser->hasRole('Admin') || $authUser->hasRole('Supervisor') )
+        if (hasEdtCaj() )
             return true;
 
         return esPropietario($caja) ?: $this->deny("Acceso denegado. No puedes editar el registro");
@@ -63,10 +63,10 @@ class CajaPolicy
             return $this->deny('El apunte es automático, no se puede borrar');
         }
 
-        if ($caja->manual == 'C' && $authUser->hasRole('Supervisor'))
+        if ($caja->manual == 'C' && esSupervisor())
             return true;
 
-        if ($authUser->hasRole('Admin'))
+        if (esAdmin())
             return true;
 
         return esPropietario($caja) ?: $this->deny("Acceso denegado. No puedes borrar el registro");

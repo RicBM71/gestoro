@@ -123,7 +123,12 @@ class UsersController extends Controller
 
         $roles = Role::with('permissions')->get(); // para listar también los permisos
         //$permisos = Permission::pluck('name','id');
-        $permisos = Permission::get();
+
+        if (esRoot())
+            $permisos = Permission::get();
+        else
+            $permisos = Permission::whereRaw("SUBSTR(nombre,1,1) = '*'")->get();
+
 
         $role_user=[];
         $data = User::find($user->id)->roles()->get();

@@ -414,8 +414,7 @@ import {mapActions} from "vuex";
         },
         computed: {
             ...mapGetters([
-                'isSupervisor',
-                'isAdmin',
+                'hasEdtFec',
                 'isRoot',
                 'hasFactura',
                 'hasAddVen',
@@ -463,7 +462,7 @@ import {mapActions} from "vuex";
             disabledFechaAlbaran(){
                 if (this.albaran.factura > 0) return true;
 
-                return !this.isSupervisor;
+                return !this.hasEdtFec;
             },
             computedNoResidente(){
                 return this.albaran.iva_no_residente ? 'No residente' : 'Residente';

@@ -161,8 +161,7 @@ import {mapActions} from "vuex";
     computed: {
         ...mapGetters([
             'isRoot',
-            'isAdmin',
-            'isSupervisor',
+            'hasEdtCli',
             'getPagination'
         ]),
     },
@@ -174,7 +173,7 @@ import {mapActions} from "vuex";
         getDni(dni){
             if (dni == null) return dni;
             if (dni.length >= 4)
-                return this.isSupervisor ? dni : "******"+dni.substr(-4);
+                return this.hasEdtCli ? dni : "******"+dni.substr(-4);
             else
                 return dni;
         },
@@ -207,7 +206,7 @@ import {mapActions} from "vuex";
         },
         editItem (id) {
             this.setPagination(this.paginaActual);
-           // if (this.isSupervisor)
+           // if (this.hasEdtCli)
                 this.$router.push({ name: 'taller.edit', params: { id: id } })
             // else
             //     this.$router.push({ name: 'taller.show', params: { id: id } })

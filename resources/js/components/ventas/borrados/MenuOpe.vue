@@ -61,11 +61,6 @@ export default {
     computed: {
         ...mapGetters([
             'isAdmin',
-            'isSupervisor',
-            'hasBorraCompras',
-            'userName',
-            'isRoot',
-            'hasAddVen'
         ]),
     },
     methods:{

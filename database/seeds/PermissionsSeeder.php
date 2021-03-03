@@ -20,5 +20,9 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name'=>'procesos','nombre'=>'Procesos']);
         Permission::create(['name'=>'edtcaj','nombre'=>'Edita Caja']);
         Permission::create(['name'=>'excel','nombre'=>'Excel']);
+        Permission::create(['name'=>'edtcli','nombre'=>'Dto. Clientes']);
+        Permission::create(['name'=>'edtfec','nombre'=>'Fecha Com/Ven']);
+        Permission::create(['name'=>'whatsapp','nombre'=>'WhatsApp']);
+
     }
 }

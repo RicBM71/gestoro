@@ -36,13 +36,6 @@ class FechaRecuperacion implements Rule
         if ($value >= Carbon::parse($this->compra->fecha_bloqueo) && $value <= Carbon::today())
             return true;
 
-
-        // if (auth()->user()->hasRole('Supervisor'))
-        //     if ($value < Carbon::today()){
-        //         $this->fecha_tope = Carbon::today();
-        //         return false;
-        //     }
-
         return false;
     }
 

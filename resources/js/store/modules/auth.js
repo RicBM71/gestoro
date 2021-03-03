@@ -182,6 +182,15 @@ const getters = {
     hasExcel: (state) =>{
         return (state.permisos.indexOf('excel') >= 0) ? true : false;
     },
+    hasEdtCli: (state) =>{
+        return (state.permisos.indexOf('dtocli') >= 0) ? true : false;
+    },
+    hasEdtFec: (state) =>{
+        return (state.permisos.indexOf('edtfec') >= 0) ? true : false;
+    },
+    hasWhatsApp: (state) =>{
+        return (state.permisos.indexOf('whatsapp') >= 0) ? true : false;
+    },
     flexCortesia: (state) =>{
         return state.flex_cortesia;
     },

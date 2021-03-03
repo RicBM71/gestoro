@@ -94,7 +94,7 @@
                                         &nbsp;
                                         <v-icon
                                             small
-                                            v-if="whatsApp == 1 && isSupervisor && props.item.cliente.tfmovil > ''"
+                                            v-if="whatsApp == 1 && hasWhatsApp && props.item.cliente.tfmovil > ''"
                                             color="green"
                                             @click="sendWhatsApp(props.item)"
                                         >
@@ -260,8 +260,9 @@ import {mapActions} from "vuex";
         ...mapGetters([
             'hasBorraCompras',
             'getPagination',
-            'isSupervisor',
             'hasExcel',
+            'hasWhatsApp',
+            'hasEdtCli',
             'parametros',
             'whatsApp'
         ])
@@ -272,7 +273,7 @@ import {mapActions} from "vuex";
             'unsetPagination'
         ]),
         getDni(dni){
-            return this.isSupervisor ? dni : "******"+dni.substr(-4);
+            return this.hasEdtCli ? dni : "******"+dni.substr(-4);
         },
         updateEventPagina(obj){
 

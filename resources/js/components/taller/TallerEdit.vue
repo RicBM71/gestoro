@@ -315,10 +315,6 @@ import {mapGetters} from 'vuex';
             this.show_loading = true;
             var id = this.$route.params.id;
 
-            // if (!this.isSupervisor)
-            //     this.$router.push({ name: 'taller.show', params: { id: id } })
-
-
             if (id > 0)
                 axios.get('/mto/talleres/'+id+'/edit')
                     .then(res => {

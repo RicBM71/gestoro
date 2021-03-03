@@ -9,7 +9,6 @@ use Illuminate\Contracts\Validation\Rule;
 class FechaAmpliacion implements Rule
 {
     protected $compra;
-    protected $esSupervisor;
     protected $fecha_tope;
     protected $rango;
     /**
@@ -38,7 +37,6 @@ class FechaAmpliacion implements Rule
 
         $desde = Carbon::parse($this->compra->fecha_compra);
 
-        // if (auth()->user()->hasRole('Supervisor')
         $fecha_tope = Carbon::today();
 
 

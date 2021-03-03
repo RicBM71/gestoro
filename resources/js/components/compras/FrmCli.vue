@@ -215,7 +215,7 @@
                         </v-text-field>
                     </v-flex>
                 </v-layout>
-                <v-layout row wrap v-if="isSupervisor">
+                <v-layout row wrap v-if="hasEdtCli">
                     <v-flex sm1>
                         <v-text-field
                             class="inputPrice"
@@ -225,7 +225,7 @@
                             data-vv-name="interes"
                             data-vv-as="interés"
                             label="Interés Renovación"
-                            :disabled="!isSupervisor"
+                            :disabled="!hasEdtCli"
                             v-on:keyup.enter="submit"
                         >
                         </v-text-field>
@@ -240,7 +240,7 @@
                             data-vv-as="interés"
                             :error-messages="errors.collect('doble_interes')"
                             label="Interés Recuperación"
-                            :disabled="!isSupervisor"
+                            :disabled="!hasEdtCli"
                             v-on:keyup.enter="submit"
                         >
                         </v-text-field>
@@ -351,7 +351,7 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'isSupervisor',
+            'hasEdtCli',
             'parametros'
         ]),
         computedFN: {

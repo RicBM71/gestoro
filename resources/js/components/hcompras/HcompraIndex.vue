@@ -208,13 +208,13 @@ import {mapGetters} from 'vuex'
     },
     computed: {
         ...mapGetters([
-            'isSupervisor',
+            'hasEdtCli',
             'parametros'
         ])
     },
     methods:{
         getDni(dni){
-            return this.isSupervisor ? dni : "******"+dni.substr(-4);
+            return this.hasEdtCli ? dni : "******"+dni.substr(-4);
         },
         formatDate(f){
             if (f == null) return null;

@@ -259,7 +259,6 @@ import {mapGetters} from 'vuex';
         computed: {
         ...mapGetters([
                 'isAdmin',
-                'isSupervisor',
             ]),
         computedMargen(){
             return this.getMoneyFormat(this.producto.margen);

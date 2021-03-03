@@ -30,10 +30,6 @@ class StoreAmpliacion extends FormRequest
                   ['required','numeric'] :
                   ['required','numeric','min:0','max:'.session('parametros')->lim_efe];
 
-                  // lo hago en controlador porque necesito saber el retraso.
-        // $dias = ($this->user()->hasRole('Supervisor') || $this->retraso) ?
-        //             ['required','numeric'] :
-        //             ['required','numeric','min:30'];
 
         $dias = ['required','numeric','min:0'];
 

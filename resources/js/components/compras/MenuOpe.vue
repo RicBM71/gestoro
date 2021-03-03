@@ -273,10 +273,7 @@ export default {
             this.$router.go(-1);
         },
         goCliente(){
-            // if (!this.isSupervisor)
-            //     this.$router.push({ name: 'cliente.show', params: { id: this.compra.cliente_id } })
-            // else
-                this.$router.push({ name: 'cliente.edit', params: { id: this.compra.cliente_id } })
+            this.$router.push({ name: 'cliente.edit', params: { id: this.compra.cliente_id } })
         },
         goCreate(){
             this.$router.push({ name: this.ruta+'.create', params: { cliente_id: this.compra.cliente_id }  })

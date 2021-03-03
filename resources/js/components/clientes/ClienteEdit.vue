@@ -263,7 +263,7 @@
                                         data-vv-name="interes"
                                         data-vv-as="interés"
                                         label="Interés Renovación"
-                                        :disabled="!isSupervisor"
+                                        :disabled="!hasEdtCli"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -278,7 +278,7 @@
                                         data-vv-as="interés"
                                         :error-messages="errors.collect('interes_recuperacion')"
                                         label="Interés Recuperación"
-                                        :disabled="!isSupervisor"
+                                        :disabled="!hasEdtCli"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -292,7 +292,7 @@
                                         data-vv-as="descuento"
                                         :error-messages="errors.collect('descuento')"
                                         label="Dto. Ventas"
-                                        :disabled="!isSupervisor"
+                                        :disabled="!hasEdtCli"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -381,7 +381,7 @@
                                         v-model="cliente.bloqueado"
                                         :items="bloqcli"
                                         label="Bloqueos"
-                                        :disabled="!isSupervisor"
+                                        :disabled="!hasEdtCli"
                                     ></v-select>
                                 </v-flex>
                             </v-layout>
@@ -616,7 +616,7 @@ import {mapGetters} from 'vuex';
             this.show_loading = true;
             var id = this.$route.params.id;
 
-            // if (!this.isSupervisor)
+            // if (!this.hasEdtCli)
             //     this.$router.push({ name: 'cliente.show', params: { id: id } })
 
 
@@ -656,7 +656,7 @@ import {mapGetters} from 'vuex';
         },
         computed: {
             ...mapGetters([
-                'isSupervisor',
+                'hasEdtCli',
                 'isAdmin',
                 'parametros'
             ]),

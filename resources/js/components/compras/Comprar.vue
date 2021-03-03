@@ -19,7 +19,7 @@
                                         offset-y
                                         full-width
                                         min-width="290px"
-                                        :readonly="!isSupervisor"
+                                        :readonly="!hasEdtFec"
                                     >
                                         <v-text-field
                                             slot="activator"
@@ -35,7 +35,7 @@
                                             locale="es"
                                             first-day-of-week=1
                                             @input="menu1 = false"
-                                            :readonly="!isSupervisor"
+                                            :readonly="!hasEdtFec"
                                         ></v-date-picker>
                                     </v-menu>
                                 </v-flex>
@@ -122,7 +122,7 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'isSupervisor',
+            'hasEdtFec',
             'hasLimEfe',
             'parametros'
         ]),

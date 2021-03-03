@@ -282,9 +282,6 @@ import {mapGetters} from 'vuex';
                     this.$router.push({ name: 'compra.close', params: { id: this.compra.id } })
             },
             goCliente(){
-                // if (!this.isSupervisor)
-                //     this.$router.push({ name: 'cliente.show', params: { id: this.compra.cliente_id } })
-                // else
                     this.$router.push({ name: 'cliente.edit', params: { id: this.compra.cliente_id } })
             },
             getDecimalFormat(value){

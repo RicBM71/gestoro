@@ -202,7 +202,7 @@ import {mapActions} from "vuex";
         ...mapGetters([
             'isRoot',
             'isAdmin',
-            'isSupervisor',
+            'hasEdtCli',
             'getPagination'
         ]),
     },
@@ -212,7 +212,7 @@ import {mapActions} from "vuex";
             'unsetPagination'
         ]),
         getDni(dni){
-            return this.isSupervisor ? dni : "******"+dni.substr(-4);
+            return this.hasEdtCli ? dni : "******"+dni.substr(-4);
         },
         getFecha(newValue) {
 
@@ -243,7 +243,7 @@ import {mapActions} from "vuex";
         },
         editItem (id) {
             this.setPagination(this.paginaActual);
-            // if (this.isSupervisor)
+            // if (this.hasEdtCli)
                 this.$router.push({ name: 'cliente.edit', params: { id: id } })
             // else
             //     this.$router.push({ name: 'cliente.show', params: { id: id } })

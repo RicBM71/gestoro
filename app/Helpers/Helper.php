@@ -95,6 +95,15 @@ function hasHardDel(){
     return auth()->user()->hasPermissionTo('harddel');
 }
 
+function hasWhatsApp(){
+    return auth()->user()->hasPermissionTo('whatsapp');
+}
+
+function hasEdtCaj(){
+    return auth()->user()->hasPermissionTo('edtcaj');
+}
+
+
 function hasReabreCompras(){
     return auth()->user()->hasPermissionTo('reacom');
 }

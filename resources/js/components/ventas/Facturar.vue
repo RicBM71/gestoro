@@ -100,11 +100,12 @@ export default {
       }
     },
     mounted(){
+
         this.fecha_min = this.albaran.fecha_albaran;
     },
     computed: {
         ...mapGetters([
-            'isSupervisor',
+            
         ]),
         computedFechaFactura() {
             moment.locale('es');

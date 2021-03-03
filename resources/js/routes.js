@@ -718,7 +718,7 @@ export default [
                 path: '/export/apuban',
                 name: 'exportar.apuban',
                 component: ApuntesBanco,
-            },
+            },   
             {
                 path: '/reubicar',
                 name: 'reubicar',
