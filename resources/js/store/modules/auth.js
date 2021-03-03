@@ -183,7 +183,7 @@ const getters = {
         return (state.permisos.indexOf('excel') >= 0) ? true : false;
     },
     hasEdtCli: (state) =>{
-        return (state.permisos.indexOf('dtocli') >= 0) ? true : false;
+        return (state.permisos.indexOf('edtcli') >= 0) ? true : false;
     },
     hasEdtFec: (state) =>{
         return (state.permisos.indexOf('edtfec') >= 0) ? true : false;
