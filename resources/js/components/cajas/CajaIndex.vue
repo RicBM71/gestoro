@@ -24,7 +24,7 @@
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on }">
                             <v-btn
-                                v-show="items.length > 0 && isGestor"
+                                v-show="items.length > 0 && hasExcel"
                                 v-on="on"
                                 color="white"
                                 icon
@@ -51,11 +51,11 @@
             <v-card>
                 <v-container>
                     <v-layout row wrap>
-                        <v-flex xs2 class="font-weight-bold" v-if="isGestor">
+                        <v-flex xs2 class="font-weight-bold" v-if="hasEdtCaj">
                             Debe: {{total_debe | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}
                         </v-flex>
                         <v-flex xs2 v-else></v-flex>
-                        <v-flex xs2 class="font-weight-bold" v-if="isGestor">
+                        <v-flex xs2 class="font-weight-bold" v-if="hasEdtCaj">
                             Haber: {{total_haber | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}
                         </v-flex>
                         <v-flex xs2 v-else></v-flex>
@@ -279,8 +279,7 @@ import {mapActions} from "vuex";
     computed: {
         ...mapGetters([
             'isAdmin',
-            'isGestor',
-            'isSupervisor',
+            'hasEdtCaj',
             'userName',
             'getPagination'
         ])
@@ -334,16 +333,16 @@ import {mapActions} from "vuex";
         },
         puedeEditar(item){
 
-            if (item.manual == 'R' && this.isSupervisor)
+            if (item.manual == 'R' && this.hasEdtCaj)
                 return true;
 
-            if (item.manual == 'G' && this.isGestor)
+            if (item.manual == 'G' && this.hasEdtCaj)
                 return true;
 
             if (item.manual != 'S') return false;
 
 
-            if (this.isSupervisor || this.isAdmin)
+            if (this.hasEdtCaj)
                 return true;
 
             return (this.userName == item.username && this.formatDate(item.created_at) == this.formatDate(new Date()));
@@ -351,7 +350,7 @@ import {mapActions} from "vuex";
         },
         puedeBorrar(item){
             if (item.manual == 'R'){ // es apunte de cierre
-                return (this.isSupervisor)
+                return (this.isAdmin)
             }else{
                 return (item.manual == "S" || item.manual == "R") && this.isAdmin;
             }

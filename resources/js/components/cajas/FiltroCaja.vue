@@ -165,7 +165,7 @@ export default {
             .then(res => {
                 this.apuntes = res.data;
                 this.apuntes.push({value: null, text: '-'});
-                if (this.isAdmin)
+                if (this.hasEdtCaj)
                     this.ma_items.push({value: 'G', text: 'Regularización'});
             })
             .catch(err =>{
@@ -177,7 +177,7 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'isAdmin',
+            'hasEdtCaj',
         ]),
         computedFechaD() {
             moment.locale('es');

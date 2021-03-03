@@ -189,12 +189,13 @@ export default {
             'isAdmin',
             'hasFactura',
             'hasUsers',
-            'isGestor',
-            'isSupervisor',
             'empresaActiva',
             'hasLiquidar',
             'lotes',
-            'parametros'
+            'parametros',
+            'hasConsultas',
+            'hasProcesos'
+
         ]),
         computedLotes(){
 
@@ -385,7 +386,7 @@ export default {
 
                     this.mn_items.push(this.mn_etiquetas);
 
-                    if (this.isGestor){
+                    if (this.hasConsultas){
                         //this.drawer = true;
                         this.mn_items.push(this.mn_consultas);
                         this.mn_items.push(this.mn_consultas2);
@@ -393,17 +394,14 @@ export default {
 
                     this.empresa_id = this.user.empresa_id;
 
-                    if (this.hasLiquidar || this.hasFactura)
+                    if (this.hasProcesos)
                         this.mn_items.push(this.mn_procesos);
 
                     if (this.isRoot)
                         this.mn_items.push(this.mn_root);
 
-                    if(this.isAdmin && this.isGestor)
+                    if(this.isAdmin)
                         this.mn_items.push(this.mn_admin);
-                    else if(this.hasUsers)
-                        this.mn_items.push(this.mn_admin);
-
 
                     this.empresas = res.data.user.empresas;
                     var idx = this.empresas.map(x => x.value).indexOf(this.empresa_id);

@@ -36,7 +36,7 @@
                                 offset-y
                                 full-width
                                 min-width="290px"
-                                :readonly="!isSupervisor"
+                                :readonly="!hasEdtCaj"
                             >
                                 <v-text-field
                                     slot="activator"
@@ -55,7 +55,7 @@
                                     locale="es"
                                     first-day-of-week=1
                                     @input="menu1 = false"
-                                    :readonly="!isSupervisor"
+                                    :readonly="!hasEdtCaj"
                                 ></v-date-picker>
                             </v-menu>
                         </v-flex>
@@ -564,7 +564,7 @@ import {mapGetters} from 'vuex';
         },
         computed: {
          ...mapGetters([
-            'isSupervisor',
+            'hasEdtCaj',
             ]),
             computedFecha() {
                 moment.locale('es');

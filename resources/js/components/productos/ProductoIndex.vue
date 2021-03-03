@@ -36,7 +36,7 @@
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on }">
                             <v-btn
-                                v-show="arr_reg.length > 0 && isGestor"
+                                v-show="arr_reg.length > 0 && hasExcel"
                                 v-on="on"
                                 color="white"
                                 icon
@@ -260,7 +260,7 @@ import {mapActions} from "vuex";
     computed: {
         ...mapGetters([
             'isAdmin',
-            'isGestor',
+            'hasExcel',
             'hasEditPro',
             'getPagination',
             'empresaActiva'

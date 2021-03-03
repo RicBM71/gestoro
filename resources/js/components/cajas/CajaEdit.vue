@@ -23,7 +23,7 @@
                                 offset-y
                                 full-width
                                 min-width="290px"
-                                :disabled="!isSupervisor"
+                                :disabled="!hasEdtCaj"
                             >
                                 <v-text-field
                                     slot="activator"
@@ -42,7 +42,7 @@
                                     locale="es"
                                     first-day-of-week=1
                                     @input="menu1 = false"
-                                    :disabled="!isSupervisor"
+                                    :disabled="!hasEdtCaj"
                                 ></v-date-picker>
                             </v-menu>
                         </v-flex>
@@ -120,7 +120,7 @@
                                 :error-messages="errors.collect('manual')"
                                 :items="origenes"
                                 label="Origen"
-                                :readonly="!isGestor"
+                                :readonly="!hasEdtCaj"
                                 ></v-select>
                         </v-flex>
                          <v-flex sm2>
@@ -222,9 +222,7 @@ import {mapGetters} from 'vuex';
         },
         computed: {
         ...mapGetters([
-                'isGestor',
-                'isSupervisor',
-                'isAdmin'
+                'hasEdtCaj',
             ]),
             computedFecha() {
                 moment.locale('es');

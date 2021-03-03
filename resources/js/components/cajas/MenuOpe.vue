@@ -27,7 +27,7 @@
             </template>
                 <span>Recuento de Caja</span>
         </v-tooltip>
-         <v-tooltip bottom>
+         <v-tooltip bottom v-if="isAdmin">
             <template v-slot:activator="{ on }">
                 <v-btn
                     v-show="id > 0"
@@ -58,6 +58,7 @@
 </template>
 <script>
 import MyDialog from '@/components/shared/MyDialog'
+import {mapGetters} from 'vuex';
 export default {
     props:{
         id: Number
@@ -71,6 +72,11 @@ export default {
           ruta: "caja",
           url: "/mto/cajas",
       }
+    },
+    computed: {
+        ...mapGetters([
+            'isAdmin',
+        ]),
     },
     methods:{
         goCreate(){

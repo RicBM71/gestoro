@@ -173,6 +173,15 @@ const getters = {
     hasConsultas: (state) =>{
         return (state.permisos.indexOf('consultas') >= 0) ? true : false;
     },
+    hasProcesos: (state) =>{
+        return (state.permisos.indexOf('procesos') >= 0) ? true : false;
+    },
+    hasEdtCaj: (state) =>{
+        return (state.permisos.indexOf('edtcaj') >= 0) ? true : false;
+    },
+    hasExcel: (state) =>{
+        return (state.permisos.indexOf('excel') >= 0) ? true : false;
+    },
     flexCortesia: (state) =>{
         return state.flex_cortesia;
     },

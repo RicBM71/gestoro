@@ -67,7 +67,7 @@
                                 :error-messages="errors.collect('manual')"
                                 :items="origenes"
                                 label="Origen"
-                                :readonly="!isGestor"
+                                :readonly="!hasEdtCaj"
                                 ></v-select>
                         </v-flex>
                          <v-flex sm3 d-flex>
@@ -187,13 +187,11 @@ import {mapGetters} from 'vuex';
         },
         computed: {
             ...mapGetters([
-                'isAdmin',
-                'isGestor',
-                'isSupervisor',
+                'hasEdtCaj',
             ]),
             computedEditFecha(){
 
-                return !this.isSupervisor;
+                return !this.hasEdtCaj;
             },
             computedFecha() {
                 moment.locale('es');
