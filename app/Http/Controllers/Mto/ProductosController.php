@@ -488,8 +488,9 @@ class ProductosController extends Controller
      */
     public function excel(Request $request){
 
-        if (!esGestor())
-            return abort(403, 'No autorizado a exportar');
+        if (!hasConsultas()){
+            return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Consultas');
+        }
 
         $data = $request->validate([
             'fecha_d'       =>['date','nullable'],

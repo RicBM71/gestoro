@@ -14,8 +14,8 @@ class EstadosRfidController extends Controller
     public function index(){
 
 
-        if (!auth()->user()->hasRole('Gestor')){
-            return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Gestor');
+        if (!hasConsultas()){
+            return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Consultas');
         }
 
         $data = DB::table('productos')->select(DB::raw(DB::getTablePrefix().'empresas.nombre AS empresa,'.DB::getTablePrefix().'etiquetas.nombre AS estado, COUNT(*) AS registros '))

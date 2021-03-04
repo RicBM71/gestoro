@@ -75,7 +75,7 @@ class Caja extends Model
 
     public function scopeGestor($query){
 
-        if (!esGestor())
+        if (!esAdmin())
             $query->where('manual','<>','G');
 
         return $query;

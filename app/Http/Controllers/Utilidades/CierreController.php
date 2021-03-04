@@ -21,7 +21,7 @@ class CierreController extends Controller
     {
 
         if (!esRoot()){
-            return abort(403, ' NO tiene permiso de acceso - Gestor');
+            return abort(403, ' NO tiene permiso de acceso - Root');
         }
 
         $data = $request->validate([

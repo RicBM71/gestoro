@@ -156,8 +156,8 @@ class AlbaranesController extends Controller
 
         $albarane = Albaran::withOutGlobalScope(EmpresaScope::class)->findOrFail($id);
 
-        if ($albarane->tipo_id == 4 && !esGestor()){
-            return abort(404, 'No se ha podido cargar este albarán - Gestor Requerido');
+        if ($albarane->tipo_id == 4 && !hasConsultas()){
+            return abort(404, 'No se ha podido cargar este albarán - Consultas Requerido');
         }
 
         // con esto cambiamos de empresa si la empresa no coincide
@@ -206,8 +206,8 @@ class AlbaranesController extends Controller
             }
         }
 
-        if ($albarane->tipo_id == 4 && !esGestor()){
-            return abort(404, 'No se ha podido cargar este albarán - Gestor Requerido');
+        if ($albarane->tipo_id == 4 && !hasConsultas()){
+            return abort(404, 'No se ha podido cargar este albarán - Consultas Requerido');
         }
 
         // con esto cambiamos de empresa si la empresa no coincide

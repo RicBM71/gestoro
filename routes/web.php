@@ -227,7 +227,7 @@ Route::group([
             Route::get('facturacion/alb', 'FacturacionVentasController@index');
         });
 
-        Route::middleware(['role:Gestor'])->group(function () {
+        Route::middleware(['permission:consultas'])->group(function () {
             Route::get('facturacion/listar', 'ListarFacturasController@index');
             Route::post('facturacion/compras/listar', 'ListarFacturasController@lisrecu');
             Route::post('facturacion/compras/listar/excel', 'ListarFacturasController@excel');
@@ -322,7 +322,7 @@ Route::group([
     'namespace' => 'Exportar',
     'middleware' => ['auth','password']],
     function (){
-        Route::middleware('role:Admin|Gestor')->group(function () {
+        Route::middleware('permission:consultas')->group(function () {
             Route::get('/libro/index', 'PrintLibroController@index');
             Route::post('/libro/excel', 'PrintLibroController@excel');
             Route::post('/libro/portada', 'PrintLibroController@portada');
@@ -394,14 +394,6 @@ Route::group([
 
         Route::get('/index', 'EtiquetasController@index');
         Route::post('/rollo', 'EtiquetasController@submit');
-
-
-        Route::middleware('role:Admin|Gestor')->group(function () {
-
-            // Route::get('/service', 'ServiciosTallerController@index');
-            // Route::post('/service', 'ServiciosTallerController@submit');
-            // Route::post('/service/excel', 'ServiciosTallerController@excel');
-        });
 
     }
 );

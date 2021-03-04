@@ -240,14 +240,14 @@ export default {
       }
     },
     mounted(){
-        if (!this.isGestor){
-            this.$toast.error('No dispone de los permisos necesarios - Gestor');
+        if (!this.isAdmin){
+            this.$toast.error('No dispone de los permisos necesarios - Admin');
             this.$router.push({ name: 'dash' })
         }
     },
     computed: {
         ...mapGetters([
-            'isGestor'
+            'isAdmin'
         ]),
         computedFechaD() {
             moment.locale('es');

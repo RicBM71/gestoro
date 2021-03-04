@@ -27,9 +27,6 @@ class ApliPdfController extends Controller
 
     public function submit(Request $request){
 
-        // if (!auth()->user()->hasRole('Gestor')){
-        //     return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Gestor');
-        // }
 
         $data = $request->validate([
             'etiqueta_id'  => ['required','integer'],

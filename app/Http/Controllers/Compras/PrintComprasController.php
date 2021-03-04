@@ -29,7 +29,7 @@ class PrintComprasController extends Controller
 
         $compra->load(['cliente']);
 
-        if ($compra->tipo_id != 1 && !esGestor() && session('empresa')->getFlag(13)){
+        if ($compra->tipo_id != 1 && !hasMail() && session('empresa')->getFlag(13)){
             return abort(404, 'No puedes enviar renovaciones');
         }
 

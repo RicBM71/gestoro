@@ -16,8 +16,8 @@ class MetalDepositoController extends Controller
     public function index(){
 
 
-        if (!auth()->user()->hasRole('Gestor')){
-            return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Gestor');
+        if (!hasConsultas()){
+            return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Consultas');
         }
 
         if (request()->wantsJson())
@@ -30,8 +30,8 @@ class MetalDepositoController extends Controller
 
     public function submit(Request $request){
 
-        if (!auth()->user()->hasRole('Gestor')){
-            return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Gestor');
+        if (!hasConsultas()){
+            return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Consultas');
         }
 
         $data = $request->validate([

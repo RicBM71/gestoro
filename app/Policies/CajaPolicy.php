@@ -36,8 +36,8 @@ class CajaPolicy
 
 
         // apunte de regularización
-        if ($caja->manual == 'G' && !$authUser->hasRole('Gestor') ){
-            return $this->deny('Acceso denegado. Contactar con un gestor');
+        if ($caja->manual == 'G' && !esAdmin() ){
+            return $this->deny('Acceso denegado. Contactar con un Administrador');
         }
 
 

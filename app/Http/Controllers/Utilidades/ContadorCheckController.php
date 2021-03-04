@@ -15,9 +15,7 @@ class ContadorCheckController extends Controller
 
     public function index($ejercicio=0){
 
-        // if (!auth()->user()->hasRole('Gestor')){
-        //     return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Gestor');
-        // }
+
         if ($ejercicio == 0){
             $ejercicio = date('Y');
         }

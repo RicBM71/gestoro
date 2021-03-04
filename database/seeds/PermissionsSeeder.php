@@ -24,10 +24,12 @@ class PermissionsSeeder extends Seeder
         // Permission::create(['name'=>'edtfec','nombre'=>'Fecha Com/Ven']);
         // Permission::create(['name'=>'whatsapp','nombre'=>'WhatsApp']);
 
-        Permission::create(['name'=>'deldep','nombre'=>'Borra depósitos']);
-        Permission::create(['name'=>'delcob','nombre'=>'Borra cobros']);
-        Permission::create(['name'=>'edtalb','nombre'=>'Edita Albarán']);
-        Permission::create(['name'=>'edtcom','nombre'=>'Edita Compras']);
+        // Permission::create(['name'=>'deldep','nombre'=>'Borra depósitos']);
+        // Permission::create(['name'=>'delcob','nombre'=>'Borra cobros']);
+        // Permission::create(['name'=>'edtalb','nombre'=>'Edita Albarán']);
+        // Permission::create(['name'=>'edtcom','nombre'=>'Edita Compras']);
+
+        Permission::create(['name'=>'mail','nombre'=>'Envía mail']);
 
     }
 }

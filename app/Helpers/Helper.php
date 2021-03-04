@@ -90,6 +90,10 @@ function hasEdtCom(){
     return auth()->user()->hasPermissionTo('edtcom');
 }
 
+function hasMail(){
+    return auth()->user()->hasPermissionTo('mail');
+}
+
 
 function hasHardDel(){
     return auth()->user()->hasPermissionTo('harddel');
@@ -101,6 +105,15 @@ function hasWhatsApp(){
 
 function hasEdtCaj(){
     return auth()->user()->hasPermissionTo('edtcaj');
+}
+
+
+function hasExcel(){
+    return auth()->user()->hasPermissionTo('excel');
+}
+
+function hasConsultas(){
+    return auth()->user()->hasPermissionTo('consultas');
 }
 
 

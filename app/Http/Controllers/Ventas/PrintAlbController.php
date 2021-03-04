@@ -35,8 +35,8 @@ class PrintAlbController extends Controller
         //$albaran = Albaran::with(['cliente'])->findOrFail($albarane->id);
         $albarane->load(['cliente']);
 
-        if ($albarane->tipo_id == 4 && !esGestor()){
-            return abort(404, 'No puedes visualizar este albarán - Gestor Requerido');
+        if ($albarane->tipo_id == 4 && !hasConsultas()){
+            return abort(404, 'No puedes visualizar este albarán - Consultas Requerido');
         }
 
         if ($albarane->cliente->email=='')
@@ -82,8 +82,8 @@ class PrintAlbController extends Controller
 
         $this->albaran = Albaran::with(['cliente','tipo','fase'])->findOrFail($id);
 
-        if ($this->albaran->tipo_id == 4 && !esGestor()){
-            return abort(404, 'No puedes visualizar este albarán - Gestor Requerido');
+        if ($this->albaran->tipo_id == 4 && !hasConsultas()){
+            return abort(404, 'No puedes visualizar este albarán - Consultas Requerido');
         }
 
         // constrola si la compra está recuperada para poder imprimir como factura

@@ -28,10 +28,6 @@ class EtiquetasController extends Controller
 
     public function submit(Request $request){
 
-        // if (!auth()->user()->hasRole('Gestor')){
-        //     return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Gestor');
-        // }
-
         $data = $request->validate([
             'clase_id'     => ['nullable','integer'],
             'tipo_fecha'    =>['string','required'],
