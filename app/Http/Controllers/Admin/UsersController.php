@@ -149,6 +149,8 @@ class UsersController extends Controller
         else
             $empresas_mostrar = Empresa::flag(0)->get();
 
+        $heredados = $user->getPermissionsViaRoles();
+
         if (request()->wantsJson())
             return [
                 'user'          => $user,
@@ -157,7 +159,8 @@ class UsersController extends Controller
                 'permisos_user' => $permisos_user,
                 'emp_user'      => $emp_user,
                 'empresas'      => $empresas_mostrar,
-                'ips'           => Ipuser::selIps($user->id)
+                'ips'           => Ipuser::selIps($user->id),
+                'heredados'     => $heredados->pluck('nombre')
             ];
 
         return redirect()->route('home');

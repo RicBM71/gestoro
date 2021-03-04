@@ -226,17 +226,17 @@ export default [
             },
             {
                 path: '/roles',
-                name: 'roles',
+                name: 'roles.index',
                 component: RolesIndex,
             },
             {
                 path: '/roles/create',
-                name: 'roles_create',
+                name: 'roles.create',
                 component: RolesCreate,
             },
             {
                 path: '/roles/:id/edit',
-                name: 'roles_edit',
+                name: 'roles.edit',
                 component: RolesEdit,
             },
             {
@@ -718,7 +718,7 @@ export default [
                 path: '/export/apuban',
                 name: 'exportar.apuban',
                 component: ApuntesBanco,
-            },   
+            },
             {
                 path: '/reubicar',
                 name: 'reubicar',

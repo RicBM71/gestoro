@@ -237,7 +237,7 @@ export default {
                 // { text: 'Importar Producto', name: 'tools.importar.producto' },
                 { text: 'Histórico compras', name: 'hcompras.index' },
                 { text: 'Usuarios', name: 'users.index' },
-                { text: 'Roles', name: 'roles' },
+                { text: 'Roles', name: 'roles.index' },
                 { text: 'Permisos', name: 'permisos.index' },
                 { text: 'Grupos', name: 'grupo.index' },
                 { text: 'Clases', name: 'clase.index' },
@@ -251,6 +251,19 @@ export default {
                 { text: 'Parámetros', name: 'parametro.edit' },
             ]
         },
+
+        mn_config: {
+            icon: 'keyboard_arrow_up',
+            'icon-alt': 'settings',
+            text: 'Configuración',
+            model: false,
+            children: [
+                { text: 'Usuarios', name: 'users.index' },
+                { text: 'Roles', name: 'roles.index' },
+                { text: 'Plantilla Whatsapps', name: 'whatsapp.index' },
+            ]
+        },
+
 
         mn_admin: {
             icon: 'keyboard_arrow_up',
@@ -402,6 +415,9 @@ export default {
 
                     if(this.isAdmin)
                         this.mn_items.push(this.mn_admin);
+
+                    if (this.isRoot || this.isAdmin)
+                        this.mn_items.push(this.mn_config);
 
                     this.empresas = res.data.user.empresas;
                     var idx = this.empresas.map(x => x.value).indexOf(this.empresa_id);

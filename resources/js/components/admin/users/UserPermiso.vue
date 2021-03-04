@@ -2,8 +2,8 @@
     <div v-show="show">
         <h3>Permisos Específicos</h3>
         <v-layout row wrap>
-            <v-flex sm3
-                v-for="item in this.permisos"
+            <v-flex sm2
+                v-for="item in permisos"
                 :key="'p'+item.id"
             >
                 <v-switch
@@ -44,9 +44,9 @@ export default {
     },
     methods:{
         showSwitch(item){
-            if (item.name == "harddel" && !this.isRoot){
-                return false;
-            }
+            // if (item.name == "harddel" && !this.isRoot){
+            //     return false;
+            // }
             return true;
         },
         setPermisosUsr(){

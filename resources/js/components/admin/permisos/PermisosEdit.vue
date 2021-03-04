@@ -1,5 +1,5 @@
 <template>
-	<div v-show="show">
+	<div>
         <v-card>
             <v-card-title color="indigo">
                 <h2 color="indigo">{{titulo}}</h2>
@@ -122,11 +122,11 @@ import MenuOpe from './MenuOpe'
         computed: {
             computedFModFormat() {
                 moment.locale('es');
-                return this.permiso.updated_at ? moment(this.permiso.updated_at).format('D/MM/YYYY H:mm') : '';
+                return this.permiso.updated_at ? moment(this.permiso.updated_at).format('D/MM/YYYY H:mm:ss') : '';
             },
             computedFCreFormat() {
                 moment.locale('es');
-                return this.permiso.created_at ? moment(this.permiso.created_at).format('D/MM/YYYY H:mm') : '';
+                return this.permiso.created_at ? moment(this.permiso.created_at).format('D/MM/YYYY H:mm:ss') : '';
             }
 
         },

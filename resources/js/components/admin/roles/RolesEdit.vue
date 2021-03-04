@@ -1,5 +1,5 @@
 <template>
-	<div v-show="show">
+	<div>
         <v-card>
             <v-card-title color="indigo">
                 <h2 color="indigo">{{titulo}}</h2>
@@ -20,8 +20,7 @@
                                 label="Nombre"
                                 data-vv-name="name"
                                 data-vv-as="nombre"
-                                readonly
-                                disabled
+                                :disabled="!isRoot"
                             >
                             </v-text-field>
                         </v-flex>
@@ -62,12 +61,12 @@
                     <v-layout row wrap v-if="this.role.id > 0">
                         <v-flex sm3
                             v-for="item in permisos"
-                            :key="item"
+                            :key="item.value"
                         >
                             <v-switch
+                                :label="item.text"
+                                :value="item.value"
                                 v-model="permiso_role"
-                                :label="item"
-                                :value="item"
                                 color="primary">
                             ></v-switch>
                         </v-flex>
@@ -76,8 +75,8 @@
                         <v-flex sm9></v-flex>
                         <v-flex sm2>
                             <div class="text-xs-center">
-                                        <v-btn @click="submit"  round  :loading="enviando" block  color="primary">
-                                Guardar Role
+                                <v-btn @click="submit" :disabled="!isRoot"  round  :loading="enviando" block  color="primary">
+                                    Guardar Role
                                 </v-btn>
                             </div>
                         </v-flex>
@@ -90,6 +89,7 @@
 <script>
 import moment from 'moment'
 import MenuOpe from './MenuOpe'
+import {mapGetters} from 'vuex';
 import RolePermisos from './RolePermisos'
 
 	export default {
@@ -128,7 +128,6 @@ import RolePermisos from './RolePermisos'
             if (id > 0)
                 axios.get('/admin/roles/'+id+'/edit')
                     .then(res => {
-
                         this.role = res.data.role;
                         this.permiso_role = res.data.permiso_role;
                         this.permisos = res.data.permisos;
@@ -141,13 +140,16 @@ import RolePermisos from './RolePermisos'
         },
 
         computed: {
+            ...mapGetters([
+	    		'isRoot'
+    		]),
             computedFModFormat() {
                 moment.locale('es');
-                return this.role.updated_at ? moment(this.role.updated_at).format('D/MM/YYYY H:mm') : '';
+                return this.role.updated_at ? moment(this.role.updated_at).format('D/MM/YYYY H:mm:ss') : '';
             },
             computedFCreFormat() {
                 moment.locale('es');
-                return this.role.created_at ? moment(this.role.created_at).format('D/MM/YYYY H:mm') : '';
+                return this.role.created_at ? moment(this.role.created_at).format('D/MM/YYYY H:mm:ss') : '';
             }
 
         },
@@ -176,8 +178,8 @@ import RolePermisos from './RolePermisos'
                                     permissions: this.permiso_role
                                 }
                             })
-                            .then(response => {
-                                this.$toast.success(response.data);
+                            .then(res => {
+                                this.role = res.data;
                                 this.enviando = false;
                             })
                             .catch(err => {

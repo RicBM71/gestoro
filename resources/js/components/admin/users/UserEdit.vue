@@ -271,8 +271,8 @@
                         <v-layout row wrap>
                             <v-flex sm12>
                                 <div v-if="showPer">
-                                    <user-role :user_id="this.user.id" :role_user="this.role_user"></user-role>
-                                    <user-permiso :user_id="this.user.id" :permisos="this.permisos" :permisos_selected="permisos_selected"></user-permiso>
+                                    <user-role :user_id="user.id" :role_user="role_user" :heredados="heredados"></user-role>
+                                    <user-permiso :user_id="user.id" :permisos="permisos" :permisos_selected="permisos_selected"></user-permiso>
                                 </div>
                             </v-flex>
                         </v-layout>
@@ -343,6 +343,7 @@
                 permisos_selected:[],
                 empresas: [],
                 ips: [],
+                heredados:[],
 
         		status: false,
         		msg : "",
@@ -387,6 +388,8 @@
                 var id = this.$route.params.id;
                 axios.get('/admin/users/'+id+'/edit')
                     .then(res => {
+
+                        this.heredados = res.data.heredados;
 
                         this.empresas = res.data.empresas;
                         this.user = res.data.user;

@@ -67,7 +67,8 @@ class RolesController extends Controller
 
         $role->givePermissionTo($request->permissions);
 
-        return response('Role creado',200);
+        if (request()->wantsJson())
+            return $role;
     }
 
 
@@ -81,7 +82,10 @@ class RolesController extends Controller
 
         $this->authorize('update',$role);
 
-        $permisos = Permission::pluck('name','id');
+        $permisos = Permission::select('name AS value', 'nombre AS text')
+                        ->orderBy('nombre', 'asc')
+                        ->get();
+
 
         $data = $role->getAllPermissions();
 
@@ -117,7 +121,8 @@ class RolesController extends Controller
         $role->permissions()->detach();
         $role->givePermissionTo($request->permissions);
 
-        return response('Role modificado',200);
+        if (request()->wantsJson())
+            return $role;
 
     }
 

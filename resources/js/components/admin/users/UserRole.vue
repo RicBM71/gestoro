@@ -1,7 +1,6 @@
 <template>
     <div v-show="show">
         <h3>Roles Usuario</h3>
-
         <v-layout row wrap>
             <v-flex sm3
                 v-for="item in roles"
@@ -17,11 +16,22 @@
                 ></v-switch>
             </v-flex>
         </v-layout>
+        <v-layout row>
+            <v-flex sm2>
+                <h3>Heredados vía Role</h3>
+            </v-flex>
+        </v-layout>
+        <v-layout row>
+
+                <v-chip v-for="nombre in heredados"
+                    :key="nombre" class="caption" outline color="blue">{{nombre}}</v-chip>
+
+        </v-layout>
     </div>
 </template>
 <script>
 export default {
-    props: ['user_id','role_user'],
+    props: ['user_id','role_user','heredados'],
     data () {
         return {
             roles: [],

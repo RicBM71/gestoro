@@ -1,5 +1,5 @@
 <template>
-    <div v-if="registros">
+    <div>
         <v-card>
             <v-card-title>
                 <h2>{{titulo}}</h2>
@@ -9,15 +9,15 @@
         </v-card>
         <v-card>
             <v-container>
-            <v-layout row wrap>
+            <v-layout row wrap  v-if="registros">
                 <v-flex xs12>
                     <v-data-table
-                    :headers="headers"
-                    :items="this.roles"
-                    rows-per-page-text="Registros por página"
+                        :headers="headers"
+                        :items="roles"
+                        :pagination.sync="pagination"
+                        rows-per-page-text="Registros por página"
                     >
                         <template slot="items" slot-scope="props">
-                            <td>{{ props.item.id }}</td>
                             <td class="text-xs-left">{{ props.item.name }}</td>
                             <td class="text-xs-left">{{ getPermisos(props.item.permissions) }}</td>
                             <td class="text-xs-left">{{ props.item.guard_name }}</td>
@@ -50,12 +50,12 @@ import MenuOpe from './MenuOpe'
     data () {
       return {
         titulo: "Roles",
+        pagination:{
+            descending: true,
+            page: 1,
+            rowsPerPage: 10
+        },
         headers: [
-          {
-            text: 'ID',
-            align: 'center',
-            value: 'id'
-          },
           {
             text: 'Nombre',
             align: 'left',
@@ -98,7 +98,7 @@ import MenuOpe from './MenuOpe'
             return p.toString();
         },
         editItem (id) {
-            this.$router.push({ name: 'roles_edit', params: { id: id } })
+            this.$router.push({ name: 'roles.edit', params: { id: id } })
         },
     }
   }
