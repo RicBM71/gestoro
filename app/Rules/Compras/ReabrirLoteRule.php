@@ -32,7 +32,7 @@ class ReabrirLoteRule implements Rule
             if (esPropietario($this->compra) )
                 return true;
             else
-                return esSupervisor();
+                return hasEdtCom();
         }else{
             return (hasReabreCompras());
         }

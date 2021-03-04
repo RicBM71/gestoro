@@ -140,7 +140,6 @@ import {mapActions} from "vuex";
     computed: {
         ...mapGetters([
             'isAdmin',
-            'isSupervisor',
         ]),
     },
     methods:{

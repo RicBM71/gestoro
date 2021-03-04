@@ -25,7 +25,7 @@
                                     </v-icon> {{ props.item.producto.referencia }}</td>
                                 <td>{{ concepto(props.item) }}</td>
                                 <td class="text-xs-right">{{ props.item.unidades | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
-                                <td v-if="isSupervisor" class="text-xs-right">{{ props.item.precio_coste | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
+                                <td v-if="hasEdtAlb" class="text-xs-right">{{ props.item.precio_coste | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                                 <td v-else>-</td>
                                 <td class="text-xs-right">{{ props.item.iva | currency('%', 0, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                                 <td v-if="albaran.tipo_id==3" class="text-xs-right">{{ props.item.importe_unidad | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
@@ -225,7 +225,7 @@ export default {
     },
     computed:{
          ...mapGetters([
-            'isSupervisor',
+            'hasEdtAlb',
             'hasEdtFac',
             'hasAddVen',
             'userName',
@@ -250,7 +250,7 @@ export default {
             if (this.albaran.username == this.userName && this.albaran.created_at.substr(0, 10) == this.hoy)
                 return true;
             else
-                return (this.isSupervisor);
+                return (this.hasEdtAlb);
 
         }
     },
@@ -308,7 +308,7 @@ export default {
                 }
             }
 
-            if (!this.isSupervisor) return '-';
+            if (!this.hasEdtAlb) return '-';
 
             if (item.margen != null)
                 return this.getDecimalFormat(item.margen, 2);

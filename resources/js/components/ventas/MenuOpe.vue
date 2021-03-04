@@ -197,14 +197,14 @@ export default {
     computed: {
         ...mapGetters([
             'isAdmin',
-            'isSupervisor',
+            'hasEdtAlb',
             'hasBorraCompras',
             'userName',
             'isRoot',
             'hasAddVen'
         ]),
         computedReaCli(){
-            if (this.isSupervisor)
+            if (this.hasEdtAlb)
                 return (this.albaran.id > 0);
             else
                 return (this.albaran.id > 0 && this.albaran.factura == null && this.albaran.fase_id == 10);

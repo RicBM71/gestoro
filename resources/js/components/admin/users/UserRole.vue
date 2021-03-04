@@ -2,7 +2,7 @@
     <div v-show="show">
         <h3>Roles Usuario</h3>
         <v-layout row wrap>
-            <v-flex sm3
+            <v-flex sm2
                 v-for="item in roles"
                 :key="item"
             >

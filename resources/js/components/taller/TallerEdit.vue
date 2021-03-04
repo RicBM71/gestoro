@@ -340,7 +340,6 @@ import {mapGetters} from 'vuex';
         },
         computed: {
             ...mapGetters([
-                'isSupervisor'
             ]),
             computedFModFormat() {
                 moment.locale('es');

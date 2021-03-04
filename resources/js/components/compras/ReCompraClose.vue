@@ -207,7 +207,7 @@
                             </v-text-field>
                             <v-select
                                 v-if="computedShowUbicacion"
-                                :disabled="!isSupervisor"
+                                :disabled="!hasEdtCom"
                                 v-model="compra.almacen_id"
                                 v-validate="'numeric'"
                                 data-vv-name="almacen_id"
@@ -641,7 +641,7 @@ import {mapState} from 'vuex'
         },
         computed: {
             ...mapGetters([
-                'isSupervisor',
+                'hasEdtCom',
                 'isAdmin',
                 'hasLiquidar',
                 'parametros',
@@ -683,7 +683,7 @@ import {mapState} from 'vuex'
 
                 return true;
 
-                // if (this.isSupervisor) return false;
+                // if (this.hasEdtCom) return false;
 
                 // return (new Date() < new Date(this.compra.fecha_bloqueo)) ? true : false;
 
@@ -692,12 +692,12 @@ import {mapState} from 'vuex'
 
                 if (this.compra.fase_id != 4) return false;
 
-                if (this.isSupervisor)
+                if (this.hasEdtCom)
                     return true;
                 else
                     return (this.compra.retraso <= 0)
                 // lo dejamos para cualquier User JL.
-                //return !this.isSupervisor;
+                //return !this.hasEdtCom;
 
             },
             computedDisabledAcuenta(){
@@ -709,7 +709,7 @@ import {mapState} from 'vuex'
                     return this.totales_concepto[1] > 0 ? false : true; // está bloqueado por fecha, pero si hay alguna ampliación dejo dar a cuenta
                 else{
 
-                    if (this.isSupervisor) return false;
+                    if (this.hasEdtCom) return false;
 
                     if (this.flexCortesia)
                         return (this.compra.retraso <= this.dias_cortesia) ? false : true
@@ -769,10 +769,10 @@ import {mapState} from 'vuex'
                 const hoy = new Date().toISOString().substr(0, 10);
 
                 if (this.compra.created_at.substr(0, 10) == hoy){
-                    if (this.compra.username == this.userName || this.isSupervisor)
+                    if (this.compra.username == this.userName || this.hasEdtCom)
                         return true;
                     else
-                        return this.isSupervisor;
+                        return this.hasEdtCom;
                 }else{
                     return this.hasReaCompras;
                 }

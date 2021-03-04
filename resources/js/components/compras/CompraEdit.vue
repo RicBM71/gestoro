@@ -314,12 +314,11 @@ import {mapGetters} from 'vuex';
         computed: {
             ...mapGetters([
                 'isAdmin',
-                'isSupervisor',
                 'parametros'
             ]),
             computedHayDepositos(){
 
-                return !this.isSupervisor;
+                return !this.isAdmin;  // TODO: Revisar con perfil compras
 
                 // if (this.isAdmin) return false;
 

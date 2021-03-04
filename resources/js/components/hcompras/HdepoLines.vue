@@ -81,7 +81,6 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'isSupervisor',
         ]),
     },
     methods:{

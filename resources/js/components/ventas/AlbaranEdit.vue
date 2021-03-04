@@ -588,7 +588,7 @@ import {mapState} from 'vuex'
         },
         computed: {
             ...mapGetters([
-                'isSupervisor',
+                'hasEdtAlb',
                 'isAdmin',
                 'isRoot',
                 'hasFactura',
@@ -641,7 +641,7 @@ import {mapState} from 'vuex'
             disabledFechaAlbaran(){
                 if (this.albaran.factura > 0) return true;
 
-                return !this.isSupervisor;
+                return !this.hasEdtAlb;
             },
             computedAbonar(){
                 if (this.totales.total == 0)
@@ -649,7 +649,7 @@ import {mapState} from 'vuex'
 
                     // si es factura manual/auto o no está facturado, no permito abonar abonos...
                 if (this.albaran.tipo_factura <= 2 && this.albaran.fase_id < 12){
-                    return this.isSupervisor;
+                    return this.hasEdtAlb;
                 }
 
                 return false;
@@ -660,7 +660,7 @@ import {mapState} from 'vuex'
 
                     // si es factura manual o no está facturado ni vendido
                 if (this.albaran.tipo_factura <= 1 && this.albaran.fase_id == 10){
-                    return this.isSupervisor;
+                    return this.hasEdtAlb;
                 }
 
                 return false;

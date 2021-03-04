@@ -79,7 +79,7 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'isSupervisor',
+            'hasDelDep',
             'isAdmin',
             'hasBorraCompras',
             'userName',
@@ -103,10 +103,10 @@ export default {
                 if (item.username == this.userName && item.updated_at.substr(0, 10) == this.hoy)
                     return true;
                 else
-                    return (this.isSupervisor);
+                    return (this.hasDelDep);
             }
             else
-                return (this.isSupervisor);
+                return (this.hasDelDep);
 
 
         },

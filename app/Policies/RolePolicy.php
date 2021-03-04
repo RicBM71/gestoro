@@ -21,7 +21,7 @@ class RolePolicy
     public function view(User $user, Role $role)
     {
         return false;
-        return $user->hasRole('Root') ?: $this->deny("Acceso denegado. Role de ROOT requerido");
+        return $user->hasRole('Admin') ?: $this->deny("Acceso denegado. Role de Admin requerido");
     }
 
     /**
@@ -33,7 +33,7 @@ class RolePolicy
     public function create(User $user)
     {
         //return false;
-        return $user->hasRole('Root') ?: $this->deny("Acceso denegado. Role de ROOT requerido");
+        return $user->hasRole('Admin') ?: $this->deny("Acceso denegado. Role de Admin requerido");
     }
 
     /**
@@ -46,7 +46,7 @@ class RolePolicy
     public function update(User $user, Role $role)
     {
 
-        return $user->hasRole('Root') ?: $this->deny("Acceso denegado. Role de ROOT requerido");
+        return $user->hasRole('Admin') ?: $this->deny("Acceso denegado. Role de Admin requerido");
     }
 
     /**

@@ -82,12 +82,12 @@ function esAdmin(){
     return auth()->user()->hasRole('Admin');
 }
 
-function esSupervisor(){
-    return (auth()->user()->hasRole('Supervisor') || auth()->user()->hasRole('Admin'));
-}
-
 function esGestor(){
     return auth()->user()->hasRole('Gestor');
+}
+
+function hasEdtCom(){
+    return auth()->user()->hasPermissionTo('edtcom');
 }
 
 

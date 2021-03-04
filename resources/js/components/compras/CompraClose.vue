@@ -324,7 +324,6 @@ import {mapState} from 'vuex'
             ...mapGetters([
                 'hasLiquidar',
                 'isAdmin',
-                'isSupervisor',
                 'hasReaCompras',
                 'userName',
                 'hasAddCom'
@@ -350,10 +349,10 @@ import {mapState} from 'vuex'
                 const hoy = new Date().toISOString().substr(0, 10);
 
                 if (this.compra.created_at.substr(0, 10) == hoy){
-                    if (this.compra.username == this.userName || this.isSupervisor)
+                    if (this.compra.username == this.userName)
                         return true;
                     else
-                        return this.isSupervisor;
+                        return this.hasReaCompras; // TODO: REVISAR cuando revisemos perfiles compra
                 }else{
                     return this.hasReaCompras;
                 }

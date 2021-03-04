@@ -117,7 +117,7 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'isSupervisor',
+            'hasDelDep',
             'hasBorraCompras',
             'userName',
             'hasAddCom'
@@ -141,7 +141,7 @@ export default {
 
             var iban_f= iban.substring(0,4)+" "+ iban.substring(4,8) + " " + iban.substring(8,12) + " "+ iban.substring(12,16) +" "+ iban.substring(16,20)+" "+ iban.substring(20,24);
 
-            return (this.isSupervisor) ? "IBAN: "+iban_f+" - BIC: "+bic :  iban.substring(0,4)+" "+ iban.substring(4,8) + " **** **** **** *" + iban.substring(21,24);
+            return (this.hasDelDep) ? "IBAN: "+iban_f+" - BIC: "+bic :  iban.substring(0,4)+" "+ iban.substring(4,8) + " **** **** **** *" + iban.substring(21,24);
         },
         modificado(item){
             moment.locale('es');
@@ -159,7 +159,7 @@ export default {
                 if (item.username == this.userName && item.created_at.substr(0, 10) == this.hoy)
                     return true;
                 else
-                    return (this.isSupervisor);
+                    return (this.hasDelDep);
             }
             else
                 return false;

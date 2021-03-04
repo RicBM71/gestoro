@@ -125,12 +125,6 @@ const getters = {
     isAdmin: (state) =>{
         return (state.roles.indexOf('Admin') >= 0) ? true : false;
     },
-    isSupervisor: (state) =>{
-        return (state.roles.indexOf('Supervisor') >= 0 || state.roles.indexOf('Admin') >= 0) ? true : false;
-    },
-    isGestor: (state) =>{
-        return (state.roles.indexOf('Gestor') >= 0) ? true : false;
-    },
     hasAddCom: (state) =>{
         return (state.permisos.indexOf('addcom') >= 0) ? true : false;
     },
@@ -190,6 +184,18 @@ const getters = {
     },
     hasWhatsApp: (state) =>{
         return (state.permisos.indexOf('whatsapp') >= 0) ? true : false;
+    },
+    hasDelDep: (state) =>{
+        return (state.permisos.indexOf('deldep') >= 0) ? true : false;
+    },
+    hasDelCob: (state) =>{
+        return (state.permisos.indexOf('delcob') >= 0) ? true : false;
+    },
+    hasEdtAlb: (state) =>{
+        return (state.permisos.indexOf('edtalb') >= 0) ? true : false;
+    },
+    hasEdtCom: (state) =>{
+        return (state.permisos.indexOf('edtcom') >= 0) ? true : false;
     },
     flexCortesia: (state) =>{
         return state.flex_cortesia;

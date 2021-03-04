@@ -59,7 +59,7 @@ class CompraPolicy
         if ($compra->fase_id == 1)
             return true;
 
-        if (esSupervisor() || esPropietario($compra))
+        if (hasEdtCom() || esPropietario($compra))
             return true;
 
         return $this->deny("Acceso denegado, no dispone de los permisos requeridos");
