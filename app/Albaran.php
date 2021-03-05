@@ -278,9 +278,9 @@ class Albaran extends Model
 
             if ($clitxt[0] ==':'){
                 $clitxt = str_replace(':','',$clitxt);
-                return $query->orWhere('notas_int','like', '%'.$clitxt.'%');
+                return $query->Where('notas_int','like', '%'.$clitxt.'%');
             }else{
-                return $query->orWhere('clitxt','like', '%'.$clitxt.'%');
+                return $query->Where('clitxt','like', '%'.$clitxt.'%');
             }
 
         }

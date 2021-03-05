@@ -74,7 +74,7 @@
                                     <td>{{ props.item.alb_ser }}</td>
                                     <td>{{ formatDate(props.item.fecha_albaran) }}</td>
                                     <td>{{ getDni(props.item.cliente.dni) }}</td>
-                                    <td>{{ props.item.cliente.razon }}</td>
+                                    <td>{{ getNombre(props.item) }}</td>
                                     <td class="text-xs-right">{{ totalImpLinea(props.item.albalins) | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                     <td>{{ props.item.fac_ser }}</td>
                                     <td>{{ formatDate(props.item.fecha_factura) }}</td>
@@ -257,15 +257,18 @@ import {mapActions} from "vuex";
             'setPagination',
             'unsetPagination'
         ]),
+        getNombre(item){
+            return (item.clitxt == null || item.clitxt == '') ? item.cliente.razon : item.clitxt;
+        },
         showNotas(item){
 
-            return (item.notas_int != null || item.clitxt != null)
+            return (item.notas_int > '')
         },
         misNotas(item){
-            var n1 = item.clitxt != null ? item.clitxt : "";
+            //var n1 = item.clitxt != null ? item.clitxt : "";
             var n2 = item.notas_int != null ? item.notas_int : "";
 
-            return n1 + " "+ n2;
+            return n2;
         },
         totalImpLinea(lineas){
 

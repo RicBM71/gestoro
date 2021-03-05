@@ -22,10 +22,10 @@
             </v-flex>
         </v-layout>
         <v-layout row>
-
+            <v-flex sm12>
                 <v-chip v-for="nombre in heredados"
                     :key="nombre" class="caption" outline color="blue">{{nombre}}</v-chip>
-
+            </v-flex>
         </v-layout>
     </div>
 </template>

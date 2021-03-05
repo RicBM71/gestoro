@@ -160,7 +160,7 @@ class UsersController extends Controller
                 'emp_user'      => $emp_user,
                 'empresas'      => $empresas_mostrar,
                 'ips'           => Ipuser::selIps($user->id),
-                'heredados'     => $heredados->pluck('nombre')
+                'heredados'     => $heredados->pluck('nombre')->sort()->values()->all()
             ];
 
         return redirect()->route('home');
