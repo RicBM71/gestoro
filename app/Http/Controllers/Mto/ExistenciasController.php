@@ -43,6 +43,7 @@ class ExistenciasController extends Controller
 
         $data = $request->validate([
             'fecha' => ['required', 'date'],
+            'detalle_id' => ['required', 'integer'],
             'importe' => ['required', 'numeric'],
         ]);
 
@@ -94,8 +95,9 @@ class ExistenciasController extends Controller
         $this->authorize('update', $existencia);
 
         $data = $request->validate([
-            'fecha' => ['required', 'date'],
-            'importe' => ['required', 'numeric'],
+            'fecha'      => ['required', 'date'],
+            'detalle_id' => ['required', 'integer'],
+            'importe'    => ['required', 'numeric'],
         ]);
 
         $data['username'] = $request->user()->username;

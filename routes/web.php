@@ -312,6 +312,8 @@ Route::group([
         Route::post('borrar/purgar', 'BorradoMasivoController@purgar');
         Route::post('borrar/ampliaciones', 'BorradoMasivoController@ampliaciones');
 
+        Route::get('calcular/existencias', 'CalcularExistenciasController@submit');
+
      //   Route::get('helpbanco', 'HelpBancosController@index');
     }
 );

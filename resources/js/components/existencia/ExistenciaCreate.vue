@@ -12,6 +12,18 @@
                  <v-container>
                      <v-layout row wrap>
                         <v-flex sm1></v-flex>
+                        <v-flex sm2 d-flex>
+                            <v-select
+                                v-model="existencia.detalle_id"
+                                v-validate="'required'"
+                                data-vv-name="detalle_id"
+                                data-vv-as="detalle"
+                                :error-messages="errors.collect('detalle_id')"
+                                :items="detalles"
+                                label="Concepto"
+                                required
+                            ></v-select>
+                        </v-flex>
                         <v-flex sm2>
                             <v-menu
                                 v-model="menu1"
@@ -88,7 +100,16 @@ import MenuOpe from './MenuOpe'
       		return {
                 titulo:"Nuevo",
                 existencia: {
+                    fecha: new Date().toISOString().substr(0, 10),
+                    detalle_id: 1,
                 },
+
+                detalles:[
+                    {value: 1, text: 'Recompras'},
+                    {value: 2, text: 'Compras'},
+                    {value: 3, text: 'Existencias'},
+                ],
+
         		status: false,
                 loading: false,
                 show_loading: false,
@@ -105,7 +126,7 @@ import MenuOpe from './MenuOpe'
             },
             computedFModFormat() {
                 moment.locale('es');
-                return this.existencia.updated_at ? moment(this.existencia.updated_at).format('D/MM/YYYY H:mm') : '';
+                return this.existencia.updated_at ? moment(this.existencia.updated_at).format('D/MM/YYYY H:mm:ss') : '';
             },
             computedFCreFormat() {
                 moment.locale('es');

@@ -268,7 +268,7 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'hasEditCom',
+            'hasEdtCom',
             'hasEdtFec',
             'hasLimEfe',
             'parametros'

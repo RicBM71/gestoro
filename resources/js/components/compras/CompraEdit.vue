@@ -314,11 +314,12 @@ import {mapGetters} from 'vuex';
         computed: {
             ...mapGetters([
                 'isAdmin',
+                'hasEdtCom',
                 'parametros'
             ]),
             computedHayDepositos(){
 
-                return !this.isAdmin;  // TODO: Revisar con perfil compras
+                return !this.hasEdtCom;  // TODO: Revisar con perfil compras
 
                 // if (this.isAdmin) return false;
 

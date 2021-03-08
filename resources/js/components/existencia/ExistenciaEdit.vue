@@ -13,6 +13,18 @@
                  <v-container>
                      <v-layout row wrap>
                         <v-flex sm1></v-flex>
+                        <v-flex sm2 d-flex>
+                            <v-select
+                                v-model="existencia.detalle_id"
+                                v-validate="'required'"
+                                data-vv-name="detalle_id"
+                                data-vv-as="detalle"
+                                :error-messages="errors.collect('detalle_id')"
+                                :items="detalles"
+                                label="Concepto"
+                                required
+                            ></v-select>
+                        </v-flex>
                         <v-flex sm2>
                             <v-menu
                                 v-model="menu1"
@@ -118,6 +130,11 @@ import {mapGetters} from 'vuex';
     	data () {
       		return {
                 titulo:"Valor Existencias",
+                detalles:[
+                    {value: 1, text: 'Recompras'},
+                    {value: 2, text: 'Compras'},
+                    {value: 3, text: 'Existencias'},
+                ],
                 existencia: {},
                 url: "/mto/existencias",
                 ruta: "existencia",
@@ -157,11 +174,11 @@ import {mapGetters} from 'vuex';
             },
             computedFModFormat() {
                 moment.locale('es');
-                return this.existencia.updated_at ? moment(this.existencia.updated_at).format('DD/MM/YYYY H:mm') : '';
+                return this.existencia.updated_at ? moment(this.existencia.updated_at).format('DD/MM/YYYY H:mm:ss') : '';
             },
             computedFCreFormat() {
                 moment.locale('es');
-                return this.existencia.created_at ? moment(this.existencia.created_at).format('DD/MM/YYYY H:mm') : '';
+                return this.existencia.created_at ? moment(this.existencia.created_at).format('DD/MM/YYYY H:mm:ss') : '';
             }
 
         },

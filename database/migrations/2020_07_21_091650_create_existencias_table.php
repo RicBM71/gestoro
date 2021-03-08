@@ -16,11 +16,12 @@ class CreateExistenciasTable extends Migration
         Schema::create('existencias', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('empresa_id');
+            $table->unsignedInteger('detalle_id');
             $table->date('fecha');
             $table->decimal('importe', 12, 2)->default(0);
             $table->string('username',30)->nullable();
             $table->timestamps();
-            $table->unique(['empresa_id','fecha']);
+            $table->unique(['empresa_id','fecha','detalle_id']);
         });
     }
 

@@ -11,7 +11,7 @@ class Existencia extends Model
     protected $dates = ['fecha'];
 
     protected $fillable = [
-        'empresa_id', 'fecha','importe', 'username'
+        'empresa_id', 'detalle_id', 'fecha','importe', 'username'
     ];
 
     protected $casts = [
