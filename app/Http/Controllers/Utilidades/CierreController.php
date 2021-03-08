@@ -16,6 +16,7 @@ use App\Http\Controllers\Controller;
 class CierreController extends Controller
 {
 
+    use CalcularExistenciasTrait;
 
     public function submit(Request $request)
     {
@@ -146,56 +147,8 @@ class CierreController extends Controller
 
         $fecha = $param['ejercicio'].'-12-31';
 
-        DB::table('existencias')->where('fecha', $fecha)->delete();
-
-        $productos = DB::table('productos')
-                        ->select('empresa_id','id','stock', 'precio_coste')
-                        ->whereIn('estado_id', [1,2,3])
-                        ->where('created_at', '<=', $fecha)
-                        ->whereNull('deleted_at')
-                        ->orderBy('empresa_id')
-                        ->get();
-
-        $valor_stock = 0;
-        $empresa_id_ant = 0;
-        foreach ($productos as $producto){
-
-            if ($empresa_id_ant == 0){
-                $empresa_id_ant = $producto->empresa_id;
-            }
-            if ($empresa_id_ant <> $producto->empresa_id){
-
-                $this->crearStock($empresa_id_ant, $valor_stock, $fecha);
-
-                $empresa_id_ant = $producto->empresa_id;
-                $valor_stock = 0;
-            }
-
-            if ($producto->stock == 1){
-                $valor_stock += ($producto->precio_coste);
-            }else{
-                $stock = Producto::getStockReal($producto->id);
-                $valor_stock += ($producto->precio_coste * $stock);
-            }
-
-        }
-
-        $this->crearStock($empresa_id_ant, $valor_stock, $fecha);
+        $this->valorInventario($fecha);
 
     }
-
-    private function crearStock($empresa_id, $valor_stock, $fecha){
-
-        $data['id'] = null;
-        $data['empresa_id'] = $empresa_id;
-        $data['fecha'] = $fecha;
-        $data['importe'] = $valor_stock;
-        $data['username'] = session('username');
-
-        Existencia::create($data);
-    }
-
-
-
 
 }
