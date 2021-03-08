@@ -107,7 +107,7 @@ import MenuOpe from './MenuOpe'
                 detalles:[
                     {value: 1, text: 'Recompras'},
                     {value: 2, text: 'Compras'},
-                    {value: 3, text: 'Existencias'},
+                    {value: 3, text: 'Inventario'},
                 ],
 
         		status: false,

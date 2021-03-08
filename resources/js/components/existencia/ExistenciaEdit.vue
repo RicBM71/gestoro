@@ -133,7 +133,7 @@ import {mapGetters} from 'vuex';
                 detalles:[
                     {value: 1, text: 'Recompras'},
                     {value: 2, text: 'Compras'},
-                    {value: 3, text: 'Existencias'},
+                    {value: 3, text: 'Inventario'},
                 ],
                 existencia: {},
                 url: "/mto/existencias",

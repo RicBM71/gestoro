@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Scopes\AislarEmpresaScope;
 use Illuminate\Support\Facades\DB;
+use App\Jobs\CalcularExistenciaJob;
 use App\Jobs\SendUpdateProductosOnline;
 use Illuminate\Support\Facades\Storage;
 
@@ -105,6 +106,9 @@ class HomeController extends Controller
         $this->unloadSession($request);
 
         $jobs  = DB::table('jobs')->count();
+
+       // dispatch(new CalcularExistenciaJob());
+
 
         session([
             'empresa_id'       => $empresa_id,

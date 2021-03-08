@@ -373,6 +373,9 @@ Route::group([
             Route::post('/apuban', 'ApuntesBancoController@submit');
             Route::post('/apuban/excel', 'ApuntesBancoController@excel');
 
+            Route::post('/valorex', 'ValorExistenciasController@submit');
+            Route::post('/valorex/excel', 'ValorExistenciasController@excel');
+
 
         });
 

@@ -162,6 +162,7 @@ import ServiciosTaller from './components/exportar/ServiciosTaller.vue';
 import Recogidas from './components/exportar/Recogidas.vue';
 import MetalDeposito from './components/exportar/MetalDeposito.vue';
 import ApuntesBanco from './components/exportar/ApuntesBanco.vue';
+import ValorExistencias from './components/exportar/ValorExistencias.vue';
 
 import ParametroEdit from './components/admin/parametros/ParametroEdit.vue';
 
@@ -718,6 +719,11 @@ export default [
                 path: '/export/apuban',
                 name: 'exportar.apuban',
                 component: ApuntesBanco,
+            },
+            {
+                path: '/export/valorex',
+                name: 'exportar.valorex',
+                component: ValorExistencias,
             },
             {
                 path: '/reubicar',

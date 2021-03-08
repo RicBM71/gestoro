@@ -128,7 +128,7 @@
                             <v-icon color="red darken-4">notification_important</v-icon>
                         </v-btn>
                     </template>
-                    <span>({{jobs}}) Mails pendientes de envio.</span>
+                    <span>({{jobs}}) Procesos pendientes.</span>
                 </v-tooltip>
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
@@ -354,6 +354,7 @@ export default {
                 { text: 'Relación facturas recuperacion', name: 'facturacion.lisfacom', icon: 'print'},
                 { text: 'Relación facturas de venta', name: 'facturacion.lisfaven', icon: 'print'},
                 { icon: 'forward', text: 'Inventario', name:'exportar.inventario' },
+                { icon: 'forward', text: 'Valor Existencias', name:'exportar.valorex' },
                 { icon: 'archive', text: 'Mod. 347', name:'exportar.mod347' },
                 { icon: 'menu_book', text: 'Imprimir Libro', name:'exportar.libro' },
                 { icon: 'check_circle_outline', text: 'Check Contadores', name:'contador.check' },
