@@ -36,7 +36,7 @@ class StoreCobroRequest extends FormRequest
 
         $data = [
 
-            'fpago_id'      => ['required','integer','between:1,4'],
+            'fpago_id'      => ['required','integer'],
             'fecha'         => ['required','date'],
             'albaran_id'    => ['required', 'integer'],
             'cliente_id'    => ['required', 'integer'],
