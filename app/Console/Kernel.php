@@ -28,7 +28,14 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
 
+
+        $schedule->call(function () {
+            \Log::info('task');
+        })->everyMinute();
+
         $schedule->job(new CalcularExistenciaJob)->everyMinute()->withoutOverlapping();
+
+
     }
 
     /**
