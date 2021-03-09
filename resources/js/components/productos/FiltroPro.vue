@@ -406,7 +406,6 @@ export default {
     },
     computed: {
          ...mapGetters([
-            'isAdmin',
             'hasDesLoc'
         ]),
         computedFechaD() {

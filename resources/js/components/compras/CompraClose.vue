@@ -323,7 +323,6 @@ import {mapState} from 'vuex'
         computed: {
             ...mapGetters([
                 'hasLiquidar',
-                'isAdmin',
                 'hasReaCompras',
                 'userName',
                 'hasAddCom'

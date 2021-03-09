@@ -206,11 +206,6 @@ export default {
                 this.fpagos.push({value:0,text:"---"});
                 this.tipos.push({value:0,text:"---"});
 
-                // if (!this.isAdmin){
-                //     const index = this.tipos.indexOf(4);
-                //     this.tipos.splice(index, 1)
-                // }
-
             })
             .catch(err => {
                 this.$toast.error('Error al montar <filtro-alb>');
@@ -218,7 +213,6 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'isAdmin',
         ]),
         computedFechaD() {
             moment.locale('es');

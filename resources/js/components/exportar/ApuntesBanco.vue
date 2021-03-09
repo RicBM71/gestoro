@@ -240,14 +240,14 @@ export default {
       }
     },
     mounted(){
-        if (!this.isAdmin){
-            this.$toast.error('No dispone de los permisos necesarios - Admin');
+        if (!this.hasConsultas){
+            this.$toast.error('No dispone de los permisos necesarios - Consultas');
             this.$router.push({ name: 'dash' })
         }
     },
     computed: {
         ...mapGetters([
-            'isAdmin'
+            'hasConsultas'
         ]),
         computedFechaD() {
             moment.locale('es');

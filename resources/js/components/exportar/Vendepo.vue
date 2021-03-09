@@ -253,7 +253,6 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'isAdmin',
         ]),
         computedFechaD() {
             moment.locale('es');

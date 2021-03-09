@@ -91,7 +91,6 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'isAdmin',
         ]),
     },
     methods:{

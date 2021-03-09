@@ -60,7 +60,6 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'isAdmin',
         ]),
     },
     methods:{
@@ -68,9 +67,6 @@ export default {
             this.$router.go(-1);
         },
         goCliente(){
-            // if (!this.isAdmin)
-            //     this.$router.push({ name: 'cliente.show', params: { id: this.albaran.cliente_id } })
-            // else
                 this.$router.push({ name: 'cliente.edit', params: { id: this.albaran.cliente_id } })
         },
         goFind(){

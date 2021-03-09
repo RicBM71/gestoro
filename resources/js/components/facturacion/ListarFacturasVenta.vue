@@ -337,7 +337,6 @@ import {mapActions} from "vuex";
 
         computed: {
             ...mapGetters([
-                    'isAdmin',
                     'getPagination',
                     'getLineasIndex',
                     'empresaActiva'

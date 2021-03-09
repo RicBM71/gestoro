@@ -178,7 +178,6 @@ import Loading from '@/components/shared/Loading'
         },
         computed: {
             ...mapGetters([
-                    'isAdmin'
                 ]),
             computedFechaD() {
                 moment.locale('es');

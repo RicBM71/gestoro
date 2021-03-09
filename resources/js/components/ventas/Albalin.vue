@@ -229,7 +229,6 @@ export default {
             'hasEdtFac',
             'hasAddVen',
             'userName',
-            'isAdmin',
             'parametros'
         ]),
         computedResto(){

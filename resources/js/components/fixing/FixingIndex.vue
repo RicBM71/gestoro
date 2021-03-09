@@ -11,7 +11,7 @@
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on }">
                             <v-btn
-                                v-show="items.length > 0 && isAdmin"
+                                v-show="items.length > 0 && hasConsultas"
                                 v-on="on"
                                 color="white"
                                 icon
@@ -162,7 +162,7 @@ import {mapActions} from "vuex";
     },
     computed: {
         ...mapGetters([
-            'isAdmin',
+            'hasConsultas',
         ])
     },
     methods:{

@@ -149,7 +149,6 @@ import {mapGetters} from 'vuex';
         },
         computed: {
         ...mapGetters([
-                'isAdmin'
             ]),
             computedFecha() {
                 moment.locale('es');

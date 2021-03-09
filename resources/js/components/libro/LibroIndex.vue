@@ -206,7 +206,6 @@ import {mapActions} from "vuex";
     computed: {
         ...mapGetters([
             'isRoot',
-            'isAdmin',
             'getPagination'
         ])
     },

@@ -74,7 +74,6 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'isAdmin',
             'isRoot'
         ]),
     },
@@ -96,7 +95,7 @@ export default {
 
             axios.post('/mto/talleres/'+this.id,{_method: 'delete'})
                 .then(response => {
-                    
+
                     this.$router.push({ name: 'taller.index' })
                     this.$toast.success(response.data.msg);
             })

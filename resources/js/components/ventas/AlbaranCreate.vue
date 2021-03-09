@@ -189,7 +189,6 @@ import Loading from '@/components/shared/Loading'
         },
         computed: {
             ...mapGetters([
-                    'isAdmin'
                 ]),
             computedFechaAlbaran() {
                 moment.locale('es');

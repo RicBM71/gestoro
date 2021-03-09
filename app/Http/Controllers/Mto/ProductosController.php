@@ -156,94 +156,94 @@ class ProductosController extends Controller
 
     }
 
-    private function miFiltro2(){
+    // private function miFiltro2(){
 
-        $data = request()->session()->get('filtro_pro');
+    //     $data = request()->session()->get('filtro_pro');
 
-        if (esAdmin() && session('parametros')->aislar_empresas == false && $data['sinscope']==true){
-            if ($data['alta'] == false)
-                $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->withTrashed()->with(['clase','estado','destino','empresa'])
-                            ->where('destino_empresa_id', session('empresa_id'))
-                            ->referencia($data['referencia'])
-                            ->fecha($data['fecha_d'],$data['fecha_h'],$data['tipo_fecha'])
-                            ->clase($data['clase_id'])
-                            ->estado($data['estado_id'])
-                            ->empresa($data['empresa_id'])
-                            ->notasNombre($data['notas'])
-                            ->refPol($data['ref_pol'])
-                            ->precioPeso($data['precio'])
-                            ->quilates($data['quilates'])
-                            ->online($data['online'])
-                            ->internos($data['interno'])
-                            ->asociado($data['cliente_id'])
-                            ->orderBy('id','desc')
-                            ->get()
-                            ->take(999);
-            else{
+    //     if (esAdmin() && session('parametros')->aislar_empresas == false && $data['sinscope']==true){
+    //         if ($data['alta'] == false)
+    //             $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->withTrashed()->with(['clase','estado','destino','empresa'])
+    //                         ->where('destino_empresa_id', session('empresa_id'))
+    //                         ->referencia($data['referencia'])
+    //                         ->fecha($data['fecha_d'],$data['fecha_h'],$data['tipo_fecha'])
+    //                         ->clase($data['clase_id'])
+    //                         ->estado($data['estado_id'])
+    //                         ->empresa($data['empresa_id'])
+    //                         ->notasNombre($data['notas'])
+    //                         ->refPol($data['ref_pol'])
+    //                         ->precioPeso($data['precio'])
+    //                         ->quilates($data['quilates'])
+    //                         ->online($data['online'])
+    //                         ->internos($data['interno'])
+    //                         ->asociado($data['cliente_id'])
+    //                         ->orderBy('id','desc')
+    //                         ->get()
+    //                         ->take(999);
+    //         else{
 
-                $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','estado','destino','empresa'])
-                        ->where('destino_empresa_id', session('empresa_id'))
-                        ->referencia($data['referencia'])
-                        ->fecha($data['fecha_d'], $data['fecha_h'],$data['tipo_fecha'])
-                        ->clase($data['clase_id'])
-                        ->estado($data['estado_id'])
-                        ->empresa($data['empresa_id'])
-                        ->notasNombre($data['notas'])
-                        ->refPol($data['ref_pol'])
-                        ->precioPeso($data['precio'])
-                        ->quilates($data['quilates'])
-                        ->online($data['online'])
-                        ->internos($data['interno'])
-                        ->asociado($data['cliente_id'])
-                        ->orderBy('id','desc')
-                        ->get()
-                        ->take(999);
-            }
+    //             $data = Producto::withOutGlobalScope(EmpresaProductoScope::class)->with(['clase','estado','destino','empresa'])
+    //                     ->where('destino_empresa_id', session('empresa_id'))
+    //                     ->referencia($data['referencia'])
+    //                     ->fecha($data['fecha_d'], $data['fecha_h'],$data['tipo_fecha'])
+    //                     ->clase($data['clase_id'])
+    //                     ->estado($data['estado_id'])
+    //                     ->empresa($data['empresa_id'])
+    //                     ->notasNombre($data['notas'])
+    //                     ->refPol($data['ref_pol'])
+    //                     ->precioPeso($data['precio'])
+    //                     ->quilates($data['quilates'])
+    //                     ->online($data['online'])
+    //                     ->internos($data['interno'])
+    //                     ->asociado($data['cliente_id'])
+    //                     ->orderBy('id','desc')
+    //                     ->get()
+    //                     ->take(999);
+    //         }
 
-        }
-        else{
-            if ($data['alta'] == false)
-                $data = Producto::withTrashed()->with(['clase','estado','destino','empresa'])
-                            ->where('destino_empresa_id', session('empresa_id'))
-                            ->referencia($data['referencia'])
-                            ->fecha($data['fecha_d'],$data['fecha_h'],$data['tipo_fecha'])
-                            ->clase($data['clase_id'])
-                            ->estado($data['estado_id'])
-                            ->empresa($data['empresa_id'])
-                            ->notasNombre($data['notas'])
-                            ->refPol($data['ref_pol'])
-                            ->precioPeso($data['precio'])
-                            ->quilates($data['quilates'])
-                            ->online($data['online'])
-                            ->internos($data['interno'])
-                            ->asociado($data['cliente_id'])
-                            ->orderBy('id','desc')
-                            ->get()
-                            ->take(999);
-            else{
+    //     }
+    //     else{
+    //         if ($data['alta'] == false)
+    //             $data = Producto::withTrashed()->with(['clase','estado','destino','empresa'])
+    //                         ->where('destino_empresa_id', session('empresa_id'))
+    //                         ->referencia($data['referencia'])
+    //                         ->fecha($data['fecha_d'],$data['fecha_h'],$data['tipo_fecha'])
+    //                         ->clase($data['clase_id'])
+    //                         ->estado($data['estado_id'])
+    //                         ->empresa($data['empresa_id'])
+    //                         ->notasNombre($data['notas'])
+    //                         ->refPol($data['ref_pol'])
+    //                         ->precioPeso($data['precio'])
+    //                         ->quilates($data['quilates'])
+    //                         ->online($data['online'])
+    //                         ->internos($data['interno'])
+    //                         ->asociado($data['cliente_id'])
+    //                         ->orderBy('id','desc')
+    //                         ->get()
+    //                         ->take(999);
+    //         else{
 
-                $data = Producto::with(['clase','estado','destino','empresa'])
-                        ->where('destino_empresa_id', session('empresa_id'))
-                        ->referencia($data['referencia'])
-                        ->fecha($data['fecha_d'], $data['fecha_h'],$data['tipo_fecha'])
-                        ->clase($data['clase_id'])
-                        ->estado($data['estado_id'])
-                        ->empresa($data['empresa_id'])
-                        ->notasNombre($data['notas'])
-                        ->refPol($data['ref_pol'])
-                        ->precioPeso($data['precio'])
-                        ->quilates($data['quilates'])
-                        ->online($data['online'])
-                        ->internos($data['interno'])
-                        ->asociado($data['cliente_id'])
-                        ->orderBy('id','desc')
-                        ->get()
-                        ->take(999);
-            }
-        }
-        return $data;
+    //             $data = Producto::with(['clase','estado','destino','empresa'])
+    //                     ->where('destino_empresa_id', session('empresa_id'))
+    //                     ->referencia($data['referencia'])
+    //                     ->fecha($data['fecha_d'], $data['fecha_h'],$data['tipo_fecha'])
+    //                     ->clase($data['clase_id'])
+    //                     ->estado($data['estado_id'])
+    //                     ->empresa($data['empresa_id'])
+    //                     ->notasNombre($data['notas'])
+    //                     ->refPol($data['ref_pol'])
+    //                     ->precioPeso($data['precio'])
+    //                     ->quilates($data['quilates'])
+    //                     ->online($data['online'])
+    //                     ->internos($data['interno'])
+    //                     ->asociado($data['cliente_id'])
+    //                     ->orderBy('id','desc')
+    //                     ->get()
+    //                     ->take(999);
+    //         }
+    //     }
+    //     return $data;
 
-    }
+    // }
 
     /**
      * Show the form for creating a new resource.

@@ -17,8 +17,8 @@ class ApuntesBancoController extends Controller
     public function index(){
 
 
-        if (!esAdmin()){
-            return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Admin');
+        if (!hasConsultas()){
+            return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Consultas');
         }
 
         // if (request()->wantsJson())
@@ -30,8 +30,8 @@ class ApuntesBancoController extends Controller
 
     public function submit(Request $request){
 
-        if (!esAdmin()){
-            return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Admin');
+        if (!hasConsultas()){
+            return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Consultas');
         }
 
         $data = $request->validate([
