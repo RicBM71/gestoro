@@ -233,7 +233,7 @@ class Albaran extends Model
 
     public static function scopeTipo($query, $tipo_id){
 
-        if (esAdmin()){
+        if (hasConsultas()){
             if (!Empty($tipo_id) && $tipo_id > 0)
                 return $query->where('tipo_id','=', $tipo_id);
         }else{
