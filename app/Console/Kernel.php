@@ -29,9 +29,9 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
 
 
-        // $schedule->call(function () {
-        //     \Log::info('task');
-        // })->everyMinute();
+        $schedule->call(function () {
+            \Log::info('task');
+        })->everyMinute();
 
         // $schedule->job(new CalcularExistenciaJob)->monthly()->withoutOverlapping();
 
