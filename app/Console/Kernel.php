@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
 
-        $schedule->job(new CalcularExistenciaJob)->mondays();
+        $schedule->job(new CalcularExistenciaJob)->hourly()->withoutOverlapping();
     }
 
     /**
