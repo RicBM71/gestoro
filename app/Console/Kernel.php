@@ -33,7 +33,8 @@ class Kernel extends ConsoleKernel
         //     \Log::info('task');
         // })->everyMinute();
 
-        $schedule->job(new CalcularExistenciaJob)->monthly()->withoutOverlapping();
+
+        $schedule->job(new CalcularExistenciaJob)->weeklyOn(3, '11:00')->withoutOverlapping();
 
 
     }
