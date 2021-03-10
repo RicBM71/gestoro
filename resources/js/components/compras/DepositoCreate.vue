@@ -151,7 +151,6 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'isAdmin',
             'hasLimEfe',
             'parametros'
         ]),

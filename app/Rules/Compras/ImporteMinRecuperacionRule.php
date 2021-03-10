@@ -38,7 +38,7 @@ class ImporteMinRecuperacionRule implements Rule
 
 
         if ($this->imp_total_recu < $this->compra->imprecu)
-            return hasEdtCom();
+            return hasReaCom();
 
         // // saltarse esto supone que el valor de venta (recuperación) sería inferior al de compra.
         // // dumpin, ojo! OJO PORQUE FALLA SI LO DEJAMOS PASAR, HAY REVISAR EN OBSERVER IMPORTE PRESTAMO

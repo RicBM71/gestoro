@@ -110,7 +110,7 @@
                                             edit
                                         </v-icon>
                                         &nbsp;
-                                        <v-icon v-if="hasBorraCompras"
+                                        <v-icon v-if="hasDelCom"
                                             small
                                             @click="openDialog(props.item)"
                                         >
@@ -258,7 +258,7 @@ import {mapActions} from "vuex";
     },
     computed: {
         ...mapGetters([
-            'hasBorraCompras',
+            'hasDelCom',
             'getPagination',
             'hasExcel',
             'hasWhatsApp',

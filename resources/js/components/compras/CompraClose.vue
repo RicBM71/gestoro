@@ -323,7 +323,7 @@ import {mapState} from 'vuex'
         computed: {
             ...mapGetters([
                 'hasLiquidar',
-                'hasReaCompras',
+                'hasReaCom',
                 'userName',
                 'hasAddCom'
             ]),
@@ -351,9 +351,9 @@ import {mapState} from 'vuex'
                     if (this.compra.username == this.userName)
                         return true;
                     else
-                        return this.hasReaCompras; // TODO: REVISAR cuando revisemos perfiles compra
+                        return this.hasReaCom; // TODO: REVISAR cuando revisemos perfiles compra
                 }else{
-                    return this.hasReaCompras;
+                    return this.hasReaCom;
                 }
 
             },

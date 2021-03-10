@@ -46,14 +46,14 @@
                                 offset-y
                                 full-width
                                 min-width="290px"
-                                :disabled="!isAdmin"
+                                :disabled="!hasReaCom"
                             >
                                 <v-text-field
                                     slot="activator"
                                     :value="computedFechaCompra"
                                     label="Fecha Compra"
                                     append-icon="event"
-                                    :readonly="!isAdmin"
+                                    :readonly="!hasReaCom"
                                     v-on:keyup.enter="submit"
                                     ></v-text-field>
                                 <v-date-picker
@@ -62,12 +62,12 @@
                                     locale="es"
                                     first-day-of-week=1
                                     @input="menu1 = false"
-                                    :readonly="!isAdmin"
+                                    :readonly="!hasReaCom"
 
                                 ></v-date-picker>
                             </v-menu>
                         </v-flex>
-                        <v-flex sm2 v-if="!isAdmin">
+                        <v-flex sm2 v-if="!hasReaCom">
                             <v-text-field
                                 class="centered-input"
                                 v-model="compra.alb_ser"
@@ -130,7 +130,7 @@
                                 data-vv-as="interés"
                                 :error-messages="errors.collect('interes')"
                                 label="% Renovación"
-                                :readonly="computedHayDepositos"
+                                :readonly="!computedHayDepositos"
                                 v-on:keyup.enter="submit"
                             >
                             </v-text-field>
@@ -145,7 +145,7 @@
                                 data-vv-as="interés"
                                 :error-messages="errors.collect('interes_recuperacion')"
                                 label="% Recuperación"
-                                :readonly="computedHayDepositos"
+                                :readonly="!computedHayDepositos"
                                 v-on:keyup.enter="submit"
                             >
                             </v-text-field>
@@ -279,6 +279,7 @@ import {mapGetters} from 'vuex';
                 docu_ok: true,
                 auth_liquidar: false,
                 grabaciones: false,
+                cambio_interes: 0
 
       		}
         },
@@ -302,6 +303,8 @@ import {mapGetters} from 'vuex';
 
                         this.fpago = this.compra.cliente.fpago_id;
 
+                        this.cambio_interes = res.data.cambio_interes;
+
                         this.show = true;
                         this.show_loading = false;
 
@@ -313,15 +316,22 @@ import {mapGetters} from 'vuex';
         },
         computed: {
             ...mapGetters([
-                'isAdmin',
-                'hasEdtCom',
+                'hasReaCom',
+                'hasEdtInt',
                 'parametros'
             ]),
             computedHayDepositos(){
 
-                return !this.hasEdtCom;  // TODO: Revisar con perfil compras
+                if (this.hasReaCom) return true;
 
-                // if (this.isAdmin) return false;
+                if (this.hasEdtInt && this.cambio_interes == 0 )
+                    return true;
+
+                return false;
+
+                // TODO: Revisar con perfil compras
+
+                // if (this.hasReaCom) return false;
 
                 // return this.totales_concepto[0] != 0;
             },

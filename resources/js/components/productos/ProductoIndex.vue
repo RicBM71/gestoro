@@ -8,18 +8,6 @@
                 <v-card-title>
                     <h2>{{titulo}}</h2>
                     <v-spacer></v-spacer>
-                    <!-- <v-tooltip bottom v-if="isAdmin">
-                        <template v-slot:activator="{ on }">
-                            <v-btn
-                                v-on="on"
-                                color="white"
-                                icon
-                            >
-                                <v-icon color="red darken-4">priority_high</v-icon>
-                            </v-btn>
-                        </template>
-                        <span>Hay opciones de administrador deshabilitadas</span>
-                    </v-tooltip> -->
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on }">
                             <v-btn
@@ -95,7 +83,7 @@
                                     <td v-else>ERROR AL ASIGNAR O/D {{ props.item.empresa_id + "/" + props.item.destino_empresa_id}}</td>
                                     <td class="justify-center layout px-0">
                                         <v-icon
-                                            v-if="props.item.deleted_at==null || isAdmin"
+                                            v-if="props.item.deleted_at==null || hasEdtPro"
                                             small
                                             class="mr-2"
                                             @click="editItem(props.item)"
@@ -103,14 +91,14 @@
                                             edit
                                         </v-icon>
                                         <v-icon
-                                            v-if="props.item.deleted_at==null && isAdmin &&  props.item.estado_id <= 2"
+                                            v-if="props.item.deleted_at==null && hasEdtPro &&  props.item.estado_id <= 2"
                                             small
                                             @click="openDialog(props.item)"
                                         >
                                             delete
                                         </v-icon>
                                         <v-icon
-                                            v-if="props.item.deleted_at!=null && isAdmin"
+                                            v-if="props.item.deleted_at!=null && hasEdtPro"
                                             small
                                             @click="openDialog(props.item)"
                                         >
@@ -259,9 +247,8 @@ import {mapActions} from "vuex";
     },
     computed: {
         ...mapGetters([
-            'isAdmin',
+            'hasEdtPro',
             'hasExcel',
-            'hasEditPro',
             'getPagination',
             'empresaActiva'
         ]),

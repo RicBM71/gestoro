@@ -268,7 +268,7 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'hasEdtCom',
+            'hasReaCom',
             'hasEdtFec',
             'hasLimEfe',
             'parametros'
@@ -298,7 +298,7 @@ export default {
             this.importe2 = 0;
         },
         validarBloqueo(){
-            if (this.hasEdtCom) return true;
+            if (this.hasReaCom) return true;
 
             if (new Date() < new Date(this.compra.fecha_bloqueo))
                 return false; // está bloqueado por fecha

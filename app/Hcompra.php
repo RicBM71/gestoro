@@ -12,7 +12,7 @@ class Hcompra extends Model
         'fecha_compra','fecha_bloqueo','fecha_renovacion','fecha_recogida','importe',
         'importe_renovacion','importe_acuenta', 'interes','fase_id', 'factura','fecha_factura',
         'serie_fac','papeleta','notas', 'username','retencion', 'interes_recuperacion', 'importe_recuperacion','almacen_id',
-        'id', 'operacion', 'username_his', 'created_his', 'compra_id'
+        'id', 'operacion', 'username_his', 'created_his', 'compra_id', 'created_at', 'updated_at'
      ];
 
     protected $appends = ['alb_ser'];
@@ -20,7 +20,7 @@ class Hcompra extends Model
     public function getAlbSerAttribute(){
 
         return $this->serie_com." ".$this->albaran.'-'.substr($this->ejercicio,-2);
-        
+
     }
 
 
@@ -53,5 +53,14 @@ class Hcompra extends Model
     {
         return $this->hasMany(Hdeposito::class);
     }
+
+    static public function getCambios($compra_id){
+
+        return Hcompra::where('compra_id', $compra_id)
+                                    ->where('operacion','I')
+                                    ->get()
+                                    ->count();
+    }
+
 
 }

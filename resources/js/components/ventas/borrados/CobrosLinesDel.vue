@@ -79,9 +79,7 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'hasDelDep',
-            'isAdmin',
-            'hasBorraCompras',
+            'hasDelCob',
             'userName',
             'hasEdtFac',
             'hasAddVen'
@@ -97,16 +95,16 @@ export default {
 
             if (this.hasEdtFac) return true;
 
-            if (this.albaran.factura > 0 && !this.isAdmin) return false;
+            if (this.albaran.factura > 0 && !this.hasDelCob) return false;
 
             if (this.cobros_lin.indexOf(item) == 0){ // es el último apunte.
                 if (item.username == this.userName && item.updated_at.substr(0, 10) == this.hoy)
                     return true;
                 else
-                    return (this.hasDelDep);
+                    return (this.hasDelCob);
             }
             else
-                return (this.hasDelDep);
+                return (this.hasDelCob);
 
 
         },

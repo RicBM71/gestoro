@@ -62,4 +62,19 @@ class HcomprasController extends Controller
             ];
 
     }
+
+    public function historial($compra_id){
+
+        if (!hasReaCom()){
+            return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Reabrir');
+        }
+
+
+        if (request()->wantsJson())
+            return Hcompra::where('compra_id', $compra_id)
+                            ->where('operacion', 'I')
+                            ->orderBy('created_at')
+                            ->get();
+
+    }
 }

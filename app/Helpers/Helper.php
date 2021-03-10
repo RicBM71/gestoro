@@ -86,7 +86,7 @@ function esGestor(){
     return auth()->user()->hasRole('Gestor');
 }
 
-function hasEdtCom(){
+function hasEdtInt(){
     return auth()->user()->hasPermissionTo('edtcom');
 }
 
@@ -107,6 +107,10 @@ function hasEdtCaj(){
     return auth()->user()->hasPermissionTo('edtcaj');
 }
 
+function hasDelCom(){
+    return auth()->user()->hasPermissionTo('delcom');
+}
+
 
 function hasExcel(){
     return auth()->user()->hasPermissionTo('excel');
@@ -117,7 +121,7 @@ function hasConsultas(){
 }
 
 
-function hasReabreCompras(){
+function hasReaCom(){
     return auth()->user()->hasPermissionTo('reacom');
 }
 

@@ -115,7 +115,6 @@ export default {
         ...mapGetters([
             'isLoggedIn',
             'isRoot',
-            'isAdmin',
             'empresaActiva',
             'imgFondo',
             'lotes'

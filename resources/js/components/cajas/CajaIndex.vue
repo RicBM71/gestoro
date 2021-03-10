@@ -278,7 +278,7 @@ import {mapActions} from "vuex";
     },
     computed: {
         ...mapGetters([
-            'isAdmin',
+            'hasDelCaj',
             'hasEdtCaj',
             'userName',
             'getPagination'
@@ -350,9 +350,9 @@ import {mapActions} from "vuex";
         },
         puedeBorrar(item){
             if (item.manual == 'R'){ // es apunte de cierre
-                return (this.isAdmin)
+                return (this.hasDelCaj)
             }else{
-                return (item.manual == "S" || item.manual == "R") && this.isAdmin;
+                return (item.manual == "S" || item.manual == "R") && this.hasDelCaj;
             }
 
         },

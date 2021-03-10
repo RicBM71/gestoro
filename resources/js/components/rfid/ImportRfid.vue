@@ -177,8 +177,8 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
       		}
         },
         mounted(){
-            if (!this.isAdmin){
-                this.$toast.error('Permiso Administrador requerido');
+            if (!this.hasEdtPro){
+                this.$toast.error('Permiso Editpro requerido');
                 this.$router.push({ name: 'dash'})
             }
             axios.get('/rfid/recuento')
@@ -192,7 +192,7 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
         },
         computed: {
             ...mapGetters([
-                'isAdmin',
+                'hasEdtPro',
             ]),
         },
     	methods:{

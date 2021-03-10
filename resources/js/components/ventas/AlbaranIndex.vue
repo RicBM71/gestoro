@@ -97,7 +97,7 @@
                                         </v-icon>
 
 
-                                        <v-icon v-if="isAdmin && props.item.factura == null"
+                                        <v-icon v-if="hasDelAlb && props.item.factura == null"
                                             small
                                             @click="openDialog(props.item)"
                                             >
@@ -245,9 +245,8 @@ import {mapActions} from "vuex";
     },
     computed: {
         ...mapGetters([
-            'hasBorraCompras',
+            'hasDelAlb',
             'getPagination',
-            'isAdmin',
             'hasEdtCli',
             'hasExcel'
         ])

@@ -10,6 +10,7 @@ use App\Compra;
 use App\Almacen;
 use App\Cliente;
 use App\Empresa;
+use App\Hcompra;
 use App\Concepto;
 use App\Deposito;
 use Carbon\Carbon;
@@ -243,6 +244,7 @@ class ComprasController extends Controller
                 'dias_cortesia'     => $dias_cortesia,
                 'cambio_recompra'   => $cambio_recompra,
                 'almacenes'         => Almacen::selAlmacenes(),
+                'cambio_interes'    => Hcompra::getCambios($compra->id)
             ];
 
     }
@@ -290,7 +292,8 @@ class ComprasController extends Controller
                 'lineas_deposito'   => Deposito::CompraId($compra->id)->get(),
                 'grabaciones'       => $grabaciones,
                 'dias_cortesia'     => $dias_cortesia,
-                'cambio_recompra'   => $cambio_recompra
+                'cambio_recompra'   => $cambio_recompra,
+                'cambio_interes'    => Hcompra::getCambios($compra->id)
             ];
 
     }
@@ -307,6 +310,7 @@ class ComprasController extends Controller
         $this->authorize('update', $compra);
 
         $data = $request->validated();
+
         $fecha_compra = Carbon::parse($data['fecha_compra']);
 
 
@@ -342,6 +346,8 @@ class ComprasController extends Controller
             $data['retencion'] = session()->get('parametros')->retencion;
         }
 
+        $this->checkUpdateInteres($compra, $data['interes'], $data['interes_recuperacion']);
+
         // if ($data['tipo_id']==1){
         //     //if (is_null($compra->fecha_renovacion) || $compra->fecha_compra <> $data['fecha_compra']){
         //     //if (is_null($compra->fecha_renovacion)){
@@ -365,6 +371,24 @@ class ComprasController extends Controller
             return [
                 'compra'=>$compra,
                 'message' => 'EL registro ha sido modificado'];
+    }
+
+    private function checkUpdateInteres($compra, $interes, $interes_recuperacion){
+
+        if ($compra->interes == $interes && $compra->interes_recuperacion == $interes_recuperacion)
+            return;
+
+        $compra_old = Compra::find($compra->id);
+
+        $data = $compra->toArray();
+        $data['id']=null;
+        $data['compra_id']=$compra->id;
+        $data['operacion']='I';
+        $data['username_his']=session('username');
+        $data['created_his']=Carbon::now();
+
+        Hcompra::create($data);
+
     }
 
     /**

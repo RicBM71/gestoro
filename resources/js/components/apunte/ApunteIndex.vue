@@ -51,7 +51,7 @@
 
 
                                             <v-icon
-                                            v-show="isAdmin"
+                                            v-show="delCaj"
                                             small
                                             @click="openDialog(props.item)"
                                             >
@@ -139,7 +139,7 @@ import {mapActions} from "vuex";
     },
     computed: {
         ...mapGetters([
-            'isAdmin',
+            'delCaj',
         ]),
     },
     methods:{

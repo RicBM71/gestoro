@@ -134,19 +134,28 @@ const getters = {
     hasMail: (state) =>{
         return (state.permisos.indexOf('mail') >= 0) ? true : false;
     },
-    hasReaCompras: (state) =>{
+    hasReaCom: (state) =>{
         return (state.permisos.indexOf('reacom') >= 0) ? true : false;
+    },
+    hasEdtUbi: (state) =>{
+        return (state.permisos.indexOf('edtubi') >= 0) ? true : false;
     },
     hasLimEfe: (state) =>{
         return (state.permisos.indexOf('salefe') >= 0) ? true : false;
     },
-    hasBorraCompras: (state) =>{
+    hasDelCom: (state) =>{
         return (state.permisos.indexOf('delcom') >= 0) ? true : false;
+    },
+    hasDelAlb: (state) =>{
+        return (state.permisos.indexOf('delalb') >= 0) ? true : false;
+    },
+    hasDelCaj: (state) =>{
+        return (state.permisos.indexOf('delcaj') >= 0) ? true : false;
     },
     hasLiquidar: (state) =>{
         return (state.permisos.indexOf('liquidar') >= 0) ? true : false;
     },
-    hasEditPro: (state) =>{
+    hasEdtPro: (state) =>{
         return (state.permisos.indexOf('edtpro') >= 0) ? true : false;
     },
     hasAuthTras: (state) =>{
@@ -197,7 +206,7 @@ const getters = {
     hasEdtAlb: (state) =>{
         return (state.permisos.indexOf('edtalb') >= 0) ? true : false;
     },
-    hasEdtCom: (state) =>{
+    hasEdtInt: (state) =>{
         return (state.permisos.indexOf('edtcom') >= 0) ? true : false;
     },
     flexCortesia: (state) =>{

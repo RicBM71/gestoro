@@ -237,7 +237,6 @@ import {mapGetters} from 'vuex';
         },
         computed: {
             ...mapGetters([
-                'isAdmin'
             ]),
             computedValorRestoCompra(){
                 var total_inventariado = parseFloat(this.compra.importe);

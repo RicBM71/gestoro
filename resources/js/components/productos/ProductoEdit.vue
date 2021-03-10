@@ -516,7 +516,7 @@ import {mapState} from 'vuex'
                             this.setAuthUser(res.data.parametros.user);
 
                         // if (this.producto.estado_id == 3 || this.producto.estado_id == 4)
-                        //     if (!this.isAdmin){
+                        //     if (!this.hasEdtPro){
                         //         this.$router.push({ name: this.ruta+'.show',  params: { id: this.producto.id }})
                         //     }
 
@@ -557,9 +557,9 @@ import {mapState} from 'vuex'
         },
         computed: {
             ...mapGetters([
-                    'isAdmin',
+                    'hasEdtPro',
                     'isRoot',
-                    'hasEditPro',
+                    'hasEdtPro',
                     'userName'
                 ]),
             computedEditEstado(){
@@ -573,7 +573,7 @@ import {mapState} from 'vuex'
             },
             computedEditGarantia(){
 
-                if (this.hasEditPro == true) return false;
+                if (this.hasEdtPro == true) return false;
 
                 return this.producto.estado_id > 3;
 
@@ -586,7 +586,7 @@ import {mapState} from 'vuex'
 
             },
             computedEditStock(){
-                if (this.show_stock && this.isAdmin)
+                if (this.show_stock && this.hasEdtPro)
                     return true;
                 return false;
             },
@@ -598,13 +598,13 @@ import {mapState} from 'vuex'
                 if (this.producto.estado_id == 3 || this.producto.estado_id == 4)
                     return false;
 
-                //     return this.isAdmin;
+                //     return this.hasEdtPro;
 
                 const hoy = new Date().toISOString().substr(0, 10);
                 if (this.producto.username == this.userName && this.producto.created_at.substr(0, 10) == hoy)
                     return true;
                 else
-                    return this.hasEditPro;
+                    return this.hasEdtPro;
             },
             computedLabelDestino(){
 

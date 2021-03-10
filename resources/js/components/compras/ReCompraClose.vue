@@ -1,6 +1,48 @@
 <template>
 	<div>
         <loading :show_loading="show_loading"></loading>
+        <v-dialog
+            v-model="dialog_cambios"
+            width="640"
+            >
+
+            <v-card>
+                <v-card-title class="headline grey lighten-2">
+                Historial de cambios
+                </v-card-title>
+
+                <v-card-text>
+                    <v-data-table
+                        :items="historial"
+                        :headers="headers"
+                        rows-per-page-text="Registros"
+                        class="elevation-1"
+                    >
+                        <template v-slot:items="props">
+                            <td class="text-xs-left">{{ getFecha(props.item.created_at) }}</td>
+                            <td class="text-xs-left">{{ props.item.username }}</td>
+                            <td class="text-xs-center">{{ getDecimalFormat(props.item.interes) }} <span v-if="parametros.doble_interes">/{{ getDecimalFormat(props.item.interes_recuperacion) }}</span></td>
+                            <td class="text-xs-right">{{ getDecimalFormat(props.item.importe) }}</td>
+                        </template>
+                    </v-data-table>
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                    color="primary"
+                    text
+                    flat
+                    round
+                    @click="dialog_cambios = false"
+                >
+                    Cerrar
+                </v-btn>
+                </v-card-actions>
+            </v-card>
+            </v-dialog>
         <v-card  v-if="show">
             <v-card-title color="indigo">
                 <h2 color="indigo">{{titulo}}: <span v-if="show" :class="compra.fase.color">{{compra.fase.nombre}}</span></h2>
@@ -118,6 +160,19 @@
                     </template>
                     <span>Alternar conceptos/importes</span>
                 </v-tooltip>
+                <v-tooltip bottom v-if="hasReaCom && cambio_interes > 0">
+                    <template v-slot:activator="{ on }">
+                         <v-btn
+                            v-on="on"
+                            color="white"
+                            icon
+                            @click="goHistorial"
+                        >
+                            <v-icon color="orange">warning_amber</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>Ver historial de cambios</span>
+                </v-tooltip>
                 <v-tooltip bottom v-if="mail_renova==true">
                     <template v-slot:activator="{ on }">
                         <v-btn
@@ -207,7 +262,7 @@
                             </v-text-field>
                             <v-select
                                 v-if="computedShowUbicacion"
-                                :disabled="!hasEdtCom"
+                                :disabled="!hasEdtUbi"
                                 v-model="compra.almacen_id"
                                 v-validate="'numeric'"
                                 data-vv-name="almacen_id"
@@ -288,7 +343,7 @@
                         </v-flex>
                         <v-flex sm2 v-else>
                             <v-text-field
-                                v-if="isAdmin"
+                                v-if="hasEdtCom"
                                 v-model="computedTotalPrestamo"
                                 label="Total Recuperado+Amp+Ac"
                                 readonly
@@ -429,6 +484,12 @@
                                     @click="goFase"  round  :loading="loading" block  color="primary">
                                     Reabrir Lote
                                 </v-btn>
+                                <v-badge color="red" v-if="hasReaCom && cambio_interes > 0">
+                                    <template v-slot:badge>
+                                        <span class="caption">{{cambio_interes}}</span>
+                                    </template>
+                                    <span class="red--text caption">Cambios de interés</span>
+                                </v-badge>
                             </div>
                         </v-flex>
                     </v-layout>
@@ -582,7 +643,16 @@ import {mapState} from 'vuex'
                 grabaciones: false,
                 dias_cortesia: 0,
                 cambio_recompra: false,
-                almacenes:[]
+                almacenes:[],
+                cambio_interes: 0,
+                dialog_cambios: false,
+                historial:[],
+                headers: [
+                    { text: 'Fecha', value: 'created_at' },
+                    { text: 'Usuario', value: 'username' },
+                    { text: 'Interés', value: 'interes' },
+                    { text: 'Imp. Pres.', value: 'importe' },
+                ],
 
       		}
         },
@@ -630,6 +700,8 @@ import {mapState} from 'vuex'
 
                         this.show_lindepo = (this.compra.fase_id == 6) ? false : true;
 
+                        this.cambio_interes = res.data.cambio_interes;
+
                         this.show = true;
                         this.show_loading = false;
 
@@ -641,16 +713,17 @@ import {mapState} from 'vuex'
         },
         computed: {
             ...mapGetters([
-                'hasEdtCom',
-                'isAdmin',
+                'hasReaCom',
+                'hasEdtUbi',
                 'hasLiquidar',
                 'parametros',
-                'hasReaCompras',
+                'hasReaCom',
                 'userName',
                 'hasAddCom',
                 'flexCortesia',
                 'parametros',
                 'hasEdtFac',
+                'hasEdtInt',
                 'mail_renova'
             ]),
             computedError(){
@@ -673,7 +746,7 @@ import {mapState} from 'vuex'
             },
             computedDisabledDesfacturar(){
 
-                if (this.compra.factura > 0 && this.hasReaCompras &&  this.hasEdtFac)
+                if (this.compra.factura > 0 && this.hasReaCom &&  this.hasEdtFac)
                     return false;
                 else
                     return true;
@@ -682,9 +755,6 @@ import {mapState} from 'vuex'
             computedAmpliar(){
 
                 return true;
-
-                // if (this.hasEdtCom) return false;
-
                 // return (new Date() < new Date(this.compra.fecha_bloqueo)) ? true : false;
 
             },
@@ -692,12 +762,11 @@ import {mapState} from 'vuex'
 
                 if (this.compra.fase_id != 4) return false;
 
-                if (this.hasEdtCom)
+                if (this.hasReaCom)
                     return true;
                 else
                     return (this.compra.retraso <= 0)
-                // lo dejamos para cualquier User JL.
-                //return !this.hasEdtCom;
+
 
             },
             computedDisabledAcuenta(){
@@ -709,7 +778,7 @@ import {mapState} from 'vuex'
                     return this.totales_concepto[1] > 0 ? false : true; // está bloqueado por fecha, pero si hay alguna ampliación dejo dar a cuenta
                 else{
 
-                    if (this.hasEdtCom) return false;
+                    if (this.hasReaCom) return false;
 
                     if (this.flexCortesia)
                         return (this.compra.retraso <= this.dias_cortesia) ? false : true
@@ -732,7 +801,7 @@ import {mapState} from 'vuex'
             computedDisabledRecuperar(){
 
                 // con esto un administrador, tiene que hacer una ampliación con importe a cero, así queda constancia
-                if (this.isAdmin) return false; // lo dejo para poder recupear aún bloqueado.
+                if (this.hasEdtCom) return false; // lo dejo para poder recupear aún bloqueado.
 
                 var date = new Date();
                 var hoy = moment(date).format('YYYY-MM-DD');
@@ -766,16 +835,29 @@ import {mapState} from 'vuex'
             },
             computedReabrir(){
 
+                if (this.hasReaCom) return true;
+
                 const hoy = new Date().toISOString().substr(0, 10);
 
-                if (this.compra.created_at.substr(0, 10) == hoy){
-                    if (this.compra.username == this.userName || this.hasEdtCom)
-                        return true;
-                    else
-                        return this.hasEdtCom;
-                }else{
-                    return this.hasReaCompras;
-                }
+                 if (this.compra.created_at.substr(0, 10) == hoy){
+                    if (this.compra.username == this.userName)
+                        return this.cambio_interes <= 1;
+                 }
+
+                 if (this.hasEdtInt && this.cambio_interes == 0)
+                    return true;
+
+                return false;
+
+
+                // if (this.compra.created_at.substr(0, 10) == hoy){
+                //     if (this.compra.username == this.userName)
+                //         return true;
+                //     else
+                //         return (this.hasEdtInt && this.cambio_interes == 0) ;
+                // }else{
+                //     return this.hasReaCom;
+                // }
 
             },
             computedInteres(){
@@ -893,6 +975,10 @@ import {mapState} from 'vuex'
             getMoneyFormat(value){
 
                 return new Intl.NumberFormat("de-DE",{style: "currency", currency: "EUR"}).format(parseFloat(value))
+            },
+            getFecha(f){
+                moment.locale('es');
+                return f ? moment(f).format('DD/MM/YYYY H:mm:ss') : '';
             },
             goEmail(){
                 this.show_loading = true;
@@ -1106,6 +1192,20 @@ import {mapState} from 'vuex'
                     .finally(()=> {
                         this.loading = false;
                     });
+            },
+            goHistorial(){
+
+                axios.get("/compras/hcompras/"+this.compra.id+"/historial" )
+                    .then(res => {
+                        this.dialog_cambios = true;
+                        this.historial = res.data;
+
+                    })
+                    .catch(err => {
+                        this.$toast.error(err.response.data.message);
+                        this.dialog_cambios = false;
+                    });
+
             }
 
     }

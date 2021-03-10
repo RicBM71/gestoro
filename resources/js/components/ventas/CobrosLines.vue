@@ -111,7 +111,6 @@ export default {
     computed: {
         ...mapGetters([
             'hasDelCob',
-            'isAdmin',
             'userName',
             'hasEdtFac',
             'hasAddVen'
@@ -123,11 +122,9 @@ export default {
     methods:{
          borrarLinea(item){
 
-            if (!this.hasAddVen) return false;
 
-            if (this.hasEdtFac) return true;
 
-            if (this.albaran.factura > 0 && !this.isAdmin) return false;
+            if (this.albaran.factura > 0 && !this.hasDelCob) return false;
 
             if (this.cobros_lin.indexOf(item) == 0){ // es el último apunte.
                 if (item.username == this.userName && item.updated_at.substr(0, 10) == this.hoy)

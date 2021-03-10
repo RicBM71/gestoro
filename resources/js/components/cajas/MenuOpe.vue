@@ -27,7 +27,7 @@
             </template>
                 <span>Recuento de Caja</span>
         </v-tooltip>
-         <v-tooltip bottom v-if="isAdmin">
+         <v-tooltip bottom v-if="hasDelCaj">
             <template v-slot:activator="{ on }">
                 <v-btn
                     v-show="id > 0"
@@ -75,7 +75,7 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'isAdmin',
+            'hasDelCaj',
         ]),
     },
     methods:{

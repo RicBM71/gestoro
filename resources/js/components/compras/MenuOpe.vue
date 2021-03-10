@@ -213,22 +213,21 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'hasEdtCom',
-            'hasBorraCompras',
+            'hasReaCom',
+            'hasDelCom',
             'userName',
             'isRoot',
-            'isAdmin',
             'hasScan',
             'hasAddCom'
         ]),
         computedReaCli(){
-            return (this.compra.id > 0 && this.compra.fase_id <= 4 && this.hasEdtCom && this.compra.factura == null);
+            return (this.compra.id > 0 && this.compra.fase_id <= 4 && this.hasReaCom && this.compra.factura == null);
         },
         computedTraslado(){
 
             const hoy = new Date().toISOString().substr(0, 10);
 
-            return (this.compra.id > 0 && this.compra.fase_id <= 4 && this.hasEdtCom && this.compra.factura == null && this.compra.fecha_compra == hoy);
+            return (this.compra.id > 0 && this.compra.fase_id <= 4 && this.hasReaCom && this.compra.factura == null && this.compra.fecha_compra == hoy);
         },
         computedImprimeCompra(){
 
@@ -257,10 +256,10 @@ export default {
                 if (this.compra.created_at.substr(0, 10) == new Date().toISOString().substr(0, 10) && this.compra.username==this.userName)
                     return true;
 
-                if (this.compra.created_at.substr(0, 10) == new Date().toISOString().substr(0, 10) && this.hasEdtCom)
+                if (this.compra.created_at.substr(0, 10) == new Date().toISOString().substr(0, 10) && this.hasReaCom)
                     return true;
 
-                if  (this.hasBorraCompras)
+                if  (this.hasDelCom)
                     return true;
 
             }

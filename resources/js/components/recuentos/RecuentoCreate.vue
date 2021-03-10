@@ -257,7 +257,6 @@ import MyDialog from '@/components/shared/MyDialog'
         },
         computed: {
         ...mapGetters([
-            'isAdmin',
         ]),
         computedFechaD() {
                 moment.locale('es');

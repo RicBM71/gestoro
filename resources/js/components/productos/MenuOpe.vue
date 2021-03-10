@@ -92,13 +92,13 @@ export default {
     },
     computed: {
     ...mapGetters([
-            'isAdmin',
+            'hasEdtPro',
         ]),
         computedDisabledBorrar(){
 
             if (this.estado_id > 2) return true;
 
-            return !this.isAdmin;
+            return !this.hasEdtPro;
         }
     },
     methods:{

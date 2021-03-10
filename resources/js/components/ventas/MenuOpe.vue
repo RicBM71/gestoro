@@ -196,9 +196,8 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'isAdmin',
+            'hasDelAlb',
             'hasEdtAlb',
-            'hasBorraCompras',
             'userName',
             'isRoot',
             'hasAddVen'
@@ -229,7 +228,7 @@ export default {
             if (this.albaran.username == this.userName && this.albaran.created_at.substr(0, 10) == this.hoy)
                 return true;
             else
-                return (this.isAdmin);
+                return (this.hasDelAlb);
 
         }
     },
@@ -238,10 +237,7 @@ export default {
             this.$router.go(-1);
         },
         goCliente(){
-            // if (!this.isAdmin)
-            //     this.$router.push({ name: 'cliente.show', params: { id: this.albaran.cliente_id } })
-            // else
-                this.$router.push({ name: 'cliente.edit', params: { id: this.albaran.cliente_id } })
+            this.$router.push({ name: 'cliente.edit', params: { id: this.albaran.cliente_id } })
         },
         goCreate(){
             this.$router.push({ name: this.ruta+'.create', params: { cliente_id: this.albaran.cliente_id }  })

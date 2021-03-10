@@ -118,7 +118,6 @@ export default {
     computed: {
         ...mapGetters([
             'hasDelDep',
-            'hasBorraCompras',
             'userName',
             'hasAddCom'
         ]),

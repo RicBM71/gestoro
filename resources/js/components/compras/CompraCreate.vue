@@ -61,7 +61,7 @@
                             </v-text-field>
                         </v-flex>
                     </v-layout>
-                    <v-layout row wrap v-if="hasBorraCompras">
+                    <v-layout row wrap v-if="hasEdtFec">
                         <v-flex sm3></v-flex>
                         <v-flex sm3>
                             <v-menu
@@ -73,7 +73,7 @@
                                 offset-y
                                 full-width
                                 min-width="290px"
-                                :disabled="!hasBorraCompras"
+                                :disabled="!hasEdtFec"
                             >
                                 <v-text-field
                                     slot="activator"
@@ -89,7 +89,7 @@
                                     locale="es"
                                     first-day-of-week=1
                                     @input="menu1 = false"
-                                    :disabled="!hasBorraCompras"
+                                    :disabled="!hasEdtFec"
                                 ></v-date-picker>
                             </v-menu>
                         </v-flex>
@@ -102,7 +102,7 @@
                                 :error-messages="errors.collect('albaran')"
                                 label="Nº Registro"
                                 v-on:keyup.enter="submit"
-                                :readonly="!hasBorraCompras"
+                                :readonly="!hasEdtFec"
                             >
                             </v-text-field>
                         </v-flex>
@@ -249,7 +249,7 @@ import Loading from '@/components/shared/Loading'
         },
         computed: {
             ...mapGetters([
-                    'hasBorraCompras'
+                    'hasEdtFec'
                 ]),
             computedFechaCompra() {
                 moment.locale('es');

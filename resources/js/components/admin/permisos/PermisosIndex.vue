@@ -9,9 +9,23 @@
         </v-card>
         <v-card>
             <v-container>
+                <v-layout row wrap>
+                    <v-flex xs6></v-flex>
+                    <v-flex xs6>
+                        <v-spacer></v-spacer>
+                        <v-text-field
+                            v-model="search"
+                            append-icon="search"
+                            label="Buscar"
+                            single-line
+                            hide-details
+                        ></v-text-field>
+                    </v-flex>
+                </v-layout>
             <v-layout row wrap  v-if="registros">
                 <v-flex xs12>
                     <v-data-table
+                        :search="search"
                         :headers="headers"
                         :items="permisos"
                         :pagination.sync="pagination"
@@ -50,6 +64,7 @@ import MenuOpe from './MenuOpe'
     data () {
       return {
         titulo: "Permisos",
+        search:'',
         pagination:{
             descending: true,
             page: 1,

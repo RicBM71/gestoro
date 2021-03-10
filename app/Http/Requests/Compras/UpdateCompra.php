@@ -23,6 +23,9 @@ class UpdateCompra extends FormRequest
      */
     public function rules()
     {
+
+        $compra = $this->compra;
+
         // if ($this->user()->hasPermissionTo('Edita Compras')){
             return [
                 'dias_custodia'         => ['required', 'numeric'],

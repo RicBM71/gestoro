@@ -4,7 +4,7 @@
         <v-tooltip bottom>
             <template v-slot:activator="{ on }">
                 <v-btn
-                    v-show="id > 0 && isRoot"
+                    v-show="id > 0 && isAdmin"
                     v-on="on"
                     color="white"
                     icon
