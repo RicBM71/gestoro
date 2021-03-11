@@ -36,7 +36,7 @@ class EstadosRfidController extends Controller
 
     public function baja(Request $request){
 
-        if (!esAdmin())
+        if (!hasEdtPro())
             return abort(411,'No autorizado');
 
         $productos = DB::table('recuentos')->select('producto_id')
@@ -78,7 +78,7 @@ class EstadosRfidController extends Controller
 
     public function restaurar(Request $request){
 
-        if (!esAdmin())
+        if (!hasEdtPro())
             return abort(411,'No autorizado');
 
         $productos = DB::table('recuentos')->select('producto_id')

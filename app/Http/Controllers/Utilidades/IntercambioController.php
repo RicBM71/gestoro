@@ -10,7 +10,7 @@ class IntercambioController extends Controller
 {
     public function index($ejercicio=0){
 
-        if (!esAdmin()){
+        if (!hasReaCom()){
             return abort(403,auth()->user()->name.' NO tiene permiso de administrador');
         }
 
@@ -20,7 +20,7 @@ class IntercambioController extends Controller
 
     public function submit(Request $request){
 
-        if (!esAdmin()){
+        if (!hasReaCom()){
             return abort(403,auth()->user()->name.' NO tiene permiso de administrador');
         }
 

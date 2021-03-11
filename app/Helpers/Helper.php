@@ -90,6 +90,10 @@ function hasEdtInt(){
     return auth()->user()->hasPermissionTo('edtcom');
 }
 
+function hasEdtPro(){
+    return auth()->user()->hasPermissionTo('edtpro');
+}
+
 function hasMail(){
     return auth()->user()->hasPermissionTo('mail');
 }
@@ -111,6 +115,13 @@ function hasDelCom(){
     return auth()->user()->hasPermissionTo('delcom');
 }
 
+function hasDelAlb(){
+    return auth()->user()->hasPermissionTo('delalb');
+}
+
+function hasDelCaj(){
+    return auth()->user()->hasPermissionTo('delcaj');
+}
 
 function hasExcel(){
     return auth()->user()->hasPermissionTo('excel');

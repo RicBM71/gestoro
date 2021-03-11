@@ -356,7 +356,7 @@ class ProductosController extends Controller
         }
         else{
 
-            if (esAdmin()){
+            if (hasEdtPro()){
                 $producto = Producto::withTrashed()->findOrFail($id);
             }else{
                 $producto = Producto::findOrFail($id);
@@ -439,7 +439,7 @@ class ProductosController extends Controller
         //     return abort(411, 'El producto existe en albaranes, no se puede borrar');
         // }
 
-        if (esAdmin()){
+        if (hasEdtPro()){
             $producto = Producto::withOutGlobalScope(EmpresaProductoScope::class)->withTrashed()->findOrFail($id);
         }else{
             $producto = Producto::findOrFail($id);
@@ -455,7 +455,7 @@ class ProductosController extends Controller
             $producto->restore();
             $msg="Registro restaurado!";
         }else{
-            if (esAdmin() && hasHardDel()){
+            if (hasEdtPro() && hasHardDel()){
                 $msg="Registro eliminado permanentemente!";
                 $producto->forceDelete();
             }

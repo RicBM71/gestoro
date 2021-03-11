@@ -378,16 +378,24 @@ class ComprasController extends Controller
         if ($compra->interes == $interes && $compra->interes_recuperacion == $interes_recuperacion)
             return;
 
-        $compra_old = Compra::find($compra->id);
+        //$compra_old = Compra::find($compra->id);
+
+        $this->createHis($compra, 'I');
+
+
+    }
+
+    private function createHis($compra, $operacion){
 
         $data = $compra->toArray();
         $data['id']=null;
         $data['compra_id']=$compra->id;
-        $data['operacion']='I';
+        $data['operacion']=$operacion;
         $data['username_his']=session('username');
         $data['created_his']=Carbon::now();
 
         Hcompra::create($data);
+
 
     }
 
@@ -538,6 +546,8 @@ class ComprasController extends Controller
         ]);
 
         $data['username'] = $request->user()->username;
+
+        $this->createHis($compra, 'L');
 
         $compra->update($data);
 

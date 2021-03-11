@@ -72,8 +72,8 @@ class HcomprasController extends Controller
 
         if (request()->wantsJson())
             return Hcompra::where('compra_id', $compra_id)
-                            ->where('operacion', 'I')
-                            ->orderBy('created_at')
+                            //->where('operacion', 'I')
+                            ->orderBy('created_his','desc')
                             ->get();
 
     }

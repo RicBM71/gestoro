@@ -100,8 +100,7 @@
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            v-show="albaran.id > 0 && hasAddVen"
-                            :disabled="!(albaran.factura==null && isAdmin)"
+                            :disabled="!(albaran.factura==null && hasEdtAlb)"
                             v-on="on"
                             color="white"
                             icon
@@ -589,7 +588,6 @@ import {mapState} from 'vuex'
         computed: {
             ...mapGetters([
                 'hasEdtAlb',
-                'isAdmin',
                 'isRoot',
                 'hasFactura',
                 'hasAddVen',
@@ -624,7 +622,7 @@ import {mapState} from 'vuex'
 
                 if (this.albaran.tipo_id != 3 || this.parametros.fixing == false) return false;
 
-                if (this.isAdmin) return false;
+                if (this.hasEdtAlb) return false;
 
                 return this.low_fix;
 

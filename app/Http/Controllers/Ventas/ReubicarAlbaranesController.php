@@ -27,7 +27,7 @@ class ReubicarAlbaranesController extends Controller
         // if (!esRoot())
         //     return abort(403,'Solo ROOT hasta verificar!');
 
-        if (!esAdmin())
+        if (!hasReaCom())
             return abort(403,'Solo administradores pueden reubicar albaranes!');
 
 

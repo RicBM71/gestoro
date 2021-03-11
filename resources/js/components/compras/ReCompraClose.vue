@@ -19,7 +19,8 @@
                         class="elevation-1"
                     >
                         <template v-slot:items="props">
-                            <td class="text-xs-left">{{ getFecha(props.item.created_at) }}</td>
+                            <td class="text-xs-left">{{ getFecha(props.item.created_his) }}</td>
+                            <td class="text-xs-left">{{ props.item.operacion }}</td>
                             <td class="text-xs-left">{{ props.item.username }}</td>
                             <td class="text-xs-center">{{ getDecimalFormat(props.item.interes) }} <span v-if="parametros.doble_interes">/{{ getDecimalFormat(props.item.interes_recuperacion) }}</span></td>
                             <td class="text-xs-right">{{ getDecimalFormat(props.item.importe) }}</td>
@@ -343,7 +344,7 @@
                         </v-flex>
                         <v-flex sm2 v-else>
                             <v-text-field
-                                v-if="hasEdtCom"
+                                v-if="hasReaCom"
                                 v-model="computedTotalPrestamo"
                                 label="Total Recuperado+Amp+Ac"
                                 readonly
@@ -648,7 +649,8 @@ import {mapState} from 'vuex'
                 dialog_cambios: false,
                 historial:[],
                 headers: [
-                    { text: 'Fecha', value: 'created_at' },
+                    { text: 'Fecha', value: 'created_his' },
+                    { text: 'Op', value: 'operacion' },
                     { text: 'Usuario', value: 'username' },
                     { text: 'Interés', value: 'interes' },
                     { text: 'Imp. Pres.', value: 'importe' },
@@ -801,7 +803,7 @@ import {mapState} from 'vuex'
             computedDisabledRecuperar(){
 
                 // con esto un administrador, tiene que hacer una ampliación con importe a cero, así queda constancia
-                if (this.hasEdtCom) return false; // lo dejo para poder recupear aún bloqueado.
+                if (this.hasReaCom) return false; // lo dejo para poder recupear aún bloqueado.
 
                 var date = new Date();
                 var hoy = moment(date).format('YYYY-MM-DD');

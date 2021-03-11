@@ -14,10 +14,7 @@ class HelpApuntesController extends Controller
     {
 
         if (request()->wantsJson())
-            if (esAdmin())
-                return Apunte::selApuntes();
-            else
-                return Apunte::selApuntes();
+            return Apunte::selApuntes();
 
     }
 }

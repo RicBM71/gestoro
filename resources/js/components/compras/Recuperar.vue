@@ -164,7 +164,7 @@
                                         data-vv-as="importe"
                                         class="inputPrice"
                                         type="number"
-
+                                        readonly
                                         v-on:keyup.enter="submit"
                                     >
                                    </v-text-field>

@@ -333,7 +333,7 @@ class RecuentosController extends Controller
 
     public function reset(Request $request){
 
-        if (!esAdmin())
+        if (!hasEdtPro())
             return abort(411,'No autorizado');
 
         if ($request->reset == true)

@@ -36,7 +36,7 @@ class CajaPolicy
 
 
         // apunte de regularización
-        if ($caja->manual == 'G' && !esAdmin() ){
+        if ($caja->manual == 'G' && !hasDelCaj() ){
             return $this->deny('Acceso denegado. Contactar con un Administrador');
         }
 
@@ -63,10 +63,10 @@ class CajaPolicy
             return $this->deny('El apunte es automático, no se puede borrar');
         }
 
-        if ($caja->manual == 'C' && esAdmin())
+        if ($caja->manual == 'C' && hasDelCaj())
             return true;
 
-        if (esAdmin())
+        if (hasDelCaj())
             return true;
 
         return esPropietario($caja) ?: $this->deny("Acceso denegado. No puedes borrar el registro");

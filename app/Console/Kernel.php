@@ -34,7 +34,7 @@ class Kernel extends ConsoleKernel
         // })->everyMinute();
 
 
-        $schedule->job(new CalcularExistenciaJob)->weeklyOn(3, '13:00')->withoutOverlapping();
+        $schedule->job(new CalcularExistenciaJob)->weeklyOn(4, '13:00')->withoutOverlapping();
 
 
     }

@@ -37,8 +37,8 @@ class BorradoMasivoController extends Controller
     {
         return abort(403, ' DESHABILITADO!! ');
 
-        if (!esAdmin()){
-            return abort(403, ' NO tiene permiso de acceso - admin');
+        if (!hasDelCaj()){
+            return abort(403, ' NO tiene permiso de acceso - DelCaj');
         }
 
 
@@ -81,7 +81,7 @@ class BorradoMasivoController extends Controller
     {
 
 
-        if (!esAdmin()){
+        if (!hasDelCaj()){
             return abort(403, ' NO tiene permiso de acceso - admin');
         }
 
@@ -125,7 +125,7 @@ class BorradoMasivoController extends Controller
     public function purgar(Request $request)
     {
 
-        if (!esAdmin()){
+        if (!hasDelCaj()){
             return abort(403, ' NO tiene permiso de acceso - admin');
         }
 
