@@ -647,7 +647,7 @@ import {mapState} from 'vuex'
 
                     // si es factura manual/auto o no está facturado, no permito abonar abonos...
                 if (this.albaran.tipo_factura <= 2 && this.albaran.fase_id < 12){
-                    return this.hasEdtAlb;
+                    return true; // voy a dejar a todos. 11.03.2021
                 }
 
                 return false;
@@ -658,7 +658,7 @@ import {mapState} from 'vuex'
 
                     // si es factura manual o no está facturado ni vendido
                 if (this.albaran.tipo_factura <= 1 && this.albaran.fase_id == 10){
-                    return this.hasEdtAlb;
+                    return true; // voy a dejar a todos. 11.03.2021
                 }
 
                 return false;
