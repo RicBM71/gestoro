@@ -31,9 +31,11 @@ class PermissionsSeeder extends Seeder
 
         // Permission::create(['name'=>'mail','nombre'=>'Envía mail']);
 
-        Permission::create(['name'=>'edtubi','nombre'=>'Cambia Ubicación']);
-        Permission::create(['name'=>'delalb','nombre'=>'Borra Albaranes']);
-        Permission::create(['name'=>'delcaj','nombre'=>'Borra Caja']);
+        // Permission::create(['name'=>'edtubi','nombre'=>'Cambia Ubicación']);
+        // Permission::create(['name'=>'delalb','nombre'=>'Borra Albaranes']);
+        // Permission::create(['name'=>'delcaj','nombre'=>'Borra Caja']);
+
+        Permission::create(['name'=>'abono','nombre'=>'Abonos']);
 
     }
 }

@@ -124,23 +124,30 @@ class UsersController extends Controller
         $roles = Role::with('permissions')->get(); // para listar también los permisos
         //$permisos = Permission::pluck('name','id');
 
-        if (esRoot())
-            $permisos = Permission::get();
-        else
-            $permisos = Permission::whereRaw("SUBSTR(nombre,1,1) = '*'")->get();
+
+        //$permisos = Permission::orderBy('nombre')->get();
+        // else
+        //     $permisos = Permission::whereRaw("SUBSTR(nombre,1,1) = '*'")->get();
 
 
-        $role_user=[];
-        $data = User::find($user->id)->roles()->get();
-        foreach($data as $role){
-            $role_user[]=$role->name;
-        }
+        // $role_user=[];
+        // $data = User::find($user->id)->roles()->get();
+        // foreach($data as $role){
+        //     $role_user[]=$role->name;
+        // }
 
-        $permisos_user=[];
-        $data = User::find($user->id)->permissions()->get();
-        foreach($data as $permiso){
-            $permisos_user[]=$permiso->name;
-        }
+        $role_user = $user->getRoleNames();
+
+        $heredados = $user->getPermissionsViaRoles();
+
+        $permisos = Permission::whereNotIn('name',$heredados->pluck('name'))->orderBy('nombre')->get();
+
+        // $permisos_user=[];
+        // $data = User::find($user->id)->permissions()->get();
+        // foreach($data as $permiso){
+        //     $permisos_user[]=$permiso->name;
+        // }
+        $permisos_user = $user->getDirectPermissions()->sortBy('nombre')->pluck('name');
 
         $emp_user = $user->empresas->pluck('id');
 
@@ -149,7 +156,6 @@ class UsersController extends Controller
         else
             $empresas_mostrar = Empresa::flag(0)->get();
 
-        $heredados = $user->getPermissionsViaRoles();
 
         if (request()->wantsJson())
             return [

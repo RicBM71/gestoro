@@ -16,6 +16,10 @@ class AbonosController extends Controller
     public function abonar(Request $request, Albaran $albarane){
 
 
+        if (!hasAbono()){
+            return abort(403,"No dispone de los permisos necesarios");
+        }
+
         $albaran_new = $this->albaran($albarane, $request);
 
         $this->albalin($albarane, $albaran_new, false);
@@ -38,6 +42,10 @@ class AbonosController extends Controller
      * @return boolean
      */
     public function cancelar(Request $request, Albaran $albarane){
+
+        if (!hasAbono()){
+            return abort(403,"No dispone de los permisos necesarios");
+        }
 
         if ($albarane->factura > 0){
             return abort(404,'El albarán está facturado, abonar en vez de cancelar!');

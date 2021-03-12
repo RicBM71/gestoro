@@ -209,6 +209,9 @@ const getters = {
     hasEdtInt: (state) =>{
         return (state.permisos.indexOf('edtcom') >= 0) ? true : false;
     },
+    hasAbono: (state) =>{
+        return (state.permisos.indexOf('abono') >= 0) ? true : false;
+    },
     flexCortesia: (state) =>{
         return state.flex_cortesia;
     },

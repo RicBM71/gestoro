@@ -90,6 +90,14 @@ function hasEdtInt(){
     return auth()->user()->hasPermissionTo('edtcom');
 }
 
+function hasEdtAlb(){
+    return auth()->user()->hasPermissionTo('edtalb');
+}
+
+function hasAbono(){
+    return auth()->user()->hasPermissionTo('abono');
+}
+
 function hasEdtPro(){
     return auth()->user()->hasPermissionTo('edtpro');
 }
