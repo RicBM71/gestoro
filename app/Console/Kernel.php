@@ -36,7 +36,9 @@ class Kernel extends ConsoleKernel
         $hora = env('CRON_HOUR');
         if ($hora == '') $hora = '00:00';
 
-        $schedule->job(new CalcularExistenciaJob)->monthlyOn(1,$hora)->withoutOverlapping();
+        //$schedule->job(new CalcularExistenciaJob)->monthlyOn(1,$hora)->withoutOverlapping();
+        $schedule->job(new CalcularExistenciaJob)->dailyAt($hora)->withoutOverlapping();
+
 
 
     }
