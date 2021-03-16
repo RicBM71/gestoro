@@ -33,8 +33,10 @@ class Kernel extends ConsoleKernel
         //     \Log::info('task');
         // })->everyMinute();
 
+        $hora = env('CRON_HOUR');
+        if ($hora == '') $hora = '00:00';
 
-        $schedule->job(new CalcularExistenciaJob)->weeklyOn(4, '13:00')->withoutOverlapping();
+        $schedule->job(new CalcularExistenciaJob)->monthlyOn(1,$hora)->withoutOverlapping();
 
 
     }
