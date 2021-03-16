@@ -127,7 +127,7 @@ class Libro extends Model
 
                 $arr = [
                     'ult_compra' => $libro->ult_compra,
-                   // 'username' => session()->get('username')
+                    'username' => session()->get('username')
                 ];
                 Libro::where('id', $libro->id)->update($arr);
             }
@@ -180,7 +180,7 @@ class Libro extends Model
 
                 $arr = [
                     'ult_compra' => $contador->ult_compra,
-                //    'username' => session()->get('username')
+                    'username' => session()->get('username')
                 ];
 
                 Libro::where('id', $contador->id)->update($arr);

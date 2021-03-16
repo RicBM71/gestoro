@@ -131,7 +131,7 @@ class Contador extends Model
 
             $arr = [
                 'ult_albaran' => $contador->ult_albaran,
-              //  'username' => session()->get('username')
+                'username' => session()->get('username')
             ];
             //Contador::where('id', $contador->id)->update($arr);
             $contador->update($arr);
@@ -167,7 +167,7 @@ class Contador extends Model
 
             $arr = [
                 'ult_albaran' => $contador->ult_albaran,
-              //  'username' => session()->get('username')
+                'username' => session()->get('username')
             ];
             //Contador::where('id', $contador->id)->update($arr);
             $contador->update($arr);
@@ -208,7 +208,7 @@ class Contador extends Model
             $arr = [
                 'ult_albaran' => $contador->ult_albaran,
                 'serie_albaran'=> $contador->serie_albaran,
-              //  'username' => session()->get('username')
+                'username' => session()->get('username')
             ];
 
             Contador::where('id', $contador->id)->update($arr);
@@ -268,7 +268,7 @@ class Contador extends Model
                 'ult_factura' => $contador->ult_factura,
                 'ult_factura_auto' => $contador->ult_factura_auto,
                 'ult_factura_abono' => $contador->ult_factura_abono,
-             //   'username' => session()->get('username')
+                'username' => session()->get('username')
             ];
 
             if ($factura == 0){
@@ -309,7 +309,7 @@ class Contador extends Model
 
             $arr = [
                 'ult_factura_auto' => $contador->ult_factura_auto,
-             //   'username' => session()->get('username')
+                'username' => session()->get('username')
             ];
 
             if ($factura == 0){
@@ -361,7 +361,7 @@ class Contador extends Model
                 'ult_factura'       => $contador->ult_factura,
                 'ult_factura_auto'  => $contador->ult_factura_auto,
                 'ult_factura_abono' => $contador->ult_factura_abono,
-             //   'username' => session()->get('username')
+                'username' => session()->get('username')
             ];
 
             Contador::where('id', $contador->id)->update($arr);
