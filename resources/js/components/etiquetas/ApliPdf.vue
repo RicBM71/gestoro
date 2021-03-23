@@ -96,8 +96,8 @@ export default {
     data () {
       return {
         form:{
-            etiqueta_id: "",
-            clase_id: "",
+            etiqueta_id: 3,
+            clase_id: 7,
             fila: 1,
             columna: 1,
             limite: 0
@@ -112,7 +112,7 @@ export default {
             .then(res => {
                 this.etiquetas = res.data.etiquetas;
                 this.clases = res.data.clases;
-                this.form.etiqueta_id = this.etiquetas[0].value;
+                //this.form.etiqueta_id = this.etiquetas[0].value;
                 this.clases.push({value:null,text:"---"});
             })
             .catch(err => {

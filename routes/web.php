@@ -397,6 +397,7 @@ Route::group([
 
         Route::get('/aplipdf', 'ApliPdfController@index');
         Route::post('/aplipdf', 'ApliPdfController@submit');
+        Route::get('/aplipdf', 'ApliPdf4x22Controller@submit'); // quitar
 
         Route::get('/index', 'EtiquetasController@index');
         Route::post('/rollo', 'EtiquetasController@submit');

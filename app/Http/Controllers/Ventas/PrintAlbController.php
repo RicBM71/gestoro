@@ -350,7 +350,7 @@ class PrintAlbController extends Controller
 
 
         PDF::SetFont('helvetica', 'R', 8, '', false);
-        if ($this->albaran->tipo_id == 3){
+        if ($this->albaran->tipo_id == 3 && $this->albaran->iva_no_residente == false){
 
             $iva = Iva::findOrFail(2);
 
