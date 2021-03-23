@@ -432,11 +432,12 @@
                                 </v-flex>
                                 <v-flex sm5 d-flex>
                                     <v-combobox
+                                        v-if="tags.length > 0"
                                         v-model="producto.tags"
                                         item-text='nombre'
                                         item-value='id'
                                         :items="tags"
-                                        label="Medios"
+                                        label="Distintivo"
                                         chips
                                         clearable
                                         multiple

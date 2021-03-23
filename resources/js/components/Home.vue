@@ -261,7 +261,7 @@ export default {
                 { icon: 'mdi-whatsapp', text: 'Plantilla Whatsapps', name: 'whatsapp.index' },
                 { icon: 'tour', text: 'Categorías', name: 'categoria.index' },
                 { icon: 'storage', text: 'Marcas', name: 'marca.index' },
-                { icon: 'mdi-cloud-upload', text: 'Medios', name: 'tag.index' },
+                { icon: 'mdi-map-marker-radius-outline', text: 'Distintivos', name: 'tag.index' },
                 { icon: 'mdi-emoticon-sad-outline', text: 'Motivos Devolución', name: 'motivo.index' },
             ]
         },
