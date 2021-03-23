@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Mto;
 
 use App\Iva;
+use App\Tag;
 use App\Clase;
 use App\Marca;
 use App\Estado;
@@ -373,10 +374,12 @@ class ProductosController extends Controller
 
         $this->authorize('update', $producto);
 
+        //$tags = $producto->load('tags');
+
         if (request()->wantsJson())
             return [
                 'parametros'=> $parametros,
-                'producto' => $producto->load('clase','empresa'),
+                'producto' => $producto->load('clase','empresa','tags'),
                 'empresas' => Empresa::selEmpresas()->Venta()->get(),
                 'clases'   => Clase::selGrupoClase(),
                 'estados'  => Estado::selEstados(),
@@ -388,7 +391,8 @@ class ProductosController extends Controller
                 'garantias'=> Garantia::selGarantias(),
                 'marcas'   => Marca::selMarcas(),
                 'categorias'=> Categoria::selCategorias(),
-                'stock_real'=> Producto::getStockReal($producto->id)
+                'stock_real'=> Producto::getStockReal($producto->id),
+                'tags'      => Tag::selTags(),
             ];
     }
 
@@ -415,9 +419,14 @@ class ProductosController extends Controller
 
         $producto->update($data);
 
+        $tags = collect($data['tags'])->pluck('id')->toArray();
+        //$t = $tags->toArray();
+
+        $producto->tags()->sync($tags);
+
         if (request()->wantsJson())
             return [
-                'producto'=> $producto->load('clase','empresa'),
+                'producto'=> $producto->load('clase','empresa','tags'),
                 'stock_real'=> Producto::getStockReal($producto->id),
                 'message' => 'EL producto ha sido modificado'
                 ];

@@ -367,7 +367,7 @@
                                         ></v-date-picker>
                                     </v-menu>
                                 </v-flex>
-                                <v-flex sm3 d-flex>
+                                <v-flex sm2 d-flex>
                                     <v-select
                                         v-model="producto.categoria_id"
                                         v-validate="'numeric'"
@@ -378,7 +378,7 @@
                                         label="Categoría"
                                     ></v-select>
                                 </v-flex>
-                                <v-flex sm3 d-flex>
+                                <v-flex sm2 d-flex>
                                     <v-select
                                         v-model="producto.marca_id"
                                         v-validate="'numeric'"
@@ -388,21 +388,6 @@
                                         :items="marcas"
                                         label="Marca"
                                     ></v-select>
-                                </v-flex>
-
-                            </v-layout>
-                            <v-layout row wrap>
-                                <v-flex sm8>
-                                    <v-textarea
-                                        v-model="producto.notas"
-                                        v-validate="'max:300'"
-                                        :error-messages="errors.collect('notas')"
-                                        label="Observaciones"
-                                        data-vv-name="notas"
-                                        data-vv-as="notas"
-                                        v-on:keyup.enter="submit"
-                                    >
-                                    </v-textarea>
                                 </v-flex>
                                 <v-flex sm1>
                                     <v-text-field
@@ -430,6 +415,46 @@
                                         readonly
                                     >
                                     </v-text-field>
+                                </v-flex>
+                            </v-layout>
+                            <v-layout row wrap>
+                                <v-flex sm6>
+                                    <v-textarea
+                                        v-model="producto.notas"
+                                        v-validate="'max:300'"
+                                        :error-messages="errors.collect('notas')"
+                                        label="Observaciones"
+                                        data-vv-name="notas"
+                                        data-vv-as="notas"
+                                        v-on:keyup.enter="submit"
+                                    >
+                                    </v-textarea>
+                                </v-flex>
+                                <v-flex sm5 d-flex>
+                                    <v-combobox
+                                        v-model="producto.tags"
+                                        item-text='nombre'
+                                        item-value='id'
+                                        :items="tags"
+                                        label="Medios"
+                                        chips
+                                        clearable
+                                        multiple
+                                        solo
+                                        flat
+                                    >
+                                        <template v-slot:selection="data">
+                                        <v-chip
+                                            text-color="blue"
+                                            outline
+                                            :selected="data.selected"
+                                            close
+                                            @input="delTag(data.item)"
+                                        >
+                                            {{ data.item.nombre }}&nbsp;
+                                        </v-chip>
+                                        </template>
+                                    </v-combobox>
                                 </v-flex>
                                 <v-flex sm1>
                                     <div class="text-xs-center">
@@ -486,6 +511,8 @@ import {mapState} from 'vuex'
                 categorias:[],
                 ivas:[],
                 empresas:[],
+                tags:[],
+                chips:[ {value:1},{value:2}],
 
                 unidades: [
                     {'value': 'U', 'text': 'Unidades'},
@@ -509,6 +536,11 @@ import {mapState} from 'vuex'
             if (id > 0)
                 axios.get(this.url+'/'+id+'/edit')
                     .then(res => {
+
+                        this.tags = res.data.tags;
+                        console.log(res.data.producto);
+                        console.log(this.tags);
+                        this.chips = res.data.producto.tags;
 
                         this.producto = res.data.producto;
 
@@ -640,6 +672,10 @@ import {mapState} from 'vuex'
                 'setAuthUser',
                 'unsetParametros'
 			]),
+            delTag(item) {
+                this.producto.tags.splice(this.producto.tags.indexOf(item), 1)
+                this.producto.tags = [...this.producto.tags]
+            },
             clase(){
                 var idx = this.clases.map(x => x.value).indexOf(this.producto.clase_id);
 

@@ -55,6 +55,7 @@ class UpdateProducto extends FormRequest
             'online'            => ['boolean'],
             'fecha_ultima_revision' => ['nullable', 'date', Rule::requiredIf($this->garantia_id > 0)],
             'meses_garantia'    => ['nullable', 'integer','max:24', Rule::requiredIf($this->garantia_id > 0)],
+            'tags'              => ['nullable']
         ];
 
         $clase = Clase::findOrFail($this->clase_id);

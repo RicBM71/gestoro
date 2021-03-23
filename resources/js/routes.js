@@ -143,6 +143,9 @@ import MarcaIndex from './components/marcas/MarcaIndex.vue';
 import MarcaEdit from './components/marcas/MarcaEdit.vue';
 import MarcaCreate from './components/marcas/MarcaCreate.vue';
 
+import TagIndex from './components/tags/TagIndex.vue';
+import TagEdit from './components/tags/TagEdit.vue';
+import TagCreate from './components/tags/TagCreate.vue';
 
 import HcompraIndex from './components/hcompras/HcompraIndex.vue';
 import HcompraShow from './components/hcompras/HcompraShow.vue';
@@ -895,6 +898,21 @@ export default [
                 path: '/categorias/:id/edit',
                 name: 'categoria.edit',
                 component: CategoriaEdit,
+            },
+            {
+                path: '/tags',
+                name: 'tag.index',
+                component: TagIndex,
+            },
+            {
+                path: '/tags/create',
+                name: 'tag.create',
+                component: TagCreate,
+            },
+            {
+                path: '/tags/:id/edit',
+                name: 'tag.edit',
+                component: TagEdit,
             },
             {
                 path: '/whatsapps',

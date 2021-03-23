@@ -113,6 +113,7 @@ Route::group([
         Route::post('clidocs/{clidoc}/renove', 'ClidocsController@renove');
 
         Route::resource('almacenes', 'AlmacenesController', ['as' => 'mto']);
+        Route::resource('tags', 'TagsController', ['as' => 'mto']);
 
         Route::resource('grupos', 'GruposController', ['as' => 'mto']);
         Route::resource('ivas', 'IvasController', ['as' => 'mto']);

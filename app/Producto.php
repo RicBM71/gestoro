@@ -147,6 +147,10 @@ Class Producto extends Model
         return ($this->belongsTo(Empresa::class,'destino_empresa_id'));
     }
 
+    public function tags(){
+        return $this->belongsToMany(Tag::class);
+    }
+
     public static function scopeReferencia($query, $referencia){
 
         $referencia = \strtoupper($referencia);
