@@ -299,6 +299,7 @@ export default {
                 { icon: 'compare_arrows', text: 'Intercambio de Operaciones', name:'intercambio' },
                 { icon: 'check_circle_outline', text: 'Check Contadores', name:'contador.check' },
                 { icon: 'auto_delete', text: 'Borrado Masivo ', name:'tools.delete' },
+                { icon: 'shopping_bag', text: 'Asignar Categorías', name:'categoria.assign' },
             ]
         },
 

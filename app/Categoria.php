@@ -16,4 +16,10 @@ class Categoria extends Model
             ->get();
 
     }
+
+    public function setNombreAttribute($nombre)
+    {
+        $this->attributes['nombre'] = strtoupper($nombre);
+
+    }
 }

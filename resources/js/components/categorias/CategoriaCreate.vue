@@ -11,7 +11,7 @@
             <v-form>
                 <v-container>
                     <v-layout row wrap>
-                        <v-flex sm1></v-flex>
+                        <v-flex sm3></v-flex>
                         <v-flex sm4>
                             <v-text-field
                                 v-model="categoria.nombre"
@@ -31,11 +31,11 @@
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm5>
+                        <v-flex sm1>
                         </v-flex>
-                        <v-flex sm2>
+                        <v-flex sm1>
                             <div class="text-xs-center">
-                                        <v-btn @click="submit"  round  :loading="loading" block  color="primary">
+                                        <v-btn @click="submit" flat round  :loading="loading" block  color="primary">
                                 Guardar
                                 </v-btn>
                             </div>

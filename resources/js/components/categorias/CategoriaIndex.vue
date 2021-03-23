@@ -12,11 +12,12 @@
         <v-card>
             <v-container v-if="registros">
                 <v-layout row wrap>
-                    <v-flex xs12>
+                    <v-flex xs2></v-flex>
+                    <v-flex xs8>
                         <v-data-table
                             :headers="headers"
                             :items="categorias"
-                            :pagination="pagination"
+                            :pagination.sync    ="pagination"
                             rows-per-page-text="Registros por página"
                         >
                             <template slot="items" slot-scope="props">
@@ -68,11 +69,14 @@ import MenuOpe from './MenuOpe'
           {
             text: 'Acciones',
             align: 'Center',
-            value: ''
+            value: 'id'
           }
         ],
         pagination:{
+            descending: false,
+            page: 1,
             rowsPerPage: 10,
+            sortBy: "id",
         },
         categorias:[],
         status: false,
@@ -87,6 +91,7 @@ import MenuOpe from './MenuOpe'
     {
         axios.get('/mto/categorias')
             .then(res => {
+                console.log(res);
                 this.categorias = res.data;
                 this.registros = true;
             })

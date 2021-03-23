@@ -315,6 +315,9 @@ Route::group([
 
         Route::get('calcular/existencias', 'CalcularExistenciasController@submit');
 
+        Route::get('categoria/assign', 'AsignarCategoriaController@index');
+        Route::post('categoria/assign', 'AsignarCategoriaController@submit');
+
      //   Route::get('helpbanco', 'HelpBancosController@index');
     }
 );

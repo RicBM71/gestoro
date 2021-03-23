@@ -186,6 +186,7 @@ import BorradoMasivo from './components/tools/BorradoMasivo.vue';
 
 import ImportarProducto from './components/tools/ImportarProducto.vue';
 import Cierre from './components/tools/Cierre.vue';
+import AsignarCategoria from './components/tools/AsignarCategoria.vue';
 
 export default [
 	{
@@ -909,6 +910,11 @@ export default [
                 path: '/whatsapps/:id/edit',
                 name: 'whatsapp.edit',
                 component: WhatsappEdit,
+            },
+            {
+                path: '/categoria/assign',
+                name: 'categoria.assign',
+                component: AsignarCategoria,
             },
 
             // {
