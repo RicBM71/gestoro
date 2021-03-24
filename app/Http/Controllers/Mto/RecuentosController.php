@@ -381,12 +381,17 @@ class RecuentosController extends Controller
 
     public function test(Request $request){
 
-        $codigos = $request->get('codigos');
 
-        $lista = explode("\n", $codigos);
+        $data = $request->validate([
+            'fecha' => ['required', 'date'],
+            'codigos' => ['required'],
+        ]);
 
-        $data['empresa_id'] = session('empresa_id');
+        $lista = explode("\n", $data['codigos']);
 
+        $rec['empresa_id'] = session('empresa_id');
+
+        $insert = array();
         foreach ($lista as $referencia){
 
             try {
@@ -407,18 +412,19 @@ class RecuentosController extends Controller
             else
                 $rfid_id = 2;
 
-            $data['producto_id']=$producto->id;
-            $data['fecha']=$data['fecha'];
-            $data['estado_id']=$producto->estado_id;
-            $data['rfid_id']=$rfid_id;
+            $rec['producto_id']=$producto->id;
+            $rec['fecha']=$data['fecha'];
+            $rec['estado_id']=$producto->estado_id;
+            $rec['rfid_id']=$rfid_id;
 
-            $insert[]=$data;
+            $insert[]=$rec;
 
         }
 
-        DB::table('recuento')->insertOrIgnore($insert);
+        DB::table('recuentos')->insertOrIgnore($insert);
 
-        $this->index();
+        if (request()->wantsJson())
+            return response('Procesado ok!', 200);
 
 
     }

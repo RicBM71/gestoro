@@ -52,7 +52,7 @@
             <v-form>
                  <v-container>
                      <v-layout row wrap>
-                        <v-flex sm2>
+                        <v-flex sm1>
                             <v-menu
                                 v-model="menu_d"
                                 :close-on-content-click="false"
@@ -85,6 +85,7 @@
                         </v-flex>
                         <v-flex sm1>
                             <v-text-field
+                                v-show="entrada_manual"
                                 v-model="prefijo"
                                 v-validate="'alpha|max:3'"
                                 :error-messages="errors.collect('prefijo')"
@@ -97,6 +98,7 @@
                         </v-flex>
                          <v-flex sm2>
                             <v-text-field
+                                v-show="entrada_manual"
                                 v-model="referencia"
                                 v-validate="'required|numeric'"
                                 :error-messages="errors.collect('referencia')"
@@ -107,29 +109,51 @@
                             >
                             </v-text-field>
                         </v-flex>
+                        <v-flex sm2>
+                            <v-switch
+                                :label="computedEntrada"
+                                v-model="entrada_manual"
+                                color="primary"
+                            ></v-switch>
+                        </v-flex>
                         <v-flex sm2></v-flex>
-                        <v-flex sm1>
+                        <v-flex sm1 v-if="entrada_manual">
                             <div class="text-xs-center">
                                 <v-btn @click="submit" round small :loading="loading" block  color="primary">
                                     Guardar
                                 </v-btn>
                             </div>
                         </v-flex>
-                        <v-flex sm1>
+                        <v-flex sm1 v-else>
                             <div class="text-xs-center">
-                                <v-btn @click="test" round small :loading="loading" block  color="primary">
-                                    Test
+                                <v-btn @click="test"
+                                    :disabled="codigos==null"
+                                     round
+                                     small
+                                     :loading="loading"
+                                      block
+                                      color="primary">
+                                    Procesar
                                 </v-btn>
                             </div>
                         </v-flex>
                     </v-layout>
-                    <v-textarea
-                        name="input-7-1"
-                        label="Default style"
-                        v-model="codigos"
-                        hint="Hint text"
-                        ></v-textarea>
                     <v-layout row wrap>
+                        <v-flex sm5></v-flex>
+                        <v-flex sm1>
+                            <v-textarea
+                                class="caption"
+                                v-show="!entrada_manual"
+                                label="Buffer Pistola"
+                                v-model="codigos"
+                                hint="Download códigos pistola"
+                                rows="20"
+                                row-height="12"
+                                outline
+                            ></v-textarea>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row wrap v-show="entrada_manual">
                             <v-flex xs12>
                                 <v-data-table
                                     :headers="headers"
@@ -211,6 +235,7 @@ import MyDialog from '@/components/shared/MyDialog'
                     search: ""
                 },
                 codigos:null,
+                entrada_manual: true,
                 headers: [
                     {
                     text: 'Referencia',
@@ -272,6 +297,9 @@ import MyDialog from '@/components/shared/MyDialog'
         computed: {
         ...mapGetters([
         ]),
+        computedEntrada(){
+            return this.entrada_manual ? 'Entrada Manual' : 'Buffer Pistola';
+        },
         computedFechaD() {
                 moment.locale('es');
                 return this.fecha_d ? moment(this.fecha_d).format('L') : '';
@@ -466,24 +494,19 @@ import MyDialog from '@/components/shared/MyDialog'
 
             },
         test(){
-            console.log(this.codigos);
+            this.loading = this.show_loading = true;
             axios.post('/mto/recuentos/test',{
-                                codigos: this.codigos
+                                codigos: this.codigos,
+                                fecha: this.fecha_d
                             })
                 .then(res => {
-
-                        this.items = res.data.recuentos;
-
+                    this.$router.push({ name: 'recuento.index' })
                 })
                 .catch(err => {
-
-
-                        this.$toast.error(err.response.data.message);
-
-
+                    this.$toast.error(err.response.data.message);
                 })
                 .finally(()=> {
-                    this.loading = false;
+                    this.loading = this.show_loading = false;
                 });
         }
 
