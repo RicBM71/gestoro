@@ -13,6 +13,7 @@ use App\Exports\RecuentoExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Scopes\EmpresaProductoScope;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\StoreRecuentoRequest;
 
@@ -375,6 +376,50 @@ class RecuentosController extends Controller
                 ->join('rfids','rfids.id','=','rfid_id')
                 ->groupBy('nombre')
                 ->get();
+
+    }
+
+    public function test(Request $request){
+
+        $codigos = $request->get('codigos');
+
+        $lista = explode("\n", $codigos);
+
+        $data['empresa_id'] = session('empresa_id');
+
+        foreach ($lista as $referencia){
+
+            try {
+
+                $producto = Producto::withOutGlobalScope(EmpresaProductoScope::class)
+                                ->withTrashed()
+                                ->where('referencia',$referencia)
+                                ->firstOrFail();
+            } catch (\Exception $e) {
+                continue;
+            }
+
+            if ($producto->empresa_id == session('empresa_id') || $producto->destino_empresa_id == session('empresa_id'))
+                if ($producto->estado_id == 4)
+                    $rfid_id = 5;
+                else
+                    $rfid_id = 1;
+            else
+                $rfid_id = 2;
+
+            $data['producto_id']=$producto->id;
+            $data['fecha']=$data['fecha'];
+            $data['estado_id']=$producto->estado_id;
+            $data['rfid_id']=$rfid_id;
+
+            $insert[]=$data;
+
+        }
+
+        DB::table('recuento')->insertOrIgnore($insert);
+
+        $this->index();
+
 
     }
 

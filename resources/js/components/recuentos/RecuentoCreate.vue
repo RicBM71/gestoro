@@ -108,14 +108,27 @@
                             </v-text-field>
                         </v-flex>
                         <v-flex sm2></v-flex>
-                        <v-flex sm2>
+                        <v-flex sm1>
                             <div class="text-xs-center">
                                 <v-btn @click="submit" round small :loading="loading" block  color="primary">
                                     Guardar
                                 </v-btn>
                             </div>
                         </v-flex>
+                        <v-flex sm1>
+                            <div class="text-xs-center">
+                                <v-btn @click="test" round small :loading="loading" block  color="primary">
+                                    Test
+                                </v-btn>
+                            </div>
+                        </v-flex>
                     </v-layout>
+                    <v-textarea
+                        name="input-7-1"
+                        label="Default style"
+                        v-model="codigos"
+                        hint="Hint text"
+                        ></v-textarea>
                     <v-layout row wrap>
                             <v-flex xs12>
                                 <v-data-table
@@ -197,6 +210,7 @@ import MyDialog from '@/components/shared/MyDialog'
                     sortBy: "id",
                     search: ""
                 },
+                codigos:null,
                 headers: [
                     {
                     text: 'Referencia',
@@ -451,6 +465,27 @@ import MyDialog from '@/components/shared/MyDialog'
                         });
 
             },
+        test(){
+            console.log(this.codigos);
+            axios.post('/mto/recuentos/test',{
+                                codigos: this.codigos
+                            })
+                .then(res => {
+
+                        this.items = res.data.recuentos;
+
+                })
+                .catch(err => {
+
+
+                        this.$toast.error(err.response.data.message);
+
+
+                })
+                .finally(()=> {
+                    this.loading = false;
+                });
+        }
 
     }
   }

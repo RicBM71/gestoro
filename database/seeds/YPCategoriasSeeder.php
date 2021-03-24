@@ -15,8 +15,10 @@ class YPCategoriasSeeder extends Seeder
     public function run()
     {
 
-        // $this->update();
-        // return;
+        DB::statement('UPDATE klt_productos set categoria_id = NULL');
+
+        $this->update();
+        return;
 
         Categoria::truncate();
 

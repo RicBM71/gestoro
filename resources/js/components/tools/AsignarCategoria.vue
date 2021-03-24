@@ -28,6 +28,7 @@
                                 label="Palabras clave"
                                 hint='Indicar palabras separadas por comas'
                                 single-line
+                                v-on:keyup.enter="submit"
                             ></v-text-field>
                         </v-flex>
                         <v-flex sm2>
