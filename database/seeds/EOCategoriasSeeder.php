@@ -49,6 +49,7 @@ class EOCategoriasSeeder extends Seeder
         DB::statement('UPDATE klt_productos set categoria_id = 3 WHERE categoria_id IS NULL AND nombre LIKE "%MEDALLA%"');
         DB::statement('UPDATE klt_productos set categoria_id = 3 WHERE categoria_id IS NULL AND nombre LIKE "%CRUZ%"');
         DB::statement('UPDATE klt_productos set categoria_id = 3 WHERE categoria_id IS NULL AND nombre LIKE "%COLLAR%"');
+        DB::statement('UPDATE klt_productos set categoria_id = 3 WHERE categoria_id IS NULL AND nombre LIKE "%CORDON%"');
         DB::statement('UPDATE klt_productos set categoria_id = 3 WHERE categoria_id IS NULL AND nombre LIKE "%GARGANTILLA%"');
         DB::statement('UPDATE klt_productos set categoria_id = 3 WHERE categoria_id IS NULL AND nombre LIKE "%CADENA%"');
         DB::statement('UPDATE klt_productos set categoria_id = 4 WHERE categoria_id IS NULL AND nombre LIKE "%GEMELO%"');
