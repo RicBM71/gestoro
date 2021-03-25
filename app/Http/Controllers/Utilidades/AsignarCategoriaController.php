@@ -18,9 +18,9 @@ class AsignarCategoriaController extends Controller
             return abort(403, ' NO tiene permiso de acceso - Edit Productos.');
         }
 
-        $productos = Producto::withoutGlobalScope(EmpresaProductoScope::class)->whereNull('categoria_id')->whereNull('deleted_at')->whereIn('estado_id',[1,2,3,4])->get();
+        $productos = Producto::withoutGlobalScope(EmpresaProductoScope::class)->whereNull('categoria_id')->whereNull('deleted_at')->whereIn('estado_id',[1,2,3])->get();
 
-        \Log::info(Producto::withoutGlobalScope(EmpresaProductoScope::class)->whereNull('categoria_id')->whereNull('deleted_at')->whereIn('estado_id',[1,2,3,4])->toSql());
+        
 
         if (request()->wantsJson())
             return [
@@ -76,12 +76,12 @@ class AsignarCategoriaController extends Controller
             $word = strtoupper($w);
 
             if ($reasignar)
-                DB::unprepared('UPDATE klt_productos SET categoria_id = '.$categoria_id.', updated_at ="'.$dt.'" WHERE nombre LIKE "%'.$word.'%" AND estado_id IN (1,2,3,4)');
+                DB::unprepared('UPDATE klt_productos SET categoria_id = '.$categoria_id.', updated_at ="'.$dt.'" WHERE nombre LIKE "%'.$word.'%" AND estado_id IN (1,2,3)');
             else
                 if ($filtrar)
                     DB::unprepared('UPDATE klt_productos SET categoria_id = '.$categoria_id.', updated_at ="'.$dt.'" WHERE categoria_id ='.$categoria_id.' AND nombre LIKE "%'.$word.'%"  AND estado_id IN (1,2,3,4)');
                 else
-                    DB::unprepared('UPDATE klt_productos SET categoria_id = '.$categoria_id.', updated_at ="'.$dt.'" WHERE categoria_id IS NULL AND nombre LIKE "%'.$word.'%" AND estado_id IN (1,2,3,4)');
+                    DB::unprepared('UPDATE klt_productos SET categoria_id = '.$categoria_id.', updated_at ="'.$dt.'" WHERE categoria_id IS NULL AND nombre LIKE "%'.$word.'%" AND estado_id IN (1,2,3)');
         }
 
         if ($filtrar)
