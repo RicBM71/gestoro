@@ -18,9 +18,13 @@ class AsignarCategoriaController extends Controller
             return abort(403, ' NO tiene permiso de acceso - Edit Productos.');
         }
 
-        $productos = Producto::withoutGlobalScope(EmpresaProductoScope::class)->whereNull('categoria_id')->whereNull('deleted_at')->whereIn('estado_id',[1,2,3])->get();
+        $productos = Producto::withoutGlobalScope(EmpresaProductoScope::class)
+                            ->whereIn('empresa_id', session('empresas_usuario'))
+                            ->whereNull('categoria_id')
+                            ->whereNull('deleted_at')
+                            ->whereIn('estado_id',[1,2,3])->get();
 
-        
+
 
         if (request()->wantsJson())
             return [
@@ -68,6 +72,8 @@ class AsignarCategoriaController extends Controller
 
         $empresa_id = session('empresa_id');
 
+        $empresas = session('empresas_usuario')->implode(',');
+
         foreach ($words as $w){
 
             if ($w == '' || $w == null)
@@ -76,17 +82,17 @@ class AsignarCategoriaController extends Controller
             $word = strtoupper($w);
 
             if ($reasignar)
-                DB::unprepared('UPDATE klt_productos SET categoria_id = '.$categoria_id.', updated_at ="'.$dt.'" WHERE nombre LIKE "%'.$word.'%" AND estado_id IN (1,2,3)');
+                DB::unprepared('UPDATE klt_productos SET categoria_id = '.$categoria_id.', updated_at ="'.$dt.'" WHERE empresa_id IN ('.$empresas.') AND nombre LIKE "%'.$word.'%" AND estado_id IN (1,2,3)');
             else
                 if ($filtrar)
-                    DB::unprepared('UPDATE klt_productos SET categoria_id = '.$categoria_id.', updated_at ="'.$dt.'" WHERE categoria_id ='.$categoria_id.' AND nombre LIKE "%'.$word.'%"  AND estado_id IN (1,2,3,4)');
+                    DB::unprepared('UPDATE klt_productos SET categoria_id = '.$categoria_id.', updated_at ="'.$dt.'" WHERE empresa_id IN ('.$empresas.') AND categoria_id ='.$categoria_id.' AND nombre LIKE "%'.$word.'%"  AND estado_id IN (1,2,3,4)');
                 else
-                    DB::unprepared('UPDATE klt_productos SET categoria_id = '.$categoria_id.', updated_at ="'.$dt.'" WHERE categoria_id IS NULL AND nombre LIKE "%'.$word.'%" AND estado_id IN (1,2,3)');
+                    DB::unprepared('UPDATE klt_productos SET categoria_id = '.$categoria_id.', updated_at ="'.$dt.'" WHERE empresa_id IN ('.$empresas.') AND categoria_id IS NULL AND nombre LIKE "%'.$word.'%" AND estado_id IN (1,2,3)');
         }
 
         if ($filtrar)
-            return Producto::withoutGlobalScope(EmpresaProductoScope::class)->where('categoria_id', $categoria_id)->whereNull('deleted_at')->whereIn('estado_id',[1,2,3,4])->get();
+            return Producto::withoutGlobalScope(EmpresaProductoScope::class)->whereIn('empresa_id', session('empresas_usuario'))->where('categoria_id', $categoria_id)->whereNull('deleted_at')->whereIn('estado_id',[1,2,3])->get();
         else
-            return Producto::withoutGlobalScope(EmpresaProductoScope::class)->whereNull('categoria_id')->whereNull('deleted_at')->whereIn('estado_id',[1,2,3,4])->get();
+            return Producto::withoutGlobalScope(EmpresaProductoScope::class)->whereIn('empresa_id', session('empresas_usuario'))->whereNull('categoria_id')->whereNull('deleted_at')->whereIn('estado_id',[1,2,3])->get();
     }
 }
