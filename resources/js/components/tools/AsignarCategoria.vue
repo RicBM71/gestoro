@@ -11,11 +11,17 @@
             <v-form>
                  <v-container>
                      <v-layout row wrap>
-                        <v-flex xs1></v-flex>
                         <v-flex sm2>
                             <v-switch
                                 :label="computedLabel"
                                 v-model="reasignar"
+                                color="primary">
+                            ></v-switch>
+                        </v-flex>
+                        <v-flex sm2>
+                            <v-switch
+                                label="Filtrar Categoría"
+                                v-model="filtrar"
                                 color="primary">
                             ></v-switch>
                         </v-flex>
@@ -49,7 +55,6 @@
                                 readonly
                             ></v-text-field>
                         </v-flex>
-                        <v-flex sm1></v-flex>
                         <v-flex sm1>
                             <div class="text-xs-center">
                                 <v-btn @click="submit" round small flat :loading="loading"  block  color="primary">
@@ -105,6 +110,7 @@ import Loading from '@/components/shared/Loading'
     	data () {
       		return {
                 reasignar: false,
+                filtrar: false,
                 pagination:{
                     descending: false,
                     page: 1,
@@ -187,7 +193,8 @@ import Loading from '@/components/shared/Loading'
                             axios.post(this.url, {
                                 categoria_id: this.categoria_id,
                                 texto: this.texto,
-                                reasignar: this.reasignar
+                                reasignar: this.reasignar,
+                                filtrar: this.filtrar
                             })
                                 .then(res => {
 

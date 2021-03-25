@@ -40,6 +40,7 @@ class AsignarCategoriaController extends Controller
             'categoria_id'  => ['required','integer'],
             'texto'         => ['required','max:190'],
             'reasignar'     => ['required','boolean'],
+            'filtrar'       => ['required','boolean'],
         ]);
 
         if (strpos($data['texto'],','))
@@ -48,7 +49,7 @@ class AsignarCategoriaController extends Controller
             $words = array($data['texto']);
 
 
-        $productos = $this->update($data['categoria_id'], $words, $data['reasignar']);
+        $productos = $this->update($data['categoria_id'], $words, $data['reasignar'], $data['filtrar']);
 
         if (request()->wantsJson())
             return [
@@ -58,7 +59,7 @@ class AsignarCategoriaController extends Controller
 
     }
 
-    private function update($categoria_id, $words, $reasignar){
+    private function update($categoria_id, $words, $reasignar,$filtrar){
 
         $dt = Carbon::now();
 
@@ -74,9 +75,15 @@ class AsignarCategoriaController extends Controller
             if ($reasignar)
                 DB::unprepared('UPDATE klt_productos SET categoria_id = '.$categoria_id.', updated_at ="'.$dt.'" WHERE (empresa_id = '.$empresa_id.' OR destino_empresa_id = '.$empresa_id.') AND nombre LIKE "%'.$word.'%"');
             else
-                DB::unprepared('UPDATE klt_productos SET categoria_id = '.$categoria_id.', updated_at ="'.$dt.'" WHERE (empresa_id = '.$empresa_id.' OR destino_empresa_id = '.$empresa_id.') AND categoria_id IS NULL AND nombre LIKE "%'.$word.'%"');
+                if ($filtrar)
+                    DB::unprepared('UPDATE klt_productos SET categoria_id = '.$categoria_id.', updated_at ="'.$dt.'" WHERE (empresa_id = '.$empresa_id.' OR destino_empresa_id = '.$empresa_id.') AND categoria_id ='.$categoria_id.' AND nombre LIKE "%'.$word.'%"');
+                else
+                    DB::unprepared('UPDATE klt_productos SET categoria_id = '.$categoria_id.', updated_at ="'.$dt.'" WHERE (empresa_id = '.$empresa_id.' OR destino_empresa_id = '.$empresa_id.') AND categoria_id IS NULL AND nombre LIKE "%'.$word.'%"');
         }
 
-        return Producto::whereNull('categoria_id')->whereNull('deleted_at')->whereIn('estado_id',[1,2,3])->get();
+        if ($filtrar)
+            return Producto::where('categoria_id', $categoria_id)->whereNull('deleted_at')->whereIn('estado_id',[1,2,3])->get();
+        else
+            return Producto::whereNull('categoria_id')->whereNull('deleted_at')->whereIn('estado_id',[1,2,3])->get();
     }
 }
