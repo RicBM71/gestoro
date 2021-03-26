@@ -1,2 +1,2 @@
-cd VENV/bin
+cd ../VENV/bin
 ./supervisord -c supervisord.conf
