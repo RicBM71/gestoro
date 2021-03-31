@@ -402,7 +402,9 @@ Route::group([
 
         Route::get('/aplipdf', 'ApliPdfController@index');
         Route::post('/aplipdf', 'ApliPdfController@submit');
-        Route::get('/aplipdf', 'ApliPdf4x22Controller@submit'); // quitar
+
+        Route::get('/aplipdf3x7', 'ApliPdf3x7Controller@index');
+        Route::post('/aplipdf3x7', 'ApliPdf3x7Controller@submit');
 
         Route::get('/index', 'EtiquetasController@index');
         Route::post('/rollo', 'EtiquetasController@submit');

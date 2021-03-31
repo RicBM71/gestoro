@@ -3,7 +3,7 @@
         <v-card>
             <loading :show_loading="show_loading"></loading>
             <v-card-title color="indigo">
-                <h2 color="indigo">Etiquetas Apli Ref. 10314</h2>
+                <h2 color="indigo">Etiquetas Apli Ref. 02414 - 01992</h2>
                 <v-spacer></v-spacer>
             </v-card-title>
         </v-card>
@@ -44,7 +44,7 @@
                         <v-flex sm1 d-flex>
                             <v-text-field
                                 v-model="form.fila"
-                                v-validate="'required|between:1,22'"
+                                v-validate="'required|between:1,7'"
                                 :error-messages="errors.collect('fila')"
                                 label="Fila"
                                 data-vv-name="fila"
@@ -59,7 +59,7 @@
                         <v-flex sm1 d-flex>
                             <v-text-field
                                 v-model="form.columna"
-                                v-validate="'required|between:1,4'"
+                                v-validate="'required|between:1,3'"
                                 :error-messages="errors.collect('columna')"
                                 label="Columna"
                                 data-vv-name="columna"
@@ -97,7 +97,7 @@ export default {
       return {
         form:{
             etiqueta_id: 3,
-            clase_id: 7,
+            clase_id: 6,
             fila: 1,
             columna: 1,
             limite: 0
@@ -110,7 +110,7 @@ export default {
     mounted(){
         axios.get('/etiquetas/aplipdf')
             .then(res => {
-                console.log(res);
+
                 this.etiquetas = res.data.etiquetas;
                 this.clases = res.data.clases;
                 //this.form.etiqueta_id = this.etiquetas[0].value;
@@ -138,7 +138,7 @@ export default {
 
                         this.show_loading = true;
                         axios({
-                            url: '/etiquetas/aplipdf',
+                            url: '/etiquetas/aplipdf3x7',
                             method: 'POST',
                             responseType: 'blob',
                             data: this.form,

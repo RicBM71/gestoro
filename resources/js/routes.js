@@ -174,6 +174,7 @@ import Reubicar from './components/reubicar/Reubicar.vue';
 import Intercambio from './components/intercambio/Intercambio.vue';
 
 import ApliPdf from './components/etiquetas/ApliPdf.vue';
+import ApliPdf3x7 from './components/etiquetas/ApliPdf3x7.vue';
 import EtiRollo from './components/etiquetas/EtiRollo.vue';
 
 import EditPassword from './components/profile/edit-password/EditPassword.vue';
@@ -793,6 +794,11 @@ export default [
                 path: '/aplipdf',
                 name: 'etiquetas.aplipdf',
                 component: ApliPdf,
+            },
+            {
+                path: '/aplipdf3x7',
+                name: 'etiquetas.apli3x7',
+                component: ApliPdf3x7,
             },
             {
                 path: '/rollo',
