@@ -53,6 +53,22 @@
                                 >
                                     edit
                                 </v-icon>
+                                <v-icon
+                                    v-if="hasFactura"
+                                    small
+                                    class="mr-2"
+                                    @click="printPDF(props.item.id)"
+                                >
+                                    shopping_cart
+                                </v-icon>
+                                <v-icon
+                                    v-if="hasFactura && props.item.factura >''"
+                                    small
+                                    class="mr-2"
+                                    @click="printRecuPDF(props.item.id)"
+                                >
+                                    credit_card
+                                </v-icon>
                             </td>
                         </template>
                         <template slot="pageText" slot-scope="props">
@@ -187,7 +203,8 @@ import {mapActions} from 'vuex'
     computed: {
         ...mapGetters([
             'getPagination',
-            'empresaActiva'
+            'empresaActiva',
+            'hasFactura'
         ]),
     },
     watch: {
@@ -205,6 +222,15 @@ import {mapActions} from 'vuex'
             'setPagination',
             'unsetPagination'
         ]),
+        printPDF(id){
+            var url = '/compras/print/'+id;
+            window.open(url, '_blank');
+            setTimeout(() => this.$emit('update:refresh', this.refresh+1), 1000);
+        },
+        printRecuPDF(id){
+            var url = '/ventas/print/'+id;
+            window.open(url, '_blank');
+        },
         deEmpresaActiva(empresa_id){
            return true;
            return empresa_id == this.empresaActiva;
