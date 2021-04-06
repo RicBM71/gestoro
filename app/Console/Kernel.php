@@ -34,12 +34,12 @@ class Kernel extends ConsoleKernel
         // $hora = env('CRON_HOUR');
         // if ($hora == '') $hora = '00:00';
 
-        $hora = '00:00';
+        $hora = '17:00';
 
         $schedule->call(function () {
             $dt = Carbon::now();
             \Log::info('task: '.$dt);
-        })->everyMinute();
+        })->daily();
 
         //\Log::info($hora);
 
