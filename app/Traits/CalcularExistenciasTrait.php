@@ -13,6 +13,8 @@ trait CalcularExistenciasTrait {
 
     public function valorDepositos($fecha){
 
+        //\Log::info('CalcularExistenciasTrait'.$fecha);
+
         DB::table('existencias')->whereIn('detalle_id', [1,2])->where('fecha', $fecha)->delete();
 
         $select = DB::getTablePrefix().'compras.empresa_id AS empresa_id, '.DB::getTablePrefix().'compras.tipo_id AS tipo_id, SUM('.DB::getTablePrefix().'comlines.importe) AS importe';

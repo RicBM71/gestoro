@@ -21,7 +21,7 @@ class CalcularExistenciaJob implements ShouldQueue
      */
     public function __construct()
     {
-        //
+
     }
 
     /**
@@ -33,6 +33,8 @@ class CalcularExistenciaJob implements ShouldQueue
     {
 
         $fecha = Carbon::today();
+
+     //   \Log::info('CalcularExistenciaJob'.$fecha);
 
         $this->valorDepositos($fecha);
 
