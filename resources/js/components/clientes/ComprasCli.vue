@@ -40,6 +40,8 @@
                             <td>{{ props.item.retraso }}</td>
                             <td v-if="props.item.fase_id == 4">{{ formatDate(props.item.fecha_renovacion) }}</td>
                             <td v-else>-</td>
+                            <td v-if="props.item.fecha_factura != ''">{{props.item.fac_ser}} {{ formatDate(props.item.fecha_factura) }}</td>
+                            <td v-else>-</td>
                             <td :class="props.item.fase.color">{{ props.item.fase.nombre }}</td>
                             <td>{{ props.item.notas }}</td>
                             <td class="justify-center layout px-0">
@@ -122,6 +124,12 @@ import {mapActions} from 'vuex'
                 text: 'F. Renova',
                 align: 'left',
                 value: 'fecha_renovacion',
+                width: '12%'
+            },
+            {
+                text: 'Factura',
+                align: 'left',
+                value: 'fecha_factura',
                 width: '12%'
             },
             {
