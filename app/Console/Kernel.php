@@ -30,10 +30,10 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
 
 
-        // $schedule->call(function () {
-        //     $dt = Carbon::now();
-        //     \Log::info('task: '.$dt);
-        // })->dailyAt('11:29');
+        $schedule->call(function () {
+            $dt = Carbon::now();
+            \Log::info('task: '.$dt);
+        })->hourly();
 
         $hora = env('CRON_HOUR');
         if ($hora == '') $hora = '00:00';
