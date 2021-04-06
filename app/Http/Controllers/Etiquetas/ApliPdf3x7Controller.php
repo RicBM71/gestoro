@@ -76,7 +76,7 @@ class ApliPdf3x7Controller extends Controller
             ->whereNull('deleted_at')
      //       ->where('stock', 1)
             ->orderBy('referencia')
-            ->get()->take(26);
+            ->get();
 
         if ($result->count()==0)
             return false;
@@ -166,20 +166,7 @@ class ApliPdf3x7Controller extends Controller
 
         }
 
-        return;
-
-        // if ($hay_tercera == false){
-        //     //fin linea
-        //     PDF::MultiCell(20, 8,  "", "0", 'C', 0, 1, '', '', true,0,false,true,8,'M',false);
-
-        //     PDF::SetFont('helvetica', '', 6, '', false);
-        //     for ($i=0;$i<=3;$i++){
-        //         ($i==3) ? $ret = 1 : $ret = 0; // cambio linea
-        //         PDF::MultiCell(50, 4.5,  $arr_nom[$i], "", 'L', 0, $ret, '', '', true,0,false,true,4.5,'M',false);
-        //     }
-        //     $arr_nom=array("","","","");
-
-        // }
+        //return;
 
         $clase_id = $data['clase_id'];
 
