@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use Carbon\Carbon;
 use App\Jobs\CalcularExistenciaJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -29,9 +30,10 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
 
 
-        // $schedule->call(function () {
-        //     \Log::info('task');
-        // })->everyMinute();
+        $schedule->call(function () {
+            $dt = Carbon::now();
+            \Log::info('task: '.$dt);
+        })->hourly();
 
         $hora = env('CRON_HOUR');
         if ($hora == '') $hora = '00:00';
