@@ -58,6 +58,7 @@
                             >
                                 <template slot="items" slot-scope="props">
                                     <td>{{ formatDate(props.item.fecha) }}</td>
+                                    <td>{{ detalle(props.item)}}</td>
                                     <td>{{ props.item.importe | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
                                     <td>{{ props.item.username+" "+formatDateUpdated(props.item.updated_at) }}</td>
 
@@ -121,6 +122,12 @@ import {mapActions} from "vuex";
                 width: '2%'
             },
             {
+                text: 'Concepto',
+                align: 'left',
+                value: 'detalle_id',
+                width: "8%"
+            },
+            {
                 text: 'Importe',
                 align: 'left',
                 value: 'importe',
@@ -151,6 +158,9 @@ import {mapActions} from "vuex";
         ejercicio: new Date().toISOString().substr(0, 4),
         filtro: false,
         saldo: 0,
+
+        detalles:['Recompras','Compras','Inventario'],
+
       }
     },
     mounted()
@@ -177,6 +187,9 @@ import {mapActions} from "vuex";
         ])
     },
     methods:{
+        detalle(item){
+            return this.detalles[item.detalle_id - 1];
+        },
         formatDate(f){
 
             if (f == null) return null;
