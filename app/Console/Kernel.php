@@ -36,15 +36,15 @@ class Kernel extends ConsoleKernel
 
         $hora = '17:00';
 
-        $schedule->call(function () {
-            $dt = Carbon::now();
-            \Log::info('task: '.$dt);
-        })->daily();
+        // $schedule->call(function () {
+        //     $dt = Carbon::now();
+        //     \Log::info('task: '.$dt);
+        // })->daily();
 
         //\Log::info($hora);
 
         //$schedule->job(new CalcularExistenciaJob)->monthlyOn(1,$hora)->withoutOverlapping();
-        $schedule->job(new CalcularExistenciaJob)->dailyAt($hora)->withoutOverlapping();
+        $schedule->job(new CalcularExistenciaJob)->weeklyOn(0,'23:00')->withoutOverlapping();
         //$schedule->job(new CalcularExistenciaJob)->everyMinute()->withoutOverlapping();
 
 
