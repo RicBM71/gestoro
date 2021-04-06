@@ -29,13 +29,17 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
 
-        $hora = env('CRON_HOUR');
-        if ($hora == '') $hora = '00:00';
+
+
+        // $hora = env('CRON_HOUR');
+        // if ($hora == '') $hora = '00:00';
+
+        $hora = '00:00';
 
         $schedule->call(function () {
             $dt = Carbon::now();
-            \Log::info('task: '.$dt.' hora env:'.$hora);
-        })->everyFiveMinutes();
+            \Log::info('task: '.$dt);
+        })->everyMinute();
 
         //\Log::info($hora);
 
