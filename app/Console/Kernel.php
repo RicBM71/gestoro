@@ -44,7 +44,7 @@ class Kernel extends ConsoleKernel
         //\Log::info($hora);
 
         //$schedule->job(new CalcularExistenciaJob)->monthlyOn(1,$hora)->withoutOverlapping();
-        $schedule->job(new CalcularExistenciaJob)->dailyAt('13:00')->withoutOverlapping();
+        $schedule->job(new CalcularExistenciaJob)->dailyAt('16:30')->withoutOverlapping();
         //$schedule->job(new CalcularExistenciaJob)->everyMinute()->withoutOverlapping();
 
 
