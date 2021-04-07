@@ -23,7 +23,7 @@
             <td>{{ $item['importe']}}</td>
             <td>{{ $item['albaran']}}</td>
             <td>{{ $item['serie']}}</td>
-            <td>{{ getFecha$item['fecha_op'])}}</td>
+            <td>{{ getFecha($item['fecha_op'])}}</td>
             <td>{{ $item['notas']}}</td>
         </tr>
     @endforeach
