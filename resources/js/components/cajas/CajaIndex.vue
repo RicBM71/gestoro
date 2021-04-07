@@ -279,6 +279,7 @@ import {mapActions} from "vuex";
     computed: {
         ...mapGetters([
             'hasDelCaj',
+            'hasExcel',
             'hasEdtCaj',
             'userName',
             'getPagination'
