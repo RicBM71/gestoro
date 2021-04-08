@@ -6,7 +6,7 @@ UPDATE klt_productos SET destino_empresa_id = 1 where destino_empresa_id = 14 an
 
 
 * * * * * cd ~/apporo && /home/oro-gestion/.bin/php artisan schedule:run >> /home/oro-gestion/logs/cron_logs/cron.log 2>&1
-* * * * * cd ~/apporo && /home/oro-gestion/.bin/php artisan schedule:run >> /home/oro-gestion/logs/cron_logs/cron.log 2>&1
-
+* * * * * cd ~/laraquil && /home/oro-gestion/.bin/php artisan schedule:run >> /dev/null 2>&1
+@reboot /home/oro-gestion/VENV/bin/supervisord  -c /home/oro-gestion/VENV/bin/supervisord.conf
 
 UPDATE `klt_productos` set nombre = REPLACE(nombre,'ROPA.','') where nombre LIKE 'ROPA.%'
