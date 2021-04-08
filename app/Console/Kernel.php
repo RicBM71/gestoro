@@ -40,11 +40,11 @@ class Kernel extends ConsoleKernel
         //     \Log::info('task: '.$dt);
         // })->daily();
 
-        \Log::info($hora);
+        //\Log::info($hora);
 
         //$schedule->job(new CalcularExistenciaJob)->monthlyOn(1,$hora)->withoutOverlapping();
-        $schedule->job(new CalcularExistenciaJob)->dailyAt($hora)->withoutOverlapping();
-        //$schedule->job(new CalcularExistenciaJob)->everyMinute()->withoutOverlapping();
+        //$schedule->job(new CalcularExistenciaJob)->dailyAt($hora)->withoutOverlapping();
+        $schedule->job(new CalcularExistenciaJob)->weeklyOn(0, $hora)->withoutOverlapping();
 
 
 
