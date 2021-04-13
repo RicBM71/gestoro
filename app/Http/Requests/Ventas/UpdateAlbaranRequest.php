@@ -34,6 +34,7 @@ class UpdateAlbaranRequest extends FormRequest
             'facturar'      => ['required','boolean'],
             'express'       => ['required','boolean'],
             'fecha_notificacion' => ['nullable', 'date'],
+            'pedido'        => ['nullable','max:100']
         ];
 
         if ($this->tipo_id == 5){

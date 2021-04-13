@@ -1,11 +1,5 @@
 <?php
 
-use App\Cobro;
-use App\Fixing;
-
-// use App\Compra;
-// use App\Scopes\EmpresaScope;
-
 Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -15,12 +9,6 @@ Route::put('/profile/destroy', 'HomeController@destroy');
 
 // Route::get('/test', 'HomeController@test');
 // Route::get('test', function () {
-
-//     echo Fixing::getFixDia(1,'2020-08-05');
-
-//     $data = Cobro::albaranId(264073)->get();
-
-
 
 //     return 'Hello World';
 // });
@@ -435,6 +423,19 @@ Route::group([
         Route::post('/restaurar', 'EstadosRfidController@restaurar');
 
 
+
+    }
+);
+
+
+Route::group([
+    'prefix' => 'woocommerce',
+    'namespace' => 'WooCommerce',
+    'middleware' => ['auth','password']],
+    function (){
+
+        Route::get('/pedidos', 'PedidosController@index');
+        Route::get('/processing', 'PedidosController@processing');
 
     }
 );

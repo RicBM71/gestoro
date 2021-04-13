@@ -22,7 +22,7 @@ class Albaran extends Model
         'cliente_id','fecha_albaran','fecha_factura','factura',
         'serie_factura','tipo_factura','clitxt','fecha_notificacion','online','iva_no_residente',
         'notas_int','motivo_id','factura_txt','albaran_abonado_id', 'username', 'cuenta_id', 'fpago_id', 'notas_ext',
-        'procedencia_empresa_id','facturar','taller_id','express'
+        'procedencia_empresa_id','facturar','taller_id','express','pedido'
     ];
 
     protected $casts = [

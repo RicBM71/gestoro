@@ -199,7 +199,7 @@
                                 ></v-date-picker>
                             </v-menu>
                         </v-flex>
-                        <v-flex sm2>
+                        <v-flex sm2 v-if="albaran.factura==''">
                             <v-text-field
                                 v-show="computedFacturar"
                                 slot="activator"
@@ -210,20 +210,31 @@
                                 @click:append="facturarHoy()"
                                 append-icon="priority_high"
                             ></v-text-field>
+                        </v-flex>
+                        <v-flex sm1 v-if="albaran.factura>0">
                             <v-text-field
-                                v-if="albaran.factura>0"
                                 v-show="!computedFacturar"
                                 :value="computedFechaFactura"
                                 label="Fecha Factura"
                                 readonly
                             ></v-text-field>
                         </v-flex>
-                        <v-flex sm2 v-if="albaran.factura>0">
+                        <v-flex sm1 v-if="albaran.factura>0">
                             <v-text-field
                                 class="centered-input"
                                 v-model="albaran.fac_ser"
                                 label="Factura"
                                 readonly
+                            >
+                            </v-text-field>
+                        </v-flex>
+                        <v-flex sm2>
+                            <v-text-field
+                                class="centered-input"
+                                v-model="albaran.pedido"
+                                label="Pedido"
+                                :readonly="albaran.factura > 0"
+                                v-on:keyup.enter="submit"
                             >
                             </v-text-field>
                         </v-flex>
@@ -241,6 +252,7 @@
                                 v-model="albaran.clitxt"
                                 label="Cliente"
                                 :readonly="albaran.factura > 0"
+                                v-on:keyup.enter="submit"
                             >
                             </v-text-field>
                         </v-flex>
@@ -711,6 +723,10 @@ import {mapState} from 'vuex'
             computedFechaFactura() {
                 moment.locale('es');
                 return this.albaran.fecha_factura ? moment(this.albaran.fecha_factura).format('DD/MM/YYYY') : '';
+            },
+            computedFechaFacturaFac() {
+                moment.locale('es');
+                return this.albaran.fecha_factura ? moment(this.albaran.fecha_factura).format('DD/MM/YYYY') + ' ' + this.albaran.fac_ser : '';
             },
             computedFechaNotificacion() {
                 moment.locale('es');
