@@ -501,6 +501,7 @@ Class Producto extends Model
             }
 
         }else{
+
             $producto->update($data);
         }
 

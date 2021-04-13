@@ -38,6 +38,10 @@ class AlbaranObserver
 
             Producto::setEstadoProducto($item->producto_id, $estado_id);
 
+            // if (config('cron.woo_url') != false && $producto->online == true){
+            //     $this->update_woo_pro($producto->referencia, $estado_id);
+            // }
+
 
             // Producto::where('id', $item->producto_id)
             //     ->where('estado_id','<>', 5) // no tocamos los genéricos
