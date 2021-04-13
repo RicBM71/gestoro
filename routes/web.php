@@ -434,8 +434,9 @@ Route::group([
     'middleware' => ['auth','password']],
     function (){
 
-        Route::get('/pedidos', 'PedidosController@index');
-        Route::get('/processing', 'PedidosController@processing');
+        Route::get('/pedidos', 'WooPedidosController@index');
+        Route::get('/processing', 'WooPedidosController@processing');
+        Route::get('/producto/{id}', 'WooPedidosController@producto');
 
     }
 );

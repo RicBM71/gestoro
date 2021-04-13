@@ -73,6 +73,7 @@
                                 <template slot="items" slot-scope="props">
                                     <td>{{ props.item.alb_ser }}</td>
                                     <td>{{ formatDate(props.item.fecha_albaran) }}</td>
+                                    <td>{{ props.item.pedido }}</td>
                                     <td>{{ getDni(props.item.cliente.dni) }}</td>
                                     <td>{{ getNombre(props.item) }}</td>
                                     <td class="text-xs-right">{{ totalImpLinea(props.item.albalins) | currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false })}}</td>
@@ -167,6 +168,12 @@ import {mapActions} from "vuex";
                 align: 'left',
                 value: 'fecha_albaran',
                 width: '8%'
+            },
+            {
+                text: 'Pedido',
+                align: 'left',
+                value: 'pedido',
+                width: '6%'
             },
             {
                 text: 'NIF/NIE',

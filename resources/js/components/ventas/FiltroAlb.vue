@@ -117,6 +117,18 @@
                     </v-text-field>
                 </v-flex>
                 <v-flex sm2>
+                    <v-text-field
+                        v-model="pedido"
+                        v-validate="'max:100'"
+                        :error-messages="errors.collect('pedido')"
+                        label="Pedido"
+                        data-vv-name="pedido"
+                        data-vv-as="pedido"
+                        v-on:keyup.enter="submit"
+                    >
+                    </v-text-field>
+                </v-flex>
+                <v-flex sm2>
                     <v-select
                         v-model="facturado"
                         :items="facturados"
@@ -183,6 +195,7 @@ export default {
             fpago_id: 0,
             fase_id:  0,
             clitxt: null,
+            pedido: null,
 
             reservas: false,
             depositos: false,
@@ -249,7 +262,8 @@ export default {
                                 facturado: this.facturado,
                                 reservas: this.reservas,
                                 depositos: this.depositos,
-                                clitxt: this.clitxt
+                                clitxt: this.clitxt,
+                                pedido: this.pedido
                             }
                         )
                         .then(res => {

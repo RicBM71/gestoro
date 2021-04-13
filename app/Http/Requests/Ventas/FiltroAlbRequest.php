@@ -35,7 +35,8 @@ class FiltroAlbRequest extends FormRequest
             'facturado' => ['required'],
             'reservas'  => ['boolean'],
             'depositos' => ['boolean'],
-            'clitxt'    => ['nullable','max:20']
+            'clitxt'    => ['nullable','max:20'],
+            'pedido'    => ['nullable']
         ];
     }
 }

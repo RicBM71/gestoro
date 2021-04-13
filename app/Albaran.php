@@ -278,15 +278,25 @@ class Albaran extends Model
 
             if ($clitxt[0] ==':'){
                 $clitxt = str_replace(':','',$clitxt);
-                return $query->Where('notas_int','like', '%'.$clitxt.'%');
+                return $query->where('notas_int','like', '%'.$clitxt.'%');
             }else{
-                return $query->Where('clitxt','like', '%'.$clitxt.'%');
+                return $query->where('clitxt','like', '%'.$clitxt.'%');
             }
 
         }
 
         return $query;
     }
+
+    public static function scopePedido($query, $pedido){
+
+        if (!Empty($pedido) && $pedido > 0)
+            return $query->where('pedido','=', $pedido);
+
+        return $query;
+
+    }
+
 
 
 
