@@ -20,8 +20,6 @@ class AlbaranObserver
 
         $this->fase_id = $albaran->fase_id;
 
-
-
         $albaran->albalins->each(function ($item){
 
             if ($this->fase_id == 10)  // reservado
@@ -36,17 +34,10 @@ class AlbaranObserver
                 'username' => session('username')
             ];
 
-            Producto::setEstadoProducto($item->producto_id, $estado_id);
+            $producto = Producto::withoutGlobalScope(EmpresaProductoScope::class)->findOrFail($item->producto_id);
+            $producto->setEstadoProducto($producto, $estado_id);
 
-            // if (config('cron.woo_url') != false && $producto->online == true){
-            //     $this->update_woo_pro($producto->referencia, $estado_id);
-            // }
-
-
-            // Producto::where('id', $item->producto_id)
-            //     ->where('estado_id','<>', 5) // no tocamos los genéricos
-            //     ->where('stock', 1)
-            //     ->update($data);
+            //Producto::setEstadoProducto($item->producto_id, $estado_id);
 
 
         });

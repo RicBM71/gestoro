@@ -475,14 +475,45 @@ Class Producto extends Model
 
     }
 
-    public static function setEstadoProducto($producto_id, $estado_id){
+    // public static function setEstadoProducto($producto_id, $estado_id){
+
+    //     $data=[
+    //         'estado_id'=> $estado_id,
+    //         'username' => session('username')
+    //     ];
+
+    //     $producto = Producto::withoutGlobalScope(EmpresaProductoScope::class)->findOrFail($producto_id);
+
+    //     if ($producto->estado_id >= 5) return;
+
+    //     if ($producto->stock > 1){
+
+    //         $vendidos = DB::table('albalins')
+    //                         ->where('producto_id', $producto_id)
+    //                         ->whereNull('deleted_at')
+    //                         ->sum('unidades');
+
+    //         if ($vendidos >= $producto->stock){
+    //             if ($estado_id == 4)        // no actualizamos para que no se quede en reservado, así no se podría volver a vender.
+    //                 $producto->update($data);
+    //         }else if ($estado_id == 2) {
+    //             $producto->update($data);    // actualizamos para dejarlo en venta.
+    //         }
+
+    //     }else{
+
+    //         $producto->update($data);
+    //     }
+
+    // }
+
+    public function setEstadoProducto($producto, $estado_id){
 
         $data=[
             'estado_id'=> $estado_id,
             'username' => session('username')
         ];
 
-        $producto = Producto::withoutGlobalScope(EmpresaProductoScope::class)->findOrFail($producto_id);
 
         if ($producto->estado_id >= 5) return;
 
@@ -504,6 +535,10 @@ Class Producto extends Model
 
             $producto->update($data);
         }
+
+        // if (config('cron.woo_url') != false && $producto->online == true){
+            //     $this->update_woo_pro($producto->referencia, $estado_id);
+            // }
 
     }
 

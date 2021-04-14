@@ -539,8 +539,7 @@ import {mapState} from 'vuex'
                     .then(res => {
 
                         this.tags = res.data.tags;
-                        console.log(res.data.producto);
-                        console.log(this.tags);
+                        
                         this.chips = res.data.producto.tags;
 
                         this.producto = res.data.producto;

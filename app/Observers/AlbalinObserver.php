@@ -18,18 +18,10 @@ class AlbalinObserver
     public function created(Albalin $albalin)
     {
 
-        // $data=[
-        //     'estado_id'=> 3,
-        //     'username' => session('username')
-        // ];
+        //Producto::setEstadoProducto($albalin->producto_id, 3);
 
-
-        // Producto::where('id', $albalin->producto_id)
-        // ->where('estado_id','<>', 5) // no tocamos los genéricos
-        //             ->where('stock', 1)
-        //             ->update($data);
-
-        Producto::setEstadoProducto($albalin->producto_id, 3);
+        $producto = Producto::withoutGlobalScope(EmpresaProductoScope::class)->findOrFail($albalin->producto_id);
+        $producto->setEstadoProducto($producto, 3);
 
         $this->updateFaseAlbaran($albalin->albaran_id);
 

@@ -228,7 +228,7 @@
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm2>
+                        <v-flex sm2 v-if="albaran.tipo_id==3">
                             <v-text-field
                                 class="centered-input"
                                 v-model="albaran.pedido"
