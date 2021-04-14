@@ -110,14 +110,14 @@ class PrintGarantiaDepositoController extends Controller
 
             if ($this->producto->cliente->tipo_doc == 'C')
                 $txt='D/Dña. '.$this->producto->cliente->razon.' con DNI: '.$this->producto->cliente->dni.' como propietario del establecimiento de compra-venta oro establecido en  '.$this->producto->cliente->direccion.' '.$this->producto->cliente->poblacion.
-                            ', por medio de la presente'."\n\n".
+                            ', por medio de la presente: '."\n\n".
                             'DECLARO RECIBIR DE '.session('empresa')->razon.' con CIF: '. session('empresa')->cif.' y domicilio en '.session('empresa')->direccion.', '.session('empresa')->poblacion.
                             ' un importe de '.getCurrency($this->producto->precio_coste).' en concepto de garantía, por el depósito para su venta de: '.$this->producto->nombre.
                             ', asentado con el número '.$this->producto->ref_pol.".\n\n".
                             'Y para que conste emito la presente a efectos de recibí.'."\n\n\n\n";
             else
-                $txt='D/Dña. '.$this->producto->cliente->razon.' con DNI: '.$this->producto->cliente->dni.' como propietario/a de la pieza detallada más abajo '.
-                            ', por medio de la presente'."\n\n".
+                $txt='D/Dña. '.$this->producto->cliente->razon.' con DNI: '.$this->producto->cliente->dni.' como propietario/a de la pieza detallada más abajo, '.
+                            'por medio de la presente: '."\n\n".
                             'DECLARO RECIBIR DE '.session('empresa')->razon.' con CIF: '. session('empresa')->cif.' y domicilio en '.session('empresa')->direccion.', '.session('empresa')->poblacion.
                             ' un importe de '.getCurrency($this->producto->precio_coste).' en concepto de garantía, por el depósito para su venta de: '.$this->producto->nombre.
                             ', asentado con el número '.$this->producto->ref_pol.".\n\n".
@@ -172,7 +172,7 @@ class PrintGarantiaDepositoController extends Controller
 
                 $pdf->SetFont('helvetica', 'R', 9, '', false);
 
-                $y = 25;
+                $y = 30;
                 $pdf->SetXY(16, $y);
                 $pdf->Write($h=0,  session('empresa')->razon, '', 0, 'L', true, 0, false, true, 0);
                 $pdf->SetXY(16, $y+=5);
