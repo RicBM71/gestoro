@@ -14,7 +14,7 @@ class AddEcommerceToProductos extends Migration
     public function up()
     {
         Schema::table('productos', function (Blueprint $table) {
-            $table->unsignedInteger('ecommerce_id')->nullable()->after('notas')->index();
+            $table->unsignedInteger('ecommerce_id')->nullable()->after('notas')->unique();
         });
     }
 

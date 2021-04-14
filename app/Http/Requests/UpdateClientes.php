@@ -63,6 +63,7 @@ class UpdateClientes extends FormRequest
             'interes_recuperacion' => ['numeric','required'],
             'descuento'         => ['numeric','required'],
             'notificar_iban'    => ['boolean'],
+            'ecommerce_id'      => ['nullable','integer']
         ];
         // Rule::unique('clientes')
         //     ->ignore($this->route('cliente')->id)->where(function ($query) {return $query->where('empresa_id', session()->get('empresa')->id; })];

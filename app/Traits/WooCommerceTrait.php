@@ -215,9 +215,9 @@ trait WooCommerceTrait {
     }
 
 
-    public function store_producto($producto_id){
+    public function store_producto($producto){
 
-        $producto = Producto::findOrFail($producto_id);
+        //$producto = Producto::findOrFail($producto_id);
 
         $data = [
             'name'              => $producto->nombre,

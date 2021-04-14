@@ -11,6 +11,20 @@
                             v-on="on"
                             color="white"
                             icon
+                            @click="goeCommerce"
+                            disabled
+                        >
+                            <v-icon color="primary">add_link</v-icon>
+                        </v-btn>
+                    </template>
+                        <span>Subir producto a eCommerce</span>
+                </v-tooltip>
+                <v-tooltip bottom v-if="this.producto.compra_id">
+                    <template v-slot:activator="{ on }">
+                        <v-btn
+                            v-on="on"
+                            color="white"
+                            icon
                             @click="goCompra"
                         >
                             <v-icon color="primary">shopping_cart</v-icon>
@@ -47,7 +61,7 @@
                                     >
                                     </v-text-field>
                                 </v-flex>
-                                <v-flex sm2>
+                                <v-flex sm1>
                                     <v-text-field
                                         v-show="producto.estado_id <= 4"
                                         v-model="producto.ref_pol"
@@ -111,6 +125,19 @@
                                         :disabled="computedEditEstado"
                                         label="Estado"
                                     ></v-select>
+                                </v-flex>
+                                <v-flex sm1 v-if="producto.online">
+                                    <v-text-field
+                                        v-model="producto.ecommerce_id"
+                                        v-validate="'numeric'"
+                                        :error-messages="errors.collect('ecommerce_id')"
+                                        label="eCommerce ID"
+                                        data-vv-name="ecommerce_id"
+                                        data-vv-as="eCommerce"
+                                        :disabled="!computedEditPro"
+                                        v-on:keyup.enter="submit"
+                                    >
+                                    </v-text-field>
                                 </v-flex>
                             </v-layout>
                             <v-layout row wrap>
@@ -687,6 +714,23 @@ import {mapState} from 'vuex'
             },
             getMoneyFormat(value){
                 return new Intl.NumberFormat("de-DE",{style: "currency", currency: "EUR"}).format(parseFloat(value))
+            },
+            goeCommerce(){
+
+                this.loading = true;
+                axios.post("/woocommerce/store/"+this.producto.id)
+                    .then(res => {
+
+                        this.$toast.success('Ok');
+                        this.producto = res.data.producto;
+                        this.loading = false;
+
+                    })
+                    .catch(err => {
+                        this.$toast.error(err.response.data.message);
+                        this.loading = false;
+                    });
+
             },
             submit() {
 

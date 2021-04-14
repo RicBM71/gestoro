@@ -162,11 +162,11 @@
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm2>
+                        <v-flex sm1>
                             <v-text-field
                                 class="centered-input"
                                 v-model="albaran.alb_ser"
-                                :label="computedLabelAlbaran"
+                                label="Albarán"
                                 readonly
                             >
                             </v-text-field>
@@ -199,24 +199,23 @@
                                 ></v-date-picker>
                             </v-menu>
                         </v-flex>
-                        <v-flex sm2 v-if="albaran.factura==''">
+                        <v-flex sm1 v-else>
+                            <v-text-field
+                                :value="computedFechaAlbaran"
+                                label="Fecha Albarán"
+                                readonly
+                            ></v-text-field>
+                        </v-flex>
+                        <v-flex sm1 v-if="albaran.factura==null">
                             <v-text-field
                                 v-show="computedFacturar"
                                 slot="activator"
                                 :value="computedFechaFactura"
-                                label="Fecha Factura"
+                                label="Facturar hoy"
                                 readonly
                                 :disabled="!albaran.facturar"
                                 @click:append="facturarHoy()"
                                 append-icon="priority_high"
-                            ></v-text-field>
-                        </v-flex>
-                        <v-flex sm1 v-if="albaran.factura>0">
-                            <v-text-field
-                                v-show="!computedFacturar"
-                                :value="computedFechaFactura"
-                                label="Fecha Factura"
-                                readonly
                             ></v-text-field>
                         </v-flex>
                         <v-flex sm1 v-if="albaran.factura>0">
@@ -228,7 +227,15 @@
                             >
                             </v-text-field>
                         </v-flex>
-                        <v-flex sm2 v-if="albaran.tipo_id==3">
+                        <v-flex sm1 v-if="albaran.factura>0">
+                            <v-text-field
+                                v-show="!computedFacturar"
+                                :value="computedFechaFactura"
+                                label="Fecha Factura"
+                                readonly
+                            ></v-text-field>
+                        </v-flex>
+                        <v-flex sm1 v-if="albaran.tipo_id==3">
                             <v-text-field
                                 class="centered-input"
                                 v-model="albaran.pedido"

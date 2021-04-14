@@ -436,7 +436,7 @@ Route::group([
 
         Route::get('/pedidos', 'WooPedidosController@index');
         Route::get('/processing', 'WooPedidosController@processing');
-        Route::get('/producto/{id}', 'WooPedidosController@producto');
+        Route::post('/store/{producto}', 'WooPedidosController@producto');
 
     }
 );

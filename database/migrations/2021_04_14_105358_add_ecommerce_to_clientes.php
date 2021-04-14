@@ -14,7 +14,7 @@ class AddEcommerceToClientes extends Migration
     public function up()
     {
         Schema::table('clientes', function (Blueprint $table) {
-            $table->unsignedInteger('ecommerce_id')->nullable()->after('descuento')->index();
+            $table->unsignedInteger('ecommerce_id')->nullable()->after('descuento')->unique();
         });
     }
 

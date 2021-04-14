@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\WooCommerce;
 
+use App\Producto;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Traits\WooCommerceTrait;
+use App\Http\Controllers\Controller;
 
 class WooPedidosController extends Controller
 {
@@ -47,9 +48,28 @@ class WooPedidosController extends Controller
      *
      * @return void
      */
-    public function producto($producto_id){
+    public function producto(Request $request, Producto $producto){
 
-        dd($this->store_producto($producto_id));
+        // $data = $request->validate([
+        //     'producto_id' => ['required','integer']
+        // ]);
+
+
+        //return $producto->load('clase','empresa','tags');
+
+        $ec = $this->store_producto($producto);
+
+        $upd['online'] = true;
+        $upd['username'] = $request->user()->username;
+        $upd['ecommerce_id'] = $ec->id;
+
+        $producto->update($upd);
+
+        if (request()->wantsJson())
+            return [
+                'producto'=> $producto->load('clase','empresa','tags'),
+                'stock_real'=> Producto::getStockReal($producto->id),
+            ];
 
     }
 

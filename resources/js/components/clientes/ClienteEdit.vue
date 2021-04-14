@@ -62,7 +62,7 @@
                                     >
                                     </v-text-field>
                                 </v-flex>
-                                <v-flex sm3>
+                                <v-flex sm2>
                                     <v-text-field
                                         v-model="cliente.nombre"
                                         v-validate="'required'"
@@ -101,6 +101,19 @@
                                         data-vv-name="fecha_dni"
                                         :disabled="computedDisabled"
                                         v-on:keyup.enter="submit"                                    >
+                                    </v-text-field>
+                                </v-flex>
+                                <v-flex sm1>
+                                    <v-text-field
+                                        v-model="cliente.ecommerce_id"
+                                        v-validate="'numeric'"
+                                        :error-messages="errors.collect('ecommerce_id')"
+                                        label="eCommerce ID"
+                                        data-vv-name="ecommerce_id"
+                                        data-vv-as="eCommerce"
+                                        :disabled="!hasEdtCli"
+                                        v-on:keyup.enter="submit"
+                                    >
                                     </v-text-field>
                                 </v-flex>
                             </v-layout>
