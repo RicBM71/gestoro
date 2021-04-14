@@ -37,8 +37,6 @@ class AlbaranObserver
             $producto = Producto::withoutGlobalScope(EmpresaProductoScope::class)->findOrFail($item->producto_id);
             $producto->setEstadoProducto($producto, $estado_id);
 
-            //Producto::setEstadoProducto($item->producto_id, $estado_id);
-
 
         });
 

@@ -26,6 +26,7 @@ class Empresa extends Model
     // 12: Activar Envíos WhatsApp
     // 13: Envío mail renovaciones
 
+
     use SoftDeletes;
 
     //protected $connection = session('bbdd');

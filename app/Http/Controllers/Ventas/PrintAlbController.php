@@ -484,7 +484,7 @@ class PrintAlbController extends Controller
                 PDF::MultiCell(188, 5, $txt, '', 'L', 0, 1, '', '', true);
 
             } catch (\Exception $e) {
-                \Log::info('falla cuenta');
+                \Log::info('falla cuenta '.$this->albaran->id);
             }
         }
     }

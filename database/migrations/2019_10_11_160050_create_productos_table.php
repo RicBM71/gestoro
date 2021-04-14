@@ -21,7 +21,7 @@ class CreateProductosTable extends Migration
             $table->string('nombre_interno')->nullable();
             $table->unsignedInteger('clase_id');
             $table->integer('quilates')->nullable();
-            $table->string('caracteristicas')->nullable();
+            $table->text('caracteristicas')->nullable();
             $table->decimal('precio_coste', 10, 2)->default(0);
             $table->decimal('peso_gr', 10, 2)->default(0);
             $table->decimal('precio_venta', 10, 2)->default(0);

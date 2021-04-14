@@ -115,7 +115,7 @@
                             </v-layout>
                             <v-layout row wrap>
                                 <v-flex sm6>
-                                    <v-textarea
+                                    <v-text-field
                                         v-model="producto.nombre"
                                         v-validate="'required'"
                                         :error-messages="errors.collect('nombre')"
@@ -125,9 +125,7 @@
                                         required
                                         :disabled="!computedEditPro"
                                     >
-                                    </v-textarea>
-                                </v-flex>
-                                <v-flex sm6>
+                                    </v-text-field>
                                     <v-text-field
                                         v-show="producto.estado_id != 5"
                                         v-model="producto.nombre_interno"
@@ -140,17 +138,19 @@
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
-                                    <v-text-field
+                                </v-flex>
+                                <v-flex sm6>
+                                    <v-textarea
                                         v-show="producto.estado_id != 5"
                                         v-model="producto.caracteristicas"
                                         v-validate="'max:190'"
                                         :error-messages="errors.collect('caracteristicas')"
-                                        label="Características: Brillantes: Talla, color, pureza, quilates - Relojes: S/N"
+                                        label="Descripción: Brillantes: Talla, color, pureza, quilates - Relojes: S/N"
                                         data-vv-name="caracteristicas"
                                         data-vv-as="características"
                                         v-on:keyup.enter="submit"
                                     >
-                                    </v-text-field>
+                                    </v-textarea>
                                 </v-flex>
                             </v-layout>
                             <v-layout row wrap v-show="producto.estado_id != 5">
@@ -300,7 +300,7 @@
                                 <v-flex sm1>
                                     <v-switch
                                         v-show="producto.estado_id != 5"
-                                        label="Online"
+                                        label="eCommerce"
                                         v-model="producto.online"
                                         :disabled="!computedEditPro"
                                         color="primary">
@@ -539,7 +539,7 @@ import {mapState} from 'vuex'
                     .then(res => {
 
                         this.tags = res.data.tags;
-                        
+
                         this.chips = res.data.producto.tags;
 
                         this.producto = res.data.producto;
