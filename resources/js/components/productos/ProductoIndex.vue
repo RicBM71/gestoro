@@ -71,7 +71,13 @@
                                 rows-per-page-text="Registros por página"
                             >
                                 <template slot="items" slot-scope="props">
-                                    <td>{{ props.item.referencia }}</td>
+                                    <td><v-icon
+                                        v-if="props.item.online"
+                                        small
+                                        class="blue--text lighten-5 mr-2"
+                                    >
+                                        star
+                                    </v-icon>{{ props.item.referencia }}</td>
                                     <td v-if="props.item.deleted_at==null">{{ props.item.nomcar }}</td>
                                     <td v-else class="tachado">{{ props.item.nomcar }}</td>
                                     <td>{{ props.item.clase.nombre }} <span v-if="props.item.quilates != 0">{{props.item.quilates}}</span></td>

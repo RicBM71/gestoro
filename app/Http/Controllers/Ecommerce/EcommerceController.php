@@ -1,17 +1,43 @@
 <?php
 
-namespace App\Http\Controllers\WooCommerce;
+namespace App\Http\Controllers\Ecommerce;
 
 use App\Producto;
 use Illuminate\Http\Request;
-use App\Traits\WooCommerceTrait;
+use App\Traits\EcommerceTrait;
+use Automattic\WooCommerce\Client;
 use App\Http\Controllers\Controller;
 
-class WooPedidosController extends Controller
+class EcommerceController extends Controller
 {
 
-    use WooCommerceTrait;
+    use EcommerceTrait;
 
+    protected $woocommerce;
+    protected $ecommerce="woo";
+
+    public function __construct()
+    {
+
+        $url = config('cron.woo_url');
+
+        if ($url == false){
+            abort(404, 'No hay tienda online configurada!');
+        }
+
+        $key = config('cron.woo_key');
+        $sec = config('cron.woo_sec');
+
+        $this->woocommerce = new Client(
+            $url,
+            $key,
+            $sec,
+            [
+                'wp_api' => true,
+                'version' => 'wc/v3'
+            ]
+        );
+    }
     /**
      * Verifica si hay pedidos pendientes de procesar
      *
@@ -19,9 +45,9 @@ class WooPedidosController extends Controller
      */
     public function index(){
 
-        $this->test();
+        $this->test($this->woocommerce);
 
-        return $this->check();
+        return $this->check($this->woocommerce);
 
     }
 
@@ -36,7 +62,8 @@ class WooPedidosController extends Controller
 
     public function pendientes(){
 
-        $pedidos = $this->processing();
+        if ($this->ecommerce == 'woo')
+            $pedidos = $this->processing($this->woocommerce);
 
         return $pedidos;
 
@@ -57,11 +84,12 @@ class WooPedidosController extends Controller
 
         //return $producto->load('clase','empresa','tags');
 
-        $ec = $this->store_producto($producto);
+        if ($this->ecommerce == 'woo')
+            $ecommerce_id = $this->woo_store_producto($this->woocommerce, $producto);
 
         $upd['online'] = true;
         $upd['username'] = $request->user()->username;
-        $upd['ecommerce_id'] = $ec->id;
+        $upd['ecommerce_id'] = $ecommerce_id;
 
         $producto->update($upd);
 

@@ -429,14 +429,14 @@ Route::group([
 
 
 Route::group([
-    'prefix' => 'woocommerce',
-    'namespace' => 'WooCommerce',
+    'prefix' => 'ecommerce',
+    'namespace' => 'Ecommerce',
     'middleware' => ['auth','password']],
     function (){
 
-        Route::get('/pedidos', 'WooPedidosController@index');
-        Route::get('/processing', 'WooPedidosController@processing');
-        Route::post('/store/{producto}', 'WooPedidosController@producto');
+        Route::get('/pedidos', 'EcommerceController@index');
+        Route::get('/processing', 'EcommerceController@processing');
+        Route::post('/store/{producto}', 'EcommerceController@producto');
 
     }
 );

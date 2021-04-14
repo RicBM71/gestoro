@@ -537,9 +537,9 @@ Class Producto extends Model
             $producto->update($data);
         }
 
-        // if (config('cron.woo_url') != false && $producto->online == true){
-        //     $this->woo_update_pro($producto->referencia, $producto->ecommerce_id, $estado_id);
-        // }
+        if (config('cron.woo_url') != false && $producto->online == true){
+            $this->woo_update_pro($producto->referencia, $producto->ecommerce_id, $estado_id);
+        }
 
     }
 

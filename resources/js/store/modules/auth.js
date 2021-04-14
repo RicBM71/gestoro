@@ -212,6 +212,9 @@ const getters = {
     hasAbono: (state) =>{
         return (state.permisos.indexOf('abono') >= 0) ? true : false;
     },
+    hasEcommerce: (state) =>{
+        return (state.permisos.indexOf('ecommerce') >= 0) ? true : false;
+    },
     flexCortesia: (state) =>{
         return state.flex_cortesia;
     },

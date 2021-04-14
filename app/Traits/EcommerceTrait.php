@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Log;
 use App\Scopes\EmpresaProductoScope;
 
 
-trait WooCommerceTrait {
+trait EcommerceTrait {
 
     protected $woocommerce;
     protected $albaranes_creados;
@@ -39,19 +39,19 @@ trait WooCommerceTrait {
         );
     }
 
-    public function check(){
+    public function check($woocommerce){
 
         $filter = ['status' => 'processing'];
-        $pedidos = $this->woocommerce->get('orders',$filter);
+        $pedidos = $woocommerce->get('orders',$filter);
 
         return collect($pedidos)->count();
 
     }
 
-    public function processing(){
+    public function processing($woocommerce){
 
         $filter = ['status' => 'processing'];
-        $pedidos = $this->woocommerce->get('orders',$filter);
+        $pedidos = $woocommerce->get('orders',$filter);
 
         $i = 0;
         foreach ($pedidos as $pedido){
@@ -215,9 +215,14 @@ trait WooCommerceTrait {
     }
 
 
-    public function store_producto($producto){
-
-        //$producto = Producto::findOrFail($producto_id);
+    /**
+     * Crea producto WooCommerce
+     *
+     * @param Object $woocommerce
+     * @param Object $producto
+     * @return integer ecommerce_id
+     */
+    public function woo_store_producto($woocommerce, $producto){
 
         $data = [
             'name'              => $producto->nombre,
@@ -228,20 +233,22 @@ trait WooCommerceTrait {
             'short_description' => $producto->nombre,
         ];
 
-        return $this->woocommerce->post('products', $data);
+        $prod = $woocommerce->post('products', $data);
+
+        return $prod->id;
 
 
     }
 
 
-    public function test(){
+    public function test($woocommerce){
 
         $data = ['sku' => 'CL63113'];
-        $p = collect($this->woocommerce->get('products',$data))->first();
+        $p = collect($woocommerce->get('products',$data))->first();
 
         dd($p);
         $filter = ['status' => 'processing'];
-        $pedidos = $this->woocommerce->get('orders',$filter);
+        $pedidos = $woocommerce->get('orders',$filter);
 
         dd($pedidos);
         foreach($pedidos as $pedido){

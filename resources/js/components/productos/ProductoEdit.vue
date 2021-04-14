@@ -5,16 +5,16 @@
             <v-card-title color="indigo">
                 <h2 color="indigo">{{titulo}}</h2>
                 <v-spacer></v-spacer>
-                <v-tooltip bottom v-if="this.producto.compra_id">
+                <v-tooltip bottom v-if="!hasEcommerce">
                     <template v-slot:activator="{ on }">
                         <v-btn
                             v-on="on"
                             color="white"
                             icon
-                            @click="goeCommerce"
-                            disabled
+                            @click="goEcommerce"
+                            :disabled="producto.ecommerce_id > 0"
                         >
-                            <v-icon color="primary">add_link</v-icon>
+                            <v-icon color="primary">cloud_upload</v-icon>
                         </v-btn>
                     </template>
                         <span>Subir producto a eCommerce</span>
@@ -36,7 +36,7 @@
 
             </v-card-title>
         </v-card>
-        <v-card v-if="!show_loading">
+        <v-card>
             <v-tabs fixed-tabs>
                 <v-tab>
                         Datos generales
@@ -619,6 +619,7 @@ import {mapState} from 'vuex'
                     'hasEdtPro',
                     'isRoot',
                     'hasEdtPro',
+                    'hasEcommerce',
                     'userName'
                 ]),
             computedEditEstado(){
@@ -715,20 +716,20 @@ import {mapState} from 'vuex'
             getMoneyFormat(value){
                 return new Intl.NumberFormat("de-DE",{style: "currency", currency: "EUR"}).format(parseFloat(value))
             },
-            goeCommerce(){
+            goEcommerce(){
 
-                this.loading = true;
-                axios.post("/woocommerce/store/"+this.producto.id)
+                this.show_loading = true;
+                axios.post("/ecommerce/store/"+this.producto.id)
                     .then(res => {
 
-                        this.$toast.success('Ok');
+                        this.$toast.success('Referencia subida correctamente!');
                         this.producto = res.data.producto;
-                        this.loading = false;
+                        this.show_loading = false;
 
                     })
                     .catch(err => {
                         this.$toast.error(err.response.data.message);
-                        this.loading = false;
+                        this.show_loading = false;
                     });
 
             },
