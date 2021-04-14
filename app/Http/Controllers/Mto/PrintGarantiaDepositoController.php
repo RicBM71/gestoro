@@ -108,12 +108,20 @@ class PrintGarantiaDepositoController extends Controller
             PDF::Write($h=0, $txt, '', 0, 'L', true, 0, false, true, 0);
 
 
-            $txt='D/Dña. '.$this->producto->cliente->razon.' con DNI: '.$this->producto->cliente->dni.' como propietario del establecimiento de compra-venta oro establecido en  '.$this->producto->cliente->direccion.' '.$this->producto->cliente->poblacion.
-                        ', por medio de la presente'."\n\n".
-                        'DECLARO RECIBIR DE '.session('empresa')->razon.' con CIF: '. session('empresa')->cif.' y domicilio en '.session('empresa')->direccion.', '.session('empresa')->poblacion.
-                        ' un importe de '.getCurrency($this->producto->precio_coste).' en concepto de garantía, por el depósito para su venta de: '.$this->producto->nombre.
-                        ', asentado con el número '.$this->producto->ref_pol.".\n\n".
-                        'Y para que conste emito la presente a efectos de recibí.'."\n\n\n\n";
+            if ($this->producto->cliente->tipo_doc == 'C')
+                $txt='D/Dña. '.$this->producto->cliente->razon.' con DNI: '.$this->producto->cliente->dni.' como propietario del establecimiento de compra-venta oro establecido en  '.$this->producto->cliente->direccion.' '.$this->producto->cliente->poblacion.
+                            ', por medio de la presente'."\n\n".
+                            'DECLARO RECIBIR DE '.session('empresa')->razon.' con CIF: '. session('empresa')->cif.' y domicilio en '.session('empresa')->direccion.', '.session('empresa')->poblacion.
+                            ' un importe de '.getCurrency($this->producto->precio_coste).' en concepto de garantía, por el depósito para su venta de: '.$this->producto->nombre.
+                            ', asentado con el número '.$this->producto->ref_pol.".\n\n".
+                            'Y para que conste emito la presente a efectos de recibí.'."\n\n\n\n";
+            else
+                $txt='D/Dña. '.$this->producto->cliente->razon.' con DNI: '.$this->producto->cliente->dni.' como propietario/a de la pieza detallada más abajo '.
+                            ', por medio de la presente'."\n\n".
+                            'DECLARO RECIBIR DE '.session('empresa')->razon.' con CIF: '. session('empresa')->cif.' y domicilio en '.session('empresa')->direccion.', '.session('empresa')->poblacion.
+                            ' un importe de '.getCurrency($this->producto->precio_coste).' en concepto de garantía, por el depósito para su venta de: '.$this->producto->nombre.
+                            ', asentado con el número '.$this->producto->ref_pol.".\n\n".
+                            'Y para que conste emito la presente a efectos de recibí.'."\n\n\n\n";
 
 
                 //$this->Write($h=0, $html, $link='', $fill=0, $align='J', $ln=true, $stretch=0, $firstline=false, $firstblock=false, $maxh=0);
@@ -146,9 +154,11 @@ class PrintGarantiaDepositoController extends Controller
 
                     $f = str_replace('storage', 'public', session()->get('empresa')->img_logo);
 
-                    $file = '@'.(Storage::get($f));
-                    $pdf->setJPEGQuality(75);
-                    $pdf->Image($file, $x='5', $y='2', $w=0, $h=0, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false);
+                    if (Storage::exists($f)){
+                        $file = '@'.(Storage::get($f));
+                        $pdf->setJPEGQuality(75);
+                        $pdf->Image($file, $x='5', $y='4', $w=0, $h=25, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false);
+                    }
 
                 }
 
