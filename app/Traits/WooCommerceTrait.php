@@ -236,10 +236,10 @@ trait WooCommerceTrait {
 
     public function test(){
 
-        $data = ['sku' => 'logo-collection'];
+        $data = ['sku' => 'CL63113'];
         $p = collect($this->woocommerce->get('products',$data))->first();
 
-       // dd($p);
+        dd($p);
         $filter = ['status' => 'processing'];
         $pedidos = $this->woocommerce->get('orders',$filter);
 

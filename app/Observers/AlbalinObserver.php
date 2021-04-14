@@ -48,7 +48,8 @@ class AlbalinObserver
     {
 
 
-        Producto::setEstadoProducto($albalin->producto_id, 2);
+        $producto = Producto::withoutGlobalScope(EmpresaProductoScope::class)->findOrFail($albalin->producto_id);
+        $producto->setEstadoProducto($producto, 2);
 
         // $data=[
         //     'estado_id'=> 2,

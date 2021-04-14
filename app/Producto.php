@@ -537,10 +537,49 @@ Class Producto extends Model
         }
 
         // if (config('cron.woo_url') != false && $producto->online == true){
-            //     $this->update_woo_pro($producto->referencia, $estado_id);
-            // }
+        //     $this->woo_update_pro($producto->referencia, $estado_id);
+        // }
 
     }
+
+    /**
+     *
+     * Actualiza estado producto para WooCommerce.
+     *
+     */
+
+    private function woo_update_pro($referencia, $estado_id){
+
+        $woocommerce = $this->woo_connect();
+
+        $data = ['sku' => $referencia];
+        $woo_producto = collect($this->woocommerce->get('products',$data))->first();
+
+        $data = ($estado_id <= 2) ? ['stock_status' => 'instock'] : ['stock_status' => 'outofstock'];
+
+        $woocommerce->put('products/'.$woo_producto->id, $data);
+
+
+    }
+
+    private function woo_connect()
+    {
+
+        $url = config('cron.woo_url');
+        $key = config('cron.woo_key');
+        $sec = config('cron.woo_sec');
+
+        return new Client(
+            $url,
+            $key,
+            $sec,
+            [
+                'wp_api' => true,
+                'version' => 'wc/v3'
+            ]
+        );
+    }
+
 
     public static function getStockReal($producto_id){
 
