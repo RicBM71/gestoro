@@ -5,7 +5,7 @@
             <v-card-title color="indigo">
                 <h2 color="indigo">{{titulo}}</h2>
                 <v-spacer></v-spacer>
-                <v-tooltip bottom v-if="!hasEcommerce">
+                <v-tooltip bottom v-if="hasEcommerce">
                     <template v-slot:activator="{ on }">
                         <v-btn
                             v-on="on"

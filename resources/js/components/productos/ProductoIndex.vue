@@ -170,7 +170,8 @@ import {mapActions} from "vuex";
             {
                 text: 'Referencia',
                 align: 'left',
-                value: 'referencia'
+                value: 'referencia',
+                width: "10%"
             },
             {
                 text: 'Nombre',
