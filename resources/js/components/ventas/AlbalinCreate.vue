@@ -242,8 +242,8 @@
             const quilates = this.producto.quilates > 0 ? this.producto.quilates+"K" : "";
             //const peso = this.producto.peso_gr > 0 ? this.producto.peso_gr+" gr." : "";
             const peso = this.producto.univen =="G" ? this.producto.peso_gr+" gr." : "";
-            const caracteristicas = this.producto.caracteristicas != null ? this.producto.caracteristicas : "";
-            return this.producto.clase.nombre+" "+quilates+" "+caracteristicas+" "+peso;
+           // const caracteristicas = this.producto.caracteristicas != null ? this.producto.caracteristicas : "";
+            return this.producto.clase.nombre+" "+quilates+" "+peso;
         },
         computedProductosLabel(){
             return this.items.length == 0 ? "Productos" : "Productos ("+this.items.length+")";

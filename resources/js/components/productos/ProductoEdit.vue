@@ -144,7 +144,7 @@
                                 <v-flex sm6>
                                     <v-text-field
                                         v-model="producto.nombre"
-                                        v-validate="'required'"
+                                        v-validate="'required|max:300'"
                                         :error-messages="errors.collect('nombre')"
                                         label="Nombre"
                                         data-vv-name="nombre"
@@ -153,6 +153,8 @@
                                         :disabled="!computedEditPro"
                                     >
                                     </v-text-field>
+                                </v-flex>
+                                <v-flex sm6>
                                     <v-text-field
                                         v-show="producto.estado_id != 5"
                                         v-model="producto.nombre_interno"
@@ -165,18 +167,6 @@
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
-                                </v-flex>
-                                <v-flex sm6>
-                                    <v-textarea
-                                        v-show="producto.estado_id != 5"
-                                        v-model="producto.caracteristicas"
-                                        :error-messages="errors.collect('caracteristicas')"
-                                        label="Descripción: Brillantes: Talla, color, pureza, quilates - Relojes: S/N"
-                                        data-vv-name="caracteristicas"
-                                        data-vv-as="características"
-                                        v-on:keyup.enter="submit"
-                                    >
-                                    </v-textarea>
                                 </v-flex>
                             </v-layout>
                             <v-layout row wrap v-show="producto.estado_id != 5">
@@ -490,6 +480,19 @@
                                         </v-btn>
                                     </div>
                                 </v-flex>
+                            </v-layout>
+                            <v-layout row wrap>
+                                <v-textarea
+                                    v-show="producto.estado_id != 5"
+                                    v-model="producto.caracteristicas"
+                                    :error-messages="errors.collect('caracteristicas')"
+                                    label="Descripción: Brillantes: Talla, color, pureza, quilates - Relojes: S/N"
+                                    data-vv-name="caracteristicas"
+                                    data-vv-as="descripción"
+                                    rows="5"
+                                    v-on:keyup.enter="submit"
+                                >
+                                </v-textarea>
                             </v-layout>
                         </v-container>
                     </v-form>

@@ -13,7 +13,7 @@
                     <td>{{ getDecimalExcel($item->peso_gr, 2)}} g</td>
                     <td>{{ $item->quilates.' KT'}}</td>
                 @else
-                    <td>{{ $item->caracteristicas}}</td>
+                    <td></td>
                     <td>{{ getDecimalExcel($item->precio_venta, 0)}} €</td>
                 @endif
             </tr>

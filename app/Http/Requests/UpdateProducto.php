@@ -42,7 +42,7 @@ class UpdateProducto extends FormRequest
             'precio_coste'      => ['numeric','required'],
             'precio_venta'      => ['numeric','required'],
             'ref_pol'           => ['nullable', 'max:20', Rule::requiredIf($this->iva_id==2)],
-            'caracteristicas'   => ['nullable'],
+            'caracteristicas'   => ['nullable', 'max:200'],
             'notas'             => ['string','nullable'],
             'cliente_id'        => ['nullable', 'integer', Rule::requiredIf($this->iva_id==2 && $this->empresa_id <> $this->destino_empresa_id && $this->compra_id == null)],
             'almacen_id'        => ['nullable', 'integer'],

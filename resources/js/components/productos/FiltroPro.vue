@@ -94,9 +94,9 @@
                         v-model="reg.caracteristicas"
                         v-validate="'max:20'"
                         :error-messages="errors.collect('caracteristicas')"
-                        label="Características"
+                        label="Descripción"
                         data-vv-name="caracteristicas"
-                        data-vv-as="caracteristicas"
+                        data-vv-as="descripción"
                         hint="Talla, color, pureza, quilates - Relojes: S/N"
                         v-on:keyup.enter="submit"
                     >

@@ -33,13 +33,13 @@ class StoreProducto extends FormRequest
 
         $data = [
 
-            'nombre'             => ['required', 'string', 'max:190'],
+            'nombre'             => ['required', 'string', 'max:300'],
             'clase_id'           => ['required','integer'],
             'estado_id'          => ['required','integer'],
             'compra_id'          => ['nullable','integer'],
             'iva_id'             => ['required','integer'],
             'quilates'           => ['nullable','integer',new LeyesRule($this->clase_id)],
-            'caracteristicas'    => ['nullable','string','max:190'],
+            'caracteristicas'    => ['nullable'],
             'peso_gr'            => ['numeric', new PesoRule($this->clase->peso)],
             'precio_coste'       => ['numeric','required'],
             'precio_venta'       => ['numeric','required'],
