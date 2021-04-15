@@ -5,10 +5,13 @@ namespace App\Observers;
 use App\Cobro;
 use App\Albalin;
 use App\Albaran;
-use App\Producto;
+use App\Traits\EstadoProductoTrait;
 
 class AlbalinObserver
 {
+
+    use EstadoProductoTrait;
+
     /**
      * Handle the albalin "created" event.
      *
@@ -18,10 +21,7 @@ class AlbalinObserver
     public function created(Albalin $albalin)
     {
 
-        //Producto::setEstadoProducto($albalin->producto_id, 3);
-
-        $producto = Producto::withoutGlobalScope(EmpresaProductoScope::class)->findOrFail($albalin->producto_id);
-        $producto->setEstadoProducto($producto, 3);
+        $this->setEstadoProducto($albalin->producto_id, 3);
 
         $this->updateFaseAlbaran($albalin->albaran_id);
 
@@ -48,8 +48,7 @@ class AlbalinObserver
     {
 
 
-        $producto = Producto::withoutGlobalScope(EmpresaProductoScope::class)->findOrFail($albalin->producto_id);
-        $producto->setEstadoProducto($producto, 2);
+        $this->setEstadoProducto($albalin->producto_id, 2);
 
         // $data=[
         //     'estado_id'=> 2,

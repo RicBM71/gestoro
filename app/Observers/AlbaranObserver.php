@@ -3,10 +3,13 @@
 namespace App\Observers;
 
 use App\Albaran;
-use App\Producto;
+use App\Traits\EstadoProductoTrait;
 
 class AlbaranObserver
 {
+
+    use EstadoProductoTrait;
+
     protected $fase_id;
 
  /**
@@ -34,8 +37,8 @@ class AlbaranObserver
                 'username' => session('username')
             ];
 
-            $producto = Producto::withoutGlobalScope(EmpresaProductoScope::class)->findOrFail($item->producto_id);
-            $producto->setEstadoProducto($producto, $estado_id);
+
+            $this->setEstadoProducto($item->producto_id, $estado_id);
 
 
         });
