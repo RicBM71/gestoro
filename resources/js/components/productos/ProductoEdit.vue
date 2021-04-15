@@ -270,7 +270,7 @@
                                         data-vv-as="coste"
                                         class="inputPrice"
                                         type="number"
-                                        :disabled="!computedEditPro"
+                                        :disabled="!computedEditCoste"
                                         v-on:keyup.enter="submit"
                                     >
                                     </v-text-field>
@@ -618,6 +618,7 @@ import {mapState} from 'vuex'
                     'hasEdtPro',
                     'isRoot',
                     'hasEdtPro',
+                    'hasEdtFac',
                     'hasEcommerce',
                     'userName'
                 ]),
@@ -648,6 +649,23 @@ import {mapState} from 'vuex'
                 if (this.show_stock && this.hasEdtPro)
                     return true;
                 return false;
+            },
+            computedEditCoste(){
+
+                if (this.producto.estado_id == 5 || this.hasEdtFac)
+                    return true;
+
+                if (this.producto.estado_id == 3 || this.producto.estado_id == 4)
+                    return false;
+
+                //     return this.hasEdtPro;
+
+                const hoy = new Date().toISOString().substr(0, 10);
+                if (this.producto.username == this.userName && this.producto.created_at.substr(0, 10) == hoy)
+                    return true;
+                else
+                    return this.hasEdtPro;
+
             },
             computedEditPro(){
 

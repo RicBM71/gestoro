@@ -270,8 +270,8 @@ class PrintAlbController extends Controller
 
             $txt.=$leyenda;
 
-            if ($row->producto->caracteristicas != '')
-                $txt.=(' '.$row->producto->caracteristicas);
+            // if ($row->producto->caracteristicas != '')
+            //     $txt.=(' '.$row->producto->caracteristicas);
 
             if ($row->notas != ''){
                 $txt.=' ** '.$row->notas.' ';
