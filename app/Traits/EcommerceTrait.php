@@ -21,25 +21,25 @@ trait EcommerceTrait {
     protected $albaranes_creados;
     protected $albaranes_empresa;
 
-    public function __construct()
-    {
+    // public function __construct()
+    // {
 
-        $url = config('cron.woo_url');
-        $key = config('cron.woo_key');
-        $sec = config('cron.woo_sec');
+    //     $url = config('cron.woo_url');
+    //     $key = config('cron.woo_key');
+    //     $sec = config('cron.woo_sec');
 
-        $this->woocommerce = new Client(
-            $url,
-            $key,
-            $sec,
-            [
-                'wp_api' => true,
-                'version' => 'wc/v3'
-            ]
-        );
-    }
+    //     $this->woocommerce = new Client(
+    //         $url,
+    //         $key,
+    //         $sec,
+    //         [
+    //             'wp_api' => true,
+    //             'version' => 'wc/v3'
+    //         ]
+    //     );
+    // }
 
-    public function check($woocommerce){
+    public function woo_check($woocommerce){
 
         $filter = ['status' => 'processing'];
         $pedidos = $woocommerce->get('orders',$filter);
@@ -48,10 +48,10 @@ trait EcommerceTrait {
 
     }
 
-    public function processing($woocommerce){
+    public function woo_processing($woocommerce){
 
         $filter = ['status' => 'processing'];
-        $pedidos = $woocommerce->get('orders',$filter);
+        $pedidos = $woocommerce->get('orders', $filter);
 
         $i = 0;
         foreach ($pedidos as $pedido){
@@ -59,6 +59,7 @@ trait EcommerceTrait {
             $this->albaranes_creados = 0;
 
             $lineas = $pedido->line_items;
+
             foreach ($lineas as $linea){
 
                 //\Log::info($pedido->order_key.' SKU: '.$linea->sku);
@@ -71,16 +72,25 @@ trait EcommerceTrait {
 
                 $producto = $p->first();
 
-                $albaran_id = $this->crearAlbaran($producto->empresa_id, $pedido);
+                $cab = [
+                    'empresa_id'    => $producto->empresa_id,
+                    'fecha_albaran' => substr($pedido->date_created,0,10),
+                    'pedido'        => 'W'.$pedido->id, //$pedido->order_key
+                    'clitxt'        => $pedido->billing->first_name.' '.$pedido->billing->last_name,
+                ];
+
+                $albaran_id = $this->crearAlbaran($cab);
 
                 $this->crearAlbalin($linea, $albaran_id, $producto->empresa_id, $producto);
 
                 $data = ['estado_id' => 4, 'username'=> session('username')];
+
                 $producto->update($data);
 
             }
 
             //aquí crear cobro. Ver var albaranes_creados para crear 1 mov. de cobro o más.
+            // si creo cobro cambiar fase_id a 11 en crearAlbaran
 
             $i++;
 
@@ -91,44 +101,41 @@ trait EcommerceTrait {
 
     }
 
-    private function crearAlbaran($empresa_id, $pedido){
-
-        $fecha_albaran = substr($pedido->date_created,0,10);
-
-        $pedido_ref = 'W'.$pedido->id;//$pedido->order_key
+    private function crearAlbaran($alb){
 
         $a = DB::table('albaranes')
-                ->where('empresa_id', '=', $empresa_id)
-                ->where('pedido', $pedido_ref)
-                ->where('fecha_albaran', $fecha_albaran)
+                ->where('empresa_id', '=', $alb['empresa_id'])
+                ->where('pedido', $alb['pedido'])
+                ->where('fecha_albaran', $alb['fecha_albaran'])
                 ->get();
 
                 // el albarán existe y lo retoramos;
         if ($a->count() > 0)
             return $a->first()->id;
 
-        $data_new['empresa_id']     = $empresa_id;
+        $data_new['empresa_id']     = $alb['empresa_id'];
 
         $data_new['tipo_id']        = 3;
 
-        $data_new['fecha_albaran']  = $fecha_albaran;
+        $data_new['fecha_albaran']  = $alb['fecha_albaran'];
         $data_new['cliente_id']     = 1;
 
-        $data_new['fase_id']          = 11; // vendido
+        $data_new['fase_id']          = 10; // reservado
         $data_new['online']           = true;
         $data_new['iva_no_residente'] = false;
         $data_new['username']         = session('username');
 
-        $ejercicio   = getEjercicio($fecha_albaran);
-        $contador_alb = Contador::incrementaContadorReubicar($ejercicio, $data_new['tipo_id'], $empresa_id);
-        $data_new['serie_albaran']    = $contador_alb['serie_albaran'];
-        $data_new['albaran']      = $contador_alb['ult_albaran'];
-        $data_new['pedido']       = $pedido_ref;
-        $data_new['clitxt']       = $pedido->billing->first_name.' '.$pedido->billing->last_name;
-        $data_new['notas_int']    = null;
-        $data_new['notas_ext']    = null;
-        $data_new['created_at']   = Carbon::now();
-        $data_new['updated_at']   = Carbon::now();
+        $ejercicio   = getEjercicio($alb['fecha_albaran']);
+        $contador_alb = Contador::incrementaContadorReubicar($ejercicio, $data_new['tipo_id'], $alb['empresa_id']);
+        $data_new['serie_albaran']  = $contador_alb['serie_albaran'];
+        $data_new['albaran']        = $contador_alb['ult_albaran'];
+        $data_new['pedido']         = $alb['pedido'];
+        $data_new['validado']       = false;
+        $data_new['clitxt']         = $alb['clitxt'];
+        $data_new['notas_int']      = null;
+        $data_new['notas_ext']      = null;
+        $data_new['created_at']     = Carbon::now();
+        $data_new['updated_at']     = Carbon::now();
 
         // lo hago así por no andar mareando con estados según voy insertando, será más rápido
 
@@ -136,10 +143,10 @@ trait EcommerceTrait {
 
         $this->albaranes_creados++;
 
-        if (!isset($this->albaranes_empresa[$empresa_id]))
-            $this->albaranes_empresa[$empresa_id]=0;
+        if (!isset($this->albaranes_empresa[$alb['empresa_id']]))
+            $this->albaranes_empresa[$alb['empresa_id']]=0;
 
-        $this->albaranes_empresa[$empresa_id]++;
+        $this->albaranes_empresa[$alb['empresa_id']]++;
 
         return $id;
 

@@ -63,7 +63,7 @@ class EcommerceController extends Controller
     public function pendientes(){
 
         if ($this->ecommerce == 'woo')
-            $pedidos = $this->processing($this->woocommerce);
+            $pedidos = $this->woo_processing($this->woocommerce);
 
         return $pedidos;
 
