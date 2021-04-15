@@ -98,7 +98,7 @@
                                         </v-icon>
 
 
-                                        <v-icon v-if="hasDelAlb && props.item.factura == null"
+                                        <v-icon v-if="puedeBorrar(props.item)"
                                             small
                                             @click="openDialog(props.item)"
                                             >
@@ -255,7 +255,8 @@ import {mapActions} from "vuex";
             'hasDelAlb',
             'getPagination',
             'hasEdtCli',
-            'hasExcel'
+            'hasExcel',
+            'userName'
         ])
     },
     methods:{
@@ -263,6 +264,20 @@ import {mapActions} from "vuex";
             'setPagination',
             'unsetPagination'
         ]),
+        puedeBorrar(item){
+
+            if (item.factura > 0) return false;
+
+            return (this.esPropietario(item) || this.hasDelAlb);
+
+
+        },
+        esPropietario(item){
+
+             const hoy = new Date().toISOString().substr(0, 10);
+             return (item.created_at.substr(0, 10) == hoy && item.username == this.userName);
+
+        },
         getNombre(item){
             return (item.clitxt == null || item.clitxt == '') ? item.cliente.razon : item.clitxt;
         },

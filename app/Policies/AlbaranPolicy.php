@@ -80,7 +80,7 @@ class AlbaranPolicy
         if (esPropietario($albarane)){
             return true;
         }elseif(!hasDelAlb()){
-                return $this->deny("Acceso denegado!. Contactar con un administrador");
+                return $this->deny("Acceso denegado!. Permiso borrado albarán requerido");
             }
 
 
