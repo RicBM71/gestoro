@@ -189,7 +189,7 @@
                 </v-flex>
                 <v-flex sm1>
                     <v-switch
-                        label="Online"
+                        label="eCommerce"
                         v-model="reg.online"
                         color="primary">
                     ></v-switch>

@@ -26,7 +26,7 @@ Class Producto extends Model
     ];
 
     protected $appends = [
-        'margen', 'nomcar'
+        'margen',
     ];
 
     /**
@@ -54,11 +54,11 @@ Class Producto extends Model
     }
 
 
-    public function setCaracteristicasAttribute($caracteristicas)
-    {
-        $this->attributes['caracteristicas'] = strtoupper($caracteristicas);
+    // public function setCaracteristicasAttribute($caracteristicas)
+    // {
+    //     $this->attributes['caracteristicas'] = strtoupper($caracteristicas);
 
-    }
+    // }
 
     public function setReferenciaAttribute($referencia)
     {
@@ -81,12 +81,6 @@ Class Producto extends Model
     public function getMargenAttribute(){
 
         return $this->precio_venta - $this->precio_coste;
-
-    }
-
-    public function getNomcarAttribute(){
-
-        return $this->nombre.' '. $this->caracteristicas;
 
     }
 
