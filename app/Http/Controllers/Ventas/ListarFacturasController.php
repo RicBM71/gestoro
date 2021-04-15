@@ -161,7 +161,7 @@ class ListarFacturasController extends Controller
                     'dni'            => $row->cliente->dni,
                     'razon'          => $row->cliente->razon,
                     'pvp'            => round($albalin->importe_venta, 2),
-                    'coste'          => round($albalin->precio_coste),
+                    'coste'          => round($albalin->precio_coste, 2),
                     'bene'           => $beneficio,
                     'base'           => $base_iva,
                     'iva'            => $iva,

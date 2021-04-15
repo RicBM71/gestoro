@@ -105,9 +105,13 @@ class Albalin extends Model
         foreach ($q as $row){
             if ($row->rebu){ // es iva rebu,
                 $rebu = true;
-                //  no puede haber REBU y no REBU en un mismo albarán
-                $base_iva  = ($row->importe_venta - $row->precio_coste);
-                $cuota_iva = round(($row->importe_venta - $row->precio_coste) * $row->iva / 100, 2);
+
+                //$base_iva  = ($row->importe_venta - $row->precio_coste);
+                //$cuota_iva = round(($row->importe_venta - $row->precio_coste) * $row->iva / 100, 2);
+
+                $base_con_iva = $row->importe_venta - $row->precio_coste;
+                $base_iva = round($base_con_iva / (1 + ($row->iva / 100 )), 2);
+                $cuota_iva  = $base_con_iva - $base_iva;
 
             }else{
                 $rebu = false;

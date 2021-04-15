@@ -19,7 +19,6 @@ trait EcommerceTrait {
 
     protected $woocommerce;
     protected $albaranes_creados;
-    protected $albaranes_empresa;
 
     // public function __construct()
     // {
@@ -89,6 +88,9 @@ trait EcommerceTrait {
 
             }
 
+            if ($this->albaranes_creados == 1) // solo se ha creado uno, y mantenemos forma de pago y total del cobro
+                $this->crearCobro($data_cobro);
+
             //aquí crear cobro. Ver var albaranes_creados para crear 1 mov. de cobro o más.
             // si creo cobro cambiar fase_id a 11 en crearAlbaran
 
@@ -97,7 +99,7 @@ trait EcommerceTrait {
         }
 
         print_r($i);
-        dd($this->albaranes_empresa);
+
 
     }
 
@@ -143,16 +145,8 @@ trait EcommerceTrait {
 
         $this->albaranes_creados++;
 
-        if (!isset($this->albaranes_empresa[$alb['empresa_id']]))
-            $this->albaranes_empresa[$alb['empresa_id']]=0;
-
-        $this->albaranes_empresa[$alb['empresa_id']]++;
-
         return $id;
 
-        //$this->contador++;
-
-        //return Albaran::withoutGlobalScope(EmpresaScope::class)->find($id);
     }
 
     private function crearAlbalin($linea, $albaran_id, $empresa_id, $producto){
@@ -250,10 +244,10 @@ trait EcommerceTrait {
 
     public function test($woocommerce){
 
-        $data = ['sku' => 'CL63113'];
-        $p = collect($woocommerce->get('products',$data))->first();
+        // $data = ['sku' => 'CL63113'];
+        // $p = collect($woocommerce->get('products',$data))->first();
 
-        dd($p);
+        // dd($p);
         $filter = ['status' => 'processing'];
         $pedidos = $woocommerce->get('orders',$filter);
 

@@ -72,7 +72,7 @@
                             <td class="text-xs-right font-weight-bold">{{ totales.unidades| currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                             <td class="text-xs-right font-weight-bold"></td>
                             <td class="text-xs-right font-weight-bold">IVA</td>
-                            <td v-if="albaran.tipo_id==3" class="text-xs-right font-weight-bold">{{ totales.iva_rebu| currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
+                            <td v-if="albaran.tipo_id==3" class="text-xs-right font-weight-bold">{{ (totales.iva_rebu+ totales.iva)| currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                             <td v-else class="text-xs-right font-weight-bold">{{ totales.iva| currency('€', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
                             <td></td>
                             <td class="text-xs-right font-weight-bold">TOTAL</td>

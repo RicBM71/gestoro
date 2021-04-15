@@ -170,7 +170,6 @@
                                     <v-textarea
                                         v-show="producto.estado_id != 5"
                                         v-model="producto.caracteristicas"
-                                        v-validate="'max:190'"
                                         :error-messages="errors.collect('caracteristicas')"
                                         label="Descripción: Brillantes: Talla, color, pureza, quilates - Relojes: S/N"
                                         data-vv-name="caracteristicas"

@@ -34,7 +34,15 @@
                         </v-flex>
                     </v-layout>
                     <v-layout wrap>
-                         <v-flex sm2></v-flex>
+                         <v-flex sm2>
+                            <v-switch
+                                v-if="envio"
+                                @change="getEnvios"
+                                label="Envío"
+                                v-model="envio"
+                                color="primary"
+                            ></v-switch>
+                        </v-flex>
                          <v-flex sm10>
                             <v-text-field
                                 :value="computedCarateristicas"
@@ -166,6 +174,7 @@
         items:[],
         search:"",
         model:"",
+        envio: false,
         referencia: "",
         producto: {
             id: 0,
@@ -281,11 +290,16 @@
 
     // },
     methods:{
+        getEnvios(){
+            this.getReferencia();
+            this.referencia = '-';
+        },
         getReferencia() {
 
                 axios.post('/utilidades/helppro/vendibles',{
                     tipo_id: this.albaran.tipo_id,
                     referencia: this.referencia,
+                    envio: this.envio
                 })
                 .then(res => {
                     this.items = res.data;

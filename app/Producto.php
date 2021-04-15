@@ -476,6 +476,17 @@ Class Producto extends Model
 
     }
 
+    public static function productosEnvio()
+    {
+
+        return Producto::select(DB::raw('id AS value, CONCAT(referencia, " " , nombre) AS text'))
+                    ->where('estado_id', 6)
+                    ->whereNull('deleted_at')
+                    ->orderBy('referencia', 'asc')
+                    ->get();
+
+    }
+
     public static function getStockReal($producto_id){
 
 

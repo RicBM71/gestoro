@@ -30,18 +30,25 @@ class HelpProductoController extends Controller
     {
 
         $data = $request->validate([
-            'tipo_id' => ['required', 'integer'],
+            'tipo_id'    => ['required', 'integer'],
             'referencia' => ['nullable'],
+            'envio'      => ['required', 'boolean']
         ]);
 
        //
             //$iva_id =  2 : 1;
 
-        if (request()->wantsJson())
+        if (request()->wantsJson()){
+
+            if ($data['envio'] == true)
+                return Producto::productosEnvio();
+
             if ($data['tipo_id'] == 3)
                 return Producto::productosREBU($data['referencia']);
             else
                 return Producto::productosGenericos($data['referencia']);
+        }
+
 
 
     }

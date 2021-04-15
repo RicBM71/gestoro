@@ -265,7 +265,7 @@ class PrintAlbController extends Controller
 				$txt.= ' ('.strtoupper($row->producto->clase->nombre).' '.$row->producto->quilates.'KT)';
             }
             // pide peso kilates.
-            if ($this->albaran->tipo_id == 3 && $row->producto->peso_gr <> 0 && $row->producto->stock == 1)
+            if ($this->albaran->tipo_id == 3 && $row->producto->peso_gr <> 0 && $row->producto->stock == 1 && $row->producto->estado_id != 6)
                 $txt.= ' '.getDecimal($row->producto->peso_gr).' gr.';
 
             $txt.=$leyenda;
@@ -299,7 +299,7 @@ class PrintAlbController extends Controller
                     PDF::MultiCell($w=10, $h, '('.$row->iva_id.') '.getDecimal($row->iva), $border='R', $align='R', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
                 else
                     if ($row->producto->iva->rebu)
-                        PDF::MultiCell($w=10, $h, getDecimal($row->iva).'*', $border='R', $align='C', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
+                        PDF::MultiCell($w=10, $h, '*', $border='R', $align='C', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
                     else
                         PDF::MultiCell($w=10, $h, getDecimal($row->iva), $border='R', $align='R', $fill=0, $ln=0, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
             }else{
