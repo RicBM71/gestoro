@@ -33,7 +33,8 @@ class StoreDeposito extends FormRequest
             'fecha'         => ['nullable','date'],
             'iban'          => ['nullable','iban', 'max:50'],
             'bic'           => ['nullable','bic', 'max:11'],
-            'notas'         => ['nullable', 'max:190']
+            'notas'         => ['nullable', 'max:190'],
+            'importe2'      => ['nullable', 'numeric']
         ];
 
         return $data;

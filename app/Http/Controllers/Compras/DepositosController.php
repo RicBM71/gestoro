@@ -73,6 +73,16 @@ class DepositosController extends Controller
         // $data['importe'] = $request->importe;
         // $data['concepto_id'] = $request->concepto_id;
         // $data['fecha'] = $request->fecha;
+        if ($data['importe2'] == '')
+            $data['importe2'] = 0;
+
+        if ($data['importe2'] > 0 && $data['importe2'] < $data['importe']){
+            $data2 = $data;
+            $data['importe'] = $data['importe'] - $data['importe2'];
+            $data2['concepto_id']=1;
+            $data2['importe']=$data['importe2'];
+            Deposito::create($data2);
+        }
 
 
         $reg = Deposito::create($data);
@@ -91,15 +101,26 @@ class DepositosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Deposito $deposito)
+    public function destroy($id)
     {
        // $this->authorize('delete', $deposito);
+
+       $deposito = Deposito::findOrFail($id);
+
+        // por si hay recuperacion con dos medios de pago
+
+        $depositos = Deposito::where('compra_id', $deposito->compra_id)
+                              ->whereIn('concepto_id',[1,2,3])
+                              ->get();
+        foreach ($depositos as $row){
+            $row->delete();
+        }
 
         if ($deposito->concepto_id <=3){
             $this->updateFase($deposito->compra_id, 1);
         }
 
-        $deposito->delete();
+        //$deposito->delete();
 
         if (request()->wantsJson())
             return [

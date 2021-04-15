@@ -1,6 +1,6 @@
 <template>
     <v-layout row justify-center>
-        <v-dialog v-model="dialog_depo" persistent max-width="600px">
+        <v-dialog v-model="dialog_depo" persistent max-width="650px">
             <v-card>
                 <v-card-title>
                 <span class="headline">Concepto</span>
@@ -18,7 +18,7 @@
                                         label="Concepto"
                                     ></v-select>
                                 </v-flex>
-                               <v-flex sm4>
+                               <v-flex sm3>
                                    <v-text-field
                                         v-model="deposito.importe"
                                         v-validate="'required|decimal:2'"
@@ -34,7 +34,24 @@
                                         v-on:keyup.enter="submit"
                                     >
                                    </v-text-field>
+                               </v-flex>
+                                   <v-flex sm3 v-if="multiple">
+                                        <v-text-field
+                                                v-model="deposito.importe2"
+                                                v-validate="'required|decimal:2|min:0'"
+                                                :error-messages="errors.collect('importe2')"
+                                                append-icon="clear"
+                                                @click:append="clear()"
+                                                label="Efectivo"
+                                                data-vv-name="importe2"
+                                                data-vv-as="importe"
+                                                class="inputPrice"
+                                                type="number"
+                                                v-on:keyup.enter="submit"
+                                            >
+                                        </v-text-field>
                                 </v-flex>
+
                             </v-layout>
                             <v-layout row wrap v-if="deposito.concepto_id==2">
                                 <v-flex sm8>
@@ -74,13 +91,23 @@
                                     </v-text-field>
                                 </v-flex>
                             </v-layout>
+                            <v-layout row wrap v-if="isRoot">
+                                <v-flex sm4>
+                                    <v-switch
+                                        v-model="multiple"
+                                        label="Múltiple - Root"
+                                    ></v-switch>
+                                </v-flex>
+                            </v-layout>
                         </v-container>
                     </v-form>
                 </v-card-text>
                 <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" flat round @click="closeDialog">Cancelar</v-btn>
-                <v-btn color="blue darken-1" flat round :disabled="loading" :loading="loading" @click="submit">Guardar</v-btn>
+                    <v-layout row wrap>
+                        <v-spacer></v-spacer>
+                        <v-btn color="blue darken-1" flat round @click="closeDialog">Cancelar</v-btn>
+                        <v-btn color="blue darken-1" flat round :disabled="loading" :loading="loading" @click="submit">Guardar</v-btn>
+                    </v-layout>
                 </v-card-actions>
             </v-card>
     </v-dialog>
@@ -106,11 +133,15 @@ export default {
             cliente_id: 0,
             iban:"",
             bic:"",
-            deposito:""
+            deposito:"",
+            importe2: 0,
         },
+
+        multiple: false,
 
         disabled: false,
         conceptos: [],
+        conceptos2: [],
         dialog: false,
         ruta: "deposito",
         url: "/compras/depositos",
@@ -152,6 +183,7 @@ export default {
     computed: {
         ...mapGetters([
             'hasLimEfe',
+            'isRoot',
             'parametros'
         ]),
         computedLimImporte(){
@@ -198,6 +230,9 @@ export default {
                 if (idx >= 0)
                     this.deposito.bic = this.bancos[idx].bic;
             }
+        },
+        clear(){
+            this.deposito.importe2 = 0;
         },
         submit(){
 
