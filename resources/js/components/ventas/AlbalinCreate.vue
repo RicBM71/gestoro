@@ -36,7 +36,7 @@
                     <v-layout wrap>
                          <v-flex sm2>
                             <v-switch
-                                v-if="envio"
+                                v-if="envios"
                                 @change="getEnvios"
                                 label="Envío"
                                 v-model="envio"
@@ -163,11 +163,8 @@
     $_veeValidate: {
         validator: 'new'
     },
-    props:{
-        albaran: Object,
-        dialog_lin: Boolean,
-        refresh_lineas: Number,
-    },
+    props:['albaran','dialog_lin','refresh_lineas','envios']
+    ,
     data: () => ({
         loading: false,
         isLoading: false,
@@ -308,6 +305,7 @@
                     }else{
                         this.reset();
                     }
+                    this.envio = false;
 
                 })
                 .catch(err => {

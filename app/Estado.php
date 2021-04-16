@@ -15,4 +15,14 @@ class Estado extends Model
             ->get();
 
     }
+
+    public static function enviosActivos(){
+        try {
+            $estado = Estado::findOrFail(6);
+            return $estado->activo;
+        } catch (\Execption $e) {
+            return false;
+        }
+
+    }
 }

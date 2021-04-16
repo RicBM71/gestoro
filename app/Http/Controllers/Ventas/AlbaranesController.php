@@ -6,6 +6,7 @@ use App\Tipo;
 use App\Cobro;
 use App\Fpago;
 use App\Cuenta;
+use App\Estado;
 use App\Fixing;
 use App\Motivo;
 use App\Taller;
@@ -183,7 +184,8 @@ class AlbaranesController extends Controller
                 'fpagos'  => Fpago::selFpagos(),
                 'talleres'=> Taller::selTalleres(),
                 'empresas'=> Empresa::selEmpresas()->Venta()->get(),
-                'fixing'  => Fixing::getFixDia(1, date('Y-m-d'), $albarane->fecha_albaran)
+                'fixing'  => Fixing::getFixDia(1, date('Y-m-d'), $albarane->fecha_albaran),
+                'envios'  => Estado::enviosActivos()
             ];
 
     }

@@ -104,6 +104,7 @@
             :albaran="albaran"
             :dialog_lin.sync="dialog_lin"
             :refresh_lineas.sync="refresh_lineas"
+            :envios="envios"
         >
         </lines-create>
         <lines-edit
@@ -123,7 +124,7 @@ import MyDialog from '@/components/shared/MyDialog'
 import AlbalinCreate from './AlbalinCreate'
 import AlbalinEdit from './AlbalinEdit'
 export default {
-    props:['albaran','totales','acuenta','fixing','low_fix'],
+    props:['albaran','totales','acuenta','fixing','low_fix','envios'],
     // props:{
     //     albaran: Object,
     //     totales: Object,

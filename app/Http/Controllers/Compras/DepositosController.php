@@ -76,9 +76,12 @@ class DepositosController extends Controller
         if ($data['importe2'] == '')
             $data['importe2'] = 0;
 
+            // esta chapuza hay que arreglarla. TODO: Urgente
         if ($data['importe2'] > 0 && $data['importe2'] < $data['importe']){
             $data2 = $data;
             $data['importe'] = $data['importe'] - $data['importe2'];
+            $data2['iban']=null;
+            $data2['bic']=null;
             $data2['concepto_id']=1;
             $data2['importe']=$data['importe2'];
             Deposito::create($data2);

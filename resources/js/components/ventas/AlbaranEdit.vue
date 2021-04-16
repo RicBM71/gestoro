@@ -471,6 +471,7 @@
                     :albaran.sync="albaran"
                     :fixing="fixing"
                     :low_fix.sync="low_fix"
+                    :envios="envios"
                 ></alba-lin>
                 <cobro-lin
                     v-show="show_lincob"
@@ -547,6 +548,7 @@ import {mapState} from 'vuex'
                 show_loading: true,
                 menu1: false,
                 menu5: false,
+                envios: false,
 
                 fase: {
                     color:"",
@@ -591,6 +593,7 @@ import {mapState} from 'vuex'
                         this.empresas.push({value: null, text: '-'});
 
                         this.fixing = res.data.fixing;
+                        this.envios = res.data.envios;
 
                         this.reLoadCobros();
 

@@ -75,7 +75,7 @@ class ListarFacturasController extends Controller
                 'dni'            => $row->cliente->dni,
                 'razon'          => $row->cliente->razon,
                 'pvp'            => round($pvp,2),
-                'coste'          => round($coste),
+                'coste'          => round($coste, 2),
                 'bene'           => round($bene),
                 'base'           => $base,
                 'iva'            => $iva,

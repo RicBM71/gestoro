@@ -94,7 +94,14 @@ class PrintAlbController extends Controller
 
         $this->lineasAlbaran = Albalin::with(['producto' => function ($query) {
                                                 $query->withTrashed();},
-                                              'producto.clase','producto.garantia','producto.iva'])->albaranId($this->albaran->id)->orderBy('id')->get();
+                                              'producto.clase','producto.garantia','producto.iva'])
+                                        ->albaranId($this->albaran->id)
+                                        ->join('productos','producto_id','=','productos.id')
+                                        ->orderBy('productos.estado_id')
+                                        ->orderBy('albalins.id')
+                                        ->get();
+
+                                        $this->lineasAlbaran = collect($this->lineasAlbaran)->sortBy('productos.estado_id');
 
         $empresa  = session()->get('empresa');
 
