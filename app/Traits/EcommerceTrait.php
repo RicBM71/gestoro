@@ -19,6 +19,7 @@ trait EcommerceTrait {
 
     protected $woocommerce;
     protected $albaranes_creados;
+    protected $id_albaranes_creados;
 
     // public function __construct()
     // {
@@ -52,6 +53,8 @@ trait EcommerceTrait {
         $filter = ['status' => 'processing'];
         $pedidos = $woocommerce->get('orders', $filter);
 
+
+        $this->id_albaranes_creados=array();
         $i = 0;
         foreach ($pedidos as $pedido){
 
@@ -88,11 +91,18 @@ trait EcommerceTrait {
 
             }
 
-            if ($this->albaranes_creados == 1) // solo se ha creado uno, y mantenemos forma de pago y total del cobro
-                $this->crearCobro($data_cobro);
 
-            //aquí crear cobro. Ver var albaranes_creados para crear 1 mov. de cobro o más.
-            // si creo cobro cambiar fase_id a 11 en crearAlbaran
+            //  Crea cobros
+            foreach ($this->id_albaranes_creados as $id){
+                $data_cobro = [
+                    'albaran_id' => $id,
+                    'fpago_id'   => 2,
+                ];
+
+                $this->crearCobro($data_cobro);
+            }
+
+            $this->id_albaranes_creados=array();
 
             $i++;
 
@@ -144,6 +154,7 @@ trait EcommerceTrait {
         $id = DB::table('albaranes')->insertGetId($data_new);
 
         $this->albaranes_creados++;
+        $this->id_albaranes_creados[] = $id;
 
         return $id;
 
@@ -177,36 +188,19 @@ trait EcommerceTrait {
 
     }
 
-    private function crearCobro($albaran_new, $albaran_id_ant, $total_albaran){
+    private function crearCobro($data){
 
-        $cobros = Cobro::where('albaran_id',$albaran_id_ant)
-                    ->orderBy('fecha','asc')
-                    ->get();
+        $albaran_new = Albaran::withOutGlobalScope(EmpresaScope::class)->findOrFail($data['albaran_id']);
 
-        $sw=false;
-        foreach ($cobros as $cobro){
-            $sw=true;
-            if ($cobro->fpago_id == 1)
-                DB::table('cajas')
-                    ->where('cobro_id', $cobro->id)
-                    ->update(['cobro_id'  => null,
-                              'manual'    => 'S',
-                            //   'username'  => session('username'),
-                            //   'updated_at'=>Carbon::now()
-                            ]);
+        $totales = Albalin::totalAlbaranByAlb($albaran_new->id);
 
-        }
-
-        if ($sw===false)
-            return;
-
-        $cobro_new['fecha']      = $cobro->fecha;
+        $cobro_new['fecha']      = $albaran_new->fecha_albaran;
         $cobro_new['albaran_id'] = $albaran_new->id;
         $cobro_new['empresa_id'] = $albaran_new->empresa_id;
         $cobro_new['cliente_id'] = $albaran_new->cliente_id;
-        $cobro_new['fpago_id']   = 2;
-        $cobro_new['importe']    = $total_albaran;
-        $cobro_new['notas']      = 'x REUBICACIÓN';
+        $cobro_new['fpago_id']   = $data['fpago_id'];
+        $cobro_new['importe']    = $totales['total'];
+        $cobro_new['notas']      = 'eCommerce';
         $cobro_new['username']   = $albaran_new->username;
         $cobro_new['created_at'] = Carbon::now();
         $cobro_new['updated_at'] = Carbon::now();

@@ -30,7 +30,7 @@ class UpdateProducto extends FormRequest
     {
         $data = [
 
-            'nombre'            => ['required', 'string', 'max:190'],
+            'nombre'            => ['required', 'string', 'max:300'],
             'nombre_interno'    => ['nullable', 'string', 'max:190'],
             'clase_id'          => ['required','integer'],
             'estado_id'         => ['required','integer'],
@@ -42,7 +42,7 @@ class UpdateProducto extends FormRequest
             'precio_coste'      => ['numeric','required'],
             'precio_venta'      => ['numeric','required'],
             'ref_pol'           => ['nullable', 'max:20', Rule::requiredIf($this->iva_id==2)],
-            'caracteristicas'   => ['nullable', 'max:200'],
+            'caracteristicas'   => ['nullable'],
             'notas'             => ['string','nullable'],
             'cliente_id'        => ['nullable', 'integer', Rule::requiredIf($this->iva_id==2 && $this->empresa_id <> $this->destino_empresa_id && $this->compra_id == null)],
             'almacen_id'        => ['nullable', 'integer'],
