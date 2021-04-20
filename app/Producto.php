@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Automattic\WooCommerce\Client;
 use Illuminate\Support\Facades\DB;
 use App\Scopes\EmpresaProductoScope;
 use Illuminate\Database\Eloquent\Model;

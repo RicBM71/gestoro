@@ -3,13 +3,14 @@
 namespace App\Traits;
 
 use App\Producto;
-use Automattic\WooCommerce\Client;
+use App\Traits\WooConnectTrait;
 use Illuminate\Support\Facades\DB;
 use App\Scopes\EmpresaProductoScope;
 
 
-
 trait EstadoProductoTrait {
+
+    use WooConnectTrait;
 
     public function setEstadoProducto($producto_id, $estado_id){
 
@@ -76,25 +77,6 @@ trait EstadoProductoTrait {
 
 
     }
-
-    private function woo_connect()
-    {
-
-        $url = config('cron.woo_url');
-        $key = config('cron.woo_key');
-        $sec = config('cron.woo_sec');
-
-        return new Client(
-            $url,
-            $key,
-            $sec,
-            [
-                'wp_api' => true,
-                'version' => 'wc/v3'
-            ]
-        );
-    }
-
 
 
 }

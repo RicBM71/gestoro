@@ -9,6 +9,7 @@ use App\Contador;
 use App\Producto;
 use Carbon\Carbon;
 use App\Scopes\EmpresaScope;
+use App\Traits\WooConnectTrait;
 use Automattic\WooCommerce\Client;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -17,29 +18,17 @@ use App\Scopes\EmpresaProductoScope;
 
 trait EcommerceTrait {
 
-    protected $woocommerce;
+    use WooConnectTrait;
+
     protected $albaranes_creados;
     protected $id_albaranes_creados;
 
-    // public function __construct()
-    // {
 
-    //     $url = config('cron.woo_url');
-    //     $key = config('cron.woo_key');
-    //     $sec = config('cron.woo_sec');
+    public function woo_check(){
 
-    //     $this->woocommerce = new Client(
-    //         $url,
-    //         $key,
-    //         $sec,
-    //         [
-    //             'wp_api' => true,
-    //             'version' => 'wc/v3'
-    //         ]
-    //     );
-    // }
-
-    public function woo_check($woocommerce){
+        $woocommerce = $this->woo_connect();
+        if ($woocommerce === false)
+            return 0;
 
         $filter = ['status' => 'processing'];
         $pedidos = $woocommerce->get('orders',$filter);
@@ -48,7 +37,11 @@ trait EcommerceTrait {
 
     }
 
-    public function woo_processing($woocommerce){
+    public function woo_processing(){
+
+        $woocommerce = $this->woo_connect();
+        if ($woocommerce === false)
+            return 0;
 
         $filter = ['status' => 'processing'];
         $pedidos = $woocommerce->get('orders', $filter);
@@ -217,7 +210,11 @@ trait EcommerceTrait {
      * @param Object $producto
      * @return integer ecommerce_id
      */
-    public function woo_store_producto($woocommerce, $producto){
+    public function woo_store_producto($producto){
+
+        $woocommerce = $this->woo_connect();
+        if ($woocommerce === false)
+            return 0;
 
         $data = [
             'name'              => $producto->nombre,
@@ -235,8 +232,12 @@ trait EcommerceTrait {
 
     }
 
+    public function woo_test(){
 
-    public function test($woocommerce){
+        $woocommerce = $this->woo_connect();
+
+        if ($woocommerce === false)
+            return 'No hay conexión';
 
         // $data = ['sku' => 'CL63113'];
         // $p = collect($woocommerce->get('products',$data))->first();

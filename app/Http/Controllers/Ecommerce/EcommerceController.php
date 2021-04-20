@@ -13,7 +13,7 @@ class EcommerceController extends Controller
 
     use EcommerceTrait;
 
-    protected $woocommerce;
+    protected $woocommerce=false;
     protected $ecommerce="woo";
 
     public function __construct()
@@ -24,20 +24,9 @@ class EcommerceController extends Controller
         if ($url == false){
             abort(404, 'No hay tienda online configurada!');
         }
-
-        $key = config('cron.woo_key');
-        $sec = config('cron.woo_sec');
-
-        $this->woocommerce = new Client(
-            $url,
-            $key,
-            $sec,
-            [
-                'wp_api' => true,
-                'version' => 'wc/v3'
-            ]
-        );
     }
+
+
     /**
      * Verifica si hay pedidos pendientes de procesar
      *
@@ -45,9 +34,9 @@ class EcommerceController extends Controller
      */
     public function index(){
 
-        $this->test($this->woocommerce);
+        if ($this->ecommerce == 'woo')
+            return $this->woo_test();
 
-        return $this->check($this->woocommerce);
 
     }
 
@@ -63,7 +52,7 @@ class EcommerceController extends Controller
     public function processing(){
 
         if ($this->ecommerce == 'woo')
-            $pedidos = $this->woo_processing($this->woocommerce);
+            $pedidos = $this->woo_processing();
 
         return $pedidos;
 
@@ -85,7 +74,7 @@ class EcommerceController extends Controller
         //return $producto->load('clase','empresa','tags');
 
         if ($this->ecommerce == 'woo')
-            $ecommerce_id = $this->woo_store_producto($this->woocommerce, $producto);
+            $ecommerce_id = $this->woo_store_producto($producto);
 
         $upd['online'] = true;
         $upd['username'] = $request->user()->username;
