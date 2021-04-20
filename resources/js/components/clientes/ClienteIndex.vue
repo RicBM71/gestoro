@@ -201,6 +201,7 @@ import {mapActions} from "vuex";
     computed: {
         ...mapGetters([
             'hasEdtCli',
+            'isRoot',
             'getPagination'
         ]),
     },

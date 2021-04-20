@@ -125,17 +125,17 @@ export default {
     }),
     mounted(){
 
-        axios.get('/dash')
-            .then(res => {
+        // axios.get('/dash')
+        //     .then(res => {
 
-                this.setAuthUser(res.data.user);
+        //         this.setAuthUser(res.data.user);
 
-                //this.logo = "/storage/logos/"+this.empresaActiva+".png";
-                this.logo = this.imgFondo;
-            })
-            .catch(err => {
-                console.log(err);
-        })
+        //         //this.logo = "/storage/logos/"+this.empresaActiva+".png";
+        //         this.logo = this.imgFondo;
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        // })
 
     },
     watch: {

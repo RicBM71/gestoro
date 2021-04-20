@@ -227,7 +227,7 @@ class HomeController extends Controller
 
     private function productosOnline($email_productos_online, $razon)
     {
-
+        
         if ($email_productos_online == null)
             return 0;
 
