@@ -28,10 +28,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
 
-        // if (config('cron.woo_url') != false){
-        //     //$schedule->job(new WooCommerceJob)->between('08:00', '20:30')->everyThirtyMinutes()->withoutOverlapping();
-        //     $schedule->job(new WooCommerceJob)->everyMinute()->withoutOverlapping();
-        // }
+        if (config('cron.woo_url') != false){
+            $schedule->job(new WooCommerceJob)->between('08:00', '20:30')->everyThirtyMinutes()->withoutOverlapping();
+            //$schedule->job(new WooCommerceJob)->everyMinute()->withoutOverlapping();
+        }
 
         $hora = config('cron.time');
 
