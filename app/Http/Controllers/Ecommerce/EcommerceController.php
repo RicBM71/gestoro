@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Ecommerce;
 
+use App\Albaran;
 use App\Producto;
+use App\Scopes\EmpresaScope;
 use Illuminate\Http\Request;
-use App\Traits\EcommerceTrait;
+use App\Traits\WoocommerceTrait;
 use Automattic\WooCommerce\Client;
 use App\Http\Controllers\Controller;
 
 class EcommerceController extends Controller
 {
 
-    use EcommerceTrait;
+    use WoocommerceTrait;
 
     protected $woocommerce=false;
     protected $ecommerce="woo";
@@ -34,9 +36,37 @@ class EcommerceController extends Controller
      */
     public function index(){
 
-        if ($this->ecommerce == 'woo')
-            return $this->woo_test();
+        $data = Albaran::withOutGlobalScope(EmpresaScope::class)->with(['empresa','cliente'])
+                        ->where('validado',false)
+                        ->get();
 
+        if (request()->wantsJson())
+            return $data;
+
+        // if ($this->ecommerce == 'woo')
+        //     return $this->woo_test();
+
+
+    }
+
+    public function validar(Request $request, Albaran $albaran){
+
+        if (!hasECommerce())
+             abort(403, 'Permiso eCommerce requerido!');
+
+        $data = $request->validate([
+            'validado'      => ['boolean', 'required'],
+        ]);
+
+        $data['username'] = $request->user()->username;
+        $data['validado'] = !$data['validado'];
+
+        $albaran->update($data);
+
+        if (request()->wantsJson())
+            return [
+                'message' => 'Pedido procedente eCommerce Validado!'
+            ];
 
     }
 

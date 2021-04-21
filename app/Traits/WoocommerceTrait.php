@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Log;
 use App\Scopes\EmpresaProductoScope;
 
 
-trait EcommerceTrait {
+trait WoocommerceTrait {
 
     use WooConnectTrait;
 
@@ -82,6 +82,9 @@ trait EcommerceTrait {
 
                 $producto->update($data);
 
+                // actualizo WooCommerce
+                $this->woo_update_pro($producto->referencia, $producto->ecommerce_id, $data['estado_id']);
+
             }
 
 
@@ -89,7 +92,7 @@ trait EcommerceTrait {
             foreach ($this->id_albaranes_creados as $id){
                 $data_cobro = [
                     'albaran_id' => $id,
-                    'fpago_id'   => 2,
+                    'fpago_id'   => 4,
                 ];
 
                 $this->crearCobro($data_cobro);
@@ -101,12 +104,14 @@ trait EcommerceTrait {
 
         }
 
-        print_r($i);
+        return $i;
 
 
     }
 
     private function crearAlbaran($alb){
+
+        $username = session('username') == null ? 'ecommerce' : session('username');
 
         $a = DB::table('albaranes')
                 ->where('empresa_id', '=', $alb['empresa_id'])
@@ -125,17 +130,17 @@ trait EcommerceTrait {
         $data_new['fecha_albaran']  = $alb['fecha_albaran'];
         $data_new['cliente_id']     = 1;
 
-        $data_new['fase_id']          = 10; // reservado
+        $data_new['fase_id']          = 11; // vendido
         $data_new['online']           = true;
+        $data_new['validado']         = false;
         $data_new['iva_no_residente'] = false;
-        $data_new['username']         = session('username');
+        $data_new['username']         = $username;
 
         $ejercicio   = getEjercicio($alb['fecha_albaran']);
         $contador_alb = Contador::incrementaContadorReubicar($ejercicio, $data_new['tipo_id'], $alb['empresa_id']);
         $data_new['serie_albaran']  = $contador_alb['serie_albaran'];
         $data_new['albaran']        = $contador_alb['ult_albaran'];
         $data_new['pedido']         = $alb['pedido'];
-        $data_new['validado']       = false;
         $data_new['clitxt']         = $alb['clitxt'];
         $data_new['notas_int']      = null;
         $data_new['notas_ext']      = null;
@@ -155,6 +160,8 @@ trait EcommerceTrait {
 
     private function crearAlbalin($linea, $albaran_id, $empresa_id, $producto){
 
+        $username = session('username') == null ? 'ecommerce' : session('username');
+
         // verificamos si ya se ha creado el producto
 
         $l = Albalin::where('albaran_id', $albaran_id)
@@ -173,7 +180,7 @@ trait EcommerceTrait {
         $albalin_new['importe_venta']   = $linea->subtotal;
         $albalin_new['iva_id']          = $producto->iva_id;
         $albalin_new['iva']             = $producto->iva->importe;
-        $albalin_new['username']        = session('username');
+        $albalin_new['username']        = $username;
         $albalin_new['created_at']      = Carbon::now();
         $albalin_new['updated_at']      = Carbon::now();
 
@@ -234,10 +241,14 @@ trait EcommerceTrait {
 
     public function woo_test(){
 
+        return $this->woo_check();
+
         $woocommerce = $this->woo_connect();
 
         if ($woocommerce === false)
             return 'No hay conexión';
+
+
 
         // $data = ['sku' => 'CL63113'];
         // $p = collect($woocommerce->get('products',$data))->first();

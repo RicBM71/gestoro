@@ -10,3 +10,7 @@ UPDATE klt_productos SET destino_empresa_id = 1 where destino_empresa_id = 14 an
 @reboot /home/oro-gestion/VENV/bin/supervisord  -c /home/oro-gestion/VENV/bin/supervisord.conf
 
 UPDATE `klt_productos` set nombre = REPLACE(nombre,'ROPA.','') where nombre LIKE 'ROPA.%'
+
+
+ck_936d7c02bb331b0044e6ab11b27f1eeeb9d93ad4
+cs_d30f94acd3c8daa9abd9a65b2c20b4ccac0980b1

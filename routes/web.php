@@ -437,6 +437,7 @@ Route::group([
         Route::get('/pedidos', 'EcommerceController@index');
         Route::get('/processing', 'EcommerceController@processing');
         Route::post('/store/{producto}', 'EcommerceController@producto');
+        Route::put('/validar/{albaran}', 'EcommerceController@validar');
 
     }
 );

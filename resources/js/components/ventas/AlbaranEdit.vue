@@ -12,6 +12,20 @@
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <v-btn
+                            v-on="on"
+                            color="white"
+                            icon
+                            @click="goValidar()"
+                        >
+                            <v-icon v-if="albaran.validado" color="blue">verified</v-icon>
+                            <v-icon v-else color="orange darken-4">verified</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>Validar albarán eCommerce</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                        <v-btn
                             v-show="computedReubicar"
                             v-on="on"
                             color="white"
@@ -614,7 +628,8 @@ import {mapState} from 'vuex'
                 'isRoot',
                 'hasFactura',
                 'hasAddVen',
-                'parametros'
+                'parametros',
+                'hasEcommerce'
             ]),
             computedTaller(){
                 return (this.factura > 0);
@@ -914,6 +929,19 @@ import {mapState} from 'vuex'
 
                 axios.put("/mto/clientes/"+this.albaran.cliente_id+"/obs", {notas: this.notas_cliente})
                     .then(res => {
+                        this.$toast.success(res.data.message);
+                        // this.loading = false;
+                    })
+                    .catch(err => {
+                        this.$toast.error(err.response.data.message);
+                        // this.loading = false;
+                    });
+            },
+            goValidar(){
+
+                axios.put("/ecommerce/validar/"+this.albaran.id, {validado: this.albaran.validado})
+                    .then(res => {
+                        this.albaran.validado = !this.albaran.validado;
                         this.$toast.success(res.data.message);
                         // this.loading = false;
                     })

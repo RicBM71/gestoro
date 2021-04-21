@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use Carbon\Carbon;
+use App\Jobs\WooCommerceJob;
 use App\Jobs\CalcularExistenciaJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -26,10 +27,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
 
-
+        // if (config('cron.woo_url') != false){
+        //     //$schedule->job(new WooCommerceJob)->between('08:00', '20:30')->everyThirtyMinutes()->withoutOverlapping();
+        //     $schedule->job(new WooCommerceJob)->everyMinute()->withoutOverlapping();
+        // }
 
         $hora = config('cron.time');
 
@@ -42,11 +44,7 @@ class Kernel extends ConsoleKernel
 
         //\Log::info($hora);
 
-        //$schedule->job(new CalcularExistenciaJob)->monthlyOn(1,$hora)->withoutOverlapping();
-        //$schedule->job(new CalcularExistenciaJob)->dailyAt($hora)->withoutOverlapping();
         $schedule->job(new CalcularExistenciaJob)->weeklyOn(0, $hora)->withoutOverlapping();
-
-
 
     }
 

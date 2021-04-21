@@ -156,6 +156,9 @@ function hasDesLoc(){
     return auth()->user()->hasPermissionTo('desloc');
 }
 
+function hasECommerce(){
+    return auth()->user()->hasPermissionTo('ecommerce');
+}
 
 
 function esPropietario($obj)

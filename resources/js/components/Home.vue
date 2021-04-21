@@ -387,6 +387,15 @@ export default {
                 { icon: 'forward', text: 'Generar Excel Etiquetas', name:'etiquetas.rollo' },
             ],
         },
+         mn_ecommerce:{
+            icon: 'keyboard_arrow_up',
+            'icon-alt': 'keyboard_arrow_down',
+            text: 'eCommerce',
+            model: false,
+            children: [
+                { icon: 'forward', text: 'Pendientes', name:'ecommerce.index' },
+            ],
+        },
         expired: false,
     }),
 
@@ -421,6 +430,9 @@ export default {
 
                     if (this.isRoot || this.isAdmin)
                         this.mn_items.push(this.mn_config);
+
+                    if (this.isRoot)
+                        this.mn_items.push(this.mn_ecommerce);
 
                     this.empresas = res.data.user.empresas;
                     var idx = this.empresas.map(x => x.value).indexOf(this.empresa_id);
