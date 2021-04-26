@@ -154,7 +154,21 @@
                                     >
                                     </v-text-field>
                                 </v-flex>
-                                <v-flex sm6>
+                                <v-flex sm3>
+                                    <v-text-field
+                                        v-show="producto.estado_id != 5"
+                                        v-model="producto.caracteristicas"
+                                        v-validate="'max:100'"
+                                        :error-messages="errors.collect('caracteristicas')"
+                                        label="Características: Brillantes: Talla, color, pureza, quilates - Relojes: S/N"
+                                        data-vv-name="caracteristicas"
+                                        data-vv-as="características"
+                                        required
+                                        v-on:keyup.enter="submit"
+                                    >
+                                    </v-text-field>
+                                </v-flex>
+                                <v-flex sm3>
                                     <v-text-field
                                         v-show="producto.estado_id != 5"
                                         v-model="producto.nombre_interno"
@@ -484,10 +498,10 @@
                             <v-layout row wrap>
                                 <v-textarea
                                     v-show="producto.estado_id != 5"
-                                    v-model="producto.caracteristicas"
-                                    :error-messages="errors.collect('caracteristicas')"
-                                    label="Descripción: Brillantes: Talla, color, pureza, quilates - Relojes: S/N"
-                                    data-vv-name="caracteristicas"
+                                    v-model="producto.descripcion"
+                                    :error-messages="errors.collect('descripcion')"
+                                    label="Descripción"
+                                    data-vv-name="descripcion"
                                     data-vv-as="descripción"
                                     rows="5"
                                     v-on:keyup.enter="submit"

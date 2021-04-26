@@ -52,7 +52,7 @@ class StoreProducto extends FormRequest
             'stock'              => ['nullable','integer'],
             'marca_id'           => ['nullable','integer'],
             'categoria_id'       => ['nullable','integer'],
-
+            'descripcion'        => ['nullable'],
         ];
 
         return $data;

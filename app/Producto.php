@@ -17,7 +17,7 @@ Class Producto extends Model
         'compra_id', 'ref_pol','estado_id','etiqueta_id','referencia', 'univen',
         'destino_empresa_id','iva_id','cliente_id','online','deleted_at','notas','username',
         'garantia_id','meses_garantia','fecha_ultima_revision','stock','descuento',
-        'marca_id', 'categoria_id', 'ecommerce_id'
+        'marca_id', 'categoria_id', 'ecommerce_id','descripcion'
     ];
 
     protected $casts = [
