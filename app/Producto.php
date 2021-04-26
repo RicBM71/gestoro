@@ -53,11 +53,11 @@ Class Producto extends Model
     }
 
 
-    // public function setCaracteristicasAttribute($caracteristicas)
-    // {
-    //     $this->attributes['caracteristicas'] = strtoupper($caracteristicas);
+    public function setCaracteristicasAttribute($caracteristicas)
+    {
+        $this->attributes['caracteristicas'] = strtoupper($caracteristicas);
 
-    // }
+    }
 
     public function setReferenciaAttribute($referencia)
     {
