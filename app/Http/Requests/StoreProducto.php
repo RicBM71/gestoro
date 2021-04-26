@@ -39,7 +39,7 @@ class StoreProducto extends FormRequest
             'compra_id'          => ['nullable','integer'],
             'iva_id'             => ['required','integer'],
             'quilates'           => ['nullable','integer',new LeyesRule($this->clase_id)],
-            'caracteristicas'    => ['nullable'],
+            'caracteristicas'    => ['nullable', 'max:100'],
             'peso_gr'            => ['numeric', new PesoRule($this->clase->peso)],
             'precio_coste'       => ['numeric','required'],
             'precio_venta'       => ['numeric','required'],

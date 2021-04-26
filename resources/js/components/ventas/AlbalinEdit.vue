@@ -184,9 +184,9 @@ export default {
 
             const peso = this.editedItem.producto.univen =="G" ? this.editedItem.producto.peso_gr+" gr." : "";
 
-            //const caracteristicas = this.editedItem.producto.caracteristicas != null ? this.editedItem.producto.caracteristicas : "";
+            const caracteristicas = this.editedItem.producto.caracteristicas != null ? this.editedItem.producto.caracteristicas : "";
 
-            return this.editedItem.producto.clase.nombre+" "+quilates+" "+peso;
+            return this.editedItem.producto.clase.nombre+" "+quilates+" "+caracteristicas+" "+peso;
         },
         computedCoste(){
              return (this.albaran.tipo_id == 5 || this.hasEdtFac);

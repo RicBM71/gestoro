@@ -98,6 +98,8 @@ trait WoocommerceTrait {
                 $this->crearCobro($data_cobro);
             }
 
+            $woocommerce->put('orders/'.$pedido->id, ['status'=>'completed']);
+
             $this->id_albaranes_creados=array();
 
             $i++;
