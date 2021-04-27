@@ -49,6 +49,15 @@ class EcommerceController extends Controller
 
     }
 
+    public function test(){
+
+
+        if ($this->ecommerce == 'woo')
+            return $this->woo_test();
+
+
+    }
+
     public function validar(Request $request, Albaran $albaran){
 
         if (!hasECommerce())

@@ -243,7 +243,7 @@ trait WoocommerceTrait {
 
     public function woo_test(){
 
-        return $this->woo_check();
+      //  return $this->woo_check();
 
         $woocommerce = $this->woo_connect();
 
@@ -255,7 +255,9 @@ trait WoocommerceTrait {
         // $data = ['sku' => 'CL63113'];
         // $p = collect($woocommerce->get('products',$data))->first();
 
-        // dd($p);
+        $p = collect($woocommerce->get('products'));
+        dd($p);
+
         $filter = ['status' => 'processing'];
         $pedidos = $woocommerce->get('orders',$filter);
 
