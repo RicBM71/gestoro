@@ -237,7 +237,7 @@ trait WoocommerceTrait {
             'name'              => $producto->nombre,
             'type'              => 'simple',
             'sku'               => $producto->referencia,
-            'regular_price'     => $producto->precio_venta,
+            'regular_price'     => $producto->precio_ecommerce,
             'description'       => $producto->descripcion,
             'short_description' => $producto->nombre,
             'manage_stock'      => true,
