@@ -248,7 +248,6 @@
                                         label="IVA"
                                         ></v-select>
                                 </v-flex>
-                                <v-flex sm1></v-flex>
                                 <v-flex sm1>
                                     <v-text-field
                                         v-model="producto.peso_gr"
@@ -303,6 +302,32 @@
                                     >
                                     </v-text-field>
                                 </v-flex>
+                                <v-flex sm1 v-if="producto.online">
+                                    <v-text-field
+                                        v-model="producto.precio_ecommerce"
+                                        v-validate="'required|decimal:2|min:1'"
+                                        :error-messages="errors.collect('precio_ecommerce')"
+                                        label="PVP eCommerce"
+                                        data-vv-name="precio_ecommerce"
+                                        data-vv-as="PVP eCommerce"
+                                        class="inputPrice"
+                                        type="number"
+                                        :disabled="!computedEditPro"
+                                        v-on:keyup.enter="submit"
+                                    >
+                                    </v-text-field>
+                                </v-flex>
+                                <v-flex sm1 v-else></v-flex>
+                                <v-flex sm1 v-if="producto.online">
+                                    <v-text-field
+                                        :value="computedMargenEC"
+                                        label="Márgen eCommerce"
+                                        class="inputPrice"
+                                        disabled
+                                    >
+                                    </v-text-field>
+                                </v-flex>
+                                <v-flex sm1 v-else></v-flex>
                                 <v-flex sm1></v-flex>
                                 <v-flex sm1 v-if="computedStock">
                                     <v-text-field
@@ -710,6 +735,9 @@ import {mapState} from 'vuex'
             },
             computedMargen(){
                 return this.getMoneyFormat(this.producto.margen);
+            },
+            computedMargenEC(){
+                return this.getMoneyFormat(this.producto.margenec);
             },
             computedFecha() {
                 moment.locale('es');

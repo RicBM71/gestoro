@@ -225,13 +225,26 @@ trait WoocommerceTrait {
         if ($woocommerce === false)
             return 0;
 
+            // hay que crear campo de cruce
+        //$producto->load('categoria');
+
+        $categoria = [
+            [
+                'id' => $producto->categoria_id
+            ]];
+
         $data = [
             'name'              => $producto->nombre,
             'type'              => 'simple',
             'sku'               => $producto->referencia,
             'regular_price'     => $producto->precio_venta,
-            'description'       => $producto->caracteristicas,
+            'description'       => $producto->descripcion,
             'short_description' => $producto->nombre,
+            'manage_stock'      => true,
+            'stock_quantity'    => 1,
+            'stock_status'      => 'instock',
+        //    'categories'        => $categoria,
+            'sold_individually' => true
         ];
 
         $prod = $woocommerce->post('products', $data);
@@ -250,6 +263,7 @@ trait WoocommerceTrait {
         if ($woocommerce === false)
             return 'No hay conexión';
 
+        dd($woocommerce->get('system_status'));
 
 
         // $data = ['sku' => 'CL63113'];

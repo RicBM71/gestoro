@@ -43,6 +43,7 @@ class StoreProducto extends FormRequest
             'peso_gr'            => ['numeric', new PesoRule($this->clase->peso)],
             'precio_coste'       => ['numeric','required'],
             'precio_venta'       => ['numeric','required'],
+            'precio_ecommerce'   => ['numeric','required'],
             'ref_pol'            => ['nullable','string', 'max:20'],
             'cliente_id'         => ['nullable','integer'],
             'univen'             => ['required', 'string', 'max:1'],

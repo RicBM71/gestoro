@@ -290,6 +290,7 @@ class ProductosController extends Controller
             $data['quilates'] = null;
 
         $data['username'] = $request->user()->username;
+        $data['precio_ecommerce'] = $data['precio_venta'];
 
 
         $reg = Producto::create($data);
@@ -414,6 +415,9 @@ class ProductosController extends Controller
         if ($clase->stockable == false){
             $data['stock'] = 1;
         }
+
+        if ($data['precio_ecommerce'] == 0 && $data['precio_venta'] > 0)
+            $data['precio_ecommerce'] = $data['precio_venta'];
 
         $data['username'] = $request->user()->username;
 

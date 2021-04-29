@@ -41,6 +41,7 @@ class UpdateProducto extends FormRequest
             'peso_gr'           => ['numeric','required'],
             'precio_coste'      => ['numeric','required'],
             'precio_venta'      => ['numeric','required'],
+            'precio_ecommerce'  => ['numeric','required'],
             'ref_pol'           => ['nullable', 'max:20', Rule::requiredIf($this->iva_id==2)],
             'caracteristicas'   => ['nullable', 'max:100'],
             'notas'             => ['string','nullable'],

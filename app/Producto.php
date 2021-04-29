@@ -17,7 +17,7 @@ Class Producto extends Model
         'compra_id', 'ref_pol','estado_id','etiqueta_id','referencia', 'univen',
         'destino_empresa_id','iva_id','cliente_id','online','deleted_at','notas','username',
         'garantia_id','meses_garantia','fecha_ultima_revision','stock','descuento',
-        'marca_id', 'categoria_id', 'ecommerce_id','descripcion'
+        'marca_id', 'categoria_id', 'ecommerce_id','descripcion','precio_ecommerce'
     ];
 
     protected $casts = [
@@ -25,7 +25,7 @@ Class Producto extends Model
     ];
 
     protected $appends = [
-        'margen',
+        'margen', 'margenec'
     ];
 
     /**
@@ -80,6 +80,12 @@ Class Producto extends Model
     public function getMargenAttribute(){
 
         return $this->precio_venta - $this->precio_coste;
+
+    }
+
+    public function getMargenecAttribute(){
+
+        return $this->precio_ecommerce - $this->precio_coste;
 
     }
 
