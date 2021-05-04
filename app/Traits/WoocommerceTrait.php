@@ -263,7 +263,7 @@ trait WoocommerceTrait {
         if ($woocommerce === false)
             return 'No hay conexión';
 
-        dd($woocommerce->get('system_status'));
+       // dd($woocommerce->get('system_status'));
 
 
         // $data = ['sku' => 'CL63113'];
