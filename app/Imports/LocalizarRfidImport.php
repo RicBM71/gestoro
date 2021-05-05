@@ -43,11 +43,6 @@ class LocalizarRfidImport implements ToCollection, WithCustomCsvSettings
 
                 $recuento = Recuento::where('producto_id',$id)->firstOrFail();
 
-                 if ($id == 64713){
-                    \Log::info( $recuento->rfid_id);
-                }
-                \Log::info( $recuento->rfid_id);
-
                 $rfid_id = (int) $recuento->rfid_id + 10;
 
                 $data=[
@@ -77,8 +72,6 @@ class LocalizarRfidImport implements ToCollection, WithCustomCsvSettings
             $i++;
 
         }
-
-        \Log::info($localizadas);
 
         DB::table('recuentos')->insert($nuevas);
 

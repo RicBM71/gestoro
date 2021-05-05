@@ -9,6 +9,8 @@ use App\Contador;
 use App\Producto;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Jobs\WooUpdateProJob;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class AbonosController extends Controller
@@ -99,7 +101,7 @@ class AbonosController extends Controller
                 $data['fase_id']  = 12;
             $data['motivo_id'] = $request->get('motivo_id');
             $data['username']   = session('username');
-            $albarane->update($data);
+           // $albarane->update($data);
         }else{
 
                 // facturo el albarán de origen.
@@ -113,7 +115,7 @@ class AbonosController extends Controller
 
             $data['fase_id']      = 12;
             $data['username']     = session('username');
-            $albarane->update($data);
+           // $albarane->update($data); lo hago cuando creo el nuevo para hacer solo un update.
         }
 
         if ($cancelacion === false && session('empresa')->getFlag(6) == false){
@@ -131,7 +133,9 @@ class AbonosController extends Controller
             $albaran_new = Albaran::create($data_new);
 
             // Actualiza ahora el albarán para crear relacion
-            $albarane->update(['albaran_abonado_id'=>$albaran_new->id]);
+            //$albarane->update(['albaran_abonado_id'=>$albaran_new->id]);
+            $data['albaran_abonado_id'] = $albaran_new->id;
+            $albarane->update($data);
 
             return $albaran_new;
         }catch(\Exception $e){
@@ -157,12 +161,15 @@ class AbonosController extends Controller
             $albalin_new['iva_id']          = $albalin->iva_id;
             $albalin_new['iva']             = $albalin->iva;
             $albalin_new['username']        = $albaran_new->username;
+            $albalin_new['updated_at']      = Carbon::now();
+            $albalin_new['created_at']      = Carbon::now();
 
-
-            Albalin::create($albalin_new);
+            //Albalin::create($albalin_new);
+            //No me interesa que pase por el observer
+            DB::table('albalins')->insert($albalin_new);
 
             $data = ['estado_id'   => 2,
-                    'etiqueta_id'  => 4,
+                    //'etiqueta_id'  => 5,
                     'username'    => $albaran_new->username];
 
             if ($cancelacion === false && $albaran_new->tipo_id == 3){ // es rebu
@@ -172,6 +179,11 @@ class AbonosController extends Controller
             Producto::where('id',$albalin->producto_id)
                     ->where('estado_id','<>', 5)
                     ->update($data);
+
+            // $producto = $albalin->load('producto');
+
+            // if (config('cron.woo_url') != false && $producto->online == true)
+            //     dispatch(new WooUpdateProJob($producto->referencia, $producto->ecommerce_id, $data['estado_id']));
 
         }
     }
@@ -190,8 +202,12 @@ class AbonosController extends Controller
             $cobro_new['importe']    = $cobro->importe * -1;
             $cobro_new['notas']      = null;
             $cobro_new['username']   = $albaran_new->username;
+            $cobro_new['updated_at'] = Carbon::now();
+            $cobro_new['created_at'] = Carbon::now();
 
-            Cobro::create($cobro_new);
+            //no me interesa que pase por el observer
+            //Cobro::create($cobro_new);
+            DB::table('cobros')->insert($cobro_new);
 
         }
 

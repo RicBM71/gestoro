@@ -114,8 +114,6 @@ class ClidocsController extends Controller
         $file1 = \str_replace('.dat',$t,$clidoc->file1);
         $file2 = \str_replace('.dat',$t,$clidoc->file2);
 
-        \Log::info($file1);
-
         try {
             Storage::disk('docs')->move($clidoc->file1, $file1);
             //code...

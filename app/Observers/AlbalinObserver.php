@@ -77,7 +77,7 @@ class AlbalinObserver
 
             $albaran = Albaran::findOrFail($albaran_id);
 
-            if ($albaran->fase_id >= 13)
+            if ($albaran->fase_id == 13)
                 return;
 
             $totales = Albalin::totalAlbaranByAlb($albaran_id);

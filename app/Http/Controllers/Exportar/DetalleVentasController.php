@@ -93,8 +93,6 @@ class DetalleVentasController extends Controller
             $primera = true;
             foreach ($albalins as $albalin){
 
-//                \Log::info($albalin);
-
                 $row_id++;
 
                 $margen = $albalin->importe_venta - $albalin->precio_coste;

@@ -9,7 +9,7 @@
                 </h2>
                 <h3 class="red--text darken-4">{{computedMotivo}}</h3>
                 <v-spacer></v-spacer>
-                <v-tooltip bottom>
+                <v-tooltip bottom v-if="albaran.pedido > 0">
                     <template v-slot:activator="{ on }">
                         <v-btn
                             v-on="on"
@@ -21,7 +21,7 @@
                             <v-icon v-else color="orange darken-4">verified</v-icon>
                         </v-btn>
                     </template>
-                    <span>Validar albarán eCommerce</span>
+                    <span>Validar albarán eCommerce1  {{albaran.pedido }}</span>
                 </v-tooltip>
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">

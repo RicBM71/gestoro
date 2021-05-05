@@ -9,7 +9,6 @@ use App\Contador;
 use App\Producto;
 use Carbon\Carbon;
 use App\Scopes\EmpresaScope;
-use App\Traits\WooConnectTrait;
 use Automattic\WooCommerce\Client;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -18,10 +17,63 @@ use App\Scopes\EmpresaProductoScope;
 
 trait WoocommerceTrait {
 
-    use WooConnectTrait;
-
     protected $albaranes_creados;
     protected $id_albaranes_creados;
+
+    public function woo_connect()
+    {
+        if (config('cron.woo_url') == false)
+            return false;
+
+        $url = config('cron.woo_url');
+        $key = config('cron.woo_key');
+        $sec = config('cron.woo_sec');
+
+        $woocommerce = new Client(
+            $url,
+            $key,
+            $sec,
+            [
+                'wp_api' => true,
+                'version' => 'wc/v3'
+            ]
+        );
+
+        return $woocommerce;
+
+    }
+
+    /**
+     *
+     * Actualiza estado producto para WooCommerce.
+     * @
+     *
+     */
+
+    private function woo_update_pro($referencia, $producto_ecommerce_id, $estado_id){
+
+        $woocommerce = $this->woo_connect();
+
+        // si tengo el ID de Woo no lo busco
+        if ($producto_ecommerce_id == null){
+            $data = ['sku' => $referencia];
+            $woo_producto = collect($woocommerce->get('products',$data))->first();
+
+            $producto_ecommerce_id = $woo_producto->id;
+
+        }
+
+        //'stock_quantity'    => 1,
+          //  'stock_status'      => 'instock',
+
+        //$data = ($estado_id <= 2) ? ['stock_status' => 'instock'] : ['stock_status' => 'outofstock'];
+        $data = ($estado_id <= 2) ? ['stock_quantity' => '1'] : ['stock_quantity' => '0'];
+
+        \Log::info('woo_update_pro: estado: '.$estado_id);
+
+        $woocommerce->put('products/'.$producto_ecommerce_id, $data);
+
+    }
 
 
     public function woo_check(){
@@ -60,6 +112,9 @@ trait WoocommerceTrait {
                 //\Log::info($pedido->order_key.' SKU: '.$linea->sku);
 
                 $p = Producto::withoutGlobalScope(EmpresaProductoScope::class)->with(['iva'])->where('referencia', '=', $linea->sku)->get();
+
+                //$p = DB::table('productos')->were
+
                 if ($p->count() == 0){
                     //abort(404, 'No se ha encontrado referencia', $linea->sku);
                     continue;
@@ -279,7 +334,6 @@ trait WoocommerceTrait {
         foreach($pedidos as $pedido){
 
             $cliente = $pedido->billing;
-            \Log::info(toArray($cliente));
 
             $lineas = $pedido->line_items;
 

@@ -24,7 +24,7 @@
         <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" flat round @click="closeDialog()">Cancelar</v-btn>
-            <v-btn color="blue darken-1" flat round @click="submit()">Aceptar</v-btn>
+            <v-btn color="blue darken-1" flat :loading="loading" round @click="submit()">Aceptar</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -38,7 +38,8 @@ export default {
     data () {
         return {
             motivos:[],
-            motivo_id:""
+            motivo_id:"",
+            loading: false
         }
     },
     mounted(){
@@ -69,6 +70,7 @@ export default {
         goAbonar(){
             this.$validator.validateAll().then((result) => {
                 if (result){
+                    this.loading = true;
                     axios.put("/ventas/abonos/"+this.albaran.id+"/abonar", {motivo_id: this.motivo_id})
                         .then(res => {
                             this.$router.push({ name: 'albaran.edit', params: { id: res.data.albaran_id } })
@@ -85,7 +87,7 @@ export default {
         goCancelar(){
             this.$validator.validateAll().then((result) => {
                 if (result){
-
+                    this.loading = true;
                     axios.put("/ventas/abonos/"+this.albaran.id+"/cancelar", {motivo_id: this.motivo_id})
                         .then(res => {
                             this.$router.push({ name: 'albaran.edit', params: { id: res.data.albaran_id } })

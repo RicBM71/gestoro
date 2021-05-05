@@ -3,7 +3,7 @@
 namespace App\Console;
 
 use Carbon\Carbon;
-use App\Jobs\WooCommerceJob;
+use App\Jobs\WooProcessingJob;
 use App\Jobs\CalcularExistenciaJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -29,8 +29,8 @@ class Kernel extends ConsoleKernel
     {
 
         if (config('cron.woo_url') != false){
-            $schedule->job(new WooCommerceJob)->between('08:00', '20:30')->everyThirtyMinutes()->withoutOverlapping();
-            //$schedule->job(new WooCommerceJob)->everyMinute()->withoutOverlapping();
+            $schedule->job(new WooProcessingJob)->between('08:00', '20:30')->everyThirtyMinutes()->withoutOverlapping();
+            //$schedule->job(new WooProcessingJob)->everyMinute()->withoutOverlapping();
         }
 
         $hora = config('cron.time');

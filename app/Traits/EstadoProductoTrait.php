@@ -3,14 +3,15 @@
 namespace App\Traits;
 
 use App\Producto;
-use App\Traits\WooConnectTrait;
+use App\Jobs\WooUpdateProJob;
+use App\Traits\WoocommerceTrait;
 use Illuminate\Support\Facades\DB;
 use App\Scopes\EmpresaProductoScope;
 
 
 trait EstadoProductoTrait {
 
-    use WooConnectTrait;
+    use WoocommerceTrait;
 
     public function setEstadoProducto($producto_id, $estado_id){
 
@@ -47,7 +48,9 @@ trait EstadoProductoTrait {
         }
 
         if (config('cron.woo_url') != false && $producto->online == true){
-            $this->woo_update_pro($producto->referencia, $producto->ecommerce_id, $estado_id);
+
+            dispatch(new WooUpdateProJob($producto->referencia, $producto->ecommerce_id, $estado_id));
+            //$this->woo_update_pro($producto->referencia, $producto->ecommerce_id, $estado_id);
         }
 
     }

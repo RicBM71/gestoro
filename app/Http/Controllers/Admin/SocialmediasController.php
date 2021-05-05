@@ -125,8 +125,6 @@ class SocialmediasController extends Controller
 
     public function logo(Request $request, Socialmedia $social){
 
-        \Log::info($social);
-
         $this->validate(request(),[
     		'logo' => 'required|image|max:256'	//jpeg png, gif, svg
         ]);

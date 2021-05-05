@@ -106,10 +106,6 @@ class EoProductosSeeder extends Seeder
 
 
         }
-
-        \Log::info('productos reasignados: '.$i);
-
-
     }
 
     private function update_producto(){
