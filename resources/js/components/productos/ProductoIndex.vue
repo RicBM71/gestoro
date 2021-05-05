@@ -97,12 +97,22 @@
                                             edit
                                         </v-icon>
                                         <v-icon
+                                            v-if="hasEcommerce && props.item.online"
+                                            :disabled="props.item.ecommerce_id > 0"
+                                            small
+                                            @click="goUploadeCommerce(props.item)"
+                                        >
+                                            cloud_upload
+                                        </v-icon>
+                                        &nbsp;
+                                        <v-icon
                                             v-if="props.item.deleted_at==null && hasEdtPro &&  props.item.estado_id <= 2"
                                             small
                                             @click="openDialog(props.item)"
                                         >
                                             delete
                                         </v-icon>
+                                        &nbsp;
                                         <v-icon
                                             v-if="props.item.deleted_at!=null && hasEdtPro"
                                             small
@@ -110,6 +120,7 @@
                                         >
                                             restore
                                         </v-icon>
+                                        &nbsp;
                                         <v-icon
                                             v-if="showExpand(props.item)"
                                             small
@@ -257,7 +268,8 @@ import {mapActions} from "vuex";
             'hasEdtPro',
             'hasExcel',
             'getPagination',
-            'empresaActiva'
+            'empresaActiva',
+            'hasEcommerce'
         ]),
     },
     methods:{
@@ -334,8 +346,27 @@ import {mapActions} from "vuex";
             });
 
         },
+        goUploadeCommerce(item){
+
+            const i = this.arr_reg.indexOf(item)
+
+            this.show_loading = true;
+            axios.post("/ecommerce/store/"+item.id)
+                .then(res => {
+
+                    this.$toast.success('Referencia subida correctamente!');
+                    this.producto = res.data.producto;
+                    this.show_loading = false;
+
+                    this.arr_reg[i].ecommerce_id = 1;
+
+                })
+                .catch(err => {
+                    this.$toast.error(err.response.data.message);
+                    this.show_loading = false;
+                });
+        },
         goExcel(){
-            console.log(this.mi_filtro);
 
             this.show_loading = true;
             axios({
