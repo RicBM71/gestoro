@@ -320,6 +320,10 @@ trait WoocommerceTrait {
 
        // dd($woocommerce->get('system_status'));
 
+        $data = ['id' => 'bacs'];
+        $p = $woocommerce->get('payment_gateways',$data);
+        dd($p);
+
 
         // $data = ['sku' => 'CL63113'];
         // $p = collect($woocommerce->get('products',$data))->first();

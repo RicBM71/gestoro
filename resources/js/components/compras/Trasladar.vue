@@ -102,7 +102,7 @@
                         if (res.data.estado == true)
                             this.$toast.success('Se ha trasladado la compra!');
                         else
-                            this.$toast.warning('Check contadores!!, taslado con indidencias!');
+                            this.$toast.warning('Check contadores!!, traslado con incidencias!');
 
                         this.$router.push({ name: 'dash' })
 

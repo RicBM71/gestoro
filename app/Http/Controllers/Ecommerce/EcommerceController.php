@@ -97,6 +97,18 @@ class EcommerceController extends Controller
 
     }
 
+    public function manual(){
+
+        $procesados = $this->woo_processing();
+
+        return [
+            'pendientes' => Albaran::withOutGlobalScope(EmpresaScope::class)->with(['empresa','cliente'])
+                        ->where('validado',false)
+                        ->get(),
+            'procesados' => $procesados
+        ];
+    }
+
 
     /**
      * Crea productos

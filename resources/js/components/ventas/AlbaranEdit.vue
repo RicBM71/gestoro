@@ -9,7 +9,7 @@
                 </h2>
                 <h3 class="red--text darken-4">{{computedMotivo}}</h3>
                 <v-spacer></v-spacer>
-                <v-tooltip bottom v-if="albaran.pedido > 0">
+                <v-tooltip bottom v-if="computedECommerce">
                     <template v-slot:activator="{ on }">
                         <v-btn
                             v-on="on"
@@ -21,7 +21,7 @@
                             <v-icon v-else color="orange darken-4">verified</v-icon>
                         </v-btn>
                     </template>
-                    <span>Validar albarán eCommerce1  {{albaran.pedido }}</span>
+                    <span>Validar albarán eCommerce</span>
                 </v-tooltip>
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
@@ -631,6 +631,11 @@ import {mapState} from 'vuex'
                 'parametros',
                 'hasEcommerce'
             ]),
+            computedECommerce(){
+
+                return this.hasEcommerce && this.albaran.pedido != null;
+
+            },
             computedTaller(){
                 return (this.factura > 0);
             },

@@ -10,6 +10,19 @@
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on }">
                             <v-btn
+                                v-on="on"
+                                color="white"
+                                icon
+                                @click="goProcesar()"
+                            >
+                                <v-icon color="primary">mdi-earth</v-icon>
+                            </v-btn>
+                        </template>
+                        <span>Comprobar pedidos ahora</span>
+                    </v-tooltip>
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                            <v-btn
                                 v-show="items.length > 0 && hasExcel"
                                 v-on="on"
                                 color="white"
@@ -189,7 +202,6 @@ import {mapActions} from "vuex";
 
         axios.get(this.url)
             .then(res => {
-                console.log(res);
                 this.items = res.data;
                 this.registros = true;
                 this.show_loading = false;
@@ -214,6 +226,25 @@ import {mapActions} from "vuex";
             'setPagination',
             'unsetPagination'
         ]),
+        goProcesar(){
+            this.show_loading = true;
+            axios.get('/ecommerce/manual')
+                .then(res => {
+                    this.items = res.data.pendientes;
+                    if (res.data.procesados > 0)
+                        this.$toast.success('Procesados '+res.data.procesados+' nuevos!');
+                    else
+                        this.$toast.warning('No hay nuevos pedidos!');
+                    this.registros = true;
+                    this.show_loading = false;
+                })
+                .catch(err =>{
+
+                    this.$toast.error(err.response.data.message);
+                    this.$router.push({ name: 'dash' })
+                })
+
+        },
         puedeBorrar(item){
 
             if (item.factura > 0) return false;

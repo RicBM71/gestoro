@@ -194,7 +194,8 @@ export default {
             'lotes',
             'parametros',
             'hasConsultas',
-            'hasProcesos'
+            'hasProcesos',
+            'hasEcommerce'
 
         ]),
         computedLotes(){
@@ -431,7 +432,7 @@ export default {
                     if (this.isRoot || this.isAdmin)
                         this.mn_items.push(this.mn_config);
 
-                    if (this.isRoot)
+                    if (this.hasEcommerce)
                         this.mn_items.push(this.mn_ecommerce);
 
                     this.empresas = res.data.user.empresas;
