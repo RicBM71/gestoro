@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Ventas;
 
+use App\Caja;
 use App\Cobro;
+use App\Cruce;
 use App\Albalin;
 use App\Albaran;
 use App\Contador;
 use App\Producto;
 use Carbon\Carbon;
+use App\Scopes\EmpresaScope;
 use Illuminate\Http\Request;
 use App\Jobs\WooUpdateProJob;
 use Illuminate\Support\Facades\DB;
@@ -207,9 +210,51 @@ class AbonosController extends Controller
 
             //no me interesa que pase por el observer
             //Cobro::create($cobro_new);
-            DB::table('cobros')->insert($cobro_new);
+            $cobro_id = DB::table('cobros')->insertGetId($cobro_new);
+
+            if ($cobro->fpago_id == 1)
+                $this->crearApunteCaja($albaran_new, $cobro_id);
 
         }
+
+    }
+
+    private function crearApunteCaja($albaran, $cobro_id){
+
+        $cobro = Cobro::findOrFail($cobro_id);
+
+        // CRUCE DE CAJA
+        $cruce = Cruce::withOutGlobalScope(EmpresaScope::class)->where('empresa_id',$albaran->empresa_id)
+                        ->where('comven', 'V')
+                        ->first();
+
+        $empresa_destino = (!$cruce) ? $albaran->empresa_id :  $cruce->destino_empresa_id;
+
+        if ($albaran->fase_id == 13){
+            $concepto = "ABONO ALBARÁN ".$albaran->alb_ser;
+            $cobro->importe = $cobro->importe * -1;
+            $dh = 'D';
+        }else{
+            $dh = ($cobro->importe >= 0) ? "H" : "D";
+            $concepto = "A CUENTA ALBARÁN ".$albaran->alb_ser;
+        }
+
+
+
+        $data = [
+            'empresa_id' => $empresa_destino,
+            'fecha' => $cobro->fecha,
+            'dh' => $dh,
+            'nombre' => $concepto,
+            'importe'=> $cobro->importe,
+            'manual'=> 'N',
+            'cobro_id' => $cobro->id,
+            'deposito_id' => null,
+            'username' => $cobro->username
+        ];
+
+        Caja::create($data);
+
 
     }
 }
