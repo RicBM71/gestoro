@@ -325,7 +325,8 @@ import {mapState} from 'vuex'
                 'hasLiquidar',
                 'hasReaCom',
                 'userName',
-                'hasAddCom'
+                'hasAddCom',
+                'isAdmin'
             ]),
             computedError(){
                 return this.compra.notas != null ? 'error' : null;
@@ -335,7 +336,7 @@ import {mapState} from 'vuex'
                 if (this.compra.fase_id !=5){ // no está recuperado
                     const hoy = new Date().toISOString().substr(0, 10);
                     if (this.compra.grupo_id == 1)
-                        return (hoy > this.compra.fecha_bloqueo);
+                        return (hoy > this.compra.fecha_bloqueo || this.isAdmin);
                     else
                         return (hoy >= this.compra.fecha_bloqueo);
                 }else{
