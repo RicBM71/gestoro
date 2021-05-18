@@ -92,16 +92,18 @@ class PrintAlbController extends Controller
         // }
             //return abort(411,'La compra no está recuperada y/o facturada');;
 
-        $this->lineasAlbaran = Albalin::with(['producto' => function ($query) {
-                                                $query->withTrashed();},
-                                              'producto.clase','producto.garantia','producto.iva'])
-                                        ->albaranId($this->albaran->id)
-                                        ->join('productos','producto_id','=','productos.id')
-                                        ->orderBy('productos.estado_id')
+
+            $this->lineasAlbaran = Albalin::with(['producto' => function ($query) {
+                $query->withTrashed();},
+                'producto.clase','producto.garantia','producto.iva'])
+                ->albaranId($this->albaran->id)
+                // ->join('productos','producto_id','=','productos.id')
+                                        // ->orderBy('productos.estado_id')
                                         ->orderBy('albalins.id')
                                         ->get();
 
-                                        $this->lineasAlbaran = collect($this->lineasAlbaran)->sortBy('productos.estado_id');
+        // si dejo join, no carga bien notas, ojo a ese orden...
+        //$this->lineasAlbaran = collect($this->lineasAlbaran)->sortBy('productos.estado_id');
 
         $empresa  = session()->get('empresa');
 
