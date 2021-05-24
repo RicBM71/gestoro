@@ -270,8 +270,11 @@ class PrintAlbController extends Controller
             }
 
             $txt = $txt_garantia.$row->producto->nombre;
-			if ($this->albaran->tipo_id == 3 && $row->producto->quilates != null){
+			if ($this->albaran->tipo_id == 3 && $row->producto->clase_id == 1){
 				$txt.= ' ('.strtoupper($row->producto->clase->nombre).' '.$row->producto->quilates.'KT)';
+            }
+            if ($this->albaran->tipo_id == 3 && $row->producto->clase_id > 1){
+				$txt.= ' ('.strtoupper($row->producto->clase->nombre).')';
             }
             // pide peso kilates.
             if ($this->albaran->tipo_id == 3 && $row->producto->peso_gr <> 0 && $row->producto->stock == 1 && $row->producto->estado_id != 6)
