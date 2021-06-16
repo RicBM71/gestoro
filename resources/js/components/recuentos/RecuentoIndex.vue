@@ -486,7 +486,6 @@ import FiltroRec from './FiltroRec'
 
         },
         reubicarProducto (item) {
-            console.log(item);
 
             this.editedIndex = this.items.indexOf(item)
 
