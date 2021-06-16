@@ -7,6 +7,7 @@ use App\Clase;
 use App\Producto;
 use App\Recuento;
 use App\Categoria;
+use Carbon\Carbon;
 use App\Scopes\EmpresaScope;
 use Illuminate\Http\Request;
 use App\Exports\RecuentoExport;
@@ -428,6 +429,37 @@ class RecuentosController extends Controller
 
 
     }
+
+    public function reubicar(Request $request, Recuento $recuento)
+    {
+
+
+        if ($recuento->rfid_id == 2)
+            $data['rfid_id'] = 12;
+        else
+            $data['rfid_id'] = 2;
+
+        $recuento->update($data);
+
+        $data_pro = [
+            'destino_empresa_id' => session('empresa_id'),
+            'username' => session('username'),
+            'updated_at' => Carbon::now()
+        ];
+
+        DB::table('productos')->where('id', $recuento->producto_id)
+            ->update($data_pro);
+
+        $recuento->load(['producto','rfid','estado']);
+
+        if (request()->wantsJson())
+            return [
+                'rfid'      => $recuento->rfid->nombre,
+                'rfid_id'   => $data['rfid_id'],
+                'message'   => 'EL registro ha sido modificado'];
+
+    }
+
 
 
 }

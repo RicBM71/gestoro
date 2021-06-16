@@ -181,6 +181,19 @@
                                                 </template>
                                                 <span>Baja Producto</span>
                                             </v-tooltip>
+                                            <v-tooltip bottom v-if="props.item.rfid_id == 2">
+                                                <template v-slot:activator="{ on }">
+                                                    <v-btn
+                                                        small
+                                                        v-on="on"
+                                                        icon
+                                                        @click="reubicarProducto(props.item)"
+                                                    >
+                                                        <v-icon color="green darken-4">where_to_vote</v-icon>
+                                                    </v-btn>
+                                                </template>
+                                                <span>Reubicar Producto</span>
+                                            </v-tooltip>
                                         </td>
                                     </template>
                                     <template slot="pageText" slot-scope="props">
@@ -462,6 +475,29 @@ import FiltroRec from './FiltroRec'
                     item.deleted_at = response.data.producto.deleted_at;
                     Object.assign(this.items[this.editedIndex], item)
                     this.$toast.success(response.data.msg);
+                })
+            .catch(err => {
+                this.status = true;
+                //console.log(err);
+                var msg = err.response.data.message;
+                this.$toast.error(msg);
+
+            });
+
+        },
+        reubicarProducto (item) {
+            console.log(item);
+
+            this.editedIndex = this.items.indexOf(item)
+
+            axios.put('mto/recuentos/'+item.recuento_id+'/reubicar')
+                .then(res => {
+
+                    item.rfid = res.data.rfid;
+                    item.rfid_id = res.data.rfid_id;
+                    Object.assign(this.items[this.editedIndex], item)
+
+
                 })
             .catch(err => {
                 this.status = true;
