@@ -21,7 +21,15 @@
         "sass-loader": "^7.3.1",
         "vue": "^2.6.12",
         "vue-router": "^3.4.9",
-        "vue-template-compiler": "^2.6.12"
+        "vue-template-compiler": "^2.6.12",
+        "postcss": ">=7.0.36",
+        "ws": ">=6.2.2",
+        "glob-parent": ">=5.1.2",
+        "normalize-url": ">=4.5.1",
+        "browserslist": ">=4.16.5",
+        "ssri": ">=7.1.1",
+        "is-svg": ">=4.2.2",
+        "xmlhttprequest-ssl": ">=1.6.2"
     },
     "dependencies": {
         "minimist": ">=1.2.3",
