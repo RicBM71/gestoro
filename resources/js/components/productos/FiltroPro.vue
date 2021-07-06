@@ -174,6 +174,7 @@
                         :items="fechas"
                         label="Tipo Fecha"
                         required
+                        @change="changeTipoFecha"
                         ></v-select>
                 </v-flex>
                 <v-flex sm1>
@@ -351,7 +352,8 @@ export default {
             ],
             fechas:[
                 {value: 'C', text: 'Creación'},
-                {value: 'M', text: 'Modificación'}
+                {value: 'M', text: 'Modificación'},
+                {value: 'D', text: 'Borrado'}
             ],
             menu_d: false,
             menu_h: false,
@@ -421,6 +423,10 @@ export default {
     methods:{
         clearDate(){
             this.reg.fecha_d = null;
+        },
+        changeTipoFecha(){
+            this.reg.alta = (this.reg.tipo_fecha == 'D') ? 'N' : 'T';
+            //console.log(this.reg);
         },
         submit(){
 

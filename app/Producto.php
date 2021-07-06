@@ -191,6 +191,9 @@ Class Producto extends Model
         elseif ($tipo == "R")
             return $query->whereDate('fecha_ultima_revision','>=', $d)
                          ->whereDate('fecha_ultima_revision','<=', $h);
+        elseif ($tipo == "D")
+            return $query->whereDate('deleted_at','>=', $d)
+                         ->whereDate('deleted_at','<=', $h);
         else
             return $query->whereDate('updated_at','>=', $d)
                          ->whereDate('updated_at','<=', $h);
