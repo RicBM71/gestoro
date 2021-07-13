@@ -124,6 +124,14 @@
                 <v-spacer></v-spacer>
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
+                        <v-btn v-on="on"  @click="goSepa()" icon v-show="remesas_sepa > 0">
+                            <v-icon color="yellow">tips_and_updates</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>({{remesas_sepa}}) Remesas SEPA pendientes.</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
                         <v-btn v-on="on" icon v-show="jobs > 0">
                             <v-icon color="red darken-4">notification_important</v-icon>
                         </v-btn>
@@ -219,6 +227,7 @@ export default {
         empresa_id:0,
         traspasos: 0,
         jobs: 0,
+        remesas_sepa: 0,
         show_loading:  false,
         //productos_online: 0,
 
@@ -443,6 +452,8 @@ export default {
 
                     this.traspasos = res.data.traspasos;
                     this.jobs = res.data.jobs;
+                    this.remesas_sepa = res.data.remesas_sepa;
+
 
                     //this.productos_online = res.data.productos_online;
 
@@ -502,6 +513,7 @@ export default {
 
                     this.setAuthUser(res.data.user);
 
+
                     this.empresa_id = this.user.empresa_id;
                     this.empresas = res.data.user.empresas;
                     this.empresas.sort(function (a, b) {
@@ -520,6 +532,7 @@ export default {
                     this.empresaTxt = this.empresas[idx].text;
                     this.traspasos = res.data.traspasos;
                     this.jobs = res.data.jobs;
+                    this.remesas_sepa = res.data.remesas_sepa;
 
                     // res.data.user.empresas.map((e) =>{
                     //     if (e.value == this.empresa_id)
@@ -556,6 +569,9 @@ export default {
                 .then(res => {
 
                     this.setAuthUser(res.data.user);
+
+                    this.remesas_sepa = res.data.remesas_sepa;
+
                     var idx = this.empresas.map(x => x.value).indexOf(this.empresa_id);
                     this.empresaTxt = this.empresas[idx].text;
                     if (this.$route.path != '/home')
@@ -593,6 +609,9 @@ export default {
                 });
 
             this.myEmpresa=false;
+        },
+        goSepa(){
+            this.$router.push({name: 'remesa.sepa'});
         },
         Logout() {
             this.$toast.success('Logout, espere...');

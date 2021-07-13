@@ -12,6 +12,13 @@
                         <td>{{ formatDate(props.item.fecha)}}</td>
                         <td :class="props.item.concepto.color">{{ props.item.concepto.nombre+formatDias(props.item.dias)+" "+ formatNotas(props.item.notas)+" "+datosIBAN(props.item.iban,props.item.bic) }}</td>
                         <td class="text-xs-right">{{ props.item.importe | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
+                        <td v-if="sepaEmpresa"><v-icon
+                                small
+                                :color="colorRemesada(props.item.remesada)"
+                                >
+                                {{ remesada(props.item.remesada) }}
+                            </v-icon></td>
+                        <td v-else></td>
                         <td class="text-xs-center">{{ modificado(props.item) }}</td>
                         <td class="justify-center layout px-0">
                             <v-icon
@@ -81,6 +88,13 @@ export default {
                     width:'5%'
                 },
                 {
+                    text: 'R',
+                    align: 'center',
+                    value: 'remesada',
+                    sortable: false,
+                    width:'1%'
+                },
+                {
                     text: 'Usuario',
                     align: 'center',
                     value: 'username',
@@ -119,7 +133,8 @@ export default {
         ...mapGetters([
             'hasDelDep',
             'userName',
-            'hasAddCom'
+            'hasAddCom',
+            'sepaEmpresa'
         ]),
     },
     methods:{
@@ -146,6 +161,12 @@ export default {
             moment.locale('es');
             //return item.username;
             return item.username+" "+moment(item.updated_at).format('D/MM/YYYY H:mm');
+        },
+        remesada(remesada){
+            return remesada ? 'done_all' : 'report_problem';
+        },
+        colorRemesada(remesada){
+            return remesada ? 'blue' : 'red';
         },
         borrarLinea(item){
 

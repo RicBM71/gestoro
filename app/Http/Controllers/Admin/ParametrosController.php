@@ -49,7 +49,6 @@ class ParametrosController extends Controller
             'fixing'         => ['required','boolean'],
             'copia_recompra' => ['required','boolean'],
             'facturar_al_recuperar' => ['required','boolean'],
-
         ]);
 
         $data['username'] = $request->user()->username;

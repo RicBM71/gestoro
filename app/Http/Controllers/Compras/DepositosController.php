@@ -66,9 +66,11 @@ class DepositosController extends Controller
 
         if ($data['concepto_id']==2){
             Cliente::updateIBAN($compra->cliente_id,$data['iban'],$data['bic']);
+            $data['remesada']=!session('parametros')->sepa;
         }else{
             $data['iban']=null;
             $data['bic']=null;
+            $data['remesada']=true;
         }
         // $data['importe'] = $request->importe;
         // $data['concepto_id'] = $request->concepto_id;

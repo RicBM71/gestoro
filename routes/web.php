@@ -309,6 +309,9 @@ Route::group([
         Route::get('categoria/assign', 'AsignarCategoriaController@index');
         Route::post('categoria/assign', 'AsignarCategoriaController@submit');
 
+        Route::get('sepa', 'SepaController@index');
+        Route::post('sepa/transfer', 'SepaController@transfer');
+
      //   Route::get('helpbanco', 'HelpBancosController@index');
     }
 );

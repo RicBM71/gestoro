@@ -28,6 +28,7 @@ const initialState = {
     lotes_abiertos: 0,
     whatsApp: null,
     mail_renova: false,
+    sepa_empresa: false,
 };
 
 /*
@@ -52,6 +53,7 @@ const mutations = {
         state.whatsApp = payload.user.whatsApp;
         state.mail_renova = payload.user.mail_renova;
         state.lotes_abiertos= payload.user.lotes_abiertos;
+        state.sepa_empresa = payload.user.sepa_empresa;
 	},
 	[UNSET_USER](state, payload) {
         state.id = null;
@@ -69,6 +71,7 @@ const mutations = {
         state.whatsApp=null;
         state.mail_renova=false,
         state.lotes_abiertos=0;
+        state.sepa_empresa=false;
 	}
 };
 
@@ -106,6 +109,9 @@ const getters = {
     },
     parametros: (state) =>{
         return state.parametros
+    },
+    sepaEmpresa: (state) =>{
+        return state.sepa_empresa == '1'
     },
     aislar: (state) =>{
         return state.aislar
@@ -214,6 +220,9 @@ const getters = {
     },
     hasEcommerce: (state) =>{
         return (state.permisos.indexOf('ecommerce') >= 0) ? true : false;
+    },
+    hasSepa: (state) =>{
+        return (state.permisos.indexOf('gensepa') >= 0) ? true : false;
     },
     flexCortesia: (state) =>{
         return state.flex_cortesia;

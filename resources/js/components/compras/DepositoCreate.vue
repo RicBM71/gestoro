@@ -187,7 +187,8 @@ export default {
             'parametros'
         ]),
         computedLimImporte(){
-            if (this.compra.importe >= 2500){
+            // TODO: 2500 esto funciona??
+            if (this.compra.importe >= 1000){
                 this.deposito.concepto_id = 2;
             }
         },

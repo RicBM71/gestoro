@@ -33,7 +33,7 @@
             </v-flex>
         </v-layout>
         <v-layout row wrap>
-            <v-flex sm1 xs12></v-flex>
+            <v-flex v-if="!sepaEmpresa" sm1 xs12></v-flex>
             <v-flex sm3 xs12>
                  <v-btn round block large color="grey" class="blue-grey lighten-3" @click="goCompraIndex()">
                      Consulta Compras
@@ -44,6 +44,12 @@
                  <v-btn round block large color="grey" class="blue-grey lighten-3" @click="goCajaIndex()">
                      Caja
                      <v-icon right dark>euro_symbol</v-icon>
+                </v-btn>
+            </v-flex>
+            <v-flex sm2 xs12 v-if="sepaEmpresa">
+                 <v-btn round block large color="grey" class="blue-grey lighten-3" @click="goSepa()">
+                     Orden SEPA
+                     <v-icon right dark>file_download</v-icon>
                 </v-btn>
             </v-flex>
             <v-flex sm2 xs12>
@@ -117,7 +123,8 @@ export default {
             'isRoot',
             'empresaActiva',
             'imgFondo',
-            'lotes'
+            'lotes',
+            'sepaEmpresa'
 		]),
     },
     data: () => ({
@@ -184,6 +191,9 @@ export default {
         },
         goRecogidas(){
             this.$router.push({ name: 'exportar.recogidas' })
+        },
+        goSepa(){
+            this.$router.push({ name: 'remesa.sepa' })
         },
     },
 

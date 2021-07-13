@@ -107,6 +107,13 @@ class HomeController extends Controller
 
         $jobs  = DB::table('jobs')->count();
 
+        if (hasSepa() && $empresa->getFlag(14))
+            $remesas_sepa = DB::table('depositos')->where('empresa_id', $empresa_id)
+                                                ->where('remesada', false)
+                                                ->count();
+        else
+            $remesas_sepa = 0;
+
        // dispatch(new CalcularExistenciaJob());
 
 
@@ -140,7 +147,8 @@ class HomeController extends Controller
             'whatsApp'      => $empresa->getFlag(12),
             'mail_renova'   => $empresa->getFlag(13),
             'aislar_empresas'  => $parametros->aislar_empresas,
-            'lotes_abiertos' => $lotes_abiertos
+            'lotes_abiertos' => $lotes_abiertos,
+            'sepa_empresa'  => $empresa->getFlag(14)
         ];
 
         if (request()->wantsJson())
@@ -149,6 +157,7 @@ class HomeController extends Controller
                 'expired'   => $this->verificarExpired($request),
                 'authuser'  => $authUser,
                 'jobs'      => $jobs,
+                'remesas_sepa' => $remesas_sepa,
                 'traspasos' => Traspaso::where('proveedora_empresa_id', session('empresa_id'))
                                         ->where('situacion_id',1)->get()->count()
             ];
@@ -227,7 +236,7 @@ class HomeController extends Controller
 
     private function productosOnline($email_productos_online, $razon)
     {
-        
+
         if ($email_productos_online == null)
             return 0;
 

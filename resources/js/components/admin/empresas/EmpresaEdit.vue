@@ -463,6 +463,13 @@
                                         color="primary">
                                     ></v-switch>
                                 </v-flex>
+                                <v-flex sm3 v-if="isRoot">
+                                    <v-switch
+                                        label="Transferencias SEPA"
+                                        v-model="sw[14]"
+                                        color="primary">
+                                    ></v-switch>
+                                </v-flex>
                             </v-layout>
                             <v-layout row wrap>
                                    <v-flex sm5></v-flex>

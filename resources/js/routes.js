@@ -187,6 +187,8 @@ import FindProducto from './components/tools/FindProducto.vue';
 import AmpliarMasivo from './components/tools/AmpliarMasivo.vue';
 import CambioInteres from './components/tools/CambioInteres.vue';
 import BorradoMasivo from './components/tools/BorradoMasivo.vue';
+import RemesaSepa from './components/tools/RemesaSepa.vue';
+
 
 import ImportarProducto from './components/tools/ImportarProducto.vue';
 import Cierre from './components/tools/Cierre.vue';
@@ -846,6 +848,11 @@ export default [
                 path: '/tools/delete',
                 name: 'tools.delete',
                 component: BorradoMasivo,
+            },
+            {
+                path: '/tools/sepa',
+                name: 'remesa.sepa',
+                component: RemesaSepa,
             },
             {
                 path: '/tools/cierre',

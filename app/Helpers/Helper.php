@@ -160,6 +160,10 @@ function hasECommerce(){
     return auth()->user()->hasPermissionTo('ecommerce');
 }
 
+function hasSepa(){
+    return auth()->user()->hasPermissionTo('gensepa');
+}
+
 
 function esPropietario($obj)
 {

@@ -25,6 +25,7 @@ class Empresa extends Model
     // 11: IBAN Reservas
     // 12: Activar Envíos WhatsApp
     // 13: Envío mail renovaciones
+    // 14: Órdenes SEPA
 
 
     use SoftDeletes;

@@ -15,8 +15,8 @@ class CreateParametrosTable extends Migration
     {
         Schema::create('parametros', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->decimal('lim_efe', 10, 2)->default(2500);
-            $table->decimal('lim_efe_nores', 10, 2)->default(15000);
+            $table->decimal('lim_efe', 10, 2)->default(1000);
+            $table->decimal('lim_efe_nores', 10, 2)->default(10000);
             $table->string('pie_rebu1')->nullable();
             $table->decimal('retencion', 6,2)->default(0);
             $table->boolean('online')->default(false);

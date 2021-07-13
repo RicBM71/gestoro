@@ -20,7 +20,7 @@ class Deposito extends Model
 
     protected $fillable = [
         'fecha','compra_id','empresa_id', 'cliente_id','dias','concepto_id','importe','dias','notas',
-        'iban','bic','username',
+        'iban','bic','username','remesada',
     ];
 
     protected static function boot()
@@ -41,7 +41,8 @@ class Deposito extends Model
     }
 
     public function compra(){
-        return $this->hasOne(Compra::class);
+        //return $this->hasOne(Compra::class);
+        return $this->belongsTo(Compra::class);
     }
 
     public function concepto()
@@ -49,10 +50,23 @@ class Deposito extends Model
     	return $this->belongsTo(Concepto::class);
     }
 
+    public function cliente()
+    {
+    	return $this->belongsTo(Cliente::class);
+    }
+
     public function scopeCompraId($query, $compra_id)
     {
         $query->with(['concepto'])
               ->where('compra_id', $compra_id )
+              ->orderBy('fecha','desc')
+              ->orderBy('id','desc');
+
+    }
+
+    public function scopeSinRemesar($query)
+    {
+        $query->where('remesada', false)
               ->orderBy('fecha','desc')
               ->orderBy('id','desc');
 
