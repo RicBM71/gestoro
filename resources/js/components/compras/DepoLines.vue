@@ -22,7 +22,6 @@
                             <span v-if="props.item.remesada">Remesa OK</span>
                             <span v-else class="red--text">Pendiente</span>
                         </td>
-                        <td v-else></td>
                         <td class="text-xs-center">{{ modificado(props.item) }}</td>
                         <td class="justify-center layout px-0">
                             <v-icon
@@ -70,7 +69,7 @@ export default {
             editedIndex: -1,
             editedItem: {},
 
-            headers: [
+            headers1: [
                 {
                     text: 'Fecha',
                     align: 'left',
@@ -112,9 +111,48 @@ export default {
                     width:'1%'
                 }
              ],
+             headers2: [
+                {
+                    text: 'Fecha',
+                    align: 'left',
+                    value: 'fecha',
+                    sortable: false,
+                    width:'10%'
+                },
+                {
+                    text: 'Operación',
+                    align: 'left',
+                    value: 'depositos.nombre',
+                    sortable: false
+                },
+                {
+                    text: 'Importe',
+                    align: 'center',
+                    value: 'importe',
+                    sortable: false,
+                    width:'5%'
+                },
+                {
+                    text: 'Usuario',
+                    align: 'center',
+                    value: 'username',
+                    sortable: false,
+                    width:'24%'
+                },
+                {
+                    text: 'A',
+                    align: 'center',
+                    sortable: false,
+                    width:'1%'
+                }
+             ],
+             headers:[],
             }
         },
     mounted(){
+
+            this.headers = (this.sepaEmpresa) ? this.headers1 : this.headers2;
+
 
 
     //     if (this.compra.id > 0){
