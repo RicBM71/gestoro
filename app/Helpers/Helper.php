@@ -161,7 +161,6 @@ function hasECommerce(){
 }
 
 function hasSepa(){
-   // return false;
     return auth()->user()->hasPermissionTo('gensepa');
 }
 

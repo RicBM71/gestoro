@@ -64,11 +64,10 @@ class Deposito extends Model
 
     }
 
-    public function scopeSinRemesar($query)
+    public function scopeRemesada($query, $remesada)
     {
-        $query->where('remesada', false)
-              ->orderBy('fecha','desc')
-              ->orderBy('id','desc');
+        $query->where('concepto_id', 2)
+              ->where('remesada', $remesada);
 
     }
 

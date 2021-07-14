@@ -311,6 +311,7 @@ Route::group([
 
         Route::get('sepa', 'SepaController@index');
         Route::post('sepa/transfer', 'SepaController@transfer');
+        Route::post('sepa/reload', 'SepaController@reload');
 
      //   Route::get('helpbanco', 'HelpBancosController@index');
     }

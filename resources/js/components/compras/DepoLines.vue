@@ -4,20 +4,24 @@
         <v-layout row wrap>
             <v-flex xs12>
                 <v-data-table
-                :headers="headers"
-                :items="lineas"
-                rows-per-page-text="Registros por página"
+                    :headers="headers"
+                    :items="lineas"
+                    rows-per-page-text="Registros por página"
                 >
                     <template slot="items" slot-scope="props">
                         <td>{{ formatDate(props.item.fecha)}}</td>
                         <td :class="props.item.concepto.color">{{ props.item.concepto.nombre+formatDias(props.item.dias)+" "+ formatNotas(props.item.notas)+" "+datosIBAN(props.item.iban,props.item.bic) }}</td>
                         <td class="text-xs-right">{{ props.item.importe | currency('', 2, { thousandsSeparator:'.', decimalSeparator: ',', symbolOnLeft: false }) }}</td>
-                        <td v-if="sepaEmpresa"><v-icon
+                        <td v-if="sepaEmpresa">
+                              <v-icon
                                 small
                                 :color="colorRemesada(props.item.remesada)"
                                 >
                                 {{ remesada(props.item.remesada) }}
-                            </v-icon></td>
+                            </v-icon>
+                            <span v-if="props.item.remesada">Remesa OK</span>
+                            <span v-else class="red--text">Pendiente</span>
+                        </td>
                         <td v-else></td>
                         <td class="text-xs-center">{{ modificado(props.item) }}</td>
                         <td class="justify-center layout px-0">
@@ -88,11 +92,11 @@ export default {
                     width:'5%'
                 },
                 {
-                    text: 'R',
-                    align: 'center',
+                    text: 'Remesada',
+                    align: 'left',
                     value: 'remesada',
                     sortable: false,
-                    width:'1%'
+
                 },
                 {
                     text: 'Usuario',

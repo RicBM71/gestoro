@@ -11,7 +11,15 @@
             <v-form>
                  <v-container>
                      <v-layout row wrap>
-                         <v-flex sm4></v-flex>
+                          <v-flex sm2></v-flex>
+                          <v-flex sm2>
+                               <v-switch
+                                    label="Remesadas"
+                                    @change="reload()"
+                                    v-model="remesada"
+                                    color="primary">
+                                ></v-switch>
+                          </v-flex>
                           <v-flex sm2>
                             <v-menu
                                 v-model="menu_h"
@@ -125,6 +133,7 @@ import Loading from '@/components/shared/Loading'
                     rowsPerPage: 10,
                     sortBy: "nombre",
                 },
+                remesada: false,
                 search:"",
                 headers: [
                     {
@@ -219,6 +228,53 @@ import Loading from '@/components/shared/Loading'
                 if (f == null) return null;
                 moment.locale('es');
                 return moment(f).format('DD/MM/YYYY');
+            },
+            reload(){
+
+                if (this.loading === false){
+
+                    this.loading = true;
+                    this.show_loading = true;
+
+                    this.$validator.validateAll().then((result) => {
+                        if (result){
+                            axios.post(this.url+'/reload', {
+                                cuenta_id: this.cuenta_id,
+                                fecha: this.fecha_h,
+                                remesada: this.remesada
+                            })
+                                .then(response => {
+
+                                    this.depositos = response.data.depositos;
+
+                                    this.show_loading = false;
+
+                                })
+                                .catch(err => {
+
+                                    if (err.request.status == 422){ // fallo de validated.
+                                        const msg_valid = err.response.data.errors;
+                                        for (const prop in msg_valid) {
+                                            this.errors.add({
+                                                field: prop,
+                                                msg: `${msg_valid[prop]}`
+                                            })
+                                        }
+                                    }else{
+                                        this.$toast.error(err.response.data.message);
+                                    }
+                                })
+                                .finally(()=> {
+                                    this.loading = this.show_loading = false;
+                                });
+                            }
+                        else{
+                            this.loading = this.show_loading = false;
+                        }
+                    });
+                }
+
+
             },
             submit() {
                 if (this.loading === false){

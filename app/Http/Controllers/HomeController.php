@@ -108,9 +108,12 @@ class HomeController extends Controller
         $jobs  = DB::table('jobs')->count();
 
         if (hasSepa() && $empresa->getFlag(14))
-            $remesas_sepa = DB::table('depositos')->where('empresa_id', $empresa_id)
-                                                ->where('remesada', false)
-                                                ->count();
+            $remesas_sepa = DB::table('depositos')
+                                ->join('compras','compra_id','=','compras.id')
+                                ->where('depositos.empresa_id', $empresa_id)
+                                ->where('remesada', false)
+                                ->where('fase_id', 4)
+                                ->count();
         else
             $remesas_sepa = 0;
 

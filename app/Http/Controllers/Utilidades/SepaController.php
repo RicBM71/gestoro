@@ -20,31 +20,55 @@ class SepaController extends Controller
     public function index(){
 
         if (!hasSepa())
-            abort(403,'No Autorizado');
-
-        // $transferencias =  Remesa::with(['cliente'])->get();
-        // $remesa = $this->generarTransfer($transferencias,2,'2019-06-27');
-        // return $remesa;
+            abort(403,'No Autorizado SEPA');
 
         if (request()->wantsJson())
             return [
                 'cuentas'  => Cuenta::selCuentas(),
-                'depositos' => Deposito::with(['compra','cliente'])->sinRemesar()->get(),
+                'depositos' => Deposito::with(['compra','cliente'])->remesada(false)
+                                    ->whereHas('compra', function ($q) {
+                                        $q->where('fase_id', '=', 4);})
+                                    ->get(),
+            ];
+    }
+
+    public function reload(Request $request){
+
+        if (!hasSepa())
+            abort(403,'No Autorizado SEPA');
+
+        $data = $request->validate([
+            'cuenta_id'=>'required|integer',
+            'fecha'=>'required|date',
+            'remesada'=>'required|boolean'
+        ]);
+
+        if (request()->wantsJson())
+            return [
+                'depositos' => Deposito::with(['compra','cliente'])
+                                    ->remesada($data['remesada'])
+                                    ->whereHas('compra', function ($q) {
+                                        $q->where('fase_id', '=', 4);})
+                                    ->where('fecha', $data['fecha'])
+                                    ->get(),
             ];
     }
 
     public function transfer(Request $request){
 
         if (!hasSepa())
-            abort(403,'No Autorizado');
+            abort(403,'No Autorizado SEPA');
 
         $data = $request->validate([
-            'cuenta_id'=>'required|integer',
-            'fecha'=>'required|date'
+            'cuenta_id' => 'required|integer',
+            'fecha'     => 'required|date'
         ]);
 
 
-        $transferencias =  Deposito::with(['compra','cliente'])->sinRemesar()->get();
+        $transferencias =  Deposito::with(['compra','cliente'])->remesada(false)
+                                        ->whereHas('compra', function ($q) {
+                                            $q->where('fase_id', '=', 4);})
+                                        ->get();
 
         if ($transferencias->count()==0)
             abort(404,'No hay transferencias para remesar');
@@ -53,9 +77,9 @@ class SepaController extends Controller
 
         if (request()->wantsJson())
             return [
-                'xml'       => $remesa['xml'],
-                'importe'   => $remesa['importe'],
-                'transferencias'   => $remesa['transferencias']
+                'xml'            => $remesa['xml'],
+                'importe'        => $remesa['importe'],
+                'transferencias' => $remesa['transferencias']
             ];
 
     }
