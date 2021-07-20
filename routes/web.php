@@ -170,6 +170,7 @@ Route::group([
 
         Route::resource('hcompras', 'HcomprasController', ['only'=>['index','show']]);
         Route::get('hcompras/{id}/historial', 'HcomprasController@historial');
+        Route::get('hcompras/{hcompra}/restore', 'HcomprasController@restore');
 
         Route::get('trasladar', 'TrasladarController@index');
         Route::put('trasladar/{compra}', 'TrasladarController@update');

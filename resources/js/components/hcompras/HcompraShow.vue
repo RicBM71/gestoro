@@ -115,12 +115,21 @@
                             </v-flex>
                         </v-layout>
                         <v-layout row wrap v-if="compra.cliente.notas!=null">
-                            <v-flex sm12>
+                            <v-flex sm10>
                                 <v-text-field
                                     v-model="compra.cliente.notas"
                                     label="Observaciones Cliente"
                                 >
                                 </v-text-field>
+                            </v-flex>
+                            <v-flex sm2>
+                                <div class="text-xs-center">
+                                <v-btn
+                                    small
+                                    @click="restore"  round  :loading="show_loading" block  color="warning">
+                                    Restaurar
+                                </v-btn>
+                            </div>
                             </v-flex>
                         </v-layout>
                         <div v-if="compra.id>0">
@@ -250,6 +259,21 @@ import {mapState} from 'vuex'
             totalOpDia(){
                 return this.getMoneyFormat(this.valor_pagado)+" / "+this.getMoneyFormat(this.valor_cobrado);
             },
+            restore(){
+                this.show_loading = true;
+                axios.get(this.url+'/'+this.compra.id+'/restore')
+                    .then(res => {
+
+                        this.show_loading = false;
+                        var ruta = res.data.compra.tipo_id == 1 ? 'recompra' : 'compra';
+
+                        this.$router.push({ name: ruta+'.close', params: { id: res.data.compra.id } })
+                    })
+                    .catch(err => {
+                        this.$toast.error(err.response.data.message);
+                        this.$router.push({ name: 'hcompras.index'})
+                    })
+            }
         }
   }
 </script>

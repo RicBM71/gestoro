@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Compras;
 
 use App\Libro;
 use App\Compra;
+use App\Comline;
 use App\Hcompra;
 use App\Deposito;
 use App\Hcomline;
@@ -75,6 +76,43 @@ class HcomprasController extends Controller
                             //->where('operacion', 'I')
                             ->orderBy('created_his','desc')
                             ->get();
+
+    }
+
+    public function restore(Hcompra $hcompra){
+
+        if (!esRoot()){
+            return abort(403,auth()->user()->name.' NO tiene permiso de acceso - Root');
+        }
+
+        $data = $hcompra->toArray();
+
+        //$data['username']= 'Restaurada';
+        //$data['created_at']=Carbon::now();
+        //$data['updated_at']=Carbon::now();
+
+        $compra = Compra::create($data);
+
+        $lineas = HComline::where('compra_id', $hcompra->compra_id)->get();
+        foreach ($lineas as $linea){
+            $l = $linea->toArray();
+            $l['compra_id'] = $compra->id;
+            Comline::create($l);
+        }
+
+        $depositos = HDeposito::where('compra_id', $hcompra->compra_id)->get();
+        foreach ($depositos as $deposito){
+            $dep = $deposito->toArray();
+            $dep['compra_id'] = $compra->id;
+            Deposito::create($dep);
+        }
+
+       // $hcompra->delete();
+
+        if (request()->wantsJson())
+            return [
+                'compra' => $compra
+            ];
 
     }
 }
