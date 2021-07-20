@@ -190,7 +190,10 @@ import Loading from '@/components/shared/Loading'
 
                     this.depositos = res.data.depositos;
                     this.cuentas = res.data.cuentas;
-                    this.cuenta_id= res.data.cuentas[0].value;
+
+                    const idx = this.cuentas.map(x => x.defecto).indexOf(1);
+
+                    this.cuenta_id= res.data.cuentas[idx].value;
 
                 })
                 .catch(err => {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Mto;
 
 use App\Cuenta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class CuentasController extends Controller
@@ -95,6 +96,13 @@ class CuentasController extends Controller
         ]);
 
         $data['username'] = $request->user()->username;
+
+        if ($data['defecto']){
+            DB::table('cuentas')
+                ->where('empresa_id',session('empresa_id'))
+                ->where('id', '<>', $cuenta->id)
+                ->update(['defecto' => false]);
+        }
 
 
         $cuenta->update($data);

@@ -51,7 +51,7 @@ class Cuenta extends Model
     public static function selCuentas($activa=null)
     {
 
-        return Cuenta::select('id AS value', 'nombre AS text')
+        return Cuenta::select('id AS value', 'nombre AS text', 'defecto')
                 ->activa($activa)
                 ->orderBy('nombre', 'asc')
                 ->get();

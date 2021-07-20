@@ -93,7 +93,8 @@ class SepaController extends Controller
         $cuenta = Cuenta::find($cuenta_id);
 
         //$idPayment = session()->get('empresa')->cif;
-        $idPayment = session()->get('empresa')->cif.date('Ymdhis');
+        $cif = str_replace('-', '', session()->get('empresa')->cif);
+        $idPayment = $cif.date('Ymdhis');
 
 
                 // Create the initiating information
@@ -122,11 +123,11 @@ class SepaController extends Controller
 
             $transfer = new CustomerCreditTransferInformation(
                 $row->importe, // Amount
-                $row->iban_abono, //IBAN of creditor
+                $row->iban, //IBAN of creditor
                 $row->cliente->razon //Name of Creditor
             );
 
-            $transfer->setBic($row->bic_abono); // Set the BIC explicitly
+            $transfer->setBic($row->bic); // Set the BIC explicitly
             $transfer->setRemittanceInformation('COMPRA '.$row->compra->albser);
             $transfer->setEndToEndIdentification(uniqid());
 

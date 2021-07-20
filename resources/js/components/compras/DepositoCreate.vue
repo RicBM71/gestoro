@@ -225,7 +225,7 @@ export default {
             this.$emit('update:dialog_depo', false)
         },
         buscarBic(){
-            if (this.deposito.iban.length >= 8 && this.deposito.bic == ''){
+            if (this.deposito.iban.length >= 8){
                 var entidad = this.deposito.iban.substring(4,8);
                 var idx = this.bancos.map(x => x.entidad).indexOf(entidad);
                 if (idx >= 0)
